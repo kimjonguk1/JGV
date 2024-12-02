@@ -1,0 +1,302 @@
+#main {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#main > .img {
+  width: 61.4rem;
+  height: 28rem;
+  background-image: url("https://img.cgv.co.kr/r2014/images/common/bg/bg_showtimes_favorite.gif");
+}
+#main > .img > .head {
+  margin: 4rem 0 1rem 4.5rem;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+  justify-content: flex-start;
+}
+#main > .img > .head #favorite-theaters {
+  margin-left: 1rem;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+  justify-content: center;
+}
+#main > .img > .head #favorite-theaters > .container {
+  width: 7.5rem;
+  height: 2.5rem;
+  border: 0.15rem solid #6e6c6d;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#main > .img > .head #favorite-theaters > .container > .text-container {
+  width: 95%;
+  height: 90%;
+  border: 0.1rem solid #6e6c6d;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+#main > .img > .head #favorite-theaters > .container > .text-container > .text {
+  color: #ffffff;
+}
+#main > .img > .head > .button {
+  background-color: #636162;
+  border: 0.2rem solid #6e6c6d;
+}
+#main > .img > .head > .button > .image {
+  width: 2.5rem;
+  height: 2rem;
+  cursor: pointer;
+}
+#main > .img > .main {
+  width: 53.5rem;
+  height: 2rem;
+  margin-left: 4rem;
+  border-top: 0.15rem solid #727171;
+  border-bottom: 0.15rem solid #727171;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 3.5rem;
+  justify-content: flex-start;
+}
+#main > .img > .main > .item {
+  color: #dbdbdb;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+#main > .img > .main > .item.select {
+  padding: 0.5rem 0.5rem;
+  color: #ffffff;
+  border-left: 0.15rem solid #727171;
+  border-right: 0.15rem solid #727171;
+  background-image: url("https://img.cgv.co.kr/r2014/images/common/ico/ico_arrow02.png");
+  background-repeat: no-repeat;
+  background-position-x: 50%;
+  background-position-y: 96%;
+}
+#main > .img > .main > .item:nth-child(1) {
+  margin-left: 2rem;
+}
+#main > .img > .main > .item:hover {
+  color: #ffffff;
+}
+#main > .img > .item-container {
+  width: 52.5rem;
+  flex-wrap: wrap;
+  margin: 1rem 0 0 5rem;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+#main > .img > .item-container > .item {
+  padding-right: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-right: 0.1rem solid #6e6c6d;
+  color: #dbdbdb;
+  cursor: pointer;
+}
+#main > .img > .item-container > .item.select {
+  color: #ffffff;
+}
+#main > .img > .item-container > .item:hover {
+  color: #ffffff;
+}
+#main > .img > .item-container > .item:nth-last-child(1) {
+  border: none;
+}
+#main > .line-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#main > .line-wrapper > .line {
+  margin-top: 2rem;
+  width: 61.4rem;
+  background-image: url("https://img.cgv.co.kr/r2014/images/common/bg/bg_h3_line.jpg");
+  background-repeat: repeat-x;
+  background-position: center;
+  text-align: center;
+}
+#main > .theater-container {
+  width: 61.4rem;
+}
+#main > .theater-container > .header {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+#main > .theater-container > .header > .text {
+  font-size: 2rem;
+  font-weight: 400;
+}
+#main > .theater-container > .img {
+  position: relative;
+}
+#main > .theater-container > .img > .image {
+  width: 100%;
+}
+#main > .theater-container > .img > .theater-info-container {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 40%;
+  background-image: url("https://img.cgv.co.kr/R2014/images/common/bg/bg_dim80.png");
+  background-repeat: repeat;
+  position: absolute;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+#main > .theater-container > .img > .theater-info-container .theater-info {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+#main > .theater-container > .img > .theater-info-container .theater-info.guide {
+  display: flex;
+  align-items: flex-end;
+  color: #b1b1ab;
+  font-size: 0.7rem;
+}
+#main > .theater-container > .img > .theater-info-container > .small-container {
+  margin: 2rem 0 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+#main > .theater-container > .img > .theater-info-container > .small-container > .header {
+  width: 40rem;
+  height: 2rem;
+  display: flex;
+  gap: 0.5rem;
+}
+#main > .theater-container > .img > .theater-info-container > .small-container > .header > .cinema-type {
+  width: 11rem;
+  flex-wrap: wrap;
+  display: flex;
+  gap: 0.5rem;
+}
+#main > .theater-container > .img > .theater-info-container > .small-container > .header > .cinema-type > .screenX {
+  width: 5rem;
+  height: 1rem;
+  background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
+  background-repeat: no-repeat;
+  background-position: -99px -162px;
+  display: flex;
+}
+#main > .theater-container > .img > .theater-info-container > .notice-container {
+  width: 10rem;
+  height: 7rem;
+  margin: 2rem 10rem 0 0;
+  padding: 0 0 0 1rem;
+  border-left: 0.1rem solid #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+#main > .theater-container > .img > .theater-info-container > .notice-container > .button {
+  width: 1.3rem;
+  height: 1.3rem;
+  background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_btn.png");
+  background-position: -50px -62px;
+  background-repeat: no-repeat;
+}
+#main > .advertisement-info > .advertisement-move > .advertisement {
+  margin-top: 1rem;
+  width: 61.4rem;
+}
+#main > .button-container {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #fb4357;
+  font-size: 1rem;
+  font-weight: 600;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+}
+#main > .button-container > .button {
+  cursor: pointer;
+}
+#main > .button-container > .button:nth-child(1) {
+  padding-right: 1rem;
+  border-right: 0.1rem solid #ffffff;
+}
+#main > .button-container > .button > .text {
+  color: #ffffff;
+}
+#main > .information {
+  width: 100%;
+  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: row;
+}
+#main > .information.hidden {
+  display: none;
+}
+#main > .information > .car-info {
+  width: 84%;
+  margin-right: 1rem;
+}
+#main > .information > .car-info .header {
+  display: flex;
+  border-bottom: 0.15rem solid #222222;
+  padding-bottom: 0.5rem;
+}
+#main > .information > .car-info .header > .bus {
+  width: 3.5rem;
+  height: 1.67rem;
+  background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_icon.png");
+  background-position-x: -200px;
+  background-position-y: -130px;
+  background-repeat: no-repeat;
+}
+#main > .information > .car-info .header .text {
+  font-size: 1rem;
+  font-weight: 600;
+}
+#main > .information > .car-info .header > .find {
+  padding: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border: 0.15rem solid #FB4357;
+  color: #FB4357;
+}
+#main > .information > .car-info .header > .car {
+  width: 3.5rem;
+  height: 1.67rem;
+  background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_icon.png");
+  background-position-x: -200px;
+  background-position-y: -158px;
+  background-repeat: no-repeat;
+}
+#main > .information > .advertisement-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+#main > .information > .cinema-info {
+  width: 84%;
+  margin-right: 1rem;
+}
+
+/*# sourceMappingURL=index.css.map */

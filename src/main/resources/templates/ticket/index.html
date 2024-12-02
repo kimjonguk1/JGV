@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>예매</title>
+    <link rel="stylesheet" th:href="@{'/ticket/assets/styles/index.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}" type="text/css">
+</head>
+<body>
+<th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
+<th:block th:replace="~{fragments/common.html :: header}"></th:block>
+<th:block th:replace="~{fragments/common.html :: nav}"></th:block>
+<main id="main">
+    <div class="header"></div>
+    <div class="main-container">
+        <div class="advertisement-container">
+            <a href="#" target="_self" class="advertisement-move">
+                <img src="https://adimg.cgv.co.kr/images/202411/MyHero/1119_160x300.jpg" alt="배너"
+                     class="advertisement">
+            </a>
+        </div>
+        <div class="main"></div>
+        <div class="advertisement-container">
+            <a href="#" target="_self" class="advertisement-move">
+                <img src="https://adimg.cgv.co.kr/images/202411/MyHero/1119_160x300.jpg" alt="배너"
+                     class="advertisement">
+            </a>
+        </div>
+    </div>
+</main>
+<th:block th:replace="~{fragments/common.html :: footer}"></th:block>
+</body>
+</html>

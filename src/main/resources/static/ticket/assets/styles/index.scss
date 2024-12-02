@@ -1,0 +1,31 @@
+@charset "UTF-8";
+@import "global";
+
+#main {
+  width: 100%;
+
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  > .header {
+    @include minmaxWidth(980px);
+    height: 10rem;
+  }
+
+  > .main-container {
+    width: 100%;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+
+    > .main {
+      @include minmaxWidth(980px);
+      height: 100rem;
+      background-color: red;
+    }
+  }
+}

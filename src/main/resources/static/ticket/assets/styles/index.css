@@ -1,0 +1,30 @@
+#main {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#main > .header {
+  width: 980px;
+  max-width: 980px;
+  min-width: 980px;
+  height: 10rem;
+}
+#main > .main-container {
+  width: 100%;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+}
+#main > .main-container > .main {
+  width: 980px;
+  max-width: 980px;
+  min-width: 980px;
+  height: 100rem;
+  background-color: red;
+}
+
+/*# sourceMappingURL=index.css.map */

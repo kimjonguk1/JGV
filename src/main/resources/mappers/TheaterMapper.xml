@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.jwkim.jgv.mappers.TheaterMapper">
+    <select id="getRegionAll"
+            parameterType="dev.jwkim.jgv.entities.RegionEntity">
+        SELECT `reg_num`  AS `regNum`,
+               `reg_name` AS `regName`
+        FROM `jgv`.`region`
+    </select>
+    <select id="getTheaterAll"
+            parameterType="dev.jwkim.jgv.entities.TheaterEntity">
+        SELECT th_num  AS `thNum`,
+               th_name AS `thName`,
+               th_addr AS `thAddr`,
+               th_img  AS `thImg`,
+               reg_num AS `regNum`
+        FROM `jgv`.`theater`
+        LIMIT 1
+    </select>
+    <select id="getTheatersAll"
+            parameterType="dev.jwkim.jgv.entities.TheaterEntity">
+        SELECT th_num  AS `thNum`,
+               th_name AS `thName`,
+               th_addr AS `thAddr`,
+               th_img  AS `thImg`,
+               reg_num AS `regNum`
+        FROM `jgv`.`theater`
+    </select>
+    <select id="getTheatersByRegion"
+            resultType="dev.jwkim.jgv.entities.TheaterEntity">
+        SELECT `th_num`            AS `thNum`,
+               `th_name`           AS `thName`,
+               `th_addr`           AS `thAddr`,
+               `th_img`            AS `thImg`
+        FROM `jgv`.`theater`
+                 LEFT JOIN jgv.region reg ON theater.reg_num = reg.reg_num
+        WHERE `reg_name` = #{region}
+    </select>
+</mapper>
