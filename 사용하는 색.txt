@@ -1,0 +1,3 @@
+예매창 background: #f2f0e5;
+
+목록 background: #333333;
