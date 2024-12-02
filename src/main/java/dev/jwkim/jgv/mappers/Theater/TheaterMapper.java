@@ -1,7 +1,7 @@
-package dev.jwkim.jgv.mappers;
+package dev.jwkim.jgv.mappers.Theater;
 
-import dev.jwkim.jgv.entities.RegionEntity;
-import dev.jwkim.jgv.entities.TheaterEntity;
+import dev.jwkim.jgv.entities.Theater.RegionEntity;
+import dev.jwkim.jgv.entities.Theater.TheaterEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

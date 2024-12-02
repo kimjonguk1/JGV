@@ -1,4 +1,4 @@
-package dev.jwkim.jgv.mappers;
+package dev.jwkim.jgv.mappers.Theater;
 
 import org.apache.ibatis.annotations.Mapper;
 

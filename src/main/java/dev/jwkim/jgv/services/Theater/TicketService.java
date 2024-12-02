@@ -1,4 +1,4 @@
-package dev.jwkim.jgv.services;
+package dev.jwkim.jgv.services.Theater;
 
 import org.springframework.stereotype.Service;
 

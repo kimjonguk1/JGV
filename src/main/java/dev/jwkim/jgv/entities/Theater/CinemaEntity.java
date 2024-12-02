@@ -1,4 +1,4 @@
-package dev.jwkim.jgv.entities;
+package dev.jwkim.jgv.entities.Theater;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

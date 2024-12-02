@@ -1,8 +1,8 @@
-package dev.jwkim.jgv.services;
+package dev.jwkim.jgv.services.Theater;
 
-import dev.jwkim.jgv.entities.RegionEntity;
-import dev.jwkim.jgv.entities.TheaterEntity;
-import dev.jwkim.jgv.mappers.TheaterMapper;
+import dev.jwkim.jgv.entities.Theater.RegionEntity;
+import dev.jwkim.jgv.entities.Theater.TheaterEntity;
+import dev.jwkim.jgv.mappers.Theater.TheaterMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

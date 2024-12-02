@@ -1,9 +1,9 @@
-package dev.jwkim.jgv.controlles;
+package dev.jwkim.jgv.controlles.Theater;
 
-import dev.jwkim.jgv.entities.RegionEntity;
-import dev.jwkim.jgv.entities.TheaterEntity;
+import dev.jwkim.jgv.entities.Theater.RegionEntity;
+import dev.jwkim.jgv.entities.Theater.TheaterEntity;
 import dev.jwkim.jgv.results.Result;
-import dev.jwkim.jgv.services.TheaterService;
+import dev.jwkim.jgv.services.Theater.TheaterService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.MediaType;
