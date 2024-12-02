@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+@mixin flex($flex_direction, $align_items, $justify_content, $gap: 0) {
+  align-items: $align_items;
+  display: flex;
+  flex-direction: $flex_direction;
+  gap: $gap;
+  justify-content: $justify_content;
+
+  > .-spring {
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+}
+
+@mixin minmaxWidth($size) {
+  width: $size;
+  max-width: $size;
+  min-width: $size;
+
+}
+
+@mixin minmaxHeight($size) {
+  height: $size;
+  max-height: $size;
+  min-height: $size;
+
+}
+
+@mixin minmaxSize($size) {
+  @include minmaxWidth($size);
+  @include minmaxHeight($size);
+}

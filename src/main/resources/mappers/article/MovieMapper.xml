@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.jwkim.jgv.mappers.Movie.MovieMapper">
+
+    <insert id="insertMovie"
+            useGeneratedKeys="true"
+            keyColumn="moNum"
+            keyProperty="moNum"
+            parameterType="dev.jwkim.jgv.entities.Movie.MovieEntity">
+        INSERT INTO `jgv`.movie (mo_title, mo_date, mo_time, mo_plot, mo_booking_rate, mo_ending)
+        VALUES (#{moTitle},#{moDate},#{moTime},#{moPlot},#{moBookingRate},#{moEnding})
+    </insert>
+    <delete id="deleteAllMovies">
+        DELETE FROM `jgv`.movie
+    </delete>
+    <delete id="deleteAllMovieCharactor">
+        DELETE FROM `jgv`.movie_charactor
+    </delete>
+    <delete id="deleteDupleMovies">
+        DELETE FROM `jgv`.movie
+        WHERE movie.mo_num NOT IN (
+            SELECT MoNum
+            FROM (
+                     SELECT MIN(mo_num) AS MoNum
+                     FROM jgv.movie
+                     GROUP BY mo_title, mo_date, mo_time
+                 ) AS unique_movies
+        );
+
+    </delete>
+    <select id="selectMovie" resultType="java.lang.Integer">
+        SELECT COUNT(0)
+        FROM jgv.movie
+    </select>
+    <select id="selectAllMovies" resultType="dev.jwkim.jgv.DTO.Movie_ImageDTO">
+        SELECT
+            m.mo_num AS 'moNum',
+            m.mo_title AS 'moTitle',
+            m.mo_date AS 'moDate',
+            m.mo_time AS 'moTime',
+            m.mo_plot AS 'moPlot',
+            m.mo_booking_rate AS 'moBookingRate',
+            i.m_img_url AS 'm_img_url'
+        FROM
+            jgv.movie m
+                LEFT JOIN
+            jgv.movie_image i ON m.mo_num = i.mo_num
+    </select>
+</mapper>
