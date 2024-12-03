@@ -11,10 +11,11 @@ import java.time.LocalDate;
 public class Movie_ImageDTO extends MovieEntity {
     private int moNum;
     private String moTitle;
-    private LocalDate moDate;
+    private String moDate;
     private int moTime;
     private String moPlot;
     private Float moBookingRate;
     private LocalDate moEnding;
     private String m_img_url;
+
 }

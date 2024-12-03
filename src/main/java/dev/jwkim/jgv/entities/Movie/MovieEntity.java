@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class MovieEntity {
     private int moNum;
     private String moTitle;
-    private LocalDate moDate;
+    private String moDate;
     private int moTime;
     private String moPlot;
     private Float moBookingRate;

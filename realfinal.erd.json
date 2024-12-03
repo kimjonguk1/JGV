@@ -4,8 +4,8 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": -259.3978,
-    "scrollLeft": -237,
+    "scrollTop": -221.3978,
+    "scrollLeft": -253,
     "zoomLevel": 0.73,
     "show": 431,
     "database": 4,
@@ -814,18 +814,18 @@
         "tableId": "Wp6vPRVy7GGA3TfU6gQo_",
         "name": "mo_date",
         "comment": "개봉일",
-        "dataType": "DATE",
+        "dataType": "VARCHAR(15)",
         "default": "",
         "options": 8,
         "ui": {
           "keys": 0,
           "widthName": 60,
           "widthComment": 60,
-          "widthDataType": 60,
+          "widthDataType": 75,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1731309020176,
+          "updateAt": 1733191464179,
           "createAt": 1731308887321
         }
       },
@@ -954,9 +954,9 @@
         "tableId": "H55LJZeEQtMq3maTjSY8Y",
         "name": "ge_name",
         "comment": "장르명",
-        "dataType": "VARCHAR(10)",
+        "dataType": "VARCHAR(20)",
         "default": "",
-        "options": 8,
+        "options": 0,
         "ui": {
           "keys": 0,
           "widthName": 60,
@@ -965,7 +965,7 @@
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1731309972230,
+          "updateAt": 1733193805156,
           "createAt": 1731309761401
         }
       },
@@ -4093,7 +4093,7 @@
       -1,
       {
         "name": 1731309011663,
-        "dataType": 1731309015269,
+        "dataType": 1733191464178,
         "options(notNull)": 1731309016455,
         "comment": 1731309020176
       }
@@ -4189,8 +4189,8 @@
       {
         "name": 1731309797408,
         "comment": 1731309806374,
-        "options(notNull)": 1731309807932,
-        "dataType": 1731309972229
+        "options(notNull)": 1733189212849,
+        "dataType": 1733193805155
       }
     ],
     "gN0B_zEr1rtfHNzW0OoFc": [

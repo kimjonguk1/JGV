@@ -45,12 +45,14 @@ public class MovieService {
             this.movieMapper.deleteAllMovies();
             this.movieImageMapper.deleteAllMoviePosterUrl();
             this.raitingMapper.deleteAllMovieRaiting();
+            this.genreMapper.deleteAllMovieGenre();
         }
             try {
                 String url = "http://www.cgv.co.kr/movies/?lt=1&ft=1";
                 Document movieDocument = Jsoup.connect(url).get();
                 Elements movielinks = movieDocument.select("div.box-image > a");
                 for (Element link : movielinks) {
+                    System.out.println("반복");
                     String href = link.attr("href");
                     href = "http://www.cgv.co.kr" + href;
                     Document MovieDoc = Jsoup.connect(href).get();
@@ -62,9 +64,7 @@ public class MovieService {
                     if (MovieDate.contains("(")) {
                         MovieDate = MovieDate.split("\\(")[0].trim();
                     }
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
-                    LocalDate releaseDate = LocalDate.parse(MovieDate, formatter);
-                    movieEntity.setMoDate(releaseDate);
+                    movieEntity.setMoDate(MovieDate);
                     // 영화 러닝타임, 장르, 관람등급, 제작국가 가져오기
                     String MovieRawData = MovieDoc.select("div.spec > dl > dt:contains(기본 정보) + dd").text();
                     // 러닝타임 가져오기
@@ -135,12 +135,7 @@ public class MovieService {
                     if (MovieDate.contains("(")) {
                         MovieDate = MovieDate.split("\\(")[0].trim();
                     }
-                    if (MovieDate.matches("\\d{4}\\.\\d{2}")) {
-                        MovieDate += ".01";
-                    }
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
-                    LocalDate releaseDate = LocalDate.parse(MovieDate, formatter);
-                    movieEntity.setMoDate(releaseDate);
+                    movieEntity.setMoDate(MovieDate);
                     // 영화 러닝타임, 장르, 관람등급, 제작국가 가져오기
                     String MovieRawData = MovieDoc.select("div.spec > dl > dt:contains(기본 정보) + dd").text();
                     // 러닝타임 가져오기
@@ -207,16 +202,11 @@ public class MovieService {
                 movieEntity.setMoTitle(movieTitle);
 
                 // 영화 개봉일 가져오기
-                String movieDate = movieDoc.select("div.spec > dl > dt:contains(개봉) + dd").text();
-                if (movieDate.contains("(")) {
-                    movieDate = movieDate.split("\\(")[0].trim();
+                String MovieDate = movieDoc.select("div.spec > dl > dt:contains(개봉) + dd").text();
+                if (MovieDate.contains("(")) {
+                    MovieDate = MovieDate.split("\\(")[0].trim();
                 }
-                if (movieDate.matches("\\d{4}\\.\\d{2}")) {
-                    movieDate += ".01"; // 월까지만 있는 경우 1일로 설정
-                }
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
-                LocalDate releaseDate = LocalDate.parse(movieDate, formatter);
-                movieEntity.setMoDate(releaseDate);
+                movieEntity.setMoDate(MovieDate);
 
                 // 영화 러닝타임, 장르, 관람등급, 제작국가 가져오기
                 String movieRawData = movieDoc.select("div.spec > dl > dt:contains(기본 정보) + dd").text();
@@ -231,14 +221,12 @@ public class MovieService {
                 String moviePlot = movieDoc.select("div.sect-story-movie").text();
                 movieEntity.setMoPlot(moviePlot);
 
-                // 영화 예매율 가져오기 (예고편은 예매율이 없을 수 있으므로 기본값 처리)
-                String movieBooking = movieDoc.select("strong.percent > span").text();
-                if (!movieBooking.isEmpty()) {
-                    movieBooking = movieBooking.replaceAll("%", "").trim();
-                    movieEntity.setMoBookingRate(Float.valueOf(movieBooking));
-                } else {
-                    movieEntity.setMoBookingRate(0.0f);
-                }
+                // 영화 예매율 가져오기
+                String MovieBooking = movieDoc.select("strong.percent > span").text();
+                MovieBooking = MovieBooking.replaceAll("%", "").trim();
+                movieEntity.setMoBookingRate(Float.valueOf(MovieBooking));
+
+                String MovieRawData = movieDoc.select("div.spec > dl > dt:contains(기본 정보) + dd").text();
 
                 affectRows = this.movieMapper.insertMovie(movieEntity);
                 int movieId = movieEntity.getMoNum();
@@ -248,6 +236,19 @@ public class MovieService {
                 String moviePoster = moviePosterLink.attr("src");
                 if (!moviePoster.isEmpty()) {
                     this.movieImageMapper.insertMoviePosterUrl(movieId, moviePoster);
+                }
+
+                // 관람 등급 가져오기
+                String[] parts = MovieRawData.split(",");
+                String raiting = parts[0].trim();
+                if(!raiting.isEmpty()) {
+                    this.raitingMapper.insertMovieRaiting(movieId, raiting);
+                }
+                // 장르 가져오기
+                String MovieGenre = movieDoc.select("dt:contains(장르)").text();
+                String genre = MovieGenre.replace("장르 :", "").trim();
+                if(!genre.isEmpty()) {
+                    this.genreMapper.insertMovieGenre(genre);
                 }
             }
         } catch (Exception e) {

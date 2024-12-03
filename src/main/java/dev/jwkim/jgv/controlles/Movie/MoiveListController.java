@@ -25,18 +25,7 @@ public class MoiveListController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("article/MovieList");
         List<Movie_ImageDTO> movies = this.movieService.selectAllMovieList();
-        LocalDate today = LocalDate.now();
-        List<Movie_ImageDTO> nowPlaying = movies.stream()
-                .filter(movie -> !movie.getMoDate().isAfter(today)) // 개봉일이 오늘 또는 이전인 경우
-                .toList();
-
-        List<Movie_ImageDTO> upcomingMovies = movies.stream()
-                .filter(movie -> movie.getMoDate().isAfter(today)) // 개봉일이 오늘 이후인 경우
-                .toList();
-
-        mav.addObject("nowPlaying", nowPlaying);
-        mav.addObject("upcomingMovies", upcomingMovies);
-//        mav.addObject("movies", movies);
+        mav.addObject("movies", movies);
         return mav;
     }
 
