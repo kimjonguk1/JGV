@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>크롤링</title>
+    <script defer src="../../static/article/assets/scripts/crawling.js"></script>
+    <link href="../../static/article/assets/styles/crawling.css">
 </head>
 <body>
-    <h1>크롤링 완료</h1>
+    <div id="loading">
+        <div class="spinner">로딩 중</div>
+    </div>
+    <h1>크롤링 결과</h1>
+    <p th:text="${message}">크롤링 작업이 완료되었습니다.</p>
 </body>
 </html>

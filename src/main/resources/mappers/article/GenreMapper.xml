@@ -4,11 +4,27 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dev.jwkim.jgv.mappers.Movie.GenreMapper">
 
-    <insert id="insertMovieGenre">
+    <insert id="insertMovieGenre" useGeneratedKeys="true" keyProperty="geNum" parameterType="dev.jwkim.jgv.entities.Movie.GenereEntity">
         INSERT INTO jgv.genre (ge_name)
         VALUES (#{geName})
     </insert>
+
+    <select id="selectGenereIdByName" resultType="Integer">
+        SELECT ge_num
+        FROM jgv.genre
+        WHERE ge_name = #{geName}
+    </select>
+
+    <insert id="insertMovieGenreMapping">
+        INSERT INTO jgv.movie_genere (ge_num, mo_num)
+        VALUES (#{genum}, #{monum})
+    </insert>
+
     <delete id="deleteAllMovieGenre">
         DELETE FROM jgv.genre
+    </delete>
+
+    <delete id="deleteMovieGenreMapping">
+        DELETE FROM jgv.movie_genere
     </delete>
 </mapper>

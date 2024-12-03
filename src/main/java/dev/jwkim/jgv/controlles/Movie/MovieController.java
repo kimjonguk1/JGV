@@ -22,8 +22,8 @@ public class MovieController {
     public ModelAndView crawling(MovieEntity movieEntity) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("article/Crawling");
-        boolean movie = this.movieService.insertAllMovies(movieEntity);
-        mav.addObject("movie", movie);
+        this.movieService.insertAllMovies(movieEntity);
+        mav.addObject("message", "크롤링이 완료되었습니다.");
         return mav;
     }
 }
