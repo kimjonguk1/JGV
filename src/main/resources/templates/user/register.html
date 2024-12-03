@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>회원가입</title>
+    <link rel="stylesheet" th:href="@{'./assets/styles/index.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}" type="text/css">
+    <link rel="stylesheet" href="/user/styles/register.css" type="text/css">
+    <script defer th:src="@{'./assets/scripts/index.js'}" type="text/javascript"></script>
+    <script defer src="/user/scripts/register.js" type="text/javascript"></script>
+</head>
+<body>
+<th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
+<th:block th:replace="~{fragments/common.html :: header}"></th:block>
+<th:block th:replace="~{fragments/common.html :: nav}"></th:block>
+<form id="register-form">
+    <table>
+        <tbody>
+        <tr>
+            <td>이름</td>
+            <td>김종율</td>
+        </tr>
+        <tr>
+            <td>아이디</td>
+            <td>
+                <label>
+                    <input type="text">
+                </label>
+                <button>중복검사</button>
+                <!--- alert로 중복 알림 설정하기 --->
+            </td>
+        </tr>
+        <tr>
+            <td>비밀번호</td>
+            <td>
+                <label>
+                    <input type="text"> <!--row 잡기-->
+                    <span>영문자,숫자,특수문자 조합하여 8~12자리, 아이디와 4자리 이상 동일,반복 문자숫자 불가 사용가능 특수문자: !"#&amp;%&'()*+,-/;:&lt;= &gt;?{|}~</span>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>비밀번호 확인</td>
+            <td>
+                <label>
+                    <input type="text">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>생년월일</td>
+            <td>
+                <label>
+                    <select>
+                        <option value="year">1996</option>
+                    </select>
+                </label>
+                <span>년</span>
+                <label>
+                    <select>
+                        <option value="month">02</option>
+                    </select>
+                </label>
+                <span>월</span>
+                <label>
+                    <select>
+                        <option value="day">23</option>
+                    </select>
+                </label>
+                <span>일</span>
+            </td>
+        </tr>
+        <tr>
+            <td>휴대전화번호</td>
+            <td>
+                <label>
+                    <input type="number">
+                </label>
+                <label>
+                    <input type="number">
+                </label>
+                <label>
+                    <input type="number">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>이메일</td>
+            <td>
+                <label>
+                    <input type="email">
+                    <span>@</span>
+                </label>
+                <label>
+                    <input type="email">
+                </label>
+                <span>이메일 주소 입력시 사용 가능 특수 문자:-ㆍ_</span>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+    <div class="button-container">
+        <button type="button">취소</button>
+        <button type="submit">등록</button>
+    </div>
+</form>
+
+<th:block th:replace="~{fragments/common.html :: footer}"></th:block>
+</body>
+</html>
