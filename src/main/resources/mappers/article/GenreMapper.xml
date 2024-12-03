@@ -6,7 +6,7 @@
 
     <insert id="insertMovieGenre">
         INSERT INTO jgv.genre (ge_name)
-        VALUES #{geName}
+        VALUES (#{geName})
     </insert>
     <delete id="deleteAllMovieGenre">
         DELETE FROM jgv.genre

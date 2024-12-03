@@ -121,7 +121,7 @@
     <!-- 현재 상영 중인 영화 -->
     <section id="nowPlaying">
         <div class="movie-container">
-            <div th:each="movie : ${nowPlaying}" class="movie-card">
+            <div th:each="movie : ${movies}" class="movie-card">
                 <a th:href="@{/movies/{id}(id=${movie.getMoNum()})}">
                     <img th:src="@{${movie.getM_img_url()}}" alt="영화 이미지" class="movie-poster">
                 </a>
@@ -137,25 +137,6 @@
                 </div>
             </div>
             <button class="reserve-btn">예매하기</button>
-        </div>
-    </section>
-
-    <!-- 상영 예정 영화 -->
-    <section id="upcomingMovies" style="display: none;">
-        <div class="movie-container">
-            <div th:each="movie : ${upcomingMovies}" class="movie-card">
-                <img th:src="@{${movie.getM_img_url()}}" alt="영화 이미지" class="movie-poster">
-                <div class="movie-info">
-                    <div class="movie-title" th:text="${movie.getMoTitle()}">영화 제목</div>
-                    <div class="movie-detail">
-                        <span>예매율: </span><span th:text="${movie.getMoBookingRate() + '%'}">0%</span>
-                    </div>
-                    <div class="movie-detail">
-                        <span>개봉일자: </span><span th:text="${movie.getMoDate()}">2024-01-01</span>
-                    </div>
-                </div>
-                <button class="reserve-btn">예매하기</button>
-            </div>
         </div>
     </section>
 </main>
