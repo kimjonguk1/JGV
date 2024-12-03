@@ -1,4 +1,4 @@
-package dev.jwkim.jgv.controlles.Theater;
+package dev.jwkim.jgv.controlles;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
