@@ -1,6 +1,7 @@
 package dev.jwkim.jgv.services.Movie;
 
 import dev.jwkim.jgv.DTO.Movie_ImageDTO;
+import dev.jwkim.jgv.entities.Movie.GenereEntity;
 import dev.jwkim.jgv.entities.Movie.MovieEntity;
 import dev.jwkim.jgv.mappers.Movie.GenreMapper;
 import dev.jwkim.jgv.mappers.Movie.MovieImageMapper;
@@ -38,7 +39,7 @@ public class MovieService {
 
     //현재 상영장 크롤링 (수정중)
     public boolean insertmovie (MovieEntity movieEntity) {
-        int affectRows = 0;
+        int movieid = 0;
         int indata = this.movieMapper.selectMovie();
         if (indata > 0) {
             this.movieMapper.deleteAllMovieCharactor();
@@ -46,6 +47,7 @@ public class MovieService {
             this.movieImageMapper.deleteAllMoviePosterUrl();
             this.raitingMapper.deleteAllMovieRaiting();
             this.genreMapper.deleteAllMovieGenre();
+            this.genreMapper.deleteMovieGenreMapping();
         }
             try {
                 String url = "http://www.cgv.co.kr/movies/?lt=1&ft=1";
@@ -83,9 +85,8 @@ public class MovieService {
                     MovieBooking = MovieBooking.replaceAll("%", "").trim();
                     movieEntity.setMoBookingRate(Float.valueOf(MovieBooking));
 
-//                    musicEntity.setCoverFileName($cover.attr("src"));
 
-                    affectRows =  this.movieMapper.insertMovie(movieEntity);
+                    movieid =  this.movieMapper.insertMovie(movieEntity);
                     int movieId = movieEntity.getMoNum();
                     // 영화 포스터 가져오기
                     Elements MoviePosterLink = MovieDoc.select("span.thumb-image > img");
@@ -102,9 +103,15 @@ public class MovieService {
                     // 장르 가져오기
                     String MovieGenre = MovieDoc.select("dt:contains(장르)").text();
                     String genre = MovieGenre.replace("장르 :", "").trim();
-                    if(!genre.isEmpty()) {
-                        this.genreMapper.insertMovieGenre(genre);
+                    GenereEntity genereEntity = new GenereEntity();
+                    genereEntity.setGeName(genre);
+                    Integer genum = this.genreMapper.selectGenereIdByName(genre);
+                    if (genum == null) {
+                        this.genreMapper.insertMovieGenre(genereEntity);
+                        genum = genereEntity.getGeNum();
                     }
+                    this.genreMapper.insertMovieGenreMapping(movieId, genum);
+
                 }
 
                 //영화 링크 따기 (더보기 탭)
@@ -153,7 +160,7 @@ public class MovieService {
                     MovieBooking = MovieBooking.replaceAll("%", "").trim();
                     movieEntity.setMoBookingRate(Float.valueOf(MovieBooking));
 
-                    affectRows =  this.movieMapper.insertMovie(movieEntity);
+                    movieid =  this.movieMapper.insertMovie(movieEntity);
 
                     int movieId = movieEntity.getMoNum();
                     // 영화 포스터 가져오기
@@ -171,15 +178,20 @@ public class MovieService {
                     // 장르 가져오기
                     String MovieGenre = MovieDoc.select("dt:contains(장르)").text();
                     String genre = MovieGenre.replace("장르 :", "").trim();
-                    if(!genre.isEmpty()) {
-                        this.genreMapper.insertMovieGenre(genre);
+                    GenereEntity genereEntity = new GenereEntity();
+                    genereEntity.setGeName(genre);
+                    Integer genum = this.genreMapper.selectGenereIdByName(genre);
+                    if (genum == null) {
+                        this.genreMapper.insertMovieGenre(genereEntity);
+                        genum = genereEntity.getGeNum();
                     }
+                    this.genreMapper.insertMovieGenreMapping(movieId, genum);
                 }
             }catch (Exception e) {
                 e.printStackTrace();
             }
 
-        return affectRows > 0;
+        return movieid > 0;
     }
 
 
@@ -247,9 +259,15 @@ public class MovieService {
                 // 장르 가져오기
                 String MovieGenre = movieDoc.select("dt:contains(장르)").text();
                 String genre = MovieGenre.replace("장르 :", "").trim();
-                if(!genre.isEmpty()) {
-                    this.genreMapper.insertMovieGenre(genre);
+                GenereEntity genereEntity = new GenereEntity();
+                genereEntity.setGeName(genre);
+                Integer genum = this.genreMapper.selectGenereIdByName(genre);
+                if (genum == null) {
+                    this.genreMapper.insertMovieGenre(genereEntity);
+                    genum = genereEntity.getGeNum();
                 }
+                this.genreMapper.insertMovieGenreMapping(movieId, genum);
+
             }
         } catch (Exception e) {
             e.printStackTrace();

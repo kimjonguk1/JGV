@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -11,103 +11,10 @@
     <script defer th:src="@{../../article/assets/scripts/index.js}" type="text/javascript"></script>
 </head>
 <body>
-<div id="advertisement" class="ad">
-    <a href="#" target="_self">
-        <img src="https://adimg.cgv.co.kr/images/202411/MyHero/980x80.jpg" alt="배너">
-    </a>
-</div>
-<header id="header" class="frame header">
-    <h1>
-        <a href="#">
-            <img th:src="@{../../article/assets/images/logo/jgv_logo.png}" alt="로고">
-        </a>
-        <span class="text">DEEP DIVE SPACE</span>
-    </h1>
-    <div class="-spring"></div>
-    <ul class="info-wrapper">
-        <div class="ad-partner">
-            <a href="#" target="_blank">
-                <img src="https://img.cgv.co.kr/WingBanner/2023/0208/16758461047540.png"
-                     alt="현대카드광고">
-            </a>
-        </div>
-        <li class="item">
-            <a href="#">
-                <img src="https://img.cgv.co.kr/R2014/images/common/ico/loginPassword.png"
-                     alt="로그인">
-                <span class="text">로그인</span>
-            </a>
-        </li>
-        <li class="item">
-            <a href="">
-                <img src="https://img.cgv.co.kr/R2014/images/common/ico/loginJoin.png"
-                     alt="회원가입">
-                <span class="text">회원가입</span>
-            </a>
-        </li>
-        <li class="item">
-            <a href="">
-                <img src="https://img.cgv.co.kr/R2014/images/common/ico/loginMember.png"
-                     alt="private">
-                <span class="text">MY JGV</span>
-            </a>
-        </li>
-        <li class="item">
-            <a href="">
-                <img src="https://img.cgv.co.kr/R2014/images/common/ico/loginCustomer.png"
-                     alt="고객센터">
-                <span class="text">고객센터</span>
-            </a>
-        </li>
 
-    </ul>
-</header>
-<nav id="nav" class="nav">
-    <div class="nav-wrapper frame">
-        <ul class="nav-menu">
-            <li class="item">
-                <h2>
-                    <a href="#">영화</a>
-                </h2>
-            </li>
-            <li class="item">
-                <h2>
-                    <a href="#">극장</a>
-                </h2>
-            </li>
-            <li class="item">
-                <h2>
-                    <a href="#" style="color: #FB4357;">예매</a>
-                </h2>
-            </li>
-            <li class="item">
-                <h2>
-                    <a href="#">스토어</a>
-                </h2>
-            </li>
-            <li class="item">
-                <h2>
-                    <a href="#">이벤트</a>
-                </h2>
-            </li>
-            <li class="item">
-                <h2>
-                    <a href="#">혜택</a>
-                </h2>
-            </li>
-        </ul>
-        <div class="-spring"></div>
-        <div class="search-wrapper">
-            <label class="search">
-                <input type="text" class="keyword" name="keyword" placeholder="종율이의 꿈 동산">
-                <button>
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAADYElEQVR4nO2aTUhVQRiGH29mikk/VCpBoJvAIErLFkVSEVIWhbVoUYuidrYQCiLSogKlH12ULdsbLXLVD4UG/RAlZCauCoosoeAWVKbdujHwXhguKmrOOaOeBw4cEM/7znfP+eb7ZgYiIiIiIiIiHDMLKAbKgC1Ahe4LmcYDrgSagE7gF5Ac4foGPAROA2uY4uQDDcCntEH+Bd4BL4D7QIcC82WYgPQANUAOU4hcoBH4aQ3kNXAG2Ki/j8RiYBdwFei3/t/cHwFieE6Ffl1j+g9wEyif4LMygWrguRWIx0ARnnICSMjoM6B0Ep+9D+jTs+PADjwiBrTInAlAvRLfZLMAuCWd38AhPKFFpn4AVY61MoBzVjI9gAevfVKD3xCg7jHpDqmWCC3hJXRtD0H/gjVDBF5E5VrZvo5wMHnmgTy0BS3eKOGnIc/NS1U9JoOcGfJV5JhXfxXhU6sAdClJOqdBgq34wRzggzztdC2WadX2poPzheNB5YJK63XziUJ9kmZaXOhSqCnkzD8aHfK216VIp0TW4x918nbFlUAMGFCX52N/vk0BaHclUCSBt/hJyt9HVwJrJfAEP8mRv0FXApskcA9/GZLHbFfNT1LreD6SYS3IzHYhUGqt9vjIXPkzq87Oio2kKkEfKZG/Ny5FvkrELE/5RrW83Qmi2qrCPy7Lm1kyc0a9RJrxj1fyttWlSJlE+hyt/E6UFdaSeZZrsZ6geu9x0CxP14MQq/GsIjTbad/laXVQJWe/BE3mDZtrQWT/dA5L9D0wj/BYZy3NrwxSOAY8UhBuEA7z1ZkaD5fCaj/jMnAqYO0sNWVJTX9Omp+xUKWNSmPkKMENvlWan33YLj+ojUpj6LzjjRLz2t+1zgv0AkvwgP1WL24MFjjQKFejk/rle3Xf7UsQNlvTY1yfxGRUZYt0ZCZhffPFGnS3b0EosA4xJLWBWjtBcyVqcFJFTkLZ3k54XgYBbVR2WYEY0krSSTUry7TLZBdXy4HdwEXgZdppsdujzPPeBiFDgWiz8kP6NWDNIulXXLX9WMpbb4OQwmxX7dGmRbu6STsog0pwJoGe1Vsy3vzhfRCGIzvtU/hfpmQQXHSHqcWR3ul8Bnk0oiAQBWHYnJDHDA9CKTOUPFWWEREREREREQzLP0nrHdyN6qzFAAAAAElFTkSuQmCC"
-                         alt="external-search-logistic-delivery-kiranshastry-solid-kiranshastry">
-                </button>
-            </label>
-        </div>
-    </div>
-</nav>
+<th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
+<th:block th:replace="~{fragments/common.html :: header}"></th:block>
+<th:block th:replace="~{fragments/common.html :: nav}"></th:block>
 <main id="main" class="frame main">
     <div class="header-row">
         <h1>무비차트</h1>
@@ -121,7 +28,7 @@
     <!-- 현재 상영 중인 영화 -->
     <section id="nowPlaying">
         <div class="movie-container">
-            <div th:each="movie : ${movies}" class="movie-card">
+            <div th:each="movie : ${nowPlaying}" class="movie-card">
                 <a th:href="@{/movies/{id}(id=${movie.getMoNum()})}">
                     <img th:src="@{${movie.getM_img_url()}}" alt="영화 이미지" class="movie-poster">
                 </a>
@@ -135,74 +42,36 @@
                 <div class="movie-detail">
                     <span>개봉일자: </span><span th:text="${movie.getMoDate()}">2024-01-01</span>
                 </div>
+                <button class="reserve-btn">예매하기</button>
             </div>
-            <button class="reserve-btn">예매하기</button>
+
+        </div>
+    </section>
+
+    <!-- 현재 상영 중인 영화 -->
+    <section id="upcomingMovies">
+        <div class="movie-container">
+            <div th:each="movie : ${upcomingMovies}" class="movie-card">
+                <a th:href="@{/movies/{id}(id=${movie.getMoNum()})}">
+                    <img th:src="@{${movie.getM_img_url()}}" alt="영화 이미지" class="movie-poster">
+                </a>
+                <div class="movie-info">
+                    <a th:href="@{/movies/{id}(id=${movie.getMoNum()})}" class="movie-title"
+                       th:text="${movie.getMoTitle()}">영화 제목</a>
+                </div>
+                <div class="movie-detail">
+                    <span>예매율: </span><span th:text="${movie.getMoBookingRate() + '%'}">0%</span>
+                </div>
+                <div class="movie-detail">
+                    <span>개봉일자: </span><span th:text="${movie.getMoDate()}">2024-01-01</span>
+                </div>
+                <button class="reserve-btn">예매하기</button>
+            </div>
         </div>
     </section>
 </main>
+<th:block th:replace="~{fragments/common.html :: footer}"></th:block>
 
-
-<footer id="footer" class="footer">
-    <div class="footer-wrapper frame">
-        <div class="policy-container">
-            <ul class="policy-list">
-                <li class="item">
-                    <a href="#">회사소개</a>
-                </li>
-                <li class="item">
-                    <a href="#">지속가능경영</a>
-                </li>
-                <li class="item">
-                    <a href="#">IR</a>
-                </li>
-                <li class="item">
-                    <a href="#">채용정보</a>
-                </li>
-                <li class="item">
-                    <a href="#">광고/제휴/출점문의</a>
-                </li>
-                <li class="item">
-                    <a href="#">이용약관</a>
-                </li>
-                <li class="item">
-                    <a href="#">편성기준</a>
-                </li>
-                <li class="item">
-                    <a href="#"><b>개인정보처리방침</b></a>
-                </li>
-                <li class="item">
-                    <a href="#">법적고지</a>
-                </li>
-                <li class="item">
-                    <a href="#">이메일주소무단수집거부</a>
-                </li>
-                <li class="item">
-                    <a href="#">윤리경영</a>
-                </li>
-                <li class="item">
-                    <a href="#">사이버감사실</a>
-                </li>
-            </ul>
-        </div>
-        <article id="article">
-            <div class="company">
-                <span class="text">(04377)대구광역시 중구 중앙대로 366 반월당센트럴타워 9층,10층</span>
-            </div>
-            <div class="company">
-                <span class="text">팀장 : 전현재 ㆍ 사업자등록번호 : 100-80-45000 ㆍ 프로젝트등록일시 : 2024 -
-                    대구반월당-0111 <a href="#">사업자정보확인</a></span>
-            </div>
-            <div class="company">
-                <span class="text">프로젝트 멤버 : 전현재 ㆍ 김종율 ㆍ 박재형 ㆍ 김종욱 &nbsp; 대표이메일 :
-                    Teamproject@KoreaIT
-                    .com</span>
-            </div>
-            <div class="company">
-                <span class="text">© JHJ PJH KJY KJW</span>
-            </div>
-        </article>
-    </div>
-</footer>
 
 </body>
 </html>

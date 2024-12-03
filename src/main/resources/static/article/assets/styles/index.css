@@ -288,6 +288,7 @@ body > .frame {
   cursor: pointer;
   background-color: #e74c3c;
   color: white;
+  margin-top: 1rem;
 }
 #main .movie-container .movie-card .movie-info {
   padding: 15px;
