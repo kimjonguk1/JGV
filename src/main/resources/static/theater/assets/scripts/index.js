@@ -2,7 +2,6 @@ const $main = document.getElementById('main');
 const $items = $main.querySelector(':scope > .img > .main');
 const $move = Array.from($items.querySelectorAll(':scope > .item'));
 const $itemContainer = $main.querySelector(':scope > .img > .item-container');
-const $containerItems = Array.from($itemContainer.querySelectorAll(':scope > .item'));
 
 $move.forEach(($item) => {
     $item.onclick = () => {
@@ -20,16 +19,22 @@ $move.forEach(($item) => {
                 return;
             }
             const response = JSON.parse(xhr.responseText);
-            console.log(response);
+            $itemContainer.innerText = "";
+            response['result'].forEach((x) => {
+                const $li = document.createElement('li');
+                $li.innerText = x['thName'];
+                $li.classList.add('item');
+                $itemContainer.append($li);
+                const $containerItems = Array.from($itemContainer.querySelectorAll(':scope > .item'));
+                $containerItems.forEach(($item) => {
+                    $item.onclick = () => {
+                        $containerItems.forEach((x) => x.classList.remove('select'));
+                        $item.classList.add('select');
+                    }
+                })
+            })
         };
         xhr.open('GET', url.toString());
         xhr.send();
     }
 });
-
-$containerItems.forEach(($item) => {
-    $item.onclick = () => {
-        $containerItems.forEach((x) => x.classList.remove('select'));
-        $item.classList.add('select');
-    }
-})
