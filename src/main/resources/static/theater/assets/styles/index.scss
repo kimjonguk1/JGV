@@ -88,14 +88,12 @@
         font-size: 0.9rem;
 
         &.select {
-          padding: 0.5rem 0.5rem;
+          padding: 0.5rem 0;
           color: #ffffff;
-          border-left: 0.15rem solid #727171;
-          border-right: 0.15rem solid #727171;
           background-image: url("https://img.cgv.co.kr/r2014/images/common/ico/ico_arrow02.png");
           background-repeat: no-repeat;
           background-position-x: 50%;
-          background-position-y: 96%;
+          background-position-y: 97%;
         }
 
         &:nth-child(1) {
@@ -172,7 +170,17 @@
 
       > .text {
         font-size: 2rem;
-        font-weight: 400;
+        font-weight: 500;
+      }
+
+      > .button {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.1rem 0.5rem;
+        cursor: pointer;
+        background-color: #fb4357;
+        border: #fb4357 solid 0.25rem;
+        color: #ffffff;
       }
     }
 
@@ -181,6 +189,7 @@
 
       > .image {
         width: 100%;
+        height: 25rem;
       }
 
       > .theater-info-container {
@@ -232,12 +241,39 @@
               display: flex;
               gap: 0.5rem;
 
+              > .imax {
+                width: 5rem;
+                height: 1rem;
+                background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
+                background-repeat: no-repeat;
+                background-position: -99px -18px;
+                display: flex;
+              }
+
+              > .dx {
+                width: 5rem;
+                height: 1rem;
+                background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
+                background-repeat: no-repeat;
+                background-position: -99px -36px;
+                display: flex;
+              }
+
               > .screenX {
                 width: 5rem;
                 height: 1rem;
                 background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
                 background-repeat: no-repeat;
                 background-position: -99px -162px;
+                display: flex;
+              }
+
+              > .cine {
+                width: 5rem;
+                height: 1rem;
+                background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
+                background-repeat: no-repeat;
+                background-position: -99px -348px;
                 display: flex;
               }
             }
@@ -297,6 +333,12 @@
       &:nth-child(1) {
         padding-right: 1rem;
         border-right: 0.1rem solid #ffffff;
+      }
+
+      > .select {
+        &.hidden {
+          display: none;
+        }
       }
 
       > .text {
@@ -369,8 +411,16 @@
     > .cinema-info {
       width: 84%;
       margin-right: 1rem;
+
+      > .day-containers {
+        display: flex;
+        flex-direction: row;
+        gap: 5rem;
+
+        > .day-container {
+          border: #000000 solid 1rem;
+        }
+      }
     }
   }
 }
-
-

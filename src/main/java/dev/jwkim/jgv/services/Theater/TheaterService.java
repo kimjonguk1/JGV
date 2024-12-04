@@ -6,6 +6,8 @@ import dev.jwkim.jgv.mappers.Theater.TheaterMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Service
 @RequiredArgsConstructor
 public class TheaterService {
@@ -15,15 +17,13 @@ public class TheaterService {
         return this.theaterMapper.getRegionAll();
     }
 
-    public TheaterEntity[] findTheaterAll() {
-        return this.theaterMapper.getTheaterAll();
-    }
-
-    public TheaterEntity[] findTheatersAll() {
-        return this.theaterMapper.getTheatersAll();
-    }
-
     public TheaterEntity[] getTheatersByRegion(String region) {
-        return this.theaterMapper.getTheatersByRegion(region);
+        TheaterEntity[] theaters = this.theaterMapper.getTheatersByRegion(region);
+        String[] addrs;
+        for (TheaterEntity theater : theaters) {
+            addrs = theater.getThAddr().split("\n");
+            theater.setThAddr(Arrays.toString(addrs));
+        }
+        return theaters;
     }
 }
