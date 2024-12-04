@@ -9,9 +9,5 @@ import org.apache.ibatis.annotations.Param;
 public interface TheaterMapper {
     RegionEntity[] getRegionAll();
 
-    TheaterEntity[] getTheaterAll();
-
-    TheaterEntity[] getTheatersAll();
-
     TheaterEntity[] getTheatersByRegion(@Param(value = "region") String region);
 }

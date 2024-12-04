@@ -1,4 +1,4 @@
-package dev.jwkim.jgv.controlles.Theater;
+package dev.jwkim.jgv.controlles.Ticket;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;

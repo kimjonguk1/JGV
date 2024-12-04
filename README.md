@@ -21,7 +21,7 @@
 | <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">    | 백엔드 프레임워크 사용       |
 
 ## 개발 기간
-- 2024.11.18 ~
+- 2024.12.03 ~
 
 ## 주요 기능
 ### 사용자 관리
