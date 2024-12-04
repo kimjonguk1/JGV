@@ -69,7 +69,7 @@
         <div class="header">
             <span class="text">CGV대구</span>
             <span class="stretch"></span>
-            <button class="button">단체/대관 문의</button>
+            <span class="button">단체/대관 문의</span>
         </div>
         <div class="img">
             <img src="https://img.cgv.co.kr/Theater/Theater/2022/1223/16717573376930.png" alt="" class="image">
@@ -77,15 +77,17 @@
                 <div class="small-container">
                     <div class="header">
                         <div class="info-container">
-                            <div class="theater-info" th:each="b : ${a}" th:text="${b}">
+                            <div class="theater-info">대구광역시 북구 칠성동2가 20-1 스펙트럼시티 4층<br>
+                                대구광역시 북구 침산로 93 스펙트럼시티 4층
                             </div>
                         </div>
                         <a href="#" class="theater-info guide" target="_blank">위치 / 주차 안내 ></a>
                         <div class="stretch"></div>
                         <div class="cinema-type">
+                            <a href="#" class="imax" target="_blank"></a>
+                            <a href="#" class="dx" target="_blank"></a>
                             <a href="#" class="screenX" target="_blank"></a>
-                            <a href="#" class="screenX" target="_blank"></a>
-                            <a href="#" class="screenX" target="_blank"></a>
+                            <a href="#" class="cine" target="_blank"></a>
                         </div>
                     </div>
                     <div class="theater-info">6관/874석</div>
@@ -106,18 +108,31 @@
     </div>
     <div class="button-container">
         <div class="button" data-id="cinema">
-            <img class="select" src="https://img.cgv.co.kr/R2014/images/common/ico/ico_finger.png" alt="" data-id="cinema">
+            <img class="select" src="https://img.cgv.co.kr/R2014/images/common/ico/ico_finger.png" alt=""
+                 data-id="cinema">
             <span class="text">상영시간표</span>
         </div>
         <div class="button" data-id="information">
-            <img class="select hidden" src="https://img.cgv.co.kr/R2014/images/common/ico/ico_finger.png" alt="" data-id="information">
+            <img class="select hidden" src="https://img.cgv.co.kr/R2014/images/common/ico/ico_finger.png" alt=""
+                 data-id="information">
             <span class="text">위치/주차안내</span>
         </div>
     </div>
     <div class="information" data-id="cinema">
         <div class="cinema-info">
-            <div class="day-container">
-
+            <div class="day-containers">
+                <div class="day-container">
+                    <div class="day">hi</div>
+                </div>
+                <div class="day-container">
+                    <div class="day">hi</div>
+                </div>
+                <div class="day-container">
+                    <div class="day">hi</div>
+                </div>
+                <div class="day-container">
+                    <div class="day">hi</div>
+                </div>
             </div>
             <div class="notice">* 시간을 클릭하시면 빠른 예매를 할 수 있습니다.</div>
             <ul class="items">
