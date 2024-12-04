@@ -1,12 +1,10 @@
 package dev.jwkim.jgv.services.Movie;
 
 import dev.jwkim.jgv.DTO.Movie_ImageDTO;
+import dev.jwkim.jgv.entities.Movie.CountryEntity;
 import dev.jwkim.jgv.entities.Movie.GenereEntity;
 import dev.jwkim.jgv.entities.Movie.MovieEntity;
-import dev.jwkim.jgv.mappers.Movie.GenreMapper;
-import dev.jwkim.jgv.mappers.Movie.MovieImageMapper;
-import dev.jwkim.jgv.mappers.Movie.MovieMapper;
-import dev.jwkim.jgv.mappers.Movie.RaitingMapper;
+import dev.jwkim.jgv.mappers.Movie.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Connection;
@@ -29,14 +27,20 @@ public class MovieService {
     private final MovieImageMapper movieImageMapper;
     private final RaitingMapper raitingMapper;
     private final GenreMapper genreMapper;
+    private final CountryMapper countryMapper;
 
-    public MovieService(MovieMapper movieMapper, MovieImageMapper movieImageMapper, RaitingMapper raitingMapper, GenreMapper genreMapper) {
+    public MovieService(MovieMapper movieMapper, MovieImageMapper movieImageMapper, RaitingMapper raitingMapper, GenreMapper genreMapper, CountryMapper countryMapper) {
         this.movieMapper = movieMapper;
         this.movieImageMapper = movieImageMapper;
         this.raitingMapper = raitingMapper;
         this.genreMapper = genreMapper;
+        this.countryMapper = countryMapper;
     }
 
+    //패턴을 제외하기 위한 메서드
+    private static boolean exceptPattern(String Part) {
+        return !Part.matches(".*(\\d|분|관람가).*");
+    }
     //현재 상영장 크롤링 (수정중)
     public boolean insertmovie (MovieEntity movieEntity) {
         int movieid = 0;
@@ -48,6 +52,8 @@ public class MovieService {
             this.raitingMapper.deleteAllMovieRaiting();
             this.genreMapper.deleteAllMovieGenre();
             this.genreMapper.deleteMovieGenreMapping();
+            this.countryMapper.deleteAllCountry();
+            this.countryMapper.deleteAllCountryMapping();
         }
             try {
                 String url = "http://www.cgv.co.kr/movies/?lt=1&ft=1";
@@ -111,6 +117,21 @@ public class MovieService {
                         genum = genereEntity.getGeNum();
                     }
                     this.genreMapper.insertMovieGenreMapping(movieId, genum);
+
+                    //제작국가 가져오기
+                    for(String part : parts) {
+                        String cleanPart = part.trim();
+                        if(!cleanPart.isEmpty() && exceptPattern(cleanPart)) {
+                            CountryEntity countryEntity = new CountryEntity();
+                            countryEntity.setCoName(cleanPart);
+                            Integer conum = this.countryMapper.selectCountryIdByName(cleanPart);
+                            if(conum == null) {
+                                this.countryMapper.insertMovieCountry(countryEntity);
+                                conum = countryEntity.getCoNum();
+                            }
+                            this.countryMapper.insertMovieCountryMapping(movieId, conum);
+                        }
+                    }
 
                 }
 
@@ -186,6 +207,21 @@ public class MovieService {
                         genum = genereEntity.getGeNum();
                     }
                     this.genreMapper.insertMovieGenreMapping(movieId, genum);
+
+                    //제작국가 가져오기
+                    for(String part : parts) {
+                        String cleanPart = part.trim();
+                        if(!cleanPart.isEmpty() && exceptPattern(cleanPart)) {
+                            CountryEntity countryEntity = new CountryEntity();
+                            countryEntity.setCoName(cleanPart);
+                            Integer conum = this.countryMapper.selectCountryIdByName(cleanPart);
+                            if(conum == null) {
+                                this.countryMapper.insertMovieCountry(countryEntity);
+                                conum = countryEntity.getCoNum();
+                            }
+                            this.countryMapper.insertMovieCountryMapping(movieId, conum);
+                        }
+                    }
                 }
             }catch (Exception e) {
                 e.printStackTrace();
@@ -267,6 +303,21 @@ public class MovieService {
                     genum = genereEntity.getGeNum();
                 }
                 this.genreMapper.insertMovieGenreMapping(movieId, genum);
+
+                //제작국가 가져오기
+                for(String part : parts) {
+                    String cleanPart = part.trim();
+                    if(!cleanPart.isEmpty() && exceptPattern(cleanPart)) {
+                        CountryEntity countryEntity = new CountryEntity();
+                        countryEntity.setCoName(cleanPart);
+                        Integer conum = this.countryMapper.selectCountryIdByName(cleanPart);
+                        if(conum == null) {
+                            this.countryMapper.insertMovieCountry(countryEntity);
+                            conum = countryEntity.getCoNum();
+                        }
+                        this.countryMapper.insertMovieCountryMapping(movieId, conum);
+                    }
+                }
 
             }
         } catch (Exception e) {
