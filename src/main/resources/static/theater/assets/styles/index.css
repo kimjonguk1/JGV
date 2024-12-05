@@ -4,6 +4,38 @@
   flex-direction: column;
   justify-content: center;
 }
+#main .imax {
+  width: 5rem;
+  height: 1rem;
+  background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
+  background-repeat: no-repeat;
+  background-position: -99px -18px;
+  display: flex;
+}
+#main .dx {
+  width: 5rem;
+  height: 1rem;
+  background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
+  background-repeat: no-repeat;
+  background-position: -99px -36px;
+  display: flex;
+}
+#main .screenX {
+  width: 5rem;
+  height: 1rem;
+  background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
+  background-repeat: no-repeat;
+  background-position: -99px -162px;
+  display: flex;
+}
+#main .cine {
+  width: 5rem;
+  height: 1rem;
+  background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
+  background-repeat: no-repeat;
+  background-position: -99px -348px;
+  display: flex;
+}
 #main > .img {
   width: 61.4rem;
   height: 28rem;
@@ -200,38 +232,6 @@
   display: flex;
   gap: 0.5rem;
 }
-#main > .theater-container > .img > .theater-info-container > .small-container > .header > .cinema-type > .imax {
-  width: 5rem;
-  height: 1rem;
-  background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
-  background-repeat: no-repeat;
-  background-position: -99px -18px;
-  display: flex;
-}
-#main > .theater-container > .img > .theater-info-container > .small-container > .header > .cinema-type > .dx {
-  width: 5rem;
-  height: 1rem;
-  background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
-  background-repeat: no-repeat;
-  background-position: -99px -36px;
-  display: flex;
-}
-#main > .theater-container > .img > .theater-info-container > .small-container > .header > .cinema-type > .screenX {
-  width: 5rem;
-  height: 1rem;
-  background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
-  background-repeat: no-repeat;
-  background-position: -99px -162px;
-  display: flex;
-}
-#main > .theater-container > .img > .theater-info-container > .small-container > .header > .cinema-type > .cine {
-  width: 5rem;
-  height: 1rem;
-  background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
-  background-repeat: no-repeat;
-  background-position: -99px -348px;
-  display: flex;
-}
 #main > .theater-container > .img > .theater-info-container > .notice-container {
   width: 10rem;
   height: 7rem;
@@ -255,7 +255,7 @@
   width: 61.4rem;
 }
 #main > .button-container {
-  margin-top: 1rem;
+  margin: 2rem 0;
   padding: 0.5rem 1rem;
   background-color: #fb4357;
   font-size: 1rem;
@@ -291,6 +291,17 @@
 #main > .information > .car-info {
   width: 84%;
   margin-right: 1rem;
+}
+#main > .information > .car-info > .detail {
+  padding: 1rem 0;
+  line-height: 1.6;
+  font-size: 0.85rem;
+}
+#main > .information > .car-info > .detail.bus {
+  font-weight: 400;
+}
+#main > .information > .car-info > .detail.car {
+  font-weight: 500;
 }
 #main > .information > .car-info .header {
   display: flex;
@@ -333,13 +344,177 @@
   width: 84%;
   margin-right: 1rem;
 }
-#main > .information > .cinema-info > .day-containers {
+#main > .information > .cinema-info > .cinema-header {
+  border-bottom: 0.15rem solid #474746;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+#main > .information > .cinema-info > .cinema-header > .day-containers {
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem 0 3rem 0;
+  border-top: #241d1e solid 0.2rem;
+  position: relative;
+  align-items: center;
   display: flex;
   flex-direction: row;
-  gap: 5rem;
 }
-#main > .information > .cinema-info > .day-containers > .day-container {
-  border: #000000 solid 1rem;
+#main > .information > .cinema-info > .cinema-header > .day-containers > .before {
+  cursor: pointer;
+  margin-right: 1.5rem;
+  background-color: #ffffff;
+  width: 3.5rem;
+  height: 1.5rem;
+  background-image: url("https://img.cgv.co.kr/r2014/images/sprite/sprite_btn.png");
+  background-repeat: no-repeat;
+  background-position: -117px -174px;
+  border: none;
+}
+#main > .information > .cinema-info > .cinema-header > .day-containers > .after {
+  right: 0;
+  cursor: pointer;
+  position: absolute;
+  background-color: #ffffff;
+  width: 3.5rem;
+  height: 1.15rem;
+  background-image: url("https://img.cgv.co.kr/r2014/images/sprite/sprite_btn.png");
+  background-repeat: no-repeat;
+  background-position: -117px -155px;
+  border: none;
+}
+#main > .information > .cinema-info > .cinema-header > .day-containers > .day-container {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+#main > .information > .cinema-info > .cinema-header > .day-containers > .day-container > .border {
+  box-sizing: border-box;
+}
+#main > .information > .cinema-info > .cinema-header > .day-containers > .day-container > .border > .item {
+  width: 100%;
+  height: 100%;
+  padding: 0.3rem 0.5rem;
+  color: #717171;
+  border: transparent solid 0.15rem;
+  cursor: pointer;
+  box-sizing: border-box;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.15rem;
+  justify-content: center;
+}
+#main > .information > .cinema-info > .cinema-header > .day-containers > .day-container > .border > .item.select {
+  color: #000000;
+  border-color: #000000;
+  border-radius: 0.25rem;
+}
+#main > .information > .cinema-info > .cinema-header > .day-containers > .day-container > .border > .item > .small-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+#main > .information > .cinema-info > .cinema-header > .day-containers > .day-container > .border > .item > .small-container .day {
+  font-size: 0.7rem;
+}
+#main > .information > .cinema-info > .cinema-header > .day-containers > .day-container > .border > .item > .day {
+  font-size: 2rem;
+  font-weight: 600;
+}
+#main > .information > .cinema-info > .cinema-header > .cinema-info-detail {
+  right: 0;
+  bottom: 0.5rem;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+#main > .information > .cinema-info > .cinema-header > .cinema-info-detail > .cinema-detail {
+  height: 0.85rem;
+  padding-left: 1.1rem;
+  line-height: 1;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  background-image: url("https://img.cgv.co.kr/r2014/images/sprite/sprite_icon.png");
+  background-repeat: no-repeat;
+  background-position: 0 -158px;
+}
+#main > .information > .cinema-info > .notice {
+  padding: 0.5rem 0;
+  font-weight: 400;
+  color: #794624;
+}
+#main > .information > .cinema-info > .items > .item {
+  border-top: 0.1rem solid #474746;
+  padding: 1.5rem 0.5rem;
+}
+#main > .information > .cinema-info > .items > .item > .movie-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+#main > .information > .cinema-info > .items > .item > .movie-container > .rating {
+  width: 1.25rem;
+  height: 1.294rem;
+}
+#main > .information > .cinema-info > .items > .item > .movie-container > .text {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+#main > .information > .cinema-info > .items > .item > .movie-container > .able {
+  padding: 0.1rem;
+  border: 0.15rem solid #3e82a4;
+  color: #3e82a4;
+  font-weight: 600;
+}
+#main > .information > .cinema-info > .items > .item > .movie-container > .long-text {
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+#main > .information > .cinema-info > .items > .item > .screen-container {
+  padding: 1rem 2rem;
+}
+#main > .information > .cinema-info > .items > .item > .screen-container > .theater-info {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+#main > .information > .cinema-info > .items > .item > .screen-container > .theater-info .text {
+  margin: 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+#main > .information > .cinema-info > .items > .item > .screen-container > .time-table-container {
+  display: flex;
+  flex-direction: row;
+}
+#main > .information > .cinema-info > .items > .item > .screen-container > .time-table-container > .time-table {
+  margin-top: 0.5rem;
+  width: 2.3rem;
+  padding: 0.3rem 1rem;
+  border: 0.1rem solid #cbcabe;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+#main > .information > .cinema-info > .items > .item > .screen-container > .time-table-container > .time-table > .time {
+  font-weight: 600;
+}
+#main > .information > .cinema-info > .items > .item > .screen-container > .time-table-container > .time-table > .seat {
+  color: #2275a4;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+#main > .information > .cinema-info > .notice-footer {
+  border-top: 0.15rem solid #474746;
+  padding-top: 0.5rem;
+  color: #666;
 }
 
 /*# sourceMappingURL=index.css.map */
