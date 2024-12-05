@@ -2,6 +2,8 @@ package dev.jwkim.jgv.controlles.Movie;
 
 import dev.jwkim.jgv.entities.Movie.MovieEntity;
 import dev.jwkim.jgv.services.Movie.MovieService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,10 +15,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class MovieController {
     private final MovieService movieService;
 
+    @Autowired
     public MovieController(MovieService movieService) {
         this.movieService = movieService;
     }
 
+    @Scheduled(cron = "0 0 12 * * ?")
     @RequestMapping(value = "/crawling", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView crawling(MovieEntity movieEntity) {
