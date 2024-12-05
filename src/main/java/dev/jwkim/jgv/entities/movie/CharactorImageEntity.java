@@ -1,4 +1,4 @@
-package dev.jwkim.jgv.entities.Movie;
+package dev.jwkim.jgv.entities.movie;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

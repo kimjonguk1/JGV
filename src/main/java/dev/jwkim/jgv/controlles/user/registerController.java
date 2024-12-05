@@ -1,4 +1,4 @@
-package dev.jwkim.jgv.controlles.User;
+package dev.jwkim.jgv.controlles.user;
 
 
 import org.springframework.stereotype.Controller;

@@ -1,7 +1,7 @@
-package dev.jwkim.jgv.mappers.Movie;
+package dev.jwkim.jgv.mappers.movie;
 
 import dev.jwkim.jgv.DTO.Movie_ImageDTO;
-import dev.jwkim.jgv.entities.Movie.MovieEntity;
+import dev.jwkim.jgv.entities.movie.MovieEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,4 +1,4 @@
-package dev.jwkim.jgv.mappers.Movie;
+package dev.jwkim.jgv.mappers.movie;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

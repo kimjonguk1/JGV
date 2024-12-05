@@ -1,6 +1,6 @@
 package dev.jwkim.jgv.DTO;
 
-import dev.jwkim.jgv.entities.Movie.MovieEntity;
+import dev.jwkim.jgv.entities.movie.MovieEntity;
 import lombok.Getter;
 import lombok.Setter;
 

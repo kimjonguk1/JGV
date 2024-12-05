@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dev.jwkim.jgv.mappers.Movie.RaitingMapper">
+<mapper namespace="dev.jwkim.jgv.mappers.movie.RaitingMapper">
 
     <insert id="insertMovieRaiting" useGeneratedKeys="true" keyProperty="raNum" parameterType="dev.jwkim.jgv.entities.Movie.RatingEntity">
         INSERT INTO jgv.rating (ra_grade)
