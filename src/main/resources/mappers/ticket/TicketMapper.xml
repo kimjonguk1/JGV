@@ -3,10 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dev.jwkim.jgv.mappers.Ticket.TicketMapper">
-
-    <insert id="insertSeat"  parameterType="dev.jwkim.jgv.entities.Ticket.SeatEntity">
-        insert into `jgv`.`seat`
-            (`se_num`, `se_name`, `ci_num`)
-        values (#{seNum}, #{seName}, #{ciNum})
-    </insert>
+    <select id="selectSeatByCiName" resultType="dev.jwkim.jgv.entities.Ticket.SeatEntity">
+        select `se_num` as `seNum`,
+               `se_name` as `seName`,
+               cinema.`ci_num` as `ciNum`
+        from `jgv`.`seat`
+                 left join jgv.cinema on seat.ci_num  = cinema.ci_num
+                 left join jgv.theater on theater.th_num  = cinema.th_num
+        where cinema.`ci_name` = #{ciName}
+          and theater.`th_name` = #{thName}
+    </select>
 </mapper>
