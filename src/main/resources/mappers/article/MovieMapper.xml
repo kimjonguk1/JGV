@@ -2,13 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dev.jwkim.jgv.mappers.Movie.MovieMapper">
+<mapper namespace="dev.jwkim.jgv.mappers.movie.MovieMapper">
 
     <insert id="insertMovie"
             useGeneratedKeys="true"
             keyColumn="moNum"
             keyProperty="moNum"
-            parameterType="dev.jwkim.jgv.entities.Movie.MovieEntity">
+            parameterType="dev.jwkim.jgv.entities.movie.MovieEntity">
         INSERT INTO `jgv`.movie (mo_title, mo_date, mo_time, mo_plot, mo_booking_rate, mo_ending)
         VALUES (#{moTitle},#{moDate},#{moTime},#{moPlot},#{moBookingRate},#{moEnding})
     </insert>
