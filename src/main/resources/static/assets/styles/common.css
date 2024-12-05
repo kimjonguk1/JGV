@@ -7,15 +7,55 @@ body {
   display: flex;
   flex-direction: column;
 }
-body .stretch {
+body button, body input, body select {
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  font: inherit;
+  margin: 0;
+  outline: none;
+  padding: 0;
+}
+body .--obj-label {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  text-align: left;
+  user-select: none;
+}
+body .--obj-label > .text {
+  color: #888888;
+  font-size: 1em;
+}
+body .--obj-filed {
+  color: #888888;
+  font-size: 1rem;
+  height: 2rem;
+  transition-duration: 250ms;
+  transition-property: border-color;
+  transition-timing-function: ease;
+  padding: 0 1.2rem;
+}
+body .--obj-filed.-border {
+  border: 0.135rem solid #dddddd;
+  color: #888888;
+}
+body .--obj-filed.-border:hover {
+  border-color: rgb(246.5, 246.5, 246.5);
+}
+body .--obj-filed.-border:focus {
+  border: 0.135rem solid #000000;
+  border-radius: 0.2rem;
+}
+body .--obj-filed .stretch {
   flex-grow: 1;
 }
-
-a {
+body a {
   text-decoration: none;
 }
-
-ol, ul {
+body ol, body ul {
   list-style-type: none;
   padding-inline-start: 0;
 }

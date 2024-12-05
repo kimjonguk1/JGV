@@ -1,6 +1,6 @@
-package dev.jwkim.jgv.DTO;
+package dev.jwkim.jgv.entities.movie;
 
-import dev.jwkim.jgv.entities.movie.MovieEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +8,8 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class Movie_ImageDTO extends MovieEntity {
+@EqualsAndHashCode(of = {"moNum"})
+public class MovieEntity {
     private int moNum;
     private String moTitle;
     private String moDate;
@@ -16,6 +17,4 @@ public class Movie_ImageDTO extends MovieEntity {
     private String moPlot;
     private Float moBookingRate;
     private LocalDate moEnding;
-    private String m_img_url;
-
 }
