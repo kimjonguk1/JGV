@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>JGV - 이메일 인증</title>
+    <script th:if="${result == null || result.equals('failire')}">
+        alert('이메일 인증에 실패하였습니다. 링크가 유효하지 않거나, 이미 사용되었을 수 있습니다.')
+    </script>
+    <script th:if="${result != null && result.equals('failure_expired')}">
+        alert('이메일 인증에 실패하였습니다. 해당 링크는 더 이상 유효하지 않습니다. 멜튜브에서 로그인하여 인증링크를 다시 받을 수 있습니다.')
+    </script>
+    <script th:if="${result != null && result.equals('success')}">
+        alert("이메일 인증에 성공하였습니다. 이제 해당 계정으로 로그인할 수 있습니다.")
+    </script>
+    <script>
+        if (history.length > 1) {
+            history.back();
+        }else {
+            window.close();
+        }
+    </script>
+
+</head>

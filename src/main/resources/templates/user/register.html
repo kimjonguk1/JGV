@@ -13,103 +13,209 @@
     <link rel="stylesheet" href="/user/styles/register.css" type="text/css">
     <script defer th:src="@{'./assets/scripts/index.js'}" type="text/javascript"></script>
     <script defer src="/user/scripts/register.js" type="text/javascript"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+
+    </script>
 </head>
 <body>
 <th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
 <th:block th:replace="~{fragments/common.html :: header}"></th:block>
 <th:block th:replace="~{fragments/common.html :: nav}"></th:block>
-<form id="register-form">
-    <table>
+
+
+<div class="frame title-container">
+    <h1>기본정보</h1>
+    <div class="-spring"></div>
+    <span>
+         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+              alt="checkmark">
+        표시는 필수 입력 항목입니다.
+    </span>
+</div>
+<form id="register-form" class="frame">
+    <table class="table">
         <tbody>
         <tr>
-            <td>이름</td>
-            <td>김종율</td>
+            <td style="border-top: 2px solid #000000;">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                     alt="checkmark">
+                <span>이름</span>
+            </td>
+            <td style="border-top: 2px solid #000000;">
+                <label class="--obj-label" data-id="name">
+                    <input required autofocus maxlength="15" minlength="2" type="text"
+                           class="_field --obj-filed -border"
+                           name="name" placeholder="이름을 입력해주세요.">
+                </label>
+            </td>
         </tr>
         <tr>
-            <td>아이디</td>
             <td>
-                <label>
-                    <input type="text">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                     alt="checkmark">
+                <span>아이디</span>
+            </td>
+            <td rel="row">
+                <label class="--obj-label" data-id="id">
+                    <input required maxlength="20" minlength="2" type="text" class="_field --obj-filed -border"
+                           name="id"
+                           placeholder="아이디를 입력해주세요.">
                 </label>
-                <button>중복검사</button>
+                <button class="duplicate-button" type="button" name="duplicate-button">중복확인</button>
                 <!--- alert로 중복 알림 설정하기 --->
             </td>
         </tr>
         <tr>
-            <td>비밀번호</td>
             <td>
-                <label>
-                    <input type="text"> <!--row 잡기-->
-                    <span>영문자,숫자,특수문자 조합하여 8~12자리, 아이디와 4자리 이상 동일,반복 문자숫자 불가 사용가능 특수문자: !"#&amp;%&'()*+,-/;:&lt;= &gt;?{|}~</span>
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                     alt="checkmark">
+                <span>비밀번호</span>
+            </td>
+            <td>
+                <label class="--obj-label" data-id="password">
+                    <input required autocomplete="off" maxlength="100" minlength="8" type="password" name="password"
+                           class="_field --obj-filed -border"
+                           placeholder="비밀번호를 입력해주세요."> <!--col 잡기-->
+                    <span class="text">영문자, 숫자, 특수문자를 모두 조합하여 8~12자리를 입력해주세요.<br>
+                                        사용 가능 특수 문자는 !"#$%&'()*+,-./:;&lt;= &gt;?@[]^_`{|}~ 입니다.<br>
+                                        아이디와 4자리 이상 동일한 비밀번호는 사용 불가합니다.<br>
+                                        동일문자를 4번 이상 사용할 수 없습니다.<br>
+                                        4자리 이상 연속되는 문자와 숫자는 사용 불가합니다.<br>
+                                        휴대전화번호와 4자리 이상 동일한 비밀번호는 사용 불가합니다.<br>
+                                        생년월일과 4자리 이상 동일한 비밀번호는 사용 불가합니다.<br>
+                                        연속된 자판배열이 4자리 이상 포함된 비밀번호는 사용 불가합니다.
+                    </span>
                 </label>
             </td>
         </tr>
         <tr>
-            <td>비밀번호 확인</td>
             <td>
-                <label>
-                    <input type="text">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                     alt="checkmark">
+                <span>비밀번호 확인</span>
+            </td>
+            <td>
+                <label class="--obj-label">
+                    <input required autocomplete="off" maxlength="100" minlength="8" type="password"
+                           name="passwordCheck" class="_field --obj-filed -border"
+                           placeholder="비밀번호를 재입력해주세요.">
                 </label>
             </td>
         </tr>
         <tr>
-            <td>생년월일</td>
             <td>
-                <label>
-                    <select>
-                        <option value="year">1996</option>
-                    </select>
-                </label>
-                <span>년</span>
-                <label>
-                    <select>
-                        <option value="month">02</option>
-                    </select>
-                </label>
-                <span>월</span>
-                <label>
-                    <select>
-                        <option value="day">23</option>
-                    </select>
-                </label>
-                <span>일</span>
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                     alt="checkmark">
+                <span>성별</span>
             </td>
-        </tr>
-        <tr>
-            <td>휴대전화번호</td>
-            <td>
-                <label>
-                    <input type="number">
-                </label>
-                <label>
-                    <input type="number">
-                </label>
-                <label>
-                    <input type="number">
+            <td rel="row">
+                <label class="--obj-label gender-container">
+                    <span>남자</span>
+                    <input required type="radio" name="gender" value="M" class="_field --obj-filed -border" checked>
+                    <span>여자</span>
+                    <input required type="radio" name="gender" value="F" class="_field --obj-filed -border">
                 </label>
             </td>
         </tr>
         <tr>
-            <td>이메일</td>
             <td>
-                <label>
-                    <input type="email">
-                    <span>@</span>
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                     alt="checkmark">
+                <span>주소</span>
+            </td>
+            <td rel="col">
+                <div class="label-container">
+                    <label class="--obj-label" style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 1rem;">
+                        <input class="_field --obj-filed -border" type="text" id="postcode"
+                               placeholder="우편번호를 입력해주세요.">
+                        <button type="button" class="addr-button" name="addr-button">주소검색</button>
+                    </label>
+                    <label class="--obj-label">
+                        <input class="_field --obj-filed -border" type="text" id="address"
+                               placeholder="주소를 입력해주세요."><br>
+                    </label>
+                </div>
+                <label class="--obj-label">
+                    <input class="_field --obj-filed -border" type="text" id="detailAddress"
+                           placeholder="상세주소 입력">
+                    <input class="_field --obj-filed -border" type="text" id="extraAddress" placeholder="참고항목">
                 </label>
-                <label>
-                    <input type="email">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                     alt="checkmark">
+                <span>생년월일</span>
+            </td>
+            <td>
+                <label class="--obj-label" data-id="birth">
+                    <input required name="birth" class="_field --obj-filed -border" type="date" value="1900-01-01">
                 </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                     alt="checkmark">
+                <span>휴대전화번호</span>
+            </td>
+            <td>
+                <label class="--obj-label" data-id="contact">
+                    <input autocomplete="off" maxlength="13" minlength="10" required type="tel"
+                           name="contact" placeholder="'-' 없이 입력" spellcheck="false" class="_field --obj-filed -border">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                     alt="checkmark">
+                <span>이메일</span>
+            </td>
+            <td rel="col">
+                <div>
+                    <label data-id="email" class="--obj-label">
+                        <input autocomplete="email" name="email" type="email" class="_field --obj-filed -border"
+                               placeholder="이메일을 입력해 주세요">
+                    </label>
+                    <!--                    <span>@</span>-->
+                    <!--                    <label data-id="email-domain" class="&#45;&#45;obj-label">-->
+                    <!--                        <input name="email-domain" type="email" placeholder="이메일 도메인"-->
+                    <!--                               class="_field &#45;&#45;obj-filed -border">-->
+                    <!--                    </label>-->
+                    <!--                    <label class="&#45;&#45;obj-label">-->
+                    <!--                        <select name="domain" class="_field &#45;&#45;obj-filed -border">-->
+                    <!--                            <option value="self">직접입력</option>-->
+                    <!--                            <option value="naver">네이버</option>-->
+                    <!--                            <option value="hamail">한메일</option>-->
+                    <!--                            <option value="nate">네이트</option>-->
+                    <!--                            <option value="gmail">지메일</option>-->
+                    <!--                        </select>-->
+                    <!--                    </label>-->
+                </div>
                 <span>이메일 주소 입력시 사용 가능 특수 문자:-ㆍ_</span>
             </td>
 
         </tr>
         </tbody>
     </table>
-    <div class="button-container">
-        <button type="button">취소</button>
-        <button type="submit">등록</button>
+    <label class="--obj-check-label">
+        <input class="--obj-filed -input" name="agree" type="checkbox">
+        <span class="_box"></span>
+        <span class="text">
+            <a href="#">서비스 이용약관</a> 및
+            <a href="#">개인정보 처리방침</a>을 읽어보았으며 이해하였고 동의합니다.
+        </span>
+    </label>
+    <div class="button-container frame">
+        <button class="cancel" type="button">취소</button>
+        <button class="submit" type="submit">등록</button>
     </div>
 </form>
+
 
 <th:block th:replace="~{fragments/common.html :: footer}"></th:block>
 </body>

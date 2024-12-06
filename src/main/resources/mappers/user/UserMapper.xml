@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.jwkim.jgv.mappers.user.UserMapper">
+
+    <insert id="insertUser"
+    parameterType="dev.jwkim.jgv.entities.user.UserEntity">
+        INSERT INTO `jgv`.`user` (`us_id`, `us_pw`, `us_name`, `us_nickname`, `us_birth`, `us_gender`, `us_email`, `us_contact`, `us_addr`, `us_created_at`, `us_updated_at`,`us_is_deleted`,`us_is_admin` ,`us_is_suspended`, `us_verified`)
+        VALUES (#{usId}, #{usPw}, #{usName}, #{usNickName}, #{usBirth}, #{usGender}, #{usEmail}, #{usContact}, #{usAddr}, #{usCreatedAt}, #{usUpdatedAt}, #{usIsDeleted}, #{usIsAdmin}, #{usIsSuspended}, #{usIsVerified})
+    </insert>
+    <update id="updateUser"
+    parameterType="dev.jwkim.jgv.entities.user.UserEntity">
+    UPDATE `jgv`.`user`
+    SET `us_id` = #{usId},
+        `us_pw` = #{usPw},
+        `us_nickname` = #{usNickName},
+        `us_contact` = #{usContact},
+        `us_addr` = #{usAddr},
+        `us_updated_at` = #{usUpdatedAt},
+        `us_is_deleted` = #{usIsDeleted},
+        `us_is_admin` = #{usIsAdmin},
+        `us_is_suspended` = #{usIsSuspended},
+        `us_verified` = #{usIsVerified}
+    WHERE `us_email` = #{usEmail}
+    LIMIT 1
+
+    </update>
+
+    <select id="selectUserByEmail"
+            resultType="dev.jwkim.jgv.entities.user.UserEntity">
+        SELECT us_num          AS `usNum`,
+               us_id           AS `usId`,
+               us_pw           AS `usPw`,
+               us_name         AS `usName`,
+               us_nickname     AS `usNickName`,
+               us_birth        AS `usBirth`,
+               us_gender       AS `usGender`,
+               us_email        AS `usEmail`,
+               us_contact      AS `usContact`,
+               us_addr         AS `usAddr`,
+               us_created_at   AS `usCreatedAt`,
+               us_updated_at   AS `usUpdatedAt`,
+               us_is_deleted   AS `usIsDeleted`,
+               us_is_admin     AS `usIsAdmin`,
+               us_is_suspended AS `usIsSuspended`,
+               us_verified     AS `usIsVerified`
+        FROM `jgv`.`user`
+        WHERE `us_email` = #{usEmail}
+        LIMIT 1
+    </select>
+
+    <select id="selectUserByContact"
+            resultType="dev.jwkim.jgv.entities.user.UserEntity">
+        SELECT us_num          AS `usNum`,
+               us_id           AS `usId`,
+               us_pw           AS `usPw`,
+               us_name         AS `usName`,
+               us_nickname     AS `usNickName`,
+               us_birth        AS `usBirth`,
+               us_gender       AS `usGender`,
+               us_email        AS `usEmail`,
+               us_contact      AS `usContact`,
+               us_addr         AS `usAddr`,
+               us_created_at   AS `usCreatedAt`,
+               us_updated_at   AS `usUpdatedAt`,
+               us_is_deleted   AS `usIsDeleted`,
+               us_is_admin     AS `usIsAdmin`,
+               us_is_suspended AS `usIsSuspended`,
+               us_verified     AS `usIsVerified`
+        FROM `jgv`.`user`
+        WHERE `us_contact` = #{usContact}
+        LIMIT 1
+    </select>
+
+    <select id="selectUserByNickname"
+            resultType="dev.jwkim.jgv.entities.user.UserEntity">
+        SELECT us_num          AS `usNum`,
+               us_id           AS `usId`,
+               us_pw           AS `usPw`,
+               us_name         AS `usName`,
+               us_nickname     AS `usNickName`,
+               us_birth        AS `usBirth`,
+               us_gender       AS `usGender`,
+               us_email        AS `usEmail`,
+               us_contact      AS `usContact`,
+               us_addr         AS `usAddr`,
+               us_created_at   AS `usCreatedAt`,
+               us_updated_at   AS `usUpdatedAt`,
+               us_is_deleted   AS `usIsDeleted`,
+               us_is_admin     AS `usIsAdmin`,
+               us_is_suspended AS `usIsSuspended`,
+               us_verified     AS `usIsVerified`
+        FROM `jgv`.`user`
+        WHERE `us_nickname` = #{usNickname}
+        LIMIT 1
+    </select>
+</mapper>
