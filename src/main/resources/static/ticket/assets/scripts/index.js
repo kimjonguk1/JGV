@@ -2,6 +2,7 @@
 const $mainPayment = document.getElementById("main-payment");
 const $mainSeat = document.getElementById("main-seat");
 const $paymentSection = document.getElementById("payment-section");
+const $main = document.querySelector(".main");
 let t = 0;
 let m = 0;
 
@@ -140,7 +141,11 @@ adults.forEach((radio) => {
             $seatPrice.textContent = '';
             $seatPriceAdd.textContent = '';
             $seatHuman.textContent = `${selectedHuman.join(', ')}`;
+
         }
+        $seatRightButtonBefore.style.display = 'flex';
+        $seatRightButtonAfter.style.display = 'none';
+        $seatRightButtonBefore.style.background = 'rgb(51, 51, 51)';
 
         seats.forEach((seat) => {
             seat.classList.remove('selected-seat');
@@ -179,7 +184,7 @@ const $paycoContainer = $mainPayment.querySelector(':scope > .left-container > .
 const $cultureCard = document.querySelector('input[name="culture-card"]');
 const $noneCulturePayText = $mainPayment.querySelector(':scope > .left-container >.simple-pay-container > .naver-pay-container > .none-culture-pay-text')
 const $CulturePayText = $mainPayment.querySelector(':scope > .left-container >.simple-pay-container > .naver-pay-container > .culture-pay-text')
-let page = 0;
+let page = 1;
 
 $paymentCheck.forEach((radio) => {
     radio.addEventListener('change', () => {
@@ -243,6 +248,13 @@ $LeftButton.onclick = () => {
         $priceTitle.style.display = 'flex';
         page = 2;
     } else if (page === 2) {
+        $main.style.display = 'flex';
+        $mainSeat.style.display = 'none';
+        page = 1;
+    } else if (page === 1) {
+        $seatRightButtonAfter.style.display = 'flex';
+        $seatRightButtonBefore.style.display = 'none';
+        page = 1
     }
 };
 
@@ -259,12 +271,12 @@ $paymentButton.onclick = () => {
         $mainPayment.style.pointerEvents = 'none';
     }
 }
-$realCancel.addEventListener('click', () => {
+$realCancel.onclick = () => {
     if (page === 3) {
         $paymentSection.style.display = 'none';
         $mainPayment.style.pointerEvents = 'auto';
     }
-})
+}
 
 const $theaterTheater = $theaterContent.querySelector('[name=theater-theater]');
 const $theaterDay = $theaterContent.querySelector('[name=theater-day]');
@@ -272,6 +284,24 @@ const $theaterTime = $theaterContent.querySelector('[name=theater-time]');
 const $theaterCinema = $theaterContent.querySelector('[name=theater-cinema]');
 
 $seatRightButtonAfter.onclick = () => {
+    if (page === 1) {
+        $main.style.display = 'none';
+        $mainSeat.style.display = 'flex';
+        $seatRightButtonBefore.style.display = 'flex';
+        $seatRightButtonAfter.style.display = 'none';
+        page = 2;
+    } else if (page === 2) {
+        $mainPayment.style.display = 'flex';
+        $mainSeat.style.display = 'none';
+        $seatRightButtonBefore.style.display = 'flex';
+        $seatRightButtonAfter.style.display = 'none';
+        $seatRightButtonBefore.style.background = 'rgb(51, 51, 51)';
+        $seatRightButtonBefore.style.display = 'none';
+        $paymentButton.style.display = 'flex';
+        $priceContent.style.display = 'none';
+        $priceTitle.style.display = 'none';
+        page = 3;
+    }
     const xhr = new XMLHttpRequest();
     const url = new URL(location.href); //ticket
     url.searchParams.set('thName', $theaterTheater.value);
@@ -285,19 +315,12 @@ $seatRightButtonAfter.onclick = () => {
         }
         const response = JSON.parse(xhr.responseText);
         const result = response['result'];
+        const result2 = response['results'];
         console.log(result);
-
-        $mainPayment.style.display = 'flex';
-        $mainSeat.style.display = 'none';
-        $seatRightButtonBefore.style.display = 'flex';
-        $seatRightButtonAfter.style.display = 'none';
-        $seatRightButtonBefore.style.background = 'rgb(51, 51, 51)';
-        $seatRightButtonBefore.style.display = 'none';
-        $paymentButton.style.display = 'flex';
-        $priceContent.style.display = 'none';
-        $priceTitle.style.display = 'none';
-        page = 3;
+        console.log(result2);
     }
+
+
 
     xhr.open('GET', url.toString()); //ticket/ciName=2관&thName=CGV대구
     xhr.send();

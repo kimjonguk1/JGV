@@ -2,14 +2,26 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dev.jwkim.jgv.mappers.Ticket.TicketMapper">
-    <select id="selectSeatByCiName" resultType="dev.jwkim.jgv.entities.Ticket.SeatEntity">
-        select `se_num` as `seNum`,
-               `se_name` as `seName`,
-               cinema.`ci_num` as `ciNum`
-        from `jgv`.`seat`
-                 left join jgv.cinema on seat.ci_num  = cinema.ci_num
-                 left join jgv.theater on theater.th_num  = cinema.th_num
+<mapper namespace="dev.jwkim.jgv.mappers.ticket.TicketMapper">
+    <select id="selectSeatByReservationSeNum" parameterType="dev.jwkim.jgv.entities.ticket.SeatEntity">
+        select `se_name` as `seName`
+        from jgv.reservation
+                 left join jgv.seat on reservation.se_num = seat.se_num
+                 left join jgv.cinema on cinema.ci_num = seat.ci_num
+                 left join jgv.theater on cinema.th_num = theater.th_num
+        where cinema.`ci_name` = #{ciName}
+          and theater.`th_name` = #{thName}
+    </select>
+    <select id="selectSeatBySeName" parameterType="dev.jwkim.jgv.entities.ticket.ReservationEntity">
+        select `re_num` as `reNum`,
+               `sc_num` as `scNum`,
+               seat.`se_num` as `seNum`,
+               `pa_num` as `paNum`,
+               `se_name` as `seName`
+        from jgv.reservation
+                 left join jgv.seat on reservation.se_num = seat.se_num
+                 left join jgv.cinema on cinema.ci_num = seat.ci_num
+                 left join jgv.theater on cinema.th_num = theater.th_num
         where cinema.`ci_name` = #{ciName}
           and theater.`th_name` = #{thName}
     </select>

@@ -23,12 +23,10 @@
   width: 980px;
   max-width: 980px;
   min-width: 980px;
-  height: 100rem;
-  background-color: red;
 }
 
 .button-container {
-  width: 62.5rem;
+  width: 61.25rem;
   text-align: center;
   color: rgb(51, 51, 51);
   font-weight: 400;
@@ -62,7 +60,7 @@
 #main-seat > .seat-div {
   left: 50%;
   transform: translate(-50%, 0);
-  width: 62.5rem;
+  width: 61.25rem;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -247,7 +245,7 @@
 
 #main-payment {
   box-sizing: border-box;
-  width: 62.5rem;
+  width: 61.25rem;
   height: auto;
   display: flex;
   flex-direction: row;
@@ -447,6 +445,13 @@
   border-radius: 0.2rem;
   cursor: pointer;
 }
+#main-payment > .left-container > .simple-pay-container > .simple-pay-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
 #main-payment > .left-container > .simple-pay-container > .simple-pay-text-container > .label-checkbox {
   display: flex;
   flex-direction: row;
@@ -459,7 +464,7 @@
   gap: 0.2rem;
 }
 #main-payment > .left-container > .simple-pay-container > .simple-pay-text-container > .text-space {
-  height: 5rem;
+  height: 3rem;
   width: 100%;
 }
 #main-payment > .left-container > .simple-pay-container > .simple-pay-text-container > .simple-pay-on-text {
@@ -473,12 +478,13 @@
   padding-bottom: 1rem;
 }
 #main-payment > .left-container > .simple-pay-container > .simple-pay-text-container > .simple-pay-on-text > .text {
-  height: 2rem;
+  height: 4rem;
   font-size: 0.75rem;
   font-weight: 400;
   width: 100%;
 }
 #main-payment > .left-container > .simple-pay-container > .simple-pay-text-container > .simple-pay-under-text {
+  width: 100%;
   padding: 1rem 0;
   display: flex;
   flex-direction: column;
@@ -684,7 +690,7 @@
   justify-content: center;
   align-items: center;
   border: 0.5rem solid rgb(112, 112, 112);
-  width: 62.5rem;
+  width: 61.25rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -700,23 +706,23 @@
   width: 100%;
   height: 2.15rem;
 }
-#payment-section > .pay-sec-container {
+#payment-section > .pay-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
   width: calc(100% - 4rem);
-  padding: 3rem 0 3rem 2rem;
+  padding: 3rem 1rem 3rem 1rem;
 }
-#payment-section > .pay-sec-container > .title {
+#payment-section > .pay-form > .title {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   width: 100%;
 }
-#payment-section > .pay-sec-container > .title > div {
+#payment-section > .pay-form > .title > div {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -726,22 +732,22 @@
   height: 2rem;
   width: 100%;
 }
-#payment-section > .pay-sec-container > .title > div > .title {
+#payment-section > .pay-form > .title > div > .title {
   height: 100%;
   width: 100%;
   text-align: left;
   font-size: 1.4rem;
   font-weight: 2000;
 }
-#payment-section > .pay-sec-container > .title > div > .title.title2 {
+#payment-section > .pay-form > .title > div > .title.title2 {
   border-left: 0.1rem solid rgb(190, 190, 189);
 }
-#payment-section > .pay-sec-container > .title > div > .title > .small-text {
+#payment-section > .pay-form > .title > div > .title > .small-text {
   width: 100%;
   font-size: 0.75rem;
   font-weight: 400;
 }
-#payment-section > .pay-sec-container > .table-div {
+#payment-section > .pay-form > .table-div {
   height: 10rem;
   width: 100%;
   display: flex;
@@ -750,11 +756,11 @@
   align-items: center;
   border-bottom: 0.1rem solid rgb(190, 190, 189);
 }
-#payment-section > .pay-sec-container > .table-div > div > .img {
+#payment-section > .pay-form > .table-div > div > .img {
   height: 9.7rem;
   width: 6.875rem;
 }
-#payment-section > .pay-sec-container > .table-div > .div-title1 {
+#payment-section > .pay-form > .table-div > .div-title1 {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -765,32 +771,32 @@
   font-weight: 700;
   font-size: 0.75rem;
 }
-#payment-section > .pay-sec-container > .table-div > .div-content1 {
+#payment-section > .pay-form > .table-div > .div-content1 {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 20.11rem;
+  width: 20.07rem;
   gap: 0.2rem;
   font-weight: 400;
   font-size: 0.75rem;
   border-right: 0.1rem solid rgb(190, 190, 189);
 }
-#payment-section > .pay-sec-container > .table-div > .div-title2 {
+#payment-section > .pay-form > .table-div > .div-title2 {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 8.39rem;
+  width: 8.43rem;
   padding-left: 3rem;
   gap: 0.2rem;
   margin-bottom: 5rem;
   font-weight: 400;
   font-size: 0.75rem;
 }
-#payment-section > .pay-sec-container > .table-div > .div-content2 {
+#payment-section > .pay-form > .table-div > .div-content2 {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -802,18 +808,18 @@
   font-weight: 400;
   font-size: 0.75rem;
 }
-#payment-section > .pay-sec-container > .table-div > .div-content2 > span > .big-red {
+#payment-section > .pay-form > .table-div > .div-content2 > span > .big-red {
   font-size: 1rem;
   font-weight: 700;
   color: red;
 }
-#payment-section > .pay-sec-container > .table-div > .div-content2 > span > .big-font {
+#payment-section > .pay-form > .table-div > .div-content2 > span > .big-font {
   font-weight: 700;
 }
-#payment-section > .pay-sec-container > .table-div > .div-content2 > span > .small-red {
+#payment-section > .pay-form > .table-div > .div-content2 > span > .small-red {
   color: red;
 }
-#payment-section > .pay-sec-container > .cancel {
+#payment-section > .pay-form > .cancel {
   padding-top: 1rem;
   display: flex;
   flex-direction: column;
@@ -823,7 +829,7 @@
   gap: 0.5rem;
   padding-bottom: 0.5rem;
 }
-#payment-section > .pay-sec-container > .agree {
+#payment-section > .pay-form > .agree {
   border-top: 0.1rem solid rgb(190, 190, 189);
   border-bottom: 0.1rem solid rgb(190, 190, 189);
   background-color: rgb(238, 238, 238);
@@ -834,7 +840,7 @@
   width: 100%;
   padding: 1rem 0 1rem 0;
 }
-#payment-section > .pay-sec-container > .agree > div.agree-div1 {
+#payment-section > .pay-form > .agree > div.agree-div1 {
   width: 23.15rem;
   display: flex;
   flex-direction: column;
@@ -845,11 +851,11 @@
   font-size: 0.75rem;
   font-weight: 400;
 }
-#payment-section > .pay-sec-container > .agree > div.agree-div1 > .agree-first {
+#payment-section > .pay-form > .agree > div.agree-div1 > .agree-first {
   font-weight: 700;
   padding-bottom: 0.2rem;
 }
-#payment-section > .pay-sec-container > .agree > div.agree-div2 {
+#payment-section > .pay-form > .agree > div.agree-div2 {
   width: 6.475rem;
   display: flex;
   flex-direction: column;
@@ -859,10 +865,10 @@
   border-right: 0.1rem solid rgb(190, 190, 189);
   gap: 0.3rem;
 }
-#payment-section > .pay-sec-container > .agree > div.agree-div2 > span {
+#payment-section > .pay-form > .agree > div.agree-div2 > span {
   height: 0.95rem;
 }
-#payment-section > .pay-sec-container > .agree > div.agree-div3 {
+#payment-section > .pay-form > .agree > div.agree-div3 {
   margin-left: 2rem;
   width: 31.75rem;
   display: flex;
@@ -872,14 +878,14 @@
   font-size: 0.75rem;
   font-weight: 700;
 }
-#payment-section > .pay-sec-container > .agree > div > label {
+#payment-section > .pay-form > .agree > div > label {
   display: flex;
   flex-direction: row;
 }
-#payment-section > .pay-sec-container > .agree > div > label.agree-label {
+#payment-section > .pay-form > .agree > div > label.agree-label {
   margin-left: 0.5rem;
 }
-#payment-section > .pay-sec-container > .agree > div > a {
+#payment-section > .pay-form > .agree > div > a {
   color: rgb(32, 124, 202);
   text-decoration-line: underline;
   text-decoration-color: rgb(32, 124, 202);
@@ -888,13 +894,13 @@
   font-size: 0.75rem;
 }
 
-#pay-form {
+#pay-button {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-#pay-form > .real-pay {
+#pay-button > .real-pay {
   width: 8.125rem;
   height: 2.8125rem;
   background-color: red;
@@ -903,7 +909,7 @@
   border: 0.1rem solid white;
   border-radius: 0.2rem;
 }
-#pay-form > .real-cancel {
+#pay-button > .real-cancel {
   height: 2.8125rem;
   width: 4.6785rem;
   border: 0.1rem solid rgb(51, 51, 51);
@@ -921,8 +927,8 @@
   box-sizing: border-box;
 }
 .control-bar > .space {
-  max-width: 62.5rem;
-  width: 62.5rem;
+  max-width: 61.25rem;
+  width: 61.25rem;
   height: 100%;
   background-color: rgb(29, 29, 28);
   box-sizing: border-box;
@@ -1001,6 +1007,8 @@
 .control-bar > .space > div.theater-content {
   width: 9.125rem;
   border-right: 0.1rem solid rgb(51, 51, 51);
+  user-select: none;
+  pointer-events: none;
 }
 .control-bar > .space > div.seat-title {
   width: 3rem;
@@ -1015,6 +1023,26 @@
 .control-bar > .space > div.price-content {
   width: 9.125rem;
 }
+.control-bar > .space > div > label {
+  border: none;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  color: #cccccc;
+  height: 1.5rem;
+  text-decoration-color: rgb(204, 204, 204);
+  font-weight: 700;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  width: 9rem;
+  background-color: rgb(29, 29, 28);
+}
+.control-bar > .space > div > label > input {
+  border: none;
+  width: 9rem;
+  font-size: 0.75rem;
+  background-color: rgb(29, 29, 28);
+  color: #cccccc;
+}
 .control-bar > .space > div > span {
   text-decoration: none;
   text-overflow: ellipsis;
@@ -1023,6 +1051,36 @@
   text-decoration-color: rgb(204, 204, 204);
   font-weight: 700;
   font-size: 0.75rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+}
+.control-bar > .space > div > span > label {
+  border: none;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  color: #cccccc;
+  height: 1.5rem;
+  text-decoration-color: rgb(204, 204, 204);
+  font-weight: 700;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  background-color: rgb(29, 29, 28);
+}
+.control-bar > .space > div > span > label.label2 {
+  width: 3rem;
+}
+.control-bar > .space > div > span > label > input {
+  background-color: rgb(29, 29, 28);
+  color: #cccccc;
+  border: none;
+  font-size: 0.75rem;
+}
+.control-bar > .space > div > span > label > [name=theater-day] {
+  width: 5rem;
+}
+.control-bar > .space > div > span > label > [name=theater-time] {
+  width: 3rem;
 }
 .control-bar > .space > div > span.poster {
   height: 6.5rem;
@@ -1039,7 +1097,7 @@
   height: 13rem;
 }
 .add .image {
-  width: 62.5rem;
+  width: 61.25rem;
   height: 8.75rem;
 }
 
