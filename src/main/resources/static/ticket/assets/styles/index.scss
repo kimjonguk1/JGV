@@ -19,11 +19,98 @@
     align-items: flex-start;
     display: flex;
     flex-direction: row;
-    gap: 1rem;
+    gap: 0.25rem;
     justify-content: center;
 
     > .main {
+      height: 25rem;
       @include minmaxWidth(980px);
+
+      display: flex;
+      flex-direction: row;
+
+      > .section {
+        width: 100%;
+        height: 100%;
+        border-left: 0.15rem solid #d4d3c9;
+
+        &:nth-last-child(1) {
+          border-right: 0.15rem solid #d4d3c9;
+        }
+
+        > .header {
+          height: 2rem;
+          background-color: #333333;
+
+          > .movie {
+            height: 100%;
+            background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/titles.png");
+            background-repeat: no-repeat;
+            background-position: 50% 8px;
+          }
+
+          > .theater {
+            height: 100%;
+            background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/titles.png");
+            background-repeat: no-repeat;
+            background-position: 50% -25px;
+          }
+
+          > .day {
+            height: 100%;
+            background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/titles.png");
+            background-repeat: no-repeat;
+            background-position: 50% -58px;
+          }
+
+          > .time {
+            height: 100%;
+            background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/titles.png");
+            background-repeat: no-repeat;
+            background-position: 50% -91px;
+          }
+        }
+
+        .body {
+          height: calc(100% - 2rem);
+          background-color: #f2f0e5;
+
+          .content {
+            padding: 1rem 1rem;
+
+            > .order {
+              display: flex;
+              flex-direction: row;
+              gap: 0.5rem;
+              background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/step1/sortmenu_border_bottom.png");
+              background-repeat: repeat-x;
+              background-position: bottom;
+
+              .text {
+                cursor: pointer;
+                padding-bottom: 0.5rem;
+                color: #666;
+                font-size: 0.85rem;
+
+                &.select {
+                  color: #333;
+                  background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/step1/sortmenu_btn_on.png");
+                  background-repeat: no-repeat;
+                  background-position: 50% 100%;
+                }
+              }
+            }
+          }
+
+          &.theater {
+
+            > .content {
+              display: flex;
+              flex-direction: row;
+            }
+          }
+        }
+      }
     }
   }
 }

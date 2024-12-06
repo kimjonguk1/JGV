@@ -2,15 +2,15 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dev.jwkim.jgv.mappers.Theater.TheaterMapper">
+<mapper namespace="dev.jwkim.jgv.mappers.theater.TheaterMapper">
     <select id="getRegionAll"
-            parameterType="dev.jwkim.jgv.entities.Theater.RegionEntity">
+            parameterType="dev.jwkim.jgv.entities.theater.RegionEntity">
         SELECT `reg_num`  AS `regNum`,
                `reg_name` AS `regName`
         FROM `jgv`.`region`
     </select>
     <select id="getTheatersByRegion"
-            resultType="dev.jwkim.jgv.entities.Theater.TheaterEntity">
+            resultType="dev.jwkim.jgv.entities.theater.TheaterEntity">
         SELECT `th_num`  AS `thNum`,
                `th_name` AS `thName`,
                `th_addr` AS `thAddr`,
@@ -18,5 +18,18 @@
         FROM `jgv`.`theater`
                  LEFT JOIN jgv.region reg ON theater.reg_num = reg.reg_num
         WHERE `reg_name` = #{region}
+    </select>
+    <select id="getCinemaCountByTheater" resultType="_int">
+        SELECT COUNT(0)
+        FROM `jgv`.`cinema`
+                 LEFT JOIN jgv.theater t on t.th_num = cinema.th_num
+        WHERE `th_name` = #{theater}
+    </select>
+    <select id="getSeatCountByCinema" resultType="_int">
+        SELECT COUNT(0)
+        FROM `jgv`.`seat`
+                 LEFT JOIN `jgv`.`cinema` ON `seat`.`ci_num` = cinema.`ci_num`
+                 LEFT JOIN `jgv`.`theater` ON theater.`th_num` = cinema.`th_num`
+        WHERE `th_name` = #{theater}
     </select>
 </mapper>
