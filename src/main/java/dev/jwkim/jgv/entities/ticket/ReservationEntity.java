@@ -1,4 +1,4 @@
-package dev.jwkim.jgv.entities.Ticket;
+package dev.jwkim.jgv.entities.ticket;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package dev.jwkim.jgv.mappers.Ticket;
+package dev.jwkim.jgv.mappers.ticket;
 
 import org.apache.ibatis.annotations.Mapper;
 

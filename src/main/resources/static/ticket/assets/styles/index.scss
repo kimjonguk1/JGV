@@ -1,4 +1,4 @@
-@charset "UTF-8";
+@charset "utf-8";
 @import "global";
 
 #main {
@@ -24,14 +24,12 @@
 
     > .main {
       @include minmaxWidth(980px);
-      height: 100rem;
-      background-color: red;
     }
   }
 }
 
 .button-container {
-  width: 62.5rem;
+  width: 61.25rem;
   text-align: center;
   color: rgb(51, 51, 51);
   font-weight: 400;
@@ -69,7 +67,7 @@
   > .seat-div {
     left: 50%;
     transform: translate(-50%, 0);
-    width: 62.5rem;
+    width: 61.25rem;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -295,7 +293,7 @@
 
 #main-payment {
   box-sizing: border-box;
-  width: 62.5rem;
+  width: 61.25rem;
   height: auto;
   display: flex;
   flex-direction: row;
@@ -530,6 +528,12 @@
       }
 
       > .simple-pay-text-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+
         > .label-checkbox {
           display: flex;
           flex-direction: row;
@@ -540,12 +544,10 @@
           height: 3rem;
           color: rgb(198, 36, 36);
           gap: 0.2rem;
-
-
         }
 
         > .text-space {
-          height: 5rem;
+          height: 3rem;
           width: 100%;
         }
 
@@ -561,7 +563,7 @@
           }
 
           > .text {
-            height: 2rem;
+            height: 4rem;
             font-size: 0.75rem;
             font-weight: 400;
             width: 100%;
@@ -569,6 +571,7 @@
         }
 
         > .simple-pay-under-text {
+          width: 100%;
           padding: 1rem 0;
           display: flex;
           flex-direction: column;
@@ -658,6 +661,7 @@
           width: 100%;
         }
       }
+
       > .text-space {
         height: 7rem;
         width: 100%;
@@ -811,7 +815,7 @@
   justify-content: center;
   align-items: center;
   border: 0.5rem solid rgb(112, 112, 112);
-  width: 62.5rem;
+  width: 61.25rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -828,14 +832,14 @@
     height: 2.15rem;
   }
 
-  > .pay-sec-container {
+  > .pay-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
     width: calc(100% - 4rem);
-    padding: 3rem 0 3rem 2rem;
+    padding: 3rem 1rem 3rem 1rem;
 
     > .title {
       display: flex;
@@ -909,7 +913,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-        width: 20.11rem;
+        width: 20.07rem;
         gap: 0.2rem;
         font-weight: 400;
         font-size: 0.75rem;
@@ -922,7 +926,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-        width: 8.39rem;
+        width: 8.43rem;
         padding-left: 3rem;
         gap: 0.2rem;
         margin-bottom: 5rem;
@@ -995,7 +999,8 @@
           gap: 0.3rem;
           font-size: 0.75rem;
           font-weight: 400;
-          > .agree-first{
+
+          > .agree-first {
             font-weight: 700;
             padding-bottom: 0.2rem;
           }
@@ -1048,12 +1053,14 @@
     }
   }
 }
-#pay-form{
+
+#pay-button {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  > .real-pay{
+
+  > .real-pay {
     width: 8.125rem;
     height: 2.8125rem;
     background-color: red;
@@ -1062,7 +1069,8 @@
     border: 0.1rem solid white;
     border-radius: 0.2rem;
   }
-  > .real-cancel{
+
+  > .real-cancel {
     height: 2.8125rem;
     width: 4.6785rem;
     border: 0.1rem solid rgb(51, 51, 51);
@@ -1083,8 +1091,8 @@
   box-sizing: border-box;
 
   > .space {
-    max-width: 62.5rem;
-    width: 62.5rem;
+    max-width: 61.25rem;
+    width: 61.25rem;
     height: 100%;
     background-color: rgb(29, 29, 28);
     box-sizing: border-box;
@@ -1173,6 +1181,9 @@
       &.theater-content {
         width: 9.125rem;
         border-right: 0.1rem solid rgb(51, 51, 51);
+        user-select: none;
+        pointer-events: none;
+
       }
 
       &.seat-title {
@@ -1192,6 +1203,29 @@
         width: 9.125rem;
       }
 
+      > label {
+        border: none;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        color: #cccccc;
+        height: 1.5rem;
+        text-decoration-color: rgb(204, 204, 204);
+        font-weight: 700;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        width: 9rem;
+        background-color: rgb(29, 29, 28);
+
+        > input{
+          border: none;
+          width: 9rem;
+          font-size: 0.75rem;
+          background-color: rgb(29, 29, 28);
+          color: #cccccc;
+
+        }
+      }
+
       > span {
         text-decoration: none;
         text-overflow: ellipsis;
@@ -1200,6 +1234,41 @@
         text-decoration-color: rgb(204, 204, 204);
         font-weight: 700;
         font-size: 0.75rem;
+        display: flex;
+        flex-direction: row;
+        gap: 0.2rem;
+
+
+        > label {
+          border: none;
+          text-decoration: none;
+          text-overflow: ellipsis;
+          color: #cccccc;
+          height: 1.5rem;
+          text-decoration-color: rgb(204, 204, 204);
+          font-weight: 700;
+          font-size: 0.75rem;
+          white-space: nowrap;
+          background-color: rgb(29, 29, 28);
+
+          &.label2{
+            width: 3rem;
+          }
+
+          > input{
+            background-color: rgb(29, 29, 28);
+            color: #cccccc;
+
+            border: none;
+            font-size: 0.75rem;
+          }
+          > [name='theater-day']{
+            width: 5rem;
+          }
+          > [name='theater-time']{
+            width: 3rem;
+          }
+        }
 
         &.poster {
           height: 6.5rem;
@@ -1221,7 +1290,7 @@
   height: 13rem;
 
   .image {
-    width: 62.5rem;
+    width: 61.25rem;
     height: 8.75rem;
   }
 }
