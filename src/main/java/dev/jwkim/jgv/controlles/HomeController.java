@@ -13,6 +13,7 @@ public class HomeController {
     public ModelAndView getIndex() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home/index");
+        //ghhg
         return modelAndView;
     }
 }
