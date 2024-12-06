@@ -7,10 +7,9 @@
     <insert id="insertMovie"
             useGeneratedKeys="true"
             keyColumn="moNum"
-            keyProperty="moNum"
-            parameterType="dev.jwkim.jgv.entities.Movie.MovieEntity">
-        INSERT INTO `jgv`.movie (mo_title, mo_date, mo_time, mo_plot, mo_booking_rate, mo_ending)
-        VALUES (#{moTitle},#{moDate},#{moTime},#{moPlot},#{moBookingRate},#{moEnding})
+            keyProperty="movie.moNum">
+        INSERT INTO `jgv`.movie (mo_title, mo_date, mo_time, mo_plot, mo_booking_rate, mo_ending, ra_num)
+        VALUES (#{movie.moTitle},#{movie.moDate},#{movie.moTime},#{movie.moPlot},#{movie.moBookingRate},#{movie.moEnding}, #{raiting})
     </insert>
     <delete id="deleteAllMovies">
         DELETE FROM `jgv`.movie

@@ -3,13 +3,14 @@ package dev.jwkim.jgv.mappers.Movie;
 import dev.jwkim.jgv.DTO.Movie_ImageDTO;
 import dev.jwkim.jgv.entities.Movie.MovieEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
 public interface MovieMapper {
     // 영화 데이터 insert
-    int insertMovie(MovieEntity movie);
+    int insertMovie(@Param("movie") MovieEntity movie,@Param("raiting") int rating);
     //db에 영화 데이터가 존재하는지 유무만 확인
     int selectMovie();
     // db 영화 데이터 전부삭제

@@ -4,11 +4,17 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dev.jwkim.jgv.mappers.Movie.RaitingMapper">
 
-    <insert id="insertMovieRaiting">
-        INSERT INTO jgv.rating (mo_num, ra_grade)
-        VALUES (#{moNum}, #{ra_grade})
+    <insert id="insertMovieRaiting" useGeneratedKeys="true" keyProperty="raNum" parameterType="dev.jwkim.jgv.entities.Movie.RatingEntity">
+        INSERT INTO jgv.rating (ra_grade)
+        VALUES (#{raGrade})
     </insert>
     <delete id="deleteAllMovieRaiting">
         DELETE FROM jgv.rating
     </delete>
+
+    <select id="selectRaitingIdByName" resultType="Integer">
+        SELECT `ra_num`
+        FROM jgv.rating
+        WHERE ra_grade = #{RaitingName}
+    </select>
 </mapper>
