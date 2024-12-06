@@ -1,9 +1,10 @@
-package dev.jwkim.jgv.services.Theater;
+package dev.jwkim.jgv.services.theater;
 
-import dev.jwkim.jgv.entities.Theater.RegionEntity;
-import dev.jwkim.jgv.entities.Theater.TheaterEntity;
-import dev.jwkim.jgv.mappers.Theater.TheaterMapper;
+import dev.jwkim.jgv.entities.theater.RegionEntity;
+import dev.jwkim.jgv.entities.theater.TheaterEntity;
+import dev.jwkim.jgv.mappers.theater.TheaterMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -18,6 +19,9 @@ public class TheaterService {
     }
 
     public TheaterEntity[] getTheatersByRegion(String region) {
+        if (region == null) {
+            return null;
+        }
         TheaterEntity[] theaters = this.theaterMapper.getTheatersByRegion(region);
         String[] addrs;
         for (TheaterEntity theater : theaters) {
@@ -25,5 +29,10 @@ public class TheaterService {
             theater.setThAddr(Arrays.toString(addrs));
         }
         return theaters;
+    }
+
+    public Pair<Integer, Integer> getTheaterSeatCount(String theater) {
+        return Pair.of(this.theaterMapper.getCinemaCountByTheater(theater),
+                this.theaterMapper.getSeatCountByCinema(theater));
     }
 }
