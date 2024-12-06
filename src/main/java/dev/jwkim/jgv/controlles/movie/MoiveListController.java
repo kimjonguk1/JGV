@@ -1,7 +1,7 @@
-package dev.jwkim.jgv.controlles.Movie;
+package dev.jwkim.jgv.controlles.movie;
 
 import dev.jwkim.jgv.DTO.Movie_ImageDTO;
-import dev.jwkim.jgv.services.Movie.MovieService;
+import dev.jwkim.jgv.services.movie.MovieService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

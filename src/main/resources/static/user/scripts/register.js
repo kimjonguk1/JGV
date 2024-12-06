@@ -1,5 +1,36 @@
 const $registerForm = document.getElementById('register-form');
 
+$registerForm['duplicate-button'].onclick = () => {
+    alert('사용가능한 아이디 입니다.');
+}
+
+$registerForm['addr-button'].onclick = () => {
+    new daum.Postcode({
+        oncomplete: function (data) {
+
+            var roadAddr = data.roadAddress;
+            var extraRoadAddr = '';
+
+            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                extraRoadAddr += data.bname;
+            }
+            if (data.buildingName !== '' && data.apartment === 'Y') {
+                extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            }
+            if (extraRoadAddr !== '') {
+                extraRoadAddr = ' (' + extraRoadAddr + ')';
+            }
+
+            document.getElementById('postcode').value = data.zonecode; // 우편번호
+            document.getElementById('address').value = roadAddr; // 도로명 주소
+            document.getElementById('detailAddress').value = data.jibunAddress; // 지번 주소
+            document.getElementById('extraAddress').value = extraRoadAddr; // 추가 주소 정보
+
+        }
+    }).open();
+}
+
+
 $registerForm.onsubmit = (e) => {
     e.preventDefault();
 
@@ -26,15 +57,22 @@ $registerForm.onsubmit = (e) => {
     formData.append('birth', $registerForm['birth'].value);
     formData.append('contact', $registerForm['contact'].value);
     xhr.onreadystatechange = () => {
-        if (xhr.readyState !== XMLHttpRequest.DONE ) {
+        if (xhr.readyState !== XMLHttpRequest.DONE) {
 
-        return;
+            return;
         }
-        if (xhr.status < 200 || xhr.status >= 300 ) {
-        alert('요청을 전송하는 도중 오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
-        return;
+        if (xhr.status < 200 || xhr.status >= 300) {
+            alert('요청을 전송하는 도중 오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
+            return;
         }
         const response = JSON.parse(xhr.responseText);
+
+        if (response['result'] === 'success') {
+            alert('이메일 보냈음 인증하셈');
+        }
+        else {
+            alert('무슨무슨 오류로 고소함');
+        }
     };
     xhr.open('POST', location.href);
     xhr.send(formData);

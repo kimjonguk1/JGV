@@ -61,6 +61,14 @@ body {
         gap: 1rem;
         justify-content: flex-start;
 
+        > .gender-container {
+          align-items: center;
+          display: flex;
+          flex-direction: row;
+          gap: 2rem;
+          justify-content: center;
+        }
+
         > .duplicate-button {
           height: 2.125rem;
           width: 4.875rem;
@@ -85,27 +93,28 @@ body {
         justify-content: center;
 
         > .label-container {
-          align-items: center;
+          align-items: flex-start;
           display: flex;
-          flex-direction: row;
+          flex-direction: column;
           justify-content: center;
           gap: 1rem;
 
-          > .add-button {
+          > .--obj-label {
+            > .addr-button {
+              height: 2.125rem;
+              width: 4.875rem;
+              background-color: #333333;
+              border: 0.0625rem solid #333333;
+              border-radius: 0.1875rem;
+              color: #ffffff;
+              cursor: pointer;
+              font-size: 0.875rem;
+              font-weight: 500;
+              vertical-align: center;
+              padding: 0 15px;
+              white-space: nowrap;
 
-            height: 2.125rem;
-            width: 4.875rem;
-            background-color: #333333;
-            border: 0.0625rem solid #333333;
-            border-radius: 0.1875rem;
-            color: #ffffff;
-            cursor: pointer;
-            font-size: 0.875rem;
-            font-weight: 500;
-            vertical-align: center;
-            padding: 0 15px;
-            white-space: nowrap;
-
+            }
           }
         }
 

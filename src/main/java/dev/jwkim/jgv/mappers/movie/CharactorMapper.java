@@ -1,6 +1,6 @@
-package dev.jwkim.jgv.mappers.Movie;
+package dev.jwkim.jgv.mappers.movie;
 
-import dev.jwkim.jgv.entities.Movie.CharactorEntity;
+import dev.jwkim.jgv.entities.movie.CharactorEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

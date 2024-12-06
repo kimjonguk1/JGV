@@ -1,8 +1,8 @@
-package dev.jwkim.jgv.services.Movie;
+package dev.jwkim.jgv.services.movie;
 
 import dev.jwkim.jgv.DTO.Movie_ImageDTO;
-import dev.jwkim.jgv.entities.Movie.*;
-import dev.jwkim.jgv.mappers.Movie.*;
+import dev.jwkim.jgv.entities.movie.*;
+import dev.jwkim.jgv.mappers.movie.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;

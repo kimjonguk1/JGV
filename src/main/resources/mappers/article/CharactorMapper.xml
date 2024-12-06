@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dev.jwkim.jgv.mappers.Movie.CharactorMapper">
-    <insert id="insertCharacter" useGeneratedKeys="true" keyProperty="chNum" parameterType="dev.jwkim.jgv.entities.Movie.CharactorEntity">
+<mapper namespace="dev.jwkim.jgv.mappers.movie.CharactorMapper">
+    <insert id="insertCharacter" useGeneratedKeys="true" keyProperty="chNum" parameterType="dev.jwkim.jgv.entities.movie.CharactorEntity">
         INSERT INTO jgv.charactor (ch_name, ch_job, ch_birth, ch_nation)
         VALUES (#{chName}, #{chJob}, #{chBirth}, #{chNation})
     </insert>

@@ -47,6 +47,13 @@ body > .title-container > span > img {
   gap: 1rem;
   justify-content: flex-start;
 }
+#register-form > table > tr > td[rel=row] > .gender-container, #register-form tbody > tr > td[rel=row] > .gender-container, #register-form td > tr > td[rel=row] > .gender-container, #register-form tr > tr > td[rel=row] > .gender-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  justify-content: center;
+}
 #register-form > table > tr > td[rel=row] > .duplicate-button, #register-form tbody > tr > td[rel=row] > .duplicate-button, #register-form td > tr > td[rel=row] > .duplicate-button, #register-form tr > tr > td[rel=row] > .duplicate-button {
   height: 2.125rem;
   width: 4.875rem;
@@ -69,13 +76,13 @@ body > .title-container > span > img {
   justify-content: center;
 }
 #register-form > table > tr > td[rel=col] > .label-container, #register-form tbody > tr > td[rel=col] > .label-container, #register-form td > tr > td[rel=col] > .label-container, #register-form tr > tr > td[rel=col] > .label-container {
-  align-items: center;
+  align-items: flex-start;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   gap: 1rem;
 }
-#register-form > table > tr > td[rel=col] > .label-container > .add-button, #register-form tbody > tr > td[rel=col] > .label-container > .add-button, #register-form td > tr > td[rel=col] > .label-container > .add-button, #register-form tr > tr > td[rel=col] > .label-container > .add-button {
+#register-form > table > tr > td[rel=col] > .label-container > .--obj-label > .addr-button, #register-form tbody > tr > td[rel=col] > .label-container > .--obj-label > .addr-button, #register-form td > tr > td[rel=col] > .label-container > .--obj-label > .addr-button, #register-form tr > tr > td[rel=col] > .label-container > .--obj-label > .addr-button {
   height: 2.125rem;
   width: 4.875rem;
   background-color: #333333;

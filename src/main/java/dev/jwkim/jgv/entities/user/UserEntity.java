@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Setter
 @Getter
-@EqualsAndHashCode
+@EqualsAndHashCode(of = {"usNum"})
 public class UserEntity {
     private int usNum;
     private String usId;

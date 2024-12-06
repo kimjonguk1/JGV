@@ -13,11 +13,18 @@
     <link rel="stylesheet" href="/user/styles/register.css" type="text/css">
     <script defer th:src="@{'./assets/scripts/index.js'}" type="text/javascript"></script>
     <script defer src="/user/scripts/register.js" type="text/javascript"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+
+    </script>
 </head>
 <body>
 <th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
 <th:block th:replace="~{fragments/common.html :: header}"></th:block>
 <th:block th:replace="~{fragments/common.html :: nav}"></th:block>
+
+
 <div class="frame title-container">
     <h1>기본정보</h1>
     <div class="-spring"></div>
@@ -56,7 +63,7 @@
                            name="id"
                            placeholder="아이디를 입력해주세요.">
                 </label>
-                <button class="duplicate-button" type="button">중복확인</button>
+                <button class="duplicate-button" type="button" name="duplicate-button">중복확인</button>
                 <!--- alert로 중복 알림 설정하기 --->
             </td>
         </tr>
@@ -78,7 +85,8 @@
                                         4자리 이상 연속되는 문자와 숫자는 사용 불가합니다.<br>
                                         휴대전화번호와 4자리 이상 동일한 비밀번호는 사용 불가합니다.<br>
                                         생년월일과 4자리 이상 동일한 비밀번호는 사용 불가합니다.<br>
-                                        연속된 자판배열이 4자리 이상 포함된 비밀번호는 사용 불가합니다.</span>
+                                        연속된 자판배열이 4자리 이상 포함된 비밀번호는 사용 불가합니다.
+                    </span>
                 </label>
             </td>
         </tr>
@@ -103,11 +111,11 @@
                 <span>성별</span>
             </td>
             <td rel="row">
-                <label class="--obj-label">
+                <label class="--obj-label gender-container">
                     <span>남자</span>
-                    <input required type="radio" name="M" class="_field --obj-filed -border">
+                    <input required type="radio" name="gender" value="M" class="_field --obj-filed -border" checked>
                     <span>여자</span>
-                    <input required type="radio" name="F" class="_field --obj-filed -border">
+                    <input required type="radio" name="gender" value="F" class="_field --obj-filed -border">
                 </label>
             </td>
         </tr>
@@ -119,18 +127,20 @@
             </td>
             <td rel="col">
                 <div class="label-container">
-                    <label class="--obj-label">
-                        <input required autocomplete="off" maxlength="100" minlength="8" type="password"
-                               name="passwordCheck" class="_field --obj-filed -border"
-                               placeholder="우편번호를 입력해 주세요.">
+                    <label class="--obj-label" style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 1rem;">
+                        <input class="_field --obj-filed -border" type="text" id="postcode"
+                               placeholder="우편번호를 입력해주세요.">
+                        <button type="button" class="addr-button" name="addr-button">주소검색</button>
                     </label>
-                    <button type="button" class="add-button">주소검색</button>
+                    <label class="--obj-label">
+                        <input class="_field --obj-filed -border" type="text" id="address"
+                               placeholder="주소를 입력해주세요."><br>
+                    </label>
                 </div>
                 <label class="--obj-label">
-                    <input class="_field --obj-filed -border" type="text" style="pointer-events: none;">
-                </label>
-                <label class="--obj-label">
-                    <input class="_field --obj-filed -border" type="text">
+                    <input class="_field --obj-filed -border" type="text" id="detailAddress"
+                           placeholder="상세주소 입력">
+                    <input class="_field --obj-filed -border" type="text" id="extraAddress" placeholder="참고항목">
                 </label>
             </td>
         </tr>
@@ -168,7 +178,7 @@
             <td rel="col">
                 <div>
                     <label data-id="email" class="--obj-label">
-                        <input autocomplete="email" name="email-domain" type="email" class="_field --obj-filed -border"
+                        <input autocomplete="email" name="email" type="email" class="_field --obj-filed -border"
                                placeholder="이메일을 입력해 주세요">
                     </label>
                     <!--                    <span>@</span>-->

@@ -1,7 +1,7 @@
-package dev.jwkim.jgv.controlles.Movie;
+package dev.jwkim.jgv.controlles.movie;
 
-import dev.jwkim.jgv.entities.Movie.MovieEntity;
-import dev.jwkim.jgv.services.Movie.MovieService;
+import dev.jwkim.jgv.entities.movie.MovieEntity;
+import dev.jwkim.jgv.services.movie.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;

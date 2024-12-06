@@ -2,14 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dev.jwkim.jgv.mappers.Movie.CountryMapper">
+<mapper namespace="dev.jwkim.jgv.mappers.movie.CountryMapper">
     <select id="selectCountryIdByName" resultType="Integer">
         SELECT co_num
         FROM jgv.country
         WHERE co_name = #{countryName}
     </select>
 
-    <insert id="insertMovieCountry" useGeneratedKeys="true" keyProperty="coNum" parameterType="dev.jwkim.jgv.entities.Movie.CountryEntity">
+    <insert id="insertMovieCountry" useGeneratedKeys="true" keyProperty="coNum" parameterType="dev.jwkim.jgv.entities.movie.CountryEntity">
         INSERT INTO jgv.country (co_name)
         VALUES (#{coName})
     </insert>
