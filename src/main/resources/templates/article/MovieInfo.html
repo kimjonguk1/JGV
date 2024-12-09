@@ -6,9 +6,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>JGV MovieInfo</title>
-    <link rel="stylesheet" th:href="@{../../article/assets/styles/index.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{../../assets/styles/common.css}" type="text/css">
-    <script defer th:src="@{../../article/assets/scripts/index.js}" type="text/javascript"></script>
+    <link rel="stylesheet" th:href="@{/article/assets/styles/index.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/assets/styles/common.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/article/assets/styles/MovieInfo.css}" type="text/css">
 </head>
 <body>
 
@@ -16,11 +16,42 @@
 <th:block th:replace="~{fragments/common.html :: header}"></th:block>
 <th:block th:replace="~{fragments/common.html :: nav}"></th:block>
 <main id="main" class="frame main">
-    <img src="./assets/images/main/mainimage.gif" alt="메인이미지">
-    <img src="./assets/images/main/mainimage.gif" alt="메인이미지">
-    <img src="./assets/images/main/mainimage.gif" alt="메인이미지">
-    <img src="./assets/images/main/mainimage.gif" alt="메인이미지">
-    <img src="./assets/images/main/mainimage.gif" alt="메인이미지">
+    <div class="movie-detail-container">
+        <div class="movie-header">
+            <div class="poster">
+                <img src="poster.jpg" alt="영화 포스터">
+            </div>
+            <div class="movie-info">
+                <h1 class="title">소방관</h1>
+                <h2 class="subtitle">FIREFIGHTERS</h2>
+                <div class="stats">
+                    <p>예매율: <span class="booking-rate">13.2%</span></p>
+                    <p>평점: <span class="rating">94%</span></p>
+                </div>
+                <div class="details">
+                    <p>감독: <span class="director">곽경택</span></p>
+                    <p>배우: <span class="actors">주원, 곽도원, 이유영</span></p>
+                    <p>장르: <span class="genre">드라마</span></p>
+                    <p>기본 정보: <span class="info">12세이상관람가, 106분, 한국</span></p>
+                    <p>개봉: <span class="release-date">2024.12.04</span></p>
+                </div>
+                <div class="buttons">
+                    <button class="btn reserve">예매하기</button>
+                </div>
+            </div>
+        </div>
+        <div class="movie-synopsis">
+            <h3>줄거리</h3>
+            <p>
+                살리기 위해, 살아남기 위해 하루하루가 마지막 현장인 소방관 팀은
+                열악한 환경 속에서도 화재 진압과 전원 구조라는 단 하나의 목표로 임기를 다한다.
+            </p>
+            <p>
+                어느 날, 다급하게 119 신고 전화로 홍제동에 화재가 발생했다는 긴급 상황이 접수되자
+                팀원들은 위기를 직감하는데...
+            </p>
+        </div>
+    </div>
 </main>
 <th:block th:replace="~{fragments/common.html :: footer}"></th:block>
 

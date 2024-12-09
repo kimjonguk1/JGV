@@ -3,6 +3,7 @@ package dev.jwkim.jgv.controlles.Movie;
 import dev.jwkim.jgv.DTO.Movie_ImageDTO;
 import dev.jwkim.jgv.services.Movie.MovieService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,8 +55,10 @@ public class MoiveListController {
         return mav;
     }
 
-    @RequestMapping(value = "/")
-    public String getMovieDetail(@RequestParam(value = "id", required = true) Integer id) {
-        return null;
+    @RequestMapping(value = "/movieList/movieInfo/{id}")
+    public ModelAndView getMovieDetail(@PathVariable("id") Integer id) {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("article/MovieInfo");
+        return mav;
     }
 }
