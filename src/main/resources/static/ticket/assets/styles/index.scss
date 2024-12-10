@@ -189,7 +189,7 @@
 
       }
 
-      .infor-container {
+      .info-container {
         margin: 1rem;
         width: 50%;
         display: flex;
@@ -1074,8 +1074,6 @@
       padding: 1rem 0 1rem 0;
 
       > div {
-
-
         &.agree-div1 {
           width: 23.15rem;
           display: flex;
@@ -1087,7 +1085,7 @@
           font-size: 0.75rem;
           font-weight: 400;
 
-          > .agree-first {
+          > .agree-all {
             font-weight: 700;
             padding-bottom: 0.2rem;
           }
@@ -1202,12 +1200,15 @@
       box-sizing: border-box;
       cursor: pointer;
       color: #cccccc;
-
+      &.seat-right-button-after{
+        background-color: red;
+      }
 
       > .arrows {
         box-sizing: border-box;
         height: 3rem;
         width: 3rem;
+
 
         & .seat-right-text {
           color: #cccccc;
