@@ -1,0 +1,214 @@
+@charset "UTF-8";
+@import "global";
+
+* {
+  list-style-type: none;
+  margin-inline: 0;
+  margin-block: 0;
+  padding-inline: 0;
+}
+
+body {
+  @include flex(column, center, center);
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+
+  > .frame {
+    @include minmaxWidth(980px);
+  }
+}
+
+#advertisement {
+  @include minmaxWidth(100%);
+  @include minmaxHeight(80px);
+  @include flex(column, center, center, 0);
+  background-color: #000000;
+}
+
+#header {
+  @include minmaxHeight(112px);
+  @include flex(row, center, flex-start, 0);
+
+  > .info-wrapper {
+    @include flex(row, center, flex-end, 2rem);
+
+    > .item {
+      > a {
+        @include flex(column, center, center, 0);
+        text-decoration: none;
+
+
+        > img {
+          width: 36px;
+          cursor: pointer;
+        }
+
+        > .text {
+          color: rgb(102, 102, 102);
+          font-size: 13px;
+          font-weight: 400;
+          left: 18px;
+        }
+      }
+
+    }
+  }
+
+  > h1 {
+    > .text {
+      font-size: 16px;
+      font-weight: 300;
+      height: 24px;
+      width: 202.641px;
+      line-height: 24px;
+      letter-spacing: 5.008px;
+
+    }
+
+    > a {
+      text-decoration: none;
+
+      > img {
+        height: 53px;
+        width: 117px;
+      }
+    }
+  }
+}
+
+#nav {
+  @include minmaxHeight(50px);
+  @include minmaxWidth(100%);
+  @include flex(row, center, center, 0);
+  border-top: 1px solid #cacaca;
+  border-bottom: 2px solid #FB4357;
+
+  > .nav-wrapper {
+    @include flex(row, center, flex-start, 1rem);
+    @include minmaxWidth(980px);
+
+
+    > .search-wrapper {
+      @include flex(row, center, center, 0);
+      border-right: 0.0625rem solid #cacaca;
+      border-left: 0.0625rem solid #cacaca;
+      padding: 0 0.6rem;
+
+
+      > .search {
+        align-items: center;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+
+
+        > .keyword {
+          height: 24px;
+          width: 200px;
+          border: none;
+          line-height: 24px;
+          font-size: 16px;
+          font-weight: 500;
+          outline: none;
+
+          &::placeholder {
+            color: #000000;
+            font-weight: 600;
+          }
+
+        }
+
+        > button {
+
+          background-color: transparent;
+          border: 0.0625rem solid transparent;
+          padding: 0.2rem;
+          position: absolute;
+
+          > img {
+            width: 1.8rem;
+          }
+        }
+
+      }
+
+    }
+
+    > .nav-menu {
+      @include flex(row, center, flex-start, 3rem);
+
+      > .item {
+
+        > h2 {
+          font-size: 16px;
+          white-space: nowrap;
+
+          > a {
+            color: #000000;
+            text-decoration: none;
+          }
+        }
+      }
+
+    }
+  }
+}
+
+#footer {
+  @include minmaxHeight(432px);
+  @include minmaxWidth(100%);
+  @include flex(column, center, flex-end, 0);
+  background-color: #f8f8f8;
+  color: #666666;
+
+  > .footer-wrapper {
+    @include minmaxHeight(150px);
+    @include minmaxWidth(980px);
+
+    > .policy-container {
+      @include flex(row, flex-start, center, 0);
+      @include minmaxHeight(19px);
+      border-bottom: 0.0625rem solid #ebebeb;
+      padding-bottom: 1.7rem;
+
+      > .policy-list {
+        @include flex(row, flex-start, center, 1rem);
+
+        > .item {
+
+          > a {
+            color: #666666;
+            white-space: nowrap;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 700;
+
+            > b {
+              color: #222222;
+              font-weight: 700;
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #article {
+    @include flex(column, flex-start, flex-end, 0);
+    @include minmaxHeight(80px);
+    padding-top: 1.7rem;
+
+    & a {
+      color: #666666;
+    }
+
+    > .company {
+      > .text {
+        color: #666666;
+        font-size: 0.7rem;
+        font-weight: 600;
+      }
+    }
+  }
+}

@@ -3,14 +3,191 @@
 
 body {
   font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+
+  > .title-container {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    margin-top: 2rem;
+    padding: 1rem;
+
+    > h1 {
+      font-weight: 400;
+    }
+
+    > .-spring {
+      flex-grow: 1;
+    }
+
+    > span {
+      top: 5rem;
+      font-size: 0.9rem;
+      font-weight: 300;
+
+      > img {
+        width: 0.6rem;
+      }
+    }
+  }
+
+}
+
+#register-form {
+  width: 100%;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  > table, tbody, td, tr {
+    border-bottom: 1px solid #dddddd;
+    border-collapse: collapse;
+    padding: 2rem;
+
+
+    > tr {
+      > td {
+        > img {
+          width: 0.9rem;
+        }
+      }
+
+      > td[rel="row"] {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        justify-content: flex-start;
+
+        > .gender-container {
+          align-items: center;
+          display: flex;
+          flex-direction: row;
+          gap: 2rem;
+          justify-content: center;
+        }
+
+        > .duplicate-button {
+          height: 2.125rem;
+          width: 4.875rem;
+          background-color: #333333;
+          border: 0.0625rem solid #333333;
+          border-radius: 0.1875rem;
+          color: #ffffff;
+          cursor: pointer;
+          font-size: 0.875rem;
+          font-weight: 500;
+          vertical-align: center;
+          padding: 0 15px;
+          white-space: nowrap;
+        }
+      }
+
+      > td[rel="col"] {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        justify-content: center;
+
+        > .label-container {
+          align-items: flex-start;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 1rem;
+
+          > .--obj-label {
+            > .addr-button {
+              height: 2.125rem;
+              width: 4.875rem;
+              background-color: #333333;
+              border: 0.0625rem solid #333333;
+              border-radius: 0.1875rem;
+              color: #ffffff;
+              cursor: pointer;
+              font-size: 0.875rem;
+              font-weight: 500;
+              vertical-align: center;
+              padding: 0 15px;
+              white-space: nowrap;
+
+            }
+          }
+        }
+
+        > span {
+          color: #666666;
+        }
+
+        > div {
+          align-items: center;
+          display: flex;
+          flex-direction: row;
+          gap: 0.5rem;
+          justify-content: flex-start;
+
+          > span {
+            color: #666666;
+          }
+        }
+      }
+
+
+      > td:nth-child(odd) {
+        background-color: #f8f8f8;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  > .--obj-check-label {
+
+    cursor: pointer;
+    user-select: none;
+
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+
+  > .button-container {
+    height: 5rem;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+    justify-content: center;
+
+    > button {
+      border: 0.0625rem solid #333333;
+      border-radius: 0.2rem;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      height: 2.375rem;
+      padding: 0 2rem;
+      width: 10rem;
+      white-space: nowrap;
+    }
+
+    > .cancel {
+      background-color: transparent;
+    }
+
+    > .submit {
+      background-color: #333333;
+      color: #ffffff;
+    }
+  }
+
 }
 
 
-table, tbody, td, tr {
-  border: 1px solid #000000;
-  border-collapse: collapse;
-}
 
-tr > td:nth-child(odd) {
-  background-color: red;
-}
+

@@ -11,6 +11,7 @@
     <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}" type="text/css">
     <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}" type="text/css">
     <script defer th:src="@{'./assets/scripts/index.js'}"></script>
+    <script defer th:src="@{'../../assets/scripts/common.js'}"></script>
 </head>
 <body>
 <th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
@@ -120,24 +121,165 @@
     </div>
     <div class="information" data-id="cinema">
         <div class="cinema-info">
-            <div class="day-containers">
-                <div class="day-container">
-                    <div class="day">hi</div>
+            <div class="cinema-header">
+                <div class="day-containers">
+                    <button class="before"></button>
+                    <ul class="day-container">
+                        <li class="item select">
+                            <div class="small-container">
+                                <div class="day">12월</div>
+                                <div class="day">목</div>
+                            </div>
+                            <div class="day">05</div>
+                        </li>
+                        <li class="item">
+                            <div class="small-container">
+                                <div class="day">12월</div>
+                                <div class="day">목</div>
+                            </div>
+                            <div class="day">05</div>
+                        </li>
+                        <li class="item">
+                            <div class="small-container">
+                                <div class="day">12월</div>
+                                <div class="day">목</div>
+                            </div>
+                            <div class="day">05</div>
+                        </li>
+                        <li class="item">
+                            <div class="small-container">
+                                <div class="day">12월</div>
+                                <div class="day">목</div>
+                            </div>
+                            <div class="day">05</div>
+                        </li>
+                        <li class="item">
+                            <div class="small-container">
+                                <div class="day">12월</div>
+                                <div class="day">목</div>
+                            </div>
+                            <div class="day">05</div>
+                        </li>
+                        <li class="item">
+                            <div class="small-container">
+                                <div class="day">12월</div>
+                                <div class="day">목</div>
+                            </div>
+                            <div class="day">05</div>
+                        </li>
+                        <li class="item">
+                            <div class="small-container">
+                                <div class="day">12월</div>
+                                <div class="day">목</div>
+                            </div>
+                            <div class="day">05</div>
+                        </li>
+                        <li class="item">
+                            <div class="small-container">
+                                <div class="day">12월</div>
+                                <div class="day">목</div>
+                            </div>
+                            <div class="day">05</div>
+                        </li>
+                    </ul>
+                    <button class="after"></button>
                 </div>
-                <div class="day-container">
-                    <div class="day">hi</div>
-                </div>
-                <div class="day-container">
-                    <div class="day">hi</div>
-                </div>
-                <div class="day-container">
-                    <div class="day">hi</div>
+                <div class="cinema-info-detail">
+                    <div class="cinema-detail">관람가격 안내</div>
+                    <div class="cinema-detail">관람등급 안내</div>
                 </div>
             </div>
             <div class="notice">* 시간을 클릭하시면 빠른 예매를 할 수 있습니다.</div>
             <ul class="items">
                 <li class="item">
-
+                    <div class="movie-container">
+                        <img src="data:image/svg+xml;charset=UTF-8, %3csvg width='20' height='20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23ageAll)'%3e%3cpath d='M17.745 20H2.256A2.256 2.256 0 0 1 0 17.745V2.255A2.255 2.255 0 0 1 2.256 0h15.49A2.253 2.253 0 0 1 20 2.255v15.49A2.254 2.254 0 0 1 17.745 20Z' fill='%23269C56'/%3e%3cpath d='M5.74 15.076 5.5 13.56H3.748l-.24 1.516H1.24v-.027L3.383 4.898h2.47l2.144 10.145v.027l-2.256.006ZM4.627 8.18l-.56 3.462h1.116L4.626 8.18ZM8.402 15.078V4.904h2.264v8.136h2.663v2.038H8.402ZM13.808 15.076V4.904h2.263v8.136h2.664v2.038l-4.927-.002Z' fill='%23fff'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='ageAll'%3e%3cpath fill='%23fff' d='M0 0h20v20H0z'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
+                             alt="all" class="rating">
+                        <span class="text">플레이브 팬 콘서트 ‘헬로, 아스테룸!’ 앙코르 인 시네마</span>
+                        <span class="able">상영중</span>
+                        <span class="long-text">/194분/2024.12.04 개봉</span>
+                    </div>
+                    <div class="screen-container">
+                        <div class="theater-info">
+                            <img class="arrow" src="https://img.cgv.co.kr/r2014/images/common/ico/ico_arrow03.png"
+                                 alt="화살표">
+                            <span class="text">2D</span>
+                            <img src="https://img.cgv.co.kr/r2014/images/common/bg/bg_li_vline.gif" alt="작대기">
+                            <span class="imax text"></span>
+                            <img src="https://img.cgv.co.kr/r2014/images/common/bg/bg_li_vline.gif" alt="작대기">
+                            <span class="text">총 166석</span>
+                        </div>
+                        <div class="time-table-container">
+                            <div class="time-table">
+                                <div class="time">18:20</div>
+                                <div class="seat">137석</div>
+                            </div>
+                            <div class="time-table">
+                                <div class="time">18:20</div>
+                                <div class="seat">137석</div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="movie-container">
+                        <img src="data:image/svg+xml;charset=UTF-8, %3csvg width='20' height='20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23ageAll)'%3e%3cpath d='M17.745 20H2.256A2.256 2.256 0 0 1 0 17.745V2.255A2.255 2.255 0 0 1 2.256 0h15.49A2.253 2.253 0 0 1 20 2.255v15.49A2.254 2.254 0 0 1 17.745 20Z' fill='%23269C56'/%3e%3cpath d='M5.74 15.076 5.5 13.56H3.748l-.24 1.516H1.24v-.027L3.383 4.898h2.47l2.144 10.145v.027l-2.256.006ZM4.627 8.18l-.56 3.462h1.116L4.626 8.18ZM8.402 15.078V4.904h2.264v8.136h2.663v2.038H8.402ZM13.808 15.076V4.904h2.263v8.136h2.664v2.038l-4.927-.002Z' fill='%23fff'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='ageAll'%3e%3cpath fill='%23fff' d='M0 0h20v20H0z'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
+                             alt="all" class="rating">
+                        <span class="text">플레이브 팬 콘서트 ‘헬로, 아스테룸!’ 앙코르 인 시네마</span>
+                        <span class="able">상영중</span>
+                        <span class="long-text">/194분/2024.12.04 개봉</span>
+                    </div>
+                    <div class="screen-container">
+                        <div class="theater-info">
+                            <img class="arrow" src="https://img.cgv.co.kr/r2014/images/common/ico/ico_arrow03.png"
+                                 alt="화살표">
+                            <span class="text">2D</span>
+                            <img src="https://img.cgv.co.kr/r2014/images/common/bg/bg_li_vline.gif" alt="작대기">
+                            <span class="imax text"></span>
+                            <img src="https://img.cgv.co.kr/r2014/images/common/bg/bg_li_vline.gif" alt="작대기">
+                            <span class="text">총 166석</span>
+                        </div>
+                        <div class="time-table-container">
+                            <div class="time-table">
+                                <div class="time">18:20</div>
+                                <div class="seat">137석</div>
+                            </div>
+                            <div class="time-table">
+                                <div class="time">18:20</div>
+                                <div class="seat">137석</div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="movie-container">
+                        <img src="data:image/svg+xml;charset=UTF-8, %3csvg width='20' height='20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23ageAll)'%3e%3cpath d='M17.745 20H2.256A2.256 2.256 0 0 1 0 17.745V2.255A2.255 2.255 0 0 1 2.256 0h15.49A2.253 2.253 0 0 1 20 2.255v15.49A2.254 2.254 0 0 1 17.745 20Z' fill='%23269C56'/%3e%3cpath d='M5.74 15.076 5.5 13.56H3.748l-.24 1.516H1.24v-.027L3.383 4.898h2.47l2.144 10.145v.027l-2.256.006ZM4.627 8.18l-.56 3.462h1.116L4.626 8.18ZM8.402 15.078V4.904h2.264v8.136h2.663v2.038H8.402ZM13.808 15.076V4.904h2.263v8.136h2.664v2.038l-4.927-.002Z' fill='%23fff'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='ageAll'%3e%3cpath fill='%23fff' d='M0 0h20v20H0z'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
+                             alt="all" class="rating">
+                        <span class="text">플레이브 팬 콘서트 ‘헬로, 아스테룸!’ 앙코르 인 시네마</span>
+                        <span class="able">상영중</span>
+                        <span class="long-text">/194분/2024.12.04 개봉</span>
+                    </div>
+                    <div class="screen-container">
+                        <div class="theater-info">
+                            <img class="arrow" src="https://img.cgv.co.kr/r2014/images/common/ico/ico_arrow03.png"
+                                 alt="화살표">
+                            <span class="text">2D</span>
+                            <img src="https://img.cgv.co.kr/r2014/images/common/bg/bg_li_vline.gif" alt="작대기">
+                            <span class="imax text"></span>
+                            <img src="https://img.cgv.co.kr/r2014/images/common/bg/bg_li_vline.gif" alt="작대기">
+                            <span class="text">총 166석</span>
+                        </div>
+                        <div class="time-table-container">
+                            <div class="time-table">
+                                <div class="time">18:20</div>
+                                <div class="seat">137석</div>
+                            </div>
+                            <div class="time-table">
+                                <div class="time">18:20</div>
+                                <div class="seat">137석</div>
+                            </div>
+                        </div>
+                    </div>
                 </li>
             </ul>
             <div class="notice-footer">[공지] 입장 지연에 따른 관람 불편을 최소화하기 위해 영화는 10분 후 상영이 시작됩니다.</div>
@@ -161,10 +303,34 @@
                 <span class="stretch"></span>
                 <a href="#" class="find">실시간 빠른 길 찾기</a>
             </div>
+            <div class="bus detail">
+                <p>1) 지하철&nbsp;: 3호선-북구청역 1번 출구에서 약 750M</p>
+                <p>2) 버스</p>
+                <p>-이마트칠성점앞 : 300, 349, 836, 동구2, 칠곡2</p>
+                <p>-오페라삼정그린코아APT : 300, 349, 836, 동구2, 북구4, 칠곡2</p>
+                <p>-대구은행제2본점앞 : 300, 323-1, 523, 708, 730, 동구2, 북구4,칠곡2</p>
+            </div>
             <div class="header">
                 <span class="car"></span>
                 <span class="text">주차안내</span>
                 <span class="stretch"></span>
+            </div>
+            <div class="car detail">
+                <p>
+                    '■ 주차 안내<br>
+                    &nbsp;- 스펙트럼시티 지하 4층, 5층 이용 시, 무료주차 가능<br>
+                    &nbsp; (지상주차장 및 지하2층,3층은 이마트 전용주차장으로 주차요금 발생함)<br>
+                    &nbsp;- 지하주차장 이용 시, 2.2M 이상의 차량은 입차제한 있음<br>
+                    <br>
+                    ■ 주차 확인(인증 방법)<br>
+                    - 주차정산 키오스크에서 관람티켓 바코드 인증하여 주차할인 등록(키오스크 위치: 4층 CGV로비, 지하 4층/지하5층 엘리베이터 앞)<br>
+                    <br>
+                    ■ 주차 요금<br>
+                    - 영화 관람 시 입차 시간 기준 3시간 30분 무료(이후 최초 30분 1,000원, 추가 10분당 500원)<br>
+                    - 영화 관람편 수 무관 무료 주차시간 적용 동일<br>
+                    - 사전정산 미진행 후 출차 시에는 환불 불가<br>
+                    &nbsp;
+                </p>
             </div>
         </div>
         <div class="advertisement-container">

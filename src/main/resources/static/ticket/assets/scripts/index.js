@@ -2,6 +2,7 @@
 const $mainPayment = document.getElementById("main-payment");
 const $mainSeat = document.getElementById("main-seat");
 const $paymentSection = document.getElementById("payment-section");
+const $main = document.querySelector(".main");
 let t = 0;
 let m = 0;
 
@@ -57,8 +58,8 @@ const $seatRightButtonBefore = $controlBar.querySelector(':scope > .space > .sea
 const $seatRightButtonAfter = $controlBar.querySelector(':scope > .space > .seat-right-button-after');
 const $LeftButton = $controlBar.querySelector(':scope > .space > .left-button');
 const $paymentButton = $controlBar.querySelector(':scope > .space > .payment-button');
-const $payForm = document.getElementById('pay-form');
-const $realCancel = $payForm.querySelector(':scope > .real-cancel');
+const $payButton = document.getElementById('pay-button');
+const $realCancel = $payButton.querySelector(':scope > .real-cancel');
 
 seats.forEach((seat) => {
     seat.addEventListener('click', () => {
@@ -69,7 +70,7 @@ seats.forEach((seat) => {
             $seatNumber.textContent = `${selectedSeats.join(', ')}`;
         } else {
             for (j = 0; j < m; j++) {
-                if (seat.id == selectedSeats[j]) {
+                if (seat.id === selectedSeats[j]) {
                     t++;
                     seat.classList.remove('selected-seat');
                     const index = selectedSeats.indexOf(seat.id);
@@ -139,7 +140,12 @@ adults.forEach((radio) => {
             $seatPricePay.textContent = '';
             $seatPrice.textContent = '';
             $seatPriceAdd.textContent = '';
+            $seatHuman.textContent = `${selectedHuman.join(', ')}`;
+
         }
+        $seatRightButtonBefore.style.display = 'flex';
+        $seatRightButtonAfter.style.display = 'none';
+        $seatRightButtonBefore.style.background = 'rgb(51, 51, 51)';
 
         seats.forEach((seat) => {
             seat.classList.remove('selected-seat');
@@ -178,7 +184,7 @@ const $paycoContainer = $mainPayment.querySelector(':scope > .left-container > .
 const $cultureCard = document.querySelector('input[name="culture-card"]');
 const $noneCulturePayText = $mainPayment.querySelector(':scope > .left-container >.simple-pay-container > .naver-pay-container > .none-culture-pay-text')
 const $CulturePayText = $mainPayment.querySelector(':scope > .left-container >.simple-pay-container > .naver-pay-container > .culture-pay-text')
-let page = 0;
+let page = 1;
 
 $paymentCheck.forEach((radio) => {
     radio.addEventListener('change', () => {
@@ -200,15 +206,15 @@ $paymentCheck.forEach((radio) => {
                         $simplePayTextContainers.forEach(container => {
                             container.style.display = 'none';
                             if (pay2 === "NAVERPAY") {
-                                $naverPayContainer.style.display = 'block';
+                                $naverPayContainer.style.display = 'flex';
                             } else if (pay2 === "SMILEPAY") {
-                                $smilePaynaverContainer.style.display = 'block';
+                                $smilePaynaverContainer.style.display = 'flex';
                             } else if (pay2 === "SSGPAY") {
-                                $ssgPayContainer.style.display = 'block';
+                                $ssgPayContainer.style.display = 'flex';
                             } else if (pay2 === "KAKAOPAY") {
-                                $kakaoPayContainer.style.display = 'block';
+                                $kakaoPayContainer.style.display = 'flex';
                             } else if (pay2 === "PAYCO") {
-                                $paycoContainer.style.display = 'block';
+                                $paycoContainer.style.display = 'flex';
                             }
                         });
                     })
@@ -231,18 +237,6 @@ $cultureCard.addEventListener('change', () => {
     }
 })
 
-$seatRightButtonAfter.onclick = () => {
-    $mainPayment.style.display = 'flex';
-    $mainSeat.style.display = 'none';
-    $seatRightButtonBefore.style.display = 'flex';
-    $seatRightButtonAfter.style.display = 'none';
-    $seatRightButtonBefore.style.background = 'rgb(51, 51, 51)';
-    $seatRightButtonBefore.style.display = 'none';
-    $paymentButton.style.display = 'flex';
-    $priceContent.style.display = 'none';
-    $priceTitle.style.display = 'none';
-    page = 3;
-};
 
 $LeftButton.onclick = () => {
     if (page === 3) {
@@ -254,22 +248,80 @@ $LeftButton.onclick = () => {
         $priceTitle.style.display = 'flex';
         page = 2;
     } else if (page === 2) {
+        $main.style.display = 'flex';
+        $mainSeat.style.display = 'none';
+        page = 1;
+    } else if (page === 1) {
+        $seatRightButtonAfter.style.display = 'flex';
+        $seatRightButtonBefore.style.display = 'none';
+        page = 1
     }
 };
 
 $paymentButton.onclick = () => {
-    if (page === 3 && pay === "card" && $card.value !== "카드를 선택해주세요."){
+    if (page === 3 && pay === "card" && $card.value !== "카드를 선택해주세요.") {
         $paymentSection.style.display = 'flex';
         $mainPayment.style.pointerEvents = 'none';
+    } else if (page === 3 && pay === "card" && $card.value === "카드를 선택해주세요.") {
+        alert("결제수단을 선택해주세요.")
     }
+
     if (page === 3 && pay !== "card") {
         $paymentSection.style.display = 'flex';
         $mainPayment.style.pointerEvents = 'none';
     }
 }
-$realCancel.addEventListener('click', () => {
+$realCancel.onclick = () => {
     if (page === 3) {
         $paymentSection.style.display = 'none';
         $mainPayment.style.pointerEvents = 'auto';
     }
-})
+}
+
+const $theaterTheater = $theaterContent.querySelector('[name=theater-theater]');
+const $theaterDay = $theaterContent.querySelector('[name=theater-day]');
+const $theaterTime = $theaterContent.querySelector('[name=theater-time]');
+const $theaterCinema = $theaterContent.querySelector('[name=theater-cinema]');
+
+$seatRightButtonAfter.onclick = () => {
+    if (page === 1) {
+        $main.style.display = 'none';
+        $mainSeat.style.display = 'flex';
+        $seatRightButtonBefore.style.display = 'flex';
+        $seatRightButtonAfter.style.display = 'none';
+        page = 2;
+    } else if (page === 2) {
+        $mainPayment.style.display = 'flex';
+        $mainSeat.style.display = 'none';
+        $seatRightButtonBefore.style.display = 'flex';
+        $seatRightButtonAfter.style.display = 'none';
+        $seatRightButtonBefore.style.background = 'rgb(51, 51, 51)';
+        $seatRightButtonBefore.style.display = 'none';
+        $paymentButton.style.display = 'flex';
+        $priceContent.style.display = 'none';
+        $priceTitle.style.display = 'none';
+        page = 3;
+    }
+    const xhr = new XMLHttpRequest();
+    const url = new URL(location.href); //ticket
+    url.searchParams.set('thName', $theaterTheater.value);
+    url.searchParams.set('ciName', $theaterCinema.value);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState !== XMLHttpRequest.DONE) {
+            return;
+        }
+        if (xhr.status < 200 || xhr.status >= 300) {
+            return;
+        }
+        const response = JSON.parse(xhr.responseText);
+        const result = response['result'];
+        const result2 = response['results'];
+        console.log(result);
+        console.log(result2);
+    }
+
+
+
+    xhr.open('GET', url.toString()); //ticket/ciName=2관&thName=CGV대구
+    xhr.send();
+}

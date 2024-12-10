@@ -44,7 +44,7 @@
 - /예매/결제 -> 사용자가 선택한 예매를 결제
 
 ## ERD
-<img src="https://tricky-bloom-e01.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fbba77931-e5b0-47ad-bf2b-0d24647cd0c4%2F1d835dad-57e4-4c60-ada5-d88a6736f506%2Ferd.png?table=block&id=140221d7-8586-8014-97c8-ed8e8f8cebee&spaceId=bba77931-e5b0-47ad-bf2b-0d24647cd0c4&width=1420&userId=&cache=v2">
+<img src="https://img.notionusercontent.com/s3/prod-files-secure%2Fbba77931-e5b0-47ad-bf2b-0d24647cd0c4%2Fc9bcf8ca-95a3-4400-bea5-3b8252e163e2%2Ferd.png/size/w=1420?exp=1733387405&sig=NANjttxYuuVZxz6YQJ32RL4lcnW3ZA_sv9co8MMLEww">
 
 ## 노션 링크
 <a href="https://tricky-bloom-e01.notion.site/Jongyul-Pirates-Movie-Theater-130221d78586808aa580cbaf5e7a7e6f?pvs=4" target="_blank">

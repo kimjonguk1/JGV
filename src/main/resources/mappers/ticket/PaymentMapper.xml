@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dev.jwkim.jgv.mappers.Ticket.PaymentMapper">
+<mapper namespace="dev.jwkim.jgv.mappers.ticket.PaymentMapper">
 
-    <insert id="insertPayment" parameterType="dev.jwkim.jgv.entities.Ticket.PaymentEntity">
+    <insert id="insertPayment" parameterType="dev.jwkim.jgv.entities.ticket.PaymentEntity">
       insert into `jgv`.`payment`(pa_num, pa_price, pa_state, pa_created_at, pa_deleted_at, us_num, me_num)
           values(#{paNum}, #{paPrice}, #{paState}, #{paCreatedAt}, #{paDeletedAt}, #{usNum}, #{meNum})
     </insert>

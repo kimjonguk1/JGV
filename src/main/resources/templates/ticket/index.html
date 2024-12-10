@@ -11,7 +11,7 @@
     <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}" type="text/css">
     <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}" type="text/css">
     <script defer th:src="@{'/ticket/assets/scripts/index.js'}"></script>
-
+    <script defer th:src="@{'../../assets/scripts/common.js'}"></script>
 </head>
 <body>
 <th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
@@ -26,14 +26,63 @@
             <img class="image" alt="예매다시하기" th:src="@{'/ticket/assets/images/retry.png'}">
             &nbsp 예매 다시하기</a>
     </div>
-    <div class="main-container" >
+    <div class="main-container">
         <div class="advertisement-container">
             <a href="#" target="_self" class="advertisement-move">
                 <img src="https://adimg.cgv.co.kr/images/202411/MyHero/1119_160x300.jpg" alt="배너"
                      class="advertisement">
             </a>
         </div>
-        <div class="main"></div>
+        <div class="main">
+            <div class="section movie">
+                <div class="header">
+                    <div class="movie"></div>
+                </div>
+                <div class="body">
+                    <div class="content">
+                        <div class="order">
+                            <div class="text ">예매율순</div>
+                            <div class="text select">가나다순</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section theater">
+                <div class="header">
+                    <div class="theater"></div>
+                </div>
+                <div class="body theater">
+                    <div class="content">
+                        <div class="region-container">
+                            <div class="region">서울</div>
+                            <div class="region">대구</div>
+                        </div>
+                        <div class="theater-container">
+                            <div class="theater">대구</div>
+                            <div class="theater">대구수성</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section day">
+                <div class="header">
+                    <div class="day"></div>
+                </div>
+                <div class="body">
+                    <div class="content">
+                    </div>
+                </div>
+            </div>
+            <div class="section time">
+                <div class="header">
+                    <div class="time"></div>
+                </div>
+                <div class="body">
+                    <div class="content">
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="main-seat" style="display: none">
             <div class="seat-div">
                 <div class="content">인원/좌석</div>
@@ -109,21 +158,24 @@
                 </div>
             </div>
         </div>
-        <div id="main-payment"  style="display: none">
+        <div id="main-payment" style="display: none">
             <div class="left-container">
                 <div class="payment-bar">결제 수단</div>
                 <div class="payment-container" id="payment-container">
                     <label>
                         <label class="payment-label">
-                            <input class="payment-check card-check" name="payment-check" type="radio" value="card" checked>
+                            <input class="payment-check card-check" name="payment-check" type="radio" value="card"
+                                   checked>
                             신용카드
                         </label>
                         <label class="payment-label">
-                            <input class="payment-check" id="cellphone" name="payment-check" type="radio" value="cellPhone">
+                            <input class="payment-check" id="cellphone" name="payment-check" type="radio"
+                                   value="cellPhone">
                             휴대폰 결제
                         </label>
                         <label class="payment-label">
-                            <input class="payment-check" id="simple-pay" name="payment-check" type="radio" value="simple-pay">
+                            <input class="payment-check" id="simple-pay" name="payment-check" type="radio"
+                                   value="simple-pay">
                             간편결제
                         </label>
                         <label class="payment-label">
@@ -192,7 +244,8 @@
                 <div class="simple-pay-container pay-containers" style="display: none">
                     <label class="label-radio">
                         <label class="simple-pay-label">
-                            <input class="simple-pay-check naver-check" name="simple-pay-check" type="radio" value="NAVERPAY"
+                            <input class="simple-pay-check naver-check" name="simple-pay-check" type="radio"
+                                   value="NAVERPAY"
                                    checked>
                             네이버페이
                         </label>
@@ -381,7 +434,7 @@
             </a>
         </div>
     </div>
-    <div id="payment-section" style="display: none;" >
+    <div id="payment-section" style="display: none;">
         <h4>예매내역 확인</h4>
         <div class="pay-sec-container">
             <div class="title">
@@ -472,12 +525,11 @@
                 </div>
             </div>
         </div>
-        <form id="pay-form" method="get">
+        <span id="pay-button">
             <button type="submit" name="real-pay" class="real-pay">결제하기</button>
             <button type="button" name="real-cancel" class="real-cancel">취소</button>
-        </form>
+        </span>
     </div>
-
 </main>
 <section class="control-bar" id="control-bar">
     <form class="space">
@@ -503,10 +555,8 @@
         </div>
         <div class="theater-content">
             <span><a>대구 CGV</a></span>
-<!--            <span><a th:text="${theater.getThName()}"></a></span>-->
             <span>2024.01.01(월) 16:43</span>
             <span>2관 5층</span>
-<!--            <span th:text="${cinema.getCiName()}"></span>-->
         </div>
         <div class="seat-title">
             <span>좌석명</span>

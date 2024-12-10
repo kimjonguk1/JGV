@@ -1,0 +1,293 @@
+* {
+  list-style-type: none;
+  margin-inline: 0;
+  margin-block: 0;
+  padding-inline: 0;
+}
+
+body {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+body > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+body > .frame {
+  width: 980px;
+  max-width: 980px;
+  min-width: 980px;
+}
+
+#advertisement {
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  height: 80px;
+  max-height: 80px;
+  min-height: 80px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  background-color: #000000;
+}
+#advertisement > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+#header {
+  height: 112px;
+  max-height: 112px;
+  min-height: 112px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: flex-start;
+}
+#header > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#header > .info-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  justify-content: flex-end;
+}
+#header > .info-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#header > .info-wrapper > .item > a {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  text-decoration: none;
+}
+#header > .info-wrapper > .item > a > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#header > .info-wrapper > .item > a > img {
+  width: 36px;
+  cursor: pointer;
+}
+#header > .info-wrapper > .item > a > .text {
+  color: rgb(102, 102, 102);
+  font-size: 13px;
+  font-weight: 400;
+  left: 18px;
+}
+#header > h1 > .text {
+  font-size: 16px;
+  font-weight: 300;
+  height: 24px;
+  width: 202.641px;
+  line-height: 24px;
+  letter-spacing: 5.008px;
+}
+#header > h1 > a {
+  text-decoration: none;
+}
+#header > h1 > a > img {
+  height: 53px;
+  width: 117px;
+}
+
+#nav {
+  height: 50px;
+  max-height: 50px;
+  min-height: 50px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: center;
+  border-top: 1px solid #cacaca;
+  border-bottom: 2px solid #FB4357;
+}
+#nav > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#nav > .nav-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+  width: 980px;
+  max-width: 980px;
+  min-width: 980px;
+}
+#nav > .nav-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#nav > .nav-wrapper > .search-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: center;
+  border-right: 0.0625rem solid #cacaca;
+  border-left: 0.0625rem solid #cacaca;
+  padding: 0 0.6rem;
+}
+#nav > .nav-wrapper > .search-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#nav > .nav-wrapper > .search-wrapper > .search {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+#nav > .nav-wrapper > .search-wrapper > .search > .keyword {
+  height: 24px;
+  width: 200px;
+  border: none;
+  line-height: 24px;
+  font-size: 16px;
+  font-weight: 500;
+  outline: none;
+}
+#nav > .nav-wrapper > .search-wrapper > .search > .keyword::placeholder {
+  color: #000000;
+  font-weight: 600;
+}
+#nav > .nav-wrapper > .search-wrapper > .search > button {
+  background-color: transparent;
+  border: 0.0625rem solid transparent;
+  padding: 0.2rem;
+  position: absolute;
+}
+#nav > .nav-wrapper > .search-wrapper > .search > button > img {
+  width: 1.8rem;
+}
+#nav > .nav-wrapper > .nav-menu {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  justify-content: flex-start;
+}
+#nav > .nav-wrapper > .nav-menu > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#nav > .nav-wrapper > .nav-menu > .item > h2 {
+  font-size: 16px;
+  white-space: nowrap;
+}
+#nav > .nav-wrapper > .nav-menu > .item > h2 > a {
+  color: #000000;
+  text-decoration: none;
+}
+
+#footer {
+  height: 432px;
+  max-height: 432px;
+  min-height: 432px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: flex-end;
+  background-color: #f8f8f8;
+  color: #666666;
+}
+#footer > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#footer > .footer-wrapper {
+  height: 150px;
+  max-height: 150px;
+  min-height: 150px;
+  width: 980px;
+  max-width: 980px;
+  min-width: 980px;
+}
+#footer > .footer-wrapper > .policy-container {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: center;
+  height: 19px;
+  max-height: 19px;
+  min-height: 19px;
+  border-bottom: 0.0625rem solid #ebebeb;
+  padding-bottom: 1.7rem;
+}
+#footer > .footer-wrapper > .policy-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#footer > .footer-wrapper > .policy-container > .policy-list {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+}
+#footer > .footer-wrapper > .policy-container > .policy-list > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#footer > .footer-wrapper > .policy-container > .policy-list > .item > a {
+  color: #666666;
+  white-space: nowrap;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+#footer > .footer-wrapper > .policy-container > .policy-list > .item > a > b {
+  color: #222222;
+  font-weight: 700;
+  text-decoration: underline;
+}
+#footer #article {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: flex-end;
+  height: 80px;
+  max-height: 80px;
+  min-height: 80px;
+  padding-top: 1.7rem;
+}
+#footer #article > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#footer #article a {
+  color: #666666;
+}
+#footer #article > .company > .text {
+  color: #666666;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/*# sourceMappingURL=index.css.map */
