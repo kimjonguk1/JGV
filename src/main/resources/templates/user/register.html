@@ -23,8 +23,6 @@
 <th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
 <th:block th:replace="~{fragments/common.html :: header}"></th:block>
 <th:block th:replace="~{fragments/common.html :: nav}"></th:block>
-
-
 <div class="frame title-container">
     <h1>기본정보</h1>
     <div class="-spring"></div>
@@ -46,7 +44,7 @@
             <td style="border-top: 2px solid #000000;">
                 <label class="--obj-label" data-id="name">
                     <input required autofocus maxlength="15" minlength="2" type="text"
-                           class="_field --obj-filed -border"
+                           class="id _field --obj-filed -border"
                            name="name" placeholder="이름을 입력해주세요.">
                 </label>
             </td>
@@ -62,9 +60,9 @@
                     <input required maxlength="20" minlength="2" type="text" class="_field --obj-filed -border"
                            name="id"
                            placeholder="아이디를 입력해주세요.">
+
                 </label>
-                <button class="duplicate-button" type="button" name="duplicate-button">중복확인</button>
-                <!--- alert로 중복 알림 설정하기 --->
+                <button class="duplicate-button" type="button" name="duplicate-id-button">중복확인</button>
             </td>
         </tr>
         <tr>
@@ -77,7 +75,9 @@
                 <label class="--obj-label" data-id="password">
                     <input required autocomplete="off" maxlength="100" minlength="8" type="password" name="password"
                            class="_field --obj-filed -border"
-                           placeholder="비밀번호를 입력해주세요."> <!--col 잡기-->
+                           placeholder="비밀번호를 입력해주세요.">
+                    <span class="warning">비밀번호 강도</span>
+
                     <span class="text">영문자, 숫자, 특수문자를 모두 조합하여 8~12자리를 입력해주세요.<br>
                                         사용 가능 특수 문자는 !"#$%&'()*+,-./:;&lt;= &gt;?@[]^_`{|}~ 입니다.<br>
                                         아이디와 4자리 이상 동일한 비밀번호는 사용 불가합니다.<br>
@@ -108,6 +108,23 @@
             <td>
                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
                      alt="checkmark">
+                <span>닉네임</span>
+            </td>
+            <!--추후 닉네임 글자수 조정 및 서비스 로직에 추가-->
+            <td rel="row">
+                <label class="--obj-label" data-id="id">
+                    <input required maxlength="20" minlength="2" type="text" class="_field --obj-filed -border"
+                           name="nickname"
+                           placeholder="닉네임을 입력해주세요.">
+                </label>
+                <button class="duplicate-button" type="button" name="duplicate-nickname-button">중복확인</button>
+                <!--- alert로 중복 알림 설정하기 --->
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                     alt="checkmark">
                 <span>성별</span>
             </td>
             <td rel="row">
@@ -129,18 +146,19 @@
                 <div class="label-container">
                     <label class="--obj-label" style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 1rem;">
                         <input class="_field --obj-filed -border" type="text" id="postcode"
-                               placeholder="우편번호를 입력해주세요.">
+                               placeholder="우편번호를 입력해주세요." name="postcode">
                         <button type="button" class="addr-button" name="addr-button">주소검색</button>
                     </label>
                     <label class="--obj-label">
                         <input class="_field --obj-filed -border" type="text" id="address"
-                               placeholder="주소를 입력해주세요."><br>
+                               placeholder="주소를 입력해주세요." name="address"><br>
                     </label>
                 </div>
                 <label class="--obj-label">
                     <input class="_field --obj-filed -border" type="text" id="detailAddress"
-                           placeholder="상세주소 입력">
-                    <input class="_field --obj-filed -border" type="text" id="extraAddress" placeholder="참고항목">
+                           placeholder="상세주소 입력" name="detailAddress">
+                    <input class="_field --obj-filed -border" type="text"
+                           id="extraAddress" placeholder="참고항목" name="extraAddress">
                 </label>
             </td>
         </tr>
@@ -181,20 +199,20 @@
                         <input autocomplete="email" name="email" type="email" class="_field --obj-filed -border"
                                placeholder="이메일을 입력해 주세요">
                     </label>
-                    <!--                    <span>@</span>-->
-                    <!--                    <label data-id="email-domain" class="&#45;&#45;obj-label">-->
-                    <!--                        <input name="email-domain" type="email" placeholder="이메일 도메인"-->
-                    <!--                               class="_field &#45;&#45;obj-filed -border">-->
-                    <!--                    </label>-->
-                    <!--                    <label class="&#45;&#45;obj-label">-->
-                    <!--                        <select name="domain" class="_field &#45;&#45;obj-filed -border">-->
-                    <!--                            <option value="self">직접입력</option>-->
-                    <!--                            <option value="naver">네이버</option>-->
-                    <!--                            <option value="hamail">한메일</option>-->
-                    <!--                            <option value="nate">네이트</option>-->
-                    <!--                            <option value="gmail">지메일</option>-->
-                    <!--                        </select>-->
-                    <!--                    </label>-->
+<!--                                        <span>@</span>-->
+<!--                                        <label data-id="email-domain" class="&#45;&#45;obj-label">-->
+<!--                                            <input name="email-domain" type="email" placeholder="이메일 도메인"-->
+<!--                                                   class="_field &#45;&#45;obj-filed -border">-->
+<!--                                        </label>-->
+<!--                                        <label class="&#45;&#45;obj-label">-->
+<!--                                            <select name="domain" class="_field &#45;&#45;obj-filed -border">-->
+<!--                                                <option value="self">직접입력</option>-->
+<!--                                                <option value="naver">네이버</option>-->
+<!--                                                <option value="hamail">한메일</option>-->
+<!--                                                <option value="nate">네이트</option>-->
+<!--                                                <option value="gmail">지메일</option>-->
+<!--                                            </select>-->
+<!--                                        </label>-->
                 </div>
                 <span>이메일 주소 입력시 사용 가능 특수 문자:-ㆍ_</span>
             </td>
