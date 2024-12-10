@@ -1,6 +1,7 @@
 package dev.jwkim.jgv.controlles.ticket;
 
 import dev.jwkim.jgv.entities.theater.CinemaTypeEntity;
+import dev.jwkim.jgv.entities.theater.ScreenEntity;
 import dev.jwkim.jgv.entities.ticket.ReservationEntity;
 import dev.jwkim.jgv.entities.ticket.SeatEntity;
 import dev.jwkim.jgv.results.Result;
@@ -26,6 +27,14 @@ public class TicketController {
     ) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("ticket/index");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/crawling", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView Crawl(ScreenEntity screen) {
+        ModelAndView modelAndView = new ModelAndView();
+        this.ticketService.Crawl(screen);
+        modelAndView.setViewName("ticket/crawling");
         return modelAndView;
     }
 
