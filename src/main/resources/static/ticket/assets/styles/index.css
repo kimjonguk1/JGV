@@ -161,7 +161,7 @@
 #main-seat > .seat-div .screen-container.screen-down {
   height: 24.0625rem;
 }
-#main-seat > .seat-div .screen-container .infor-container {
+#main-seat > .seat-div .screen-container .info-container {
   margin: 1rem;
   width: 50%;
   display: flex;
@@ -169,13 +169,13 @@
   justify-content: flex-start;
   height: auto;
 }
-#main-seat > .seat-div .screen-container .infor-container.title-right-box {
+#main-seat > .seat-div .screen-container .info-container.title-right-box {
   gap: 1rem;
 }
-#main-seat > .seat-div .screen-container .infor-container#nopContainer {
+#main-seat > .seat-div .screen-container .info-container#nopContainer {
   border-right: 1px solid #d4d3c9;
 }
-#main-seat > .seat-div .screen-container .infor-container #maximum_people {
+#main-seat > .seat-div .screen-container .info-container #maximum_people {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -186,7 +186,7 @@
   box-sizing: border-box;
   color: rgb(255, 0, 0);
 }
-#main-seat > .seat-div .screen-container .infor-container .title-container {
+#main-seat > .seat-div .screen-container .info-container .title-container {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -195,24 +195,24 @@
   gap: 0.2rem;
   box-sizing: border-box;
 }
-#main-seat > .seat-div .screen-container .infor-container .title-container > .text {
+#main-seat > .seat-div .screen-container .info-container .title-container > .text {
   width: auto;
   height: 1rem;
   font-size: 0.75rem;
   padding: 0 0.5rem;
 }
-#main-seat > .seat-div .screen-container .infor-container .title-container > .text.center {
+#main-seat > .seat-div .screen-container .info-container .title-container > .text.center {
   border-right: 1px solid #d4d3c9;
   border-left: 1px solid #d4d3c9;
 }
-#main-seat > .seat-div .screen-container .infor-container .title-container > .big-text {
+#main-seat > .seat-div .screen-container .info-container .title-container > .big-text {
   font-weight: 700;
   font-size: 1.28rem;
 }
-#main-seat > .seat-div .screen-container .infor-container .title-container .title {
+#main-seat > .seat-div .screen-container .info-container .title-container .title {
   width: 3rem;
 }
-#main-seat > .seat-div .screen-container .infor-container .title-container > .adult {
+#main-seat > .seat-div .screen-container .info-container .title-container > .adult {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -221,7 +221,7 @@
   gap: 0.3rem;
   box-sizing: border-box;
 }
-#main-seat > .seat-div .screen-container .infor-container .title-container > .adult > .selected {
+#main-seat > .seat-div .screen-container .info-container .title-container > .adult > .selected {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -233,26 +233,26 @@
   font-weight: 700;
   cursor: pointer;
 }
-#main-seat > .seat-div .screen-container .infor-container .title-container > .adult > .selected > .adults {
+#main-seat > .seat-div .screen-container .info-container .title-container > .adult > .selected > .adults {
   display: none;
 }
-#main-seat > .seat-div .screen-container .infor-container .title-container > .adult > .selected > .-adult {
+#main-seat > .seat-div .screen-container .info-container .title-container > .adult > .selected > .-adult {
   color: rgb(51, 51, 51);
   text-decoration: none;
   cursor: pointer;
 }
-#main-seat > .seat-div .screen-container .infor-container .title-container > .adult > .selected:has(.adults:checked) {
+#main-seat > .seat-div .screen-container .info-container .title-container > .adult > .selected:has(.adults:checked) {
   background-color: rgb(51, 51, 51);
   color: rgb(255, 255, 255);
 }
-#main-seat > .seat-div .screen-container .infor-container .text {
+#main-seat > .seat-div .screen-container .info-container .text {
   padding: 0 0.3rem;
 }
-#main-seat > .seat-div .screen-container .infor-container .cinema {
+#main-seat > .seat-div .screen-container .info-container .cinema {
   border-right: 0.025rem solid #d4d3c9;
   border-left: 0.025rem solid #d4d3c9;
 }
-#main-seat > .seat-div .screen-container .infor-container .seat-color {
+#main-seat > .seat-div .screen-container .info-container .seat-color {
   color: red;
 }
 #main-seat > .seat-div .screen-container > .seat-container {
@@ -921,7 +921,7 @@
   font-size: 0.75rem;
   font-weight: 400;
 }
-#payment-section > .pay-form > .agree > div.agree-div1 > .agree-first {
+#payment-section > .pay-form > .agree > div.agree-div1 > .agree-all {
   font-weight: 700;
   padding-bottom: 0.2rem;
 }
@@ -1021,6 +1021,9 @@
   box-sizing: border-box;
   cursor: pointer;
   color: #cccccc;
+}
+.control-bar > .space > .icon-box.seat-right-button-after {
+  background-color: red;
 }
 .control-bar > .space > .icon-box > .arrows {
   box-sizing: border-box;

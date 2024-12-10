@@ -1,5 +1,6 @@
 package dev.jwkim.jgv.mappers.ticket;
 
+import dev.jwkim.jgv.entities.theater.CinemaTypeEntity;
 import dev.jwkim.jgv.entities.ticket.ReservationEntity;
 import dev.jwkim.jgv.entities.ticket.SeatEntity;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,6 +13,10 @@ public interface TicketMapper {
             @Param("thName") String thName);
 
     SeatEntity[] selectSeatBySeName(
+            @Param("ciName") String ciName,
+            @Param("thName") String thName);
+
+    CinemaTypeEntity[] selectSeatByCitPrice(
             @Param("ciName") String ciName,
             @Param("thName") String thName);
 }

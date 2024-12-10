@@ -87,7 +87,7 @@
             <div class="seat-div">
                 <div class="content">인원/좌석</div>
                 <div class="screen-container">
-                    <div class="infor-container" id="nopContainer">
+                    <div class="info-container" id="nopContainer">
                         <span id="maximum_people">* 최대 8명 선택 가능</span>
                         <div class="title-container">
                             <span class="title">일반</span>
@@ -131,11 +131,11 @@
                             </label>
                         </div>
                     </div>
-                    <div class="infor-container title-right-box">
+                    <div class="info-container title-right-box">
                         <div class="title-container">
-                            <span class="text">대구 CGV</span>
-                            <span class="text center">2관 5층</span>
-                            <span class="text">남은 좌석 <b class="seat-color">000</b>/110</span>
+                            <span class="text">CGV대구</span>
+                            <span class="text center">2관</span>
+                            <span class="text seat-text">남은 좌석 <b id="seat-color" class="seat-color">00</b>/40</span>
                         </div>
                         <div class="title-container">
                             <b class="big-text data">0000.00.00</b>
@@ -158,6 +158,7 @@
                 </div>
             </div>
         </div>
+        <!------------------------------------------------------------------------------------>
         <div id="main-payment" style="display: none">
             <div class="left-container">
                 <div class="payment-bar">결제 수단</div>
@@ -217,7 +218,7 @@
                         <span class=" text">(삼성U포인트, OK캐쉬백, 신셰게 포인트는 포인트 중복 적립 불가) </span>
                     </div>
                 </div>
-                <div class="cellphone-container pay-containers" style="display: none">
+                <div class="cellphone-container  pay-containers" style="display: none">
                     <div class="cellphone-content">
                 <span class="text">
                     <span class="text">결제금액</span>
@@ -272,7 +273,6 @@
                         </label>
                         <div class="simple-pay-on-text">
                             <h4>네이버페이 결제 순서</h4>
-                            <span class="text-space"></span>
                             <span class="text">1. 우측 하단에 있는 "결제하기" 버튼을 클릭해주세요.</span>
                             <span class="text">2. 예매내역 확인 후 결제하기 버튼 클릭 시 '네이버페이'결제 인증창이 뜹니다.</span>
                             <span class="text">3. '네이버페이'결제 인증창에서 정보를 입력하신 후 결제해주세요.</span>
@@ -312,6 +312,8 @@
                             <span class="text">2. 결제내역 확인 후 결제하기 버튼 클릭 시, 팝업창이 뜸</span>
                             <span class="text">3. 해당 '스마일페이' 팝업에서 원하는 카드를 선택 후 정보를 입력하신 후 정보를 입력하시면 됩니다.</span>
                         </div>
+                        <span class="text-space"></span>
+
                         <div class="simple-pay-under-text">
                             <h5>'스마일페이' 결제시, 기본 0.5% 스마일캐시가 적립되며.<br>
                                 스마일카드로 결제 시, 기본 0.5% + 추가 2.0% 적립되어 최대 2.5%적립됩니다.
@@ -328,6 +330,8 @@
                             <span class="text">2. 예매내역 확인 후 결제하기 버튼 클릭 시 'SSGPAY' 결제 인증창이 뜹니다.</span>
                             <span class="text">3. 'SSGPAY' 결제 인증창에서 정보를 입력하신 후 결제해주세요.</span>
                         </div>
+                        <span class="text-space"></span>
+
                         <div class="simple-pay-under-text">
                             <h5>'SSGPAY'는 결제 시 신용카드 선할인과 카드사 포인트는</h5>
                             <h5>이용이 불가능하며, 신용카드 별 청구할인은 이용이 가능합니다.</h5>
@@ -341,6 +345,7 @@
                             <span class="text">2. 예매내역 확인 후 결제하기 버튼 클릭 시 '카카오페이' 결제 인증창이 뜹니다.</span>
                             <span class="text">3. '카카오페이' 결제 인증창에서 정보를 입력하신 후 결제해주세요.</span>
                         </div>
+                        <span class="text-space"></span>
                         <div class="simple-pay-under-text">
                             <h5>* '카카오페이'는 신용카드 선할인과 카드사 포인트는 이용이 불가능하며,</h5>
                             <h5>신용카드별 청구할인은 이용이 가능합니다.</h5>
@@ -353,6 +358,7 @@
                             <span class="text">1. 우측 하단에 있는 '결제하기'버튼을 클릭해주세요.</span>
                             <span class="text">2. 예매내역 확인 후 결제하기 버튼 클릭 시 'PAYCO' 결제 인증창이 뜹니다.</span>
                             <span class="text">3. 'PAYCO' 결제 인증창에서 정보를 입력하신 후 결제해주세요.</span>
+                            <span class="text-space"></span>
                         </div>
                         <div class="simple-pay-under-text">
                             <h5>* 'PAYCO'는 씨티카드와 즉시할인 신용카드, 카드사 포인트는 이용이 불가능하며,</h5>
@@ -399,7 +405,7 @@
                     <div class="pay-box">
                         <div class="pay-text">결제하실 금액</div>
                         <div class="pay-price-box basic-color">
-                            <div class="pay-big-price">30,000</div>
+                            <div class="pay-big-price" id="pay-price-won1"></div>
                             <div class="pay-small-price">원</div>
                         </div>
                     </div>
@@ -415,11 +421,12 @@
                         <div class="pay-title">결제 내역</div>
                         <div class="pay-content">
                             <span class="pay-kind">신용카드</span>
-                            <span class="pay-price">30,000원</span>
+                            <span class="pay-price" id="pay-price-won2"></span>
+                            <span class="pay-price">원</span>
                         </div>
                         <div class="pay-text">남은 결제 금액</div>
                         <div class="pay-price-box yellow-color">
-                            <div class="pay-big-price">30,000</div>
+                            <div class="pay-big-price" id="pay-price-won3"></div>
                             <div class="pay-small-price">원</div>
                         </div>
                     </div>
@@ -434,103 +441,104 @@
             </a>
         </div>
     </div>
-    <div id="payment-section" style="display: none;">
-        <h4>예매내역 확인</h4>
-        <div class="pay-sec-container">
-            <div class="title">
-                <div>
+    <!------------------------------------------------------------------------------------>
+</main>
+<section id="payment-section" style="display: none;">
+    <h4>예매내역 확인</h4>
+    <form class="pay-form">
+        <div class="title">
+            <div>
                 <span class="title">ㆍ예매정보
                     <span class="small-text">결제하시기 전 예매내역을 다시 한번 확인해주세요.</span>
                 </span>
-                </div>
-                <div>
+            </div>
+            <div>
                 <span class="title title2">ㆍ결제정보
                     <span class="small-text">결제하기 버튼을 클릭하시면 결제가 완료됩니다.</span>
                 </span>
-                </div>
             </div>
-            <div class="table-div">
-                <div>
-                    <img class="img" src="/ticket/assets/images/icon3.png" alt="#">
-                </div>
-                <div class="div-title1">
-                    <span>영화명</span>
-                    <span>극장</span>
-                    <span>상경관</span>
-                    <span>일시</span>
-                    <span>인원</span>
-                    <span>좌석</span>
-                </div>
-                <div class="div-content1">
-                    <span>위키드(자막)</span>
-                    <span>CGV 고양행신</span>
-                    <span>1관 6층</span>
-                    <span>2024년 12월 1일(일) 20:10~23:00</span>
-                    <span>일반 1명</span>
-                    <span>A1</span>
-                </div>
-                <div class="div-title2">
-                    <span>결제금액</span>
-                    <span>결제 수단</span>
-                </div>
-                <div class="div-content2">
+        </div>
+        <div class="table-div">
+            <div>
+                <img class="img" src="/ticket/assets/images/icon3.png" alt="#">
+            </div>
+            <div class="div-title1">
+                <span>영화명</span>
+                <span>극장</span>
+                <span>상경관</span>
+                <span>일시</span>
+                <span>인원</span>
+                <span>좌석</span>
+            </div>
+            <div class="div-content1">
+                <span>위키드(자막)</span>
+                <span>CGV 고양행신</span>
+                <span>1관 6층</span>
+                <span>2024년 12월 1일(일) 20:10~23:00</span>
+                <span class="pay-human"></span>
+                <span class="pay-seat"></span>
+            </div>
+            <div class="div-title2">
+                <span>결제금액</span>
+                <span>결제 수단</span>
+            </div>
+            <div class="div-content2">
                 <span>
-                    <span class="big-red">14,000</span>
+                    <span class="big-red" id="pay-price-won4"></span>
                     <span>원</span>
                 </span>
-                    <span>
+                <span>
                     <span class="big-font">카드 결제</span>
-                    <span class="small-red">14,000</span>
+                    <span class="small-red" id="pay-price-won5"></span>
                     <span>원</span>
                 </span>
-                </div>
             </div>
-            <div class="cancel">
-                <span>ㆍ인터넷 예매는 온라인상으로 영화상영 시간 20분 전 까지 취소 가능하며 20분 이후에는 현장에서 취소를하셔야합니다.</span>
-                <span>ㆍ현장취소를 하는 경우 상영시간 이전까지만 가능하며 영화 상영 시작 시간 이후 취소/환불/결제수단 변경은 불가합니다.</span>
-                <span>ㆍ입장 지연에 따른 관람 불편을 최소화하기 위해 본 영화는 10분 후 상영이 시작됩니다.</span>
-                <a href="#">> 예약취소 및 환불규정 안내</a>
+        </div>
+        <div class="cancel">
+            <span>ㆍ인터넷 예매는 온라인상으로 영화상영 시간 20분 전 까지 취소 가능하며 20분 이후에는 현장에서 취소를하셔야합니다.</span>
+            <span>ㆍ현장취소를 하는 경우 상영시간 이전까지만 가능하며 영화 상영 시작 시간 이후 취소/환불/결제수단 변경은 불가합니다.</span>
+            <span>ㆍ입장 지연에 따른 관람 불편을 최소화하기 위해 본 영화는 10분 후 상영이 시작됩니다.</span>
+            <a href="#">> 예약취소 및 환불규정 안내</a>
+        </div>
+        <div class="agree">
+            <div class="agree-div1">
+                <label class="agree-all">
+                    <input type="checkbox" id="checkbox-agree-all">
+                    결제대행 서비스 약관에 모두 동의
+                </label>
+                <label class="agree-label">
+                    <input type="checkbox" class="checkbox-agree">
+                    전자금융거래 이용약관
+                </label>
+                <label class="agree-label">
+                    <input type="checkbox" class="checkbox-agree">
+                    개인정보 수집 이용약관
+                </label>
+                <label class="agree-label">
+                    <input type="checkbox" class="checkbox-agree">
+                    개인정보 제공 및 위탁 안내 약관
+                </label>
             </div>
-            <div class="agree">
-                <div class="agree-div1">
-                    <label class="agree-first">
-                        <input type="checkbox">
-                        결제대행 서비스 약관에 모두 동의
-                    </label>
-                    <label class="agree-label">
-                        <input type="checkbox">
-                        전자금융거래 이용약관
-                    </label>
-                    <label class="agree-label">
-                        <input type="checkbox">
-                        개인정보 수집 이용약관
-                    </label>
-                    <label class="agree-label">
-                        <input type="checkbox">
-                        개인정보 제공 및 위탁 안내 약관
-                    </label>
-                </div>
-                <div class="agree-div2">
-                    <span></span>
-                    <a href="#">전문확인</a>
-                    <a href="#">전문확인</a>
-                    <a href="#">전문확인</a>
-                </div>
-                <div></div>
-                <div class="agree-div3">
-                    <label>
-                        <input type="checkbox">
-                        상기 결제 내역을 모두 확인했습니다.
-                    </label>
-                </div>
+            <div class="agree-div2">
+                <span></span>
+                <a href="#">전문확인</a>
+                <a href="#">전문확인</a>
+                <a href="#">전문확인</a>
+            </div>
+            <div></div>
+            <div class="agree-div3">
+                <label>
+                    <input type="checkbox">
+                    상기 결제 내역을 모두 확인했습니다.
+                </label>
             </div>
         </div>
         <span id="pay-button">
-            <button type="submit" name="real-pay" class="real-pay">결제하기</button>
-            <button type="button" name="real-cancel" class="real-cancel">취소</button>
-        </span>
-    </div>
-</main>
+        <button type="submit" name="real-pay" class="real-pay">결제하기</button>
+        <button type="button" name="real-cancel" class="real-cancel">취소</button>
+    </span>
+    </form>
+</section>
 <section class="control-bar" id="control-bar">
     <form class="space">
         <button type="button" name="left-button" class="icon-box left-button">
@@ -554,9 +562,20 @@
             <span>인원</span>
         </div>
         <div class="theater-content">
-            <span><a>대구 CGV</a></span>
-            <span>2024.01.01(월) 16:43</span>
-            <span>2관 5층</span>
+            <label>
+                <input name="theater-theater" type="text" value="CGV대구">
+            </label>
+            <span>
+            <label class="label1">
+            <input name="theater-day" type="text" value="2024.01.01(월)">
+            </label>
+            <label class="label2">
+            <input name="theater-time" type="text" value="16:43">
+            </label>
+                </span>
+            <label>
+                <input name="theater-cinema" type="text" value="2관">
+            </label>
         </div>
         <div class="seat-title">
             <span>좌석명</span>
@@ -584,6 +603,7 @@
         </button>
     </form>
 </section>
+<!------------------------------------------------------------------------------------>
 <div class="add">
     <img class="image" src="https://adimg.cgv.co.kr/images/202411/MorningCalm/996x140.jpg" alt="">
 </div>

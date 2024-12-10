@@ -1,5 +1,6 @@
 package dev.jwkim.jgv.controlles.ticket;
 
+import dev.jwkim.jgv.entities.theater.CinemaTypeEntity;
 import dev.jwkim.jgv.entities.ticket.ReservationEntity;
 import dev.jwkim.jgv.entities.ticket.SeatEntity;
 import dev.jwkim.jgv.results.Result;
@@ -37,8 +38,10 @@ public class TicketController {
         JSONObject response = new JSONObject();
         ReservationEntity[] seatNum = this.ticketService.selectSeatByReservationNum(ciName, thName);
         SeatEntity[] seatName = this.ticketService.selectSeatBySeatName(ciName, thName);
+        CinemaTypeEntity[] citPrice = this.ticketService.selectSeatByCitPrice(ciName, thName);
         response.put(Result.NAME, seatNum);
         response.put(Result.NAMES, seatName);
+        response.put(Result.NAMESS, citPrice);
         return response.toString();
     }
 }

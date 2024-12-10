@@ -1,5 +1,6 @@
 package dev.jwkim.jgv.services.ticket;
 
+import dev.jwkim.jgv.entities.theater.CinemaTypeEntity;
 import dev.jwkim.jgv.entities.ticket.ReservationEntity;
 import dev.jwkim.jgv.entities.ticket.SeatEntity;
 import dev.jwkim.jgv.mappers.ticket.TicketMapper;
@@ -23,5 +24,11 @@ public class TicketService {
 
         SeatEntity[] seatName = this.ticketMapper.selectSeatBySeName(ciName, thName);
         return seatName;
+    }
+
+    public CinemaTypeEntity[] selectSeatByCitPrice(String ciName, String thName) {
+
+        CinemaTypeEntity[] citPrice = this.ticketMapper.selectSeatByCitPrice(ciName, thName);
+        return citPrice;
     }
 }

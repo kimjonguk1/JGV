@@ -25,4 +25,13 @@
         where cinema.`ci_name` = #{ciName}
           and theater.`th_name` = #{thName}
     </select>
+    <select id="selectSeatByCitPrice" resultType="dev.jwkim.jgv.entities.theater.CinemaTypeEntity">
+        select `cit_price` as `citPrice`
+        from jgv.cinema
+                 left join jgv.cinema_type on cinema.cit_num = cinema_type.cit_num
+                 left join jgv.theater on cinema.th_num = theater.th_num
+        where cinema.`ci_name` = #{ciName}
+          and theater.`th_name` = #{thName}
+
+    </select>
 </mapper>
