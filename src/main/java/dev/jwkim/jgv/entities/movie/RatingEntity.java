@@ -10,5 +10,4 @@ import lombok.Setter;
 public class RatingEntity {
     private int raNum;
     private String raGrade;
-    private int MoNum;
 }

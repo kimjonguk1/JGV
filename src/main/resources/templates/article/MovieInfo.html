@@ -9,6 +9,7 @@
     <link rel="stylesheet" th:href="@{/article/assets/styles/index.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/assets/styles/common.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/article/assets/styles/MovieInfo.css}" type="text/css">
+    <script defer th:src="@{/article/assets/scripts/MovieInfo.js}" type="text/javascript"></script>
 </head>
 <body>
 
@@ -16,41 +17,90 @@
 <th:block th:replace="~{fragments/common.html :: header}"></th:block>
 <th:block th:replace="~{fragments/common.html :: nav}"></th:block>
 <main id="main" class="frame main">
-    <div class="movie-detail-container">
+    <div class="movie-detail-container" th:if="${movieInfo != null}">
         <div class="movie-header">
             <div class="poster">
-                <img src="poster.jpg" alt="영화 포스터">
+                <img th:src="${movieInfo.getM_img_url()}" alt="영화 포스터">
             </div>
             <div class="movie-info">
-                <h1 class="title">소방관</h1>
-                <h2 class="subtitle">FIREFIGHTERS</h2>
+                <h1 class="title" th:text="${movieInfo.getMoTitle()}">소방관</h1>
                 <div class="stats">
-                    <p>예매율: <span class="booking-rate">13.2%</span></p>
-                    <p>평점: <span class="rating">94%</span></p>
+                    <p>예매율: <span class="booking-rate" th:text="${movieInfo.getMoBookingRate()} + '%'">13.2%</span></p>
                 </div>
+                <hr>
                 <div class="details">
-                    <p>감독: <span class="director">곽경택</span></p>
-                    <p>배우: <span class="actors">주원, 곽도원, 이유영</span></p>
-                    <p>장르: <span class="genre">드라마</span></p>
-                    <p>기본 정보: <span class="info">12세이상관람가, 106분, 한국</span></p>
-                    <p>개봉: <span class="release-date">2024.12.04</span></p>
+                    <p>감독: <span class="director" th:text="${movieInfo.getDirectorName()}">곽경택</span></p>
+                    <p>배우: <span class="actors" th:each="actors : ${movieInfo.getActorNames()}" th:text="${actors}">주원, 곽도원, 이유영</span></p>
+                    <p>장르: <span class="genre" th:each="genres : ${movieInfo.getGenres()}" th:text="${genres}">드라마</span></p>
+                    <p>기본 정보: <span class="info" th:text="${movieInfo.getGrade()}"></span> , <span class="info" th:text="${movieInfo.getMoTime()} + '분'"></span> , <span class="info" th:each="countries : ${movieInfo.getCountries()}" th:text="${countries}"></span></p>
+                    <p>개봉: <span class="release-date" th:text="${movieInfo.getMoDate()}">2024.12.04</span></p>
                 </div>
                 <div class="buttons">
                     <button class="btn reserve">예매하기</button>
                 </div>
             </div>
         </div>
-        <div class="movie-synopsis">
-            <h3>줄거리</h3>
-            <p>
-                살리기 위해, 살아남기 위해 하루하루가 마지막 현장인 소방관 팀은
-                열악한 환경 속에서도 화재 진압과 전원 구조라는 단 하나의 목표로 임기를 다한다.
-            </p>
-            <p>
-                어느 날, 다급하게 119 신고 전화로 홍제동에 화재가 발생했다는 긴급 상황이 접수되자
-                팀원들은 위기를 직감하는데...
-            </p>
+        <div class="tabs">
+            <ul class="tab-list">
+                <li class="tab-item active"><a href="#overview" class="active">주요정보</a></li>
+                <li class="tab-separator">|</li>
+                <li class="tab-item"><a href="#character">감독/출연</a></li>
+                <li class="tab-separator">|</li>
+                <li class="tab-item"><a href="#review">평점/리뷰</a></li>
+                <li class="tab-separator">|</li>
+                <li class="tab-item"><a href="#schedule">상영시간표</a></li>
+            </ul>
         </div>
+        <section id="overview">
+            <div class="movie-synopsis">
+                <p th:text="${movieInfo.getMoPlot()}">
+                    살리기 위해, 살아남기 위해 하루하루가 마지막 현장인 소방관 팀은
+                    열악한 환경 속에서도 화재 진압과 전원 구조라는 단 하나의 목표로 임기를 다한다.
+                </p>
+            </div>
+        </section>
+        <section id="character">
+            <div class="movie-people-container">
+                    <h2>&nbsp;&nbsp;감독</h2>
+                    <div class="director">
+                        <img src="감독이미지URL" alt="감독 이미지">
+                        <div class="info">
+                            <p class="name">Todd Haynes</p>
+                            <div class="related-works">
+                                <span>연관작품</span>
+                                <div class="works">
+                                    <img src="연관작품1이미지URL" alt="연관 작품 1">
+                                    <img src="연관작품2이미지URL" alt="연관 작품 2">
+                                    <img src="연관작품3이미지URL" alt="연관 작품 3">
+                                    <img src="연관작품4이미지URL" alt="연관 작품 4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>&nbsp;&nbsp;출연</h2>
+                    <div class="actors-list">
+                        <div class="actor">
+                            <img src="배우1이미지URL" alt="배우 이미지">
+                            <div class="info">
+                                <p class="role">주연</p>
+                                <p class="name">Cate Blanchett</p>
+                                <p class="works">오션스8(2018), 캐롤(2016), 매니페스트(2019)</p>
+                            </div>
+                        </div>
+                        <!-- 추가 배우 -->
+                    </div>
+            </div>
+        </section>
+        <section id="schedule">
+
+        </section>
+        <section id="review">
+
+        </section>
+    </div>
+    <div class="movie-no-data" th:if="${movieInfo == null}">
+        <h1>페이지를 찾을 수 없습니다</h1>
+        <h2>영화 페이지가 존재하지 않습니다</h2>
     </div>
 </main>
 <th:block th:replace="~{fragments/common.html :: footer}"></th:block>

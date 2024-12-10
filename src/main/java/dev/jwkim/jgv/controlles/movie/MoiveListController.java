@@ -1,6 +1,7 @@
 package dev.jwkim.jgv.controlles.movie;
 
 import dev.jwkim.jgv.DTO.Movie_ImageDTO;
+import dev.jwkim.jgv.DTO.Movie_InfoDTO;
 import dev.jwkim.jgv.services.movie.MovieService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,6 +60,8 @@ public class MoiveListController {
     public ModelAndView getMovieDetail(@PathVariable("id") Integer id) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("article/MovieInfo");
+        Movie_InfoDTO movieInfo = movieService.selectMovieInfoById(id);
+        mav.addObject("movieInfo", movieInfo);
         return mav;
     }
 }
