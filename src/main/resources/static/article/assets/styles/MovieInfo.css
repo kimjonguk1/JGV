@@ -1,0 +1,95 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  margin: 0;
+  padding: 0;
+}
+
+.movie-detail-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
+}
+.movie-detail-container .movie-header {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.movie-detail-container .movie-header .poster {
+  flex: 0 0 300px;
+}
+.movie-detail-container .movie-header .poster img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.movie-detail-container .movie-header .movie-info {
+  flex: 1;
+}
+.movie-detail-container .movie-header .movie-info .title {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+.movie-detail-container .movie-header .movie-info .subtitle {
+  font-size: 18px;
+  font-weight: normal;
+  color: #666;
+  margin: 5px 0 15px;
+}
+.movie-detail-container .movie-header .movie-info .stats {
+  display: flex;
+  gap: 20px;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+.movie-detail-container .movie-header .movie-info .stats p {
+  margin: 0;
+}
+.movie-detail-container .movie-header .movie-info .stats p span {
+  font-weight: bold;
+}
+.movie-detail-container .movie-header .movie-info .details {
+  font-size: 14px;
+  color: #555;
+}
+.movie-detail-container .movie-header .movie-info .details p {
+  margin: 5px 0;
+}
+.movie-detail-container .movie-header .movie-info .details p span {
+  font-weight: bold;
+  color: #333;
+}
+.movie-detail-container .movie-header .movie-info .buttons {
+  margin-top: 20px;
+}
+.movie-detail-container .movie-header .movie-info .buttons .btn {
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.movie-detail-container .movie-header .movie-info .buttons .btn.reserve {
+  background-color: #ff4d4f;
+  color: #fff;
+}
+.movie-detail-container .movie-header .movie-info .buttons .btn:hover {
+  opacity: 0.9;
+}
+.movie-detail-container .movie-synopsis h3 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+.movie-detail-container .movie-synopsis p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/*# sourceMappingURL=MovieInfo.css.map */

@@ -29,7 +29,7 @@
     <section id="nowPlaying">
         <div class="movie-container">
             <div th:each="movie : ${nowPlaying}" class="movie-card">
-                <a th:href="@{/movies/{id}(id=${movie.getMoNum()})}">
+                <a th:href="@{/movies/movieList/movieInfo/{id}(id=${movie.getMoNum()})}">
                     <img th:src="@{${movie.getM_img_url()}}" alt="영화 이미지" class="movie-poster">
                 </a>
                 <div class="movie-info">
@@ -52,7 +52,7 @@
     <section id="upcomingMovies">
         <div class="movie-container">
             <div th:each="movie : ${upcomingMovies}" class="movie-card">
-                <a th:href="@{/movies/{id}(id=${movie.getMoNum()})}">
+                <a th:href="@{/movies/movieList/movieInfo/{id}(id=${movie.getMoNum()})}">
                     <img th:src="@{${movie.getM_img_url()}}" alt="영화 이미지" class="movie-poster">
                 </a>
                 <div class="movie-info">
