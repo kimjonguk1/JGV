@@ -1,6 +1,7 @@
 package dev.jwkim.jgv.services.movie;
 
 import dev.jwkim.jgv.DTO.Movie_ImageDTO;
+import dev.jwkim.jgv.DTO.Movie_InfoDTO;
 import dev.jwkim.jgv.entities.movie.*;
 import dev.jwkim.jgv.mappers.movie.*;
 import org.json.JSONArray;
@@ -45,12 +46,6 @@ public class MovieService {
 
     public boolean insertAllMovies(MovieEntity movieEntity) {
         try {
-            // 기존 데이터 삭제
-            // 스레드 동기화 : 여러 스레드가 동시에 접근하는 것을 막아줌
-            synchronized (this) {
-                clearDatabase();
-            }
-
             // 병렬로 크롤링 및 삽입 작업 수행
             CompletableFuture<Void> currentMoviesFuture = CompletableFuture.runAsync(() -> insertMovies(movieEntity), executorService);
             CompletableFuture<Void> upcomingMoviesFuture = CompletableFuture.runAsync(() -> insertPreMovies(movieEntity), executorService);
@@ -71,27 +66,6 @@ public class MovieService {
         }
     }
 
-    // 모든 데이터 삭제
-    private void clearDatabase() {
-        try {
-            raitingMapper.deleteAllMovieRaiting();
-
-            charactorMapper.deleteAllMovieCharacterMapping();
-            charactorMapper.deleteAllCharacterImg();
-            charactorMapper.deleteAllCharacter();
-
-            countryMapper.deleteAllCountryMapping();
-            countryMapper.deleteAllCountry();
-
-            genreMapper.deleteMovieGenreMapping();
-            genreMapper.deleteAllMovieGenre();
-
-            movieImageMapper.deleteAllMoviePosterUrl();
-            movieMapper.deleteAllMovies();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     private void insertMovies(MovieEntity movieEntity) {
         try {
@@ -172,28 +146,45 @@ public class MovieService {
             String movieTitle = movieDoc.select("div.box-contents > div.title > strong").text();
             movieEntity.setMoTitle(movieTitle);
 
+            // 영화 데이터가 이미 존재하는지 확인 (update를 위해)
+            Integer ifMovieId = movieMapper.selectMovieIdByTitle(movieTitle);
+
+            //개봉일
             String movieDate = movieDoc.select("div.spec > dl > dt:contains(개봉) + dd").text();
             movieEntity.setMoDate(movieDate.split("\\(")[0].trim());
 
-
+            //러닝타임
             Matcher matcher = Pattern.compile("(\\d+)(?=분)").matcher(rawData);
             if (matcher.find()) {
                 movieEntity.setMoTime(Integer.parseInt(matcher.group(1)));
             }
 
+            //영화 줄거리
             String moviePlot = movieDoc.select("div.sect-story-movie").text();
             movieEntity.setMoPlot(moviePlot);
 
+            //예매율
             String bookingRate = movieDoc.select("strong.percent > span").text().replace("%", "").trim();
             movieEntity.setMoBookingRate(Float.valueOf(bookingRate));
 
-            // 삽입 작업
-            movieMapper.insertMovie(movieEntity, raId);
-
             // 영화 포스터
             String posterUrl = movieDoc.select("span.thumb-image > img").attr("src");
-            if (!posterUrl.isEmpty()) {
-                movieImageMapper.insertMoviePosterUrl(movieEntity.getMoNum(), posterUrl);
+
+            // 영화 포스터가 이미 존재하는지 확인 (업데이트를 위해)
+            String ifPosterUrl = movieImageMapper.selectPosterUrlByMovieId(movieEntity.getMoNum());
+
+            // 기존 데이터가 있을 경우
+            if(ifMovieId != null) {
+                movieEntity.setMoNum(ifMovieId);
+                movieMapper.updateMovie(movieEntity);
+                if (!posterUrl.equals(ifPosterUrl)) {
+                    movieImageMapper.updateMoviePosterUrl(ifMovieId, posterUrl);
+                }
+            } else { //없을 경우 그냥 insert
+                movieMapper.insertMovie(movieEntity, raId);
+                if (!posterUrl.isEmpty()) {
+                    movieImageMapper.insertMoviePosterUrl(movieEntity.getMoNum(), posterUrl);
+                }
             }
 
             // 장르
@@ -319,5 +310,22 @@ public class MovieService {
 
     public List<Movie_ImageDTO> selectAllMovieList() {
         return this.movieMapper.selectAllMovies();
+    }
+
+    public Movie_InfoDTO selectMovieInfoById(Integer movieId) {
+        Movie_InfoDTO movieInfo = movieMapper.getMovieInfoById(movieId);
+
+        // 로그로 각 필드 값 확인
+        if (movieInfo == null) {
+            System.out.println("Movie_InfoDTO 객체가 null입니다.");
+            return null;
+        }
+
+        System.out.println("영화 제목: " + movieInfo.getMoTitle());
+        System.out.println("장르: " + movieInfo.getGenres());
+        System.out.println("배우: " + movieInfo.getActorNames());
+        System.out.println("제작 국가: " + movieInfo.getCountries());
+
+        return movieInfo;
     }
 }

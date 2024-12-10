@@ -8,7 +8,14 @@
         INSERT INTO jgv.movie_image (mo_num, m_img_url)
         VALUES (#{moNum}, #{imgUrl})
     </insert>
-    <delete id="deleteAllMoviePosterUrl">
-        DELETE FROM jgv.movie_image
-    </delete>
+    <update id="updateMoviePosterUrl">
+        UPDATE jgv.movie_image
+        SET m_img_url = #{imgUrl}
+        WHERE mo_num = #{moNum}
+    </update>
+    <select id="selectPosterUrlByMovieId">
+        SELECT m_img_url
+        FROM jgv.movie_image
+        WHERE mo_num = #{moNum}
+    </select>
 </mapper>

@@ -11,12 +11,6 @@
         INSERT INTO `jgv`.movie (mo_title, mo_date, mo_time, mo_plot, mo_booking_rate, mo_ending, ra_num)
         VALUES (#{movie.moTitle},#{movie.moDate},#{movie.moTime},#{movie.moPlot},#{movie.moBookingRate},#{movie.moEnding}, #{raiting})
     </insert>
-    <delete id="deleteAllMovies">
-        DELETE FROM `jgv`.movie
-    </delete>
-    <delete id="deleteAllMovieCharactor">
-        DELETE FROM `jgv`.movie_charactor
-    </delete>
     <delete id="deleteDupleMovies">
         DELETE FROM `jgv`.movie
         WHERE movie.mo_num NOT IN (
@@ -27,7 +21,6 @@
                      GROUP BY mo_title, mo_date, mo_time
                  ) AS unique_movies
         );
-
     </delete>
     <select id="selectMovie" resultType="java.lang.Integer">
         SELECT COUNT(0)
@@ -46,5 +39,51 @@
             jgv.movie m
                 LEFT JOIN
             jgv.movie_image i ON m.mo_num = i.mo_num
+    </select>
+    <select id="selectMovieIdByTitle" parameterType="String" resultType="Integer">
+        SELECT mo_num
+        FROM jgv.movie
+        WHERE mo_title = #{movieTitle}
+    </select>
+
+    <update id="updateMovie" parameterType="dev.jwkim.jgv.entities.movie.MovieEntity">
+        UPDATE jgv.movie
+        SET mo_date = #{moDate},
+            mo_time = #{moTime},
+            mo_plot = #{moPlot},
+            mo_booking_rate = #{moBookingRate}
+        WHERE mo_num = #{moNum}
+    </update>
+
+    <select id="getMovieInfoById" parameterType="int" resultType="dev.jwkim.jgv.DTO.Movie_InfoDTO">
+        SELECT m.mo_num AS moNum,
+               mo_title AS moTitle,
+               i.m_img_url AS m_img_url,
+               mo_date AS moDate,
+               mo_time AS moTime,
+               mo_plot AS moPlot,
+               mo_booking_rate AS moBookingRate,
+               r.ra_grade AS grade,
+               GROUP_CONCAT(DISTINCT g.ge_name) AS genres,
+               GROUP_CONCAT(DISTINCT y.co_name) AS countries,
+               d.ch_name AS directorName,
+               d_img.c_img_url AS directorImage,
+               GROUP_CONCAT(DISTINCT a.ch_name) AS actorNames,
+               GROUP_CONCAT(a_img.c_img_url) AS actorImages
+        FROM jgv.movie m
+                 LEFT JOIN jgv.movie_image i ON m.mo_num = i.mo_num
+                 LEFT JOIN jgv.rating r ON m.ra_num = r.ra_num
+                 LEFT JOIN jgv.movie_genere mg ON m.mo_num = mg.mo_num
+                 LEFT JOIN jgv.genre g ON mg.ge_num = g.ge_num
+                 LEFT JOIN jgv.movie_country my ON m.mo_num = my.mo_num
+                 LEFT JOIN jgv.country y ON my.co_num = y.co_num
+
+                 LEFT JOIN jgv.movie_charactor mc ON m.mo_num = mc.mo_num
+                 LEFT JOIN jgv.charactor d ON mc.ch_num = d.ch_num AND d.ch_job = '감독'
+                 LEFT JOIN jgv.charactor a ON mc.ch_num = a.ch_num AND a.ch_job = '배우'
+                 LEFT JOIN jgv.charactor_image d_img ON d.ch_num = d_img.ch_num
+                 LEFT JOIN jgv.charactor_image a_img ON a.ch_num = a_img.ch_num
+        WHERE m.mo_num = #{id}
+        GROUP BY m.mo_num
     </select>
 </mapper>

@@ -17,4 +17,5 @@ public class MovieEntity {
     private String moPlot;
     private Float moBookingRate;
     private LocalDate moEnding;
+    private int raNum;
 }
