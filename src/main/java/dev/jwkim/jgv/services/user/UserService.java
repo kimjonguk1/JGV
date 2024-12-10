@@ -7,6 +7,7 @@ import dev.jwkim.jgv.mappers.user.EmailTokenMapper;
 import dev.jwkim.jgv.mappers.user.UserMapper;
 import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.results.Result;
+import dev.jwkim.jgv.results.user.LoginResult;
 import dev.jwkim.jgv.results.user.RegisterResult;
 import dev.jwkim.jgv.results.user.ValidateEmailTokenResult;
 import dev.jwkim.jgv.utils.CryptoUtils;
@@ -33,22 +34,33 @@ public class UserService {
 
 
     @Autowired
-    public UserService(UserMapper userMapper, EmailTokenMapper emailTokenMapper, JavaMailSender mailSender , SpringTemplateEngine templateEngine) {
+    public UserService(UserMapper userMapper, EmailTokenMapper emailTokenMapper, JavaMailSender mailSender, SpringTemplateEngine templateEngine) {
         this.userMapper = userMapper;
         this.emailTokenMapper = emailTokenMapper;
         this.mailSender = mailSender;
         this.templateEngine = templateEngine;
     }
 
-
+    // region 회원가입 / 비밀번호 암호화
     @Transactional
     public Result register(HttpServletRequest request, UserEntity user) throws MessagingException {
-        if (user == null ||
-                user.getUsName().isEmpty() || user.getUsName().length() < 2 ||
-                user.getUsName().length() > 15 ||  user.getUsId().isEmpty() || user.getUsId().length() < 2 ||  user.getUsId().length() > 20 ||
-                user.getUsPw().isEmpty() || user.getUsPw().length() < 8 || user.getUsPw().length() > 100 || user.getUsBirth() == null || user.getUsContact().isEmpty() || user.getUsContact().length() < 10 || user.getUsContact().length() > 13 || user.getUsEmail() == null || user.getUsEmail().isEmpty() || user.getUsEmail().length() < 8 || user.getUsEmail().length() > 50 || user.getUsGender() == null || user.getUsAddr() == null || user.getUsAddr().isEmpty() || user.getUsCreatedAt() == null || user.getUsIsDeleted() || user.getUsIsAdmin() ||
-                user.getUsIsSuspended() || !user.getUsIsVerified()) {
+        if (
+                user == null ||
+                        user.getUsName() == null ||
+                        user.getUsName().isEmpty() || user.getUsName().length() < 2 || user.getUsName().length() > 15 ||
+                        user.getUsId() == null || user.getUsId().isEmpty() || user.getUsId().length() < 2 || user.getUsId().length() > 20 ||
+                        user.getUsPw() == null || user.getUsPw().isEmpty() || user.getUsPw().length() < 8 || user.getUsPw().length() > 100 ||
+                        user.getUsBirth() == null ||
+                        user.getUsContact() == null || user.getUsContact().isEmpty() || user.getUsContact().length() < 10 || user.getUsContact().length() > 13 ||
+                        user.getUsEmail() == null || user.getUsEmail().isEmpty() || user.getUsEmail().length() < 8 || user.getUsEmail().length() > 50 ||
+                        user.getUsGender() == null || user.getUsAddr() == null || user.getUsAddr().isEmpty()
+
+        ) {
+
             return CommonResult.FAILURE;
+        }
+        if (this.userMapper.selectUserByEmail(user.getUsId()) != null) {
+            return RegisterResult.FAILURE_DUPLICATE_ID;
         }
         if (this.userMapper.selectUserByEmail(user.getUsEmail()) != null) {
             return RegisterResult.FAILURE_DUPLICATE_EMAIL;
@@ -59,6 +71,7 @@ public class UserService {
         if (this.userMapper.selectUserByNickname(user.getUsNickName()) != null) {
             return RegisterResult.FAILURE_DUPLICATE_NICKNAME;
         }
+
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setUsId(user.getUsId());
         user.setUsPw(encoder.encode(user.getUsPw()));
@@ -76,6 +89,7 @@ public class UserService {
         user.setUsIsSuspended(false);
         user.setUsIsVerified(false);
 
+
         if (this.userMapper.insertUser(user) == 0) {
             throw new TransactionalException();
         }
@@ -92,10 +106,10 @@ public class UserService {
         emailToken.setEmUsed(false);
 
         if (this.emailTokenMapper.insertEmailToken(emailToken) == 0) {
-            throw  new TransactionalException();
+            throw new TransactionalException();
         }
         String validationLink = String.format(
-                "%s://%s:$d/user/validate-email-token?userEmail=%s&key=%s",
+                "%s://%s:%d/user/validate-email-token?emEmail=%s&emKey=%s",
                 request.getScheme(),
                 request.getServerName(),
                 request.getServerPort(),
@@ -104,23 +118,66 @@ public class UserService {
         //org.thymeleaf Context
         Context context = new Context();
         context.setVariable("ValidationLink", validationLink);
-        String mailText = this.templateEngine.process("email/register", context);
+        String mailText = this.templateEngine.process("email/validationLink", context);
         // DOCTYPE 에 넣어서 문자열로 처리하겠다
 
         MimeMessage mimeMassage = this.mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMassage);
         mimeMessageHelper.setFrom("nyeonjae94@gmail.com");
         mimeMessageHelper.setTo(emailToken.getEmEmail());
-        mimeMessageHelper.setSubject("[멜튜브] 회원가입 인증 링크");
+        mimeMessageHelper.setSubject("[JGV] 회원가입 인증 링크");
         mimeMessageHelper.setText(mailText, true);
         this.mailSender.send(mimeMassage);
 
         return CommonResult.SUCCESS;
     }
+// endregion
 
+    // region 로그인
+    public Result login(UserEntity user) {
+        if (user == null ||
+                user.getUsId() == null || user.getUsId().isEmpty() || user.getUsId().length() < 2 || user.getUsId().length() > 20 ||
+                user.getUsPw() == null || user.getUsPw().isEmpty() || user.getUsPw().length() < 8 || user.getUsPw().length() > 100) {
+            return CommonResult.FAILURE;
+        }
+        UserEntity dbUser = this.userMapper.selectUserByEmail(user.getUsId());
+        if (dbUser == null || dbUser.getUsIsDeleted() != null) {
+            return CommonResult.FAILURE;
+        }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (!encoder.matches(user.getUsPw(), dbUser.getUsPw())) {
+            return CommonResult.FAILURE;
+        }
+        if (!dbUser.getUsIsVerified()) {
+            return LoginResult.FAILURE_NOT_VERIFIED;
+        }
+        if (dbUser.getUsIsSuspended()) {
+            return LoginResult.FAILURE_SUSPENDED;
+        }
+        user.setUsPw(dbUser.getUsPw());
+        user.setUsName(dbUser.getUsName());
+        user.setUsNickName(dbUser.getUsNickName());
+        user.setUsBirth(dbUser.getUsBirth());
+        user.setUsGender(dbUser.getUsGender());
+        user.setUsEmail(dbUser.getUsEmail());
+        user.setUsContact(dbUser.getUsContact());
+        user.setUsAddr(dbUser.getUsAddr());
+        user.setUsCreatedAt(dbUser.getUsCreatedAt());
+        user.setUsUpdatedAt(dbUser.getUsUpdatedAt());
+        user.setUsIsDeleted(dbUser.getUsIsDeleted());
+        user.setUsIsAdmin(dbUser.getUsIsAdmin());
+        user.setUsIsSuspended(dbUser.getUsIsSuspended());
+        user.setUsIsVerified(dbUser.getUsIsVerified());
+
+        return CommonResult.SUCCESS;
+    }
+    // endregion
+
+    // region 이메일 토큰 발급
     public Result validateEmailToken(EmailTokenEntity emailToken) {
         if (emailToken == null ||
-                emailToken.getEmEmail() == null || emailToken.getEmEmail().length() < 8 || emailToken.getEmEmail().length() > 50 || emailToken.getEmKey() == null || emailToken.getEmKey().length() != 128) {
+                emailToken.getEmEmail() == null || emailToken.getEmEmail().length() < 8 || emailToken.getEmEmail().length() > 50 ||
+                emailToken.getEmKey() == null || emailToken.getEmKey().length() != 128) {
             return CommonResult.FAILURE;
         }
         EmailTokenEntity dbEmailToken = this.emailTokenMapper.selectEmailTokenByUserEmailAndKey
@@ -140,7 +197,28 @@ public class UserService {
         if (this.userMapper.updateUser(user) == 0) {
             throw new TransactionalException();
         }
+
+
         return CommonResult.SUCCESS;
     }
-}
+// endregion
 
+    // region 아이디 , 닉네임 중복검사
+    @Transactional
+    public Result checkDuplicateUser(String userId) {
+        if (this.userMapper.selectUserById(userId) != null) {
+            return RegisterResult.FAILURE_DUPLICATE_ID;
+        }
+        return CommonResult.SUCCESS;
+    }
+
+    @Transactional
+    public Result checkDuplicateNickname(String nickname) {
+
+        if (this.userMapper.selectUserByNickname(nickname) != null) {
+            return RegisterResult.FAILURE_DUPLICATE_NICKNAME;
+        }
+        return CommonResult.SUCCESS;
+    }
+// endregion
+}

@@ -95,4 +95,26 @@
         WHERE `us_nickname` = #{usNickname}
         LIMIT 1
     </select>
+
+    <select id="selectUserById" resultType="dev.jwkim.jgv.entities.user.UserEntity">
+        SELECT us_num          AS `usNum`,
+               us_id           AS `usId`,
+               us_pw           AS `usPw`,
+               us_name         AS `usName`,
+               us_nickname     AS `usNickName`,
+               us_birth        AS `usBirth`,
+               us_gender       AS `usGender`,
+               us_email        AS `usEmail`,
+               us_contact      AS `usContact`,
+               us_addr         AS `usAddr`,
+               us_created_at   AS `usCreatedAt`,
+               us_updated_at   AS `usUpdatedAt`,
+               us_is_deleted   AS `usIsDeleted`,
+               us_is_admin     AS `usIsAdmin`,
+               us_is_suspended AS `usIsSuspended`,
+               us_verified     AS `usIsVerified`
+        FROM `jgv`.`user`
+        WHERE `us_id` = #{usId}
+        LIMIT 1
+    </select>
 </mapper>
