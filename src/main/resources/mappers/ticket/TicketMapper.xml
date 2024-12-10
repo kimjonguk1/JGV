@@ -3,6 +3,46 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dev.jwkim.jgv.mappers.ticket.TicketMapper">
+    <insert id="insertScreen"
+            parameterType="dev.jwkim.jgv.entities.theater.ScreenEntity">
+        INSERT INTO `jgv`.`screen` (sc_start_date, mo_num, ci_num)
+        VALUES (#{scStartDate}, #{moNum}, #{ciNum})
+    </insert>
+    <select id="selectMovieNumByMovieTitle"
+            resultType="dev.jwkim.jgv.entities.movie.MovieEntity">
+        SELECT `mo_num`          AS `moNum`,
+               `mo_title`        AS `moTitle`,
+               `mo_date`         AS `moDate`,
+               `mo_time`         AS `moTime`,
+               `mo_plot`         AS `moPlot`,
+               `mo_booking_rate` AS `moBookingRate`,
+               `mo_ending`       AS `moEnding`,
+               `ra_num`          AS `raNum`
+        FROM `jgv`.`movie`
+        WHERE `mo_title` = #{moTitle}
+    </select>
+    <select id="selectCinemaNumByCinemaTitle"
+            resultType="dev.jwkim.jgv.entities.theater.CinemaEntity">
+        SELECT `ci_num`  AS `ciNum`,
+               `ci_name` AS `ciName`,
+               `cinema`.`th_num`  AS `thNum`
+        FROM `jgv`.`cinema`
+                 LEFT JOIN `jgv`.`theater` t ON `cinema`.th_num = t.th_num
+        WHERE `ci_name` = #{ciName}
+          AND `th_name` = #{thName}
+    </select>
+    <select id="selectCinemaNumByCinemaType"
+            resultType="dev.jwkim.jgv.entities.theater.CinemaEntity">
+        SELECT `ci_num`,
+               `ci_name`,
+               `cinema`.`th_num`,
+               `cinema`.`cit_num`
+        FROM `jgv`.`cinema`
+                 LEFT JOIN `jgv`.`theater` t ON `cinema`.`th_num` = t.th_num
+                 LEFT JOIN `jgv`.`cinema_type` ct on ct.cit_num = cinema.cit_num
+        WHERE `th_name` = #{thName}
+          AND `cit_name` = #{citName}
+    </select>
     <select id="selectSeatByReservationSeNum" parameterType="dev.jwkim.jgv.entities.ticket.SeatEntity">
         select `se_name` as `seName`
         from jgv.reservation
