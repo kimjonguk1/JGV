@@ -85,6 +85,7 @@ $registerForm['duplicate-nickname-button'].onclick = () => {
 // endregion
 
 // region 회원가입
+{
 
     $registerForm.onsubmit = (e) => {
         e.preventDefault();
@@ -135,18 +136,18 @@ $registerForm['duplicate-nickname-button'].onclick = () => {
             const response = JSON.parse(xhr.responseText);
 
             if (response['result'] === 'success') {
-                alert('입력하신 이베일로 인증 링크를 전송하였습니다. 계정 인증 후 로그인이 가능하며, 해당 링크는 24시간 이후 만료 됩니다.');
+                alert('입력하신 이메일로 인증 링크를 전송하였습니다. 계정 인증 후 로그인이 가능하며, 해당 링크는 24시간 이후 만료 됩니다.');
 
                 location.href = `/user/login`;
             } else {
-
                 alert('서버가 알 수 없는 응답을 반환하였습니다. 잠시 후 다시 시도해 주세요.');
             }
         };
-        xhr.open('POST', location.href);
+        xhr.open('POST', '/user/register');
         xhr.send(formData);
 
 
     }
+}
 
 // endregion
