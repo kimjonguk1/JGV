@@ -1,3 +1,4 @@
+@charset "UTF-8";
 #main {
   width: 100%;
   align-items: center;
@@ -20,7 +21,7 @@
   justify-content: center;
 }
 #main > .main-container > .main {
-  height: 25rem;
+  height: 565px;
   width: 980px;
   max-width: 980px;
   min-width: 980px;
@@ -28,12 +29,23 @@
   flex-direction: row;
 }
 #main > .main-container > .main > .section {
-  width: 100%;
   height: 100%;
   border-left: 0.15rem solid #d4d3c9;
 }
 #main > .main-container > .main > .section:nth-last-child(1) {
   border-right: 0.15rem solid #d4d3c9;
+}
+#main > .main-container > .main > .section.movie {
+  width: 284px;
+}
+#main > .main-container > .main > .section.theater {
+  width: 265px;
+}
+#main > .main-container > .main > .section.day {
+  width: 91px;
+}
+#main > .main-container > .main > .section.time {
+  width: 346px;
 }
 #main > .main-container > .main > .section > .header {
   height: 2rem;
@@ -68,6 +80,8 @@
   background-color: #f2f0e5;
 }
 #main > .main-container > .main > .section .body .content {
+  box-sizing: border-box;
+  height: 100%;
   padding: 1rem 1rem;
 }
 #main > .main-container > .main > .section .body .content > .order {
@@ -90,9 +104,182 @@
   background-repeat: no-repeat;
   background-position: 50% 100%;
 }
+#main > .main-container > .main > .section .body .content > .movie {
+  height: 100%;
+  overflow-y: auto;
+}
+#main > .main-container > .main > .section .body .content > .movie::-webkit-scrollbar {
+  width: 10px; /* 스크롤바 너비 */
+}
+#main > .main-container > .main > .section .body .content > .movie::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5); /* 스크롤바의 색상 */
+  border-radius: 5px; /* 둥근 모서리 */
+  height: 10%;
+}
+#main > .main-container > .main > .section .body .content > .movie > .item-container {
+  margin-top: 0.1rem;
+  width: 100%;
+  font-weight: 600;
+  border: 0.1rem solid transparent;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+#main > .main-container > .main > .section .body .content > .movie > .item-container > .text {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 0.3rem;
+  border: 0.1rem solid transparent;
+  line-height: 1;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+  justify-content: flex-start;
+}
+#main > .main-container > .main > .section .body .content > .movie > .item-container > .text > .rating {
+  width: 1.25rem;
+  height: 1.294rem;
+}
+#main > .main-container > .main > .section .body .content > .movie > .item-container.select {
+  background-color: #333;
+  border-color: #000;
+  color: #ffffff;
+}
+#main > .main-container > .main > .section .body .content > .movie > .item-container.select > .text {
+  border-color: #5c5c5c;
+}
 #main > .main-container > .main > .section .body.theater > .content {
   display: flex;
   flex-direction: row;
+}
+#main > .main-container > .main > .section .body.theater > .content > .region-container {
+  width: 50%;
+}
+#main > .main-container > .main > .section .body.theater > .content > .region-container > .region {
+  padding: 0.5rem;
+  margin-bottom: 0.1rem;
+  background-color: #e6e4d9;
+  font-size: 0.75rem;
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+#main > .main-container > .main > .section .body.theater > .content > .region-container > .region.select {
+  background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/step1/theaterarealist_item_selected.png");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-color: transparent;
+}
+#main > .main-container > .main > .section .body.theater > .content > .theater-container {
+  width: 50%;
+  overflow-y: auto;
+}
+#main > .main-container > .main > .section .body.theater > .content > .theater-container::-webkit-scrollbar {
+  width: 10px; /* 스크롤바 너비 */
+}
+#main > .main-container > .main > .section .body.theater > .content > .theater-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5); /* 스크롤바의 색상 */
+  border-radius: 5px; /* 둥근 모서리 */
+  height: 10%;
+}
+#main > .main-container > .main > .section .body.theater > .content > .theater-container > .theater {
+  width: 100%;
+  height: 30px;
+  font-weight: 600;
+  border: 0.1rem solid transparent;
+  box-sizing: border-box;
+  line-height: 1;
+  cursor: pointer;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#main > .main-container > .main > .section .body.theater > .content > .theater-container > .theater > .text {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 0.4rem;
+  border: 0.1rem solid transparent;
+}
+#main > .main-container > .main > .section .body.theater > .content > .theater-container > .theater.select {
+  background-color: #333;
+  border-color: #000;
+  color: #ffffff;
+}
+#main > .main-container > .main > .section .body.theater > .content > .theater-container > .theater.select > .text {
+  border-color: #5c5c5c;
+}
+#main > .main-container > .main > .section .body.day > .content {
+  padding: 0.5rem 0.5rem;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  /* 스크롤바 전체 영역 */
+  /* 전체 스크롤바 스타일 */
+}
+#main > .main-container > .main > .section .body.day > .content::-webkit-scrollbar {
+  width: 10px; /* 스크롤바 너비 */
+}
+#main > .main-container > .main > .section .body.day > .content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5); /* 스크롤바의 색상 */
+  border-radius: 5px; /* 둥근 모서리 */
+  height: 10%;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container {
+  height: 100%;
+  border: 0.1rem solid transparent;
+  box-sizing: border-box;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container > .title {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container > .title > .year, #main > .main-container > .main > .section .body.day > .content > .day-container > .title .month {
+  color: #666;
+  font-weight: 600;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container > .title > .year {
+  font-size: 0.8rem;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container > .title > .month {
+  font-size: 2.5rem;
+  padding: 0;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container > .day {
+  border: 0.1rem solid transparent;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container > .day.select {
+  background-color: #333;
+  border-color: #000;
+  color: #ffffff;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container > .day.select > .day-container {
+  border-color: #5c5c5c;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container {
+  padding: 0.5rem 0.5rem;
+  border: 0.1rem solid transparent;
+  display: flex;
+  flex-direction: row;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container > .date {
+  font-weight: 600;
+}
+#main > .main-container > .main > .section .body.time > .content {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+#main > .main-container > .main > .section .body.time > .content > .notice {
+  color: #666;
 }
 
 .button-container {
@@ -1010,176 +1197,132 @@
   width: 100vw;
   background-color: rgb(29, 29, 28);
   height: 7.5rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
   box-sizing: border-box;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.control-bar > .space {
-  max-width: 61.25rem;
-  width: 61.25rem;
+.control-bar > .container {
+  width: 980px;
+  max-width: 980px;
+  min-width: 980px;
   height: 100%;
-  background-color: rgb(29, 29, 28);
-  box-sizing: border-box;
+  padding: 10px 0;
+  position: relative;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-}
-.control-bar > .space > .icon-box {
-  height: 5rem;
-  width: 5rem;
-  background-color: rgb(51, 51, 51);
-  border: 0.1rem solid #d4d3c9;
-  border-radius: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  cursor: pointer;
-  color: #cccccc;
-}
-.control-bar > .space > .icon-box.seat-right-button-after {
-  background-color: red;
-}
-.control-bar > .space > .icon-box > .arrows {
-  box-sizing: border-box;
-  height: 3rem;
-  width: 3rem;
-}
-.control-bar > .space > .icon-box > .arrows .seat-right-text {
-  color: #cccccc;
-  font-weight: 700;
-}
-.control-bar > .space > .payment-button {
-  width: 13.75rem;
-  height: 6.75rem;
-  border-radius: 1rem;
-  background-color: red;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  cursor: pointer;
-  border: 0.1rem solid red;
-}
-.control-bar > .space > .payment-button > .check-image {
-  box-sizing: border-box;
-  width: 3rem;
-  height: 3rem;
-}
-.control-bar > .space > .payment-button > .payment-check {
-  color: #ffffff;
-  font-weight: 7000;
-  font-size: 1.5rem;
-}
-.control-bar > .space > div {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
-  gap: 0.2rem;
-  padding: 0.5rem 0;
+  align-items: center;
+}
+.control-bar > .container > .movie-container {
+  width: 210px;
   height: 100%;
-  font-size: 0.75rem;
-  font-weight: 400;
-  text-align: left;
+  background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_steps.png");
+  background-repeat: no-repeat;
+  background-position: 50% 40px;
 }
-.control-bar > .space > div.title {
-  width: 7.5rem;
-  border-right: 0.1rem solid rgb(51, 51, 51);
+.control-bar > .container > .movie-container.hidden {
+  display: none;
 }
-.control-bar > .space > div.theater-title {
-  width: 2.5rem;
-}
-.control-bar > .space > div.theater-content {
-  width: 9.125rem;
-  border-right: 0.1rem solid rgb(51, 51, 51);
-  user-select: none;
-  pointer-events: none;
-}
-.control-bar > .space > div.seat-title {
-  width: 3rem;
-}
-.control-bar > .space > div.seat-content {
-  width: 9.125rem;
-  border-right: 0.1rem solid rgb(51, 51, 51);
-}
-.control-bar > .space > div.price-title {
-  width: 2.5rem;
-}
-.control-bar > .space > div.price-content {
-  width: 9.125rem;
-}
-.control-bar > .space > div > label {
-  border: none;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  color: #cccccc;
-  height: 1.5rem;
-  text-decoration-color: rgb(204, 204, 204);
-  font-weight: 700;
-  font-size: 0.75rem;
-  white-space: nowrap;
-  width: 9rem;
-  background-color: rgb(29, 29, 28);
-}
-.control-bar > .space > div > label > input {
-  border: none;
-  width: 9rem;
-  font-size: 0.75rem;
-  background-color: rgb(29, 29, 28);
-  color: #cccccc;
-}
-.control-bar > .space > div > span {
-  text-decoration: none;
-  text-overflow: ellipsis;
-  color: #cccccc;
-  height: 1.5rem;
-  text-decoration-color: rgb(204, 204, 204);
-  font-weight: 700;
-  font-size: 0.75rem;
+.control-bar > .container > .poster-container {
+  width: 210px;
+  height: 100%;
+  box-sizing: border-box;
+  align-items: center;
   display: flex;
   flex-direction: row;
-  gap: 0.2rem;
 }
-.control-bar > .space > div > span > label {
-  border: none;
-  text-decoration: none;
-  text-overflow: ellipsis;
+.control-bar > .container > .poster-container > .poster > .movie {
+  width: 74px;
+  height: 100%;
+}
+.control-bar > .container > .poster-container > .movie-info {
+  height: 100%;
+  padding: 1rem 0 1rem 1rem;
   color: #cccccc;
-  height: 1.5rem;
-  text-decoration-color: rgb(204, 204, 204);
-  font-weight: 700;
-  font-size: 0.75rem;
-  white-space: nowrap;
-  background-color: rgb(29, 29, 28);
-}
-.control-bar > .space > div > span > label.label2 {
-  width: 3rem;
-}
-.control-bar > .space > div > span > label > input {
-  background-color: rgb(29, 29, 28);
-  color: #cccccc;
-  border: none;
-  font-size: 0.75rem;
-}
-.control-bar > .space > div > span > label > [name=theater-day] {
-  width: 5rem;
-}
-.control-bar > .space > div > span > label > [name=theater-time] {
-  width: 3rem;
-}
-.control-bar > .space > div > span.poster {
-  height: 6.5rem;
-  width: 4.625rem;
+  box-sizing: border-box;
+  font-size: 0.85rem;
+  font-weight: 600;
   display: flex;
-  background-color: white;
+  flex-direction: column;
+}
+.control-bar > .container > .theater-container {
+  width: 185px;
+  height: 100%;
+  background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_steps.png");
+  background-repeat: no-repeat;
+  background-position: 50% -68px;
+}
+.control-bar > .container > .theater-container.hidden {
+  display: none;
+}
+.control-bar > .container > .seat-container {
+  width: 111px;
+  height: 100%;
+  margin: 2rem 0 0 1.5rem;
+  background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_steps.png");
+  background-repeat: no-repeat;
+  background-position: 50% -190px;
+}
+.control-bar > .container > .seat-container.hidden {
+  display: none;
+}
+.control-bar > .container > .payment-container {
+  width: 71px;
+  height: 100%;
+  margin: 2rem 0 0 1.5rem;
+  background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_steps.png");
+  background-repeat: no-repeat;
+  background-position: 50% -298px;
+}
+.control-bar > .container > .payment-container.hidden {
+  display: none;
+}
+.control-bar > .container .left-button {
+  width: 106px;
+  height: 108px;
+  cursor: pointer;
+  margin-right: 1rem;
+  background-image: url("http://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_buttons.png");
+  background-repeat: no-repeat;
+}
+.control-bar > .container .left-button.hidden {
+  display: none;
+}
+.control-bar > .container .left-button.first {
+  background-position: 0 0;
+}
+.control-bar > .container .left-button.second {
+  background-position: 0 -110px;
+}
+.control-bar > .container .right-button {
+  right: 0;
+  width: 106px;
+  height: 108px;
+  position: absolute;
+  cursor: pointer;
+  background-image: url("http://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_buttons.png");
+  background-repeat: no-repeat;
+}
+.control-bar > .container .right-button.hidden {
+  display: none;
+}
+.control-bar > .container .right-button.first {
+  background-position: 0 -220px;
+}
+.control-bar > .container .right-button.first.after {
+  background-position: -150px -220px;
+}
+.control-bar > .container .right-button.second {
+  background-position: 0 -330px;
+}
+.control-bar > .container .right-button.second.after {
+  background-position: -150px -330px;
+}
+.control-bar > .container .right-button.third {
+  width: 220px;
+  background-position: 0 -550px;
 }
 
 .add {

@@ -43,6 +43,18 @@
         WHERE `th_name` = #{thName}
           AND `cit_name` = #{citName}
     </select>
+    <select id="selectDuplicateScreen"
+            resultType="dev.jwkim.jgv.entities.theater.ScreenEntity">
+        SELECT sc_num        AS `scNum`,
+               sc_start_date AS `scStartDate`,
+               mo_num        AS `moNum`,
+               ci_num        AS `ciNum`
+        FROM `jgv`.`screen`
+        WHERE `sc_start_date` = #{startDate}
+          AND `mo_num` = #{moNum}
+          AND `ci_num` = #{ciNum}
+    </select>
+<!-- 분리점 -->
     <select id="selectSeatByReservationSeNum" parameterType="dev.jwkim.jgv.entities.ticket.SeatEntity">
         select `se_name` as `seName`
         from jgv.reservation
