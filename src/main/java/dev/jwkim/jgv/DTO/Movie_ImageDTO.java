@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class Movie_ImageDTO extends MovieEntity {
-    private int moNum;
+    private Integer moNum;
     private String moTitle;
     private String moDate;
     private int moTime;

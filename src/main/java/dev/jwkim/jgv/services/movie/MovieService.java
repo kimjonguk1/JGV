@@ -12,9 +12,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -30,18 +32,20 @@ public class MovieService {
     private final GenreMapper genreMapper;
     private final CountryMapper countryMapper;
     private final CharactorMapper charactorMapper;
+    private final CharacterService characterService;
 
     // 병렬 처리를 위한 스레드 풀
     private final ExecutorService executorService = Executors.newFixedThreadPool(3);
 
     public MovieService(MovieMapper movieMapper, MovieImageMapper movieImageMapper, RaitingMapper raitingMapper,
-                        GenreMapper genreMapper, CountryMapper countryMapper, CharactorMapper charactorMapper) {
+                        GenreMapper genreMapper, CountryMapper countryMapper, CharactorMapper charactorMapper, CharacterService characterService) {
         this.movieMapper = movieMapper;
         this.movieImageMapper = movieImageMapper;
         this.raitingMapper = raitingMapper;
         this.genreMapper = genreMapper;
         this.countryMapper = countryMapper;
         this.charactorMapper = charactorMapper;
+        this.characterService = characterService;
     }
 
     public boolean insertAllMovies(MovieEntity movieEntity) {
@@ -55,9 +59,7 @@ public class MovieService {
             CompletableFuture.allOf(currentMoviesFuture, upcomingMoviesFuture, moreMoviesFuture).join();
 
             // 중복 데이터 제거
-            synchronized (this) {
-                deleteDupleMovies();
-            }
+            deleteDupleMovies();
 
             return true;
         } catch (Exception e) {
@@ -170,22 +172,16 @@ public class MovieService {
             // 영화 포스터
             String posterUrl = movieDoc.select("span.thumb-image > img").attr("src");
 
-            // 영화 포스터가 이미 존재하는지 확인 (업데이트를 위해)
-            String ifPosterUrl = movieImageMapper.selectPosterUrlByMovieId(movieEntity.getMoNum());
+
 
             // 기존 데이터가 있을 경우
             if(ifMovieId != null) {
                 movieEntity.setMoNum(ifMovieId);
-                movieMapper.updateMovie(movieEntity);
-                if (!posterUrl.equals(ifPosterUrl)) {
-                    movieImageMapper.updateMoviePosterUrl(ifMovieId, posterUrl);
-                }
-            } else { //없을 경우 그냥 insert
-                movieMapper.insertMovie(movieEntity, raId);
-                if (!posterUrl.isEmpty()) {
-                    movieImageMapper.insertMoviePosterUrl(movieEntity.getMoNum(), posterUrl);
-                }
             }
+            // 영화 포스터가 이미 존재하는지 확인 (업데이트를 위해)
+            String ifPosterUrl = movieImageMapper.selectPosterUrlByMovieId(movieEntity.getMoNum());
+
+            updateMovieDetails(movieEntity, posterUrl, raId, ifPosterUrl);
 
             // 장르
             String MovieGenre = movieDoc.select("dt:contains(장르)").text();
@@ -250,6 +246,7 @@ public class MovieService {
         }
     }
 
+
     // 개별 캐릭터 데이터를 처리하는 메서드
     private void processCharacter(int movieId, Element characterLink, String job) {
         try {
@@ -285,9 +282,12 @@ public class MovieService {
 
             // 캐릭터 이미지 처리
             String characterImage = characterDoc.select("div.box-image > a > span.thumb-image > img").attr("src");
-            if (!characterImage.isEmpty()) {
-                charactorMapper.insertCharacterImg(charId, characterImage);
+            if (characterImage.isEmpty()) {
+                // 기본 이미지를 명시적으로 추가
+                characterImage = "http://img.cgv.co.kr/R2014/images/common/default_230_260.gif";
             }
+            this.characterService.insertCharacterImageIfNotExists(charId, characterImage);
+
 
             // 영화와 캐릭터 매핑
             charactorMapper.insertMovieCharacter(movieId, charId);
@@ -296,6 +296,8 @@ public class MovieService {
             e.printStackTrace();
         }
     }
+
+
 
     private boolean exceptPattern(String part) {
         if (part == null || part.trim().isEmpty()) {
@@ -314,18 +316,32 @@ public class MovieService {
 
     public Movie_InfoDTO selectMovieInfoById(Integer movieId) {
         Movie_InfoDTO movieInfo = movieMapper.getMovieInfoById(movieId);
+        List<String> actorNames = charactorMapper.selectActorNamesByMovieId(movieId);
+        List<String> actorImages = charactorMapper.selectActorImagesByMovieId(movieId);
 
-        // 로그로 각 필드 값 확인
-        if (movieInfo == null) {
-            System.out.println("Movie_InfoDTO 객체가 null입니다.");
-            return null;
-        }
-
-        System.out.println("영화 제목: " + movieInfo.getMoTitle());
-        System.out.println("장르: " + movieInfo.getGenres());
-        System.out.println("배우: " + movieInfo.getActorNames());
-        System.out.println("제작 국가: " + movieInfo.getCountries());
-
+        System.out.println(actorNames);
+        System.out.println(actorImages);
+        movieInfo.setActorNames(actorNames);
+        movieInfo.setActorImages(actorImages);
         return movieInfo;
+    }
+
+    @Transactional
+    public void updateMovieDetails(MovieEntity movieEntity, String posterUrl, Integer raId, String ifPosterUrl) {
+        Integer movieId = movieEntity.getMoNum();
+        if (movieId != null) {
+            // Update 기존 영화 데이터
+            movieMapper.updateMovie(movieEntity);
+            // 포스터가 변경된 경우만 업데이트
+            if (posterUrl != null && !posterUrl.equals(ifPosterUrl)) {
+                movieImageMapper.updateMoviePosterUrl(movieEntity.getMoNum(), posterUrl);
+            }
+        } else {
+            // Insert 새로운 영화 데이터
+            movieMapper.insertMovie(movieEntity, raId);
+            if (posterUrl != null && !posterUrl.equals(ifPosterUrl)) {
+                movieImageMapper.insertMoviePosterUrl(movieEntity.getMoNum(), posterUrl);
+            }
+        }
     }
 }
