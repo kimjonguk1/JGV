@@ -899,6 +899,14 @@
   gap: 0.5rem;
   padding-bottom: 0.5rem;
 }
+#payment-section > .pay-form > .cancel > button {
+  border: none;
+  padding-left: 1rem;
+  background-color: inherit;
+  cursor: pointer;
+  color: #6868ec;
+  text-decoration: underline;
+}
 #payment-section > .pay-form > .agree {
   border-top: 0.1rem solid rgb(190, 190, 189);
   border-bottom: 0.1rem solid rgb(190, 190, 189);
@@ -909,6 +917,7 @@
   align-items: flex-start;
   width: 100%;
   padding: 1rem 0 1rem 0;
+  gap: 0.2rem;
 }
 #payment-section > .pay-form > .agree > div.agree-div1 {
   width: 23.15rem;
@@ -921,6 +930,9 @@
   font-size: 0.75rem;
   font-weight: 400;
 }
+#payment-section > .pay-form > .agree > div.agree-div1 label {
+  cursor: pointer;
+}
 #payment-section > .pay-form > .agree > div.agree-div1 > .agree-all {
   font-weight: 700;
   padding-bottom: 0.2rem;
@@ -931,12 +943,18 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  margin-left: 2rem;
   border-right: 0.1rem solid rgb(190, 190, 189);
-  gap: 0.3rem;
 }
 #payment-section > .pay-form > .agree > div.agree-div2 > span {
   height: 0.95rem;
+}
+#payment-section > .pay-form > .agree > div.agree-div2 > button {
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+  color: #6868ec;
+  text-decoration: underline;
+  font-size: 0.75rem;
 }
 #payment-section > .pay-form > .agree > div.agree-div3 {
   margin-left: 2rem;
@@ -951,6 +969,8 @@
 #payment-section > .pay-form > .agree > div > label {
   display: flex;
   flex-direction: row;
+  gap: 0.2rem;
+  cursor: pointer;
 }
 #payment-section > .pay-form > .agree > div > label.agree-label {
   margin-left: 0.5rem;
