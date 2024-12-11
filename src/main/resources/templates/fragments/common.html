@@ -17,7 +17,7 @@
 </div>
 <header th:fragment="header" id="header" class="frame header">
     <h1>
-        <a href="#">
+        <a th:href="@{'/'}">
             <img src="/fragments/assets/images/jgv_logo.png" alt="로고">
         </a>
         <span class="text">DEEP DIVE SPACE</span>
@@ -31,14 +31,21 @@
             </a>
         </li>
         <li class="item">
-            <a href="#">
+            <a th:href="@{'/user/login'}">
                 <img src="https://img.cgv.co.kr/R2014/images/common/ico/loginPassword.png"
                      alt="로그인">
                 <span class="text">로그인</span>
             </a>
         </li>
         <li class="item">
-            <a href="">
+            <a th:href="@{'/'}">
+                <img src="https://img.cgv.co.kr/R2014/images/common/ico/loginPassword.png"
+                     alt="로그아웃">
+                <span class="text">로그아웃</span>
+            </a>
+        </li>
+        <li class="item">
+            <a th:href="@{'/user/register'}">
                 <img src="https://img.cgv.co.kr/R2014/images/common/ico/loginJoin.png"
                      alt="회원가입">
                 <span class="text">회원가입</span>

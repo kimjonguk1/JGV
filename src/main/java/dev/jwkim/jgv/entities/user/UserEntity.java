@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -16,7 +17,7 @@ public class UserEntity {
     private String usPw;
     private String usName;
     private String usNickName;
-    private Date usBirth;
+    private LocalDate usBirth;
     private String usGender;
     private String usEmail;
     private String usContact;
