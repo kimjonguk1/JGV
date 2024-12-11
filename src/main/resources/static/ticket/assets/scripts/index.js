@@ -1,4 +1,3 @@
-//seat
 const $mainPayment = document.getElementById("main-payment");
 const $mainSeat = document.getElementById("main-seat");
 const $paymentSection = document.getElementById("payment-section");
@@ -24,6 +23,7 @@ const $payPriceWon2 = document.getElementById("pay-price-won2");
 const $payPriceWon3 = document.getElementById("pay-price-won3");
 const $payPriceWon4 = document.getElementById("pay-price-won4");
 const $payPriceWon5 = document.getElementById("pay-price-won5");
+const $payPriceWon6 = document.getElementById("pay-price-won6");
 
 
 const adults = document.querySelectorAll('.adults');
@@ -54,6 +54,7 @@ const $paymentButton = $controlBar.querySelector(':scope > .space > .payment-but
 const $payButton = document.getElementById('pay-button');
 const $realCancel = $payButton.querySelector(':scope > .real-cancel');
 const $seatColor = document.getElementById('seat-color');
+const $method = document.getElementById('method');
 
 
 let selectedHuman = [];
@@ -75,8 +76,10 @@ let price = 0;
 
 const $payHuman = $payForm.querySelector(':scope > .table-div > .div-content1 > .pay-human')
 const $paySeat = $payForm.querySelector(':scope > .table-div > .div-content1 > .pay-seat')
-
-
+const $payMovie = document.getElementById('pay-movie')
+const $payTheater = document.getElementById('pay-theater')
+const $payCinema = document.getElementById('pay-cinema')
+const $payTime = document.getElementById('pay-time')
 
 
 //payment
@@ -113,10 +116,13 @@ $paymentCheck.forEach((radio) => {
             });
 
             if (pay === "card") {
+                $method.innerText = "신용카드"
                 $cardContainer.style.display = 'block';
             } else if (pay === "cellPhone") {
+                $method.innerText = "휴대폰 결제"
                 $cellphoneContainer.style.display = 'block';
             } else if (pay === "simple-pay") {
+                $method.innerText = "간편결제"
                 $simplePayContainer.style.display = 'block';
                 $simplePayCheck.forEach((radio) => {
                     radio.addEventListener('change', () => {
@@ -138,8 +144,11 @@ $paymentCheck.forEach((radio) => {
                     })
                 })
             } else if (pay === "credit") {
+                $method.innerText = "내통장결제"
+
                 $creditContainer.style.display = 'block';
             } else if (pay === "toss") {
+                $method.innerText = "토스"
                 $tossContainer.style.display = 'block';
             }
         }
@@ -295,13 +304,13 @@ $seatRightButtonAfter.onclick = () => {
                         $payPriceWon3.textContent = `${price2}`;
                         $payPriceWon4.textContent = `${price2}`;
                         $payPriceWon5.textContent = `${price2}`;
+                        $payPriceWon6.textContent = `${price2}`;
 
                         $seatPrice.textContent = `${price3} X ${radio.value}`;
                         $seatPriceAdd.textContent = `${price2}원`;
                         selectedHuman.push(`일반 ${(radio.value)} 명`);
                         $seatHuman.textContent = `${selectedHuman.join(', ')}`
                         $payHuman.textContent = selectedHuman;
-
 
 
                     } else {
@@ -388,6 +397,7 @@ $seatRightButtonAfter.onclick = () => {
     }
 }
 const $checkboxAgreeAll = document.getElementById('checkbox-agree-all');
+const $checkboxAgreeSolo = document.getElementById('checkbox-agree-solo');
 const $checkboxAgrees = $payForm.querySelectorAll(':scope > .agree > .agree-div1 > .agree-label > .checkbox-agree');
 
 $checkboxAgreeAll.addEventListener('change', function () {
@@ -402,3 +412,35 @@ $checkboxAgrees.forEach(checkbox => {
         $checkboxAgreeAll.checked = allChecked;
     });
 });
+
+function ReservationRefundRegulation() {
+    window.open(
+        "http://localhost:8080/ticket/ReservationRefundRegulations", // 팝업에서 열릴 URL
+        "ReservationRefundRegulation",         // 팝업창 이름
+        "width=600,height=800,left=200,top=200" // 크기와 위치
+    );
+}
+
+function TCUElectronicFinancialTransactions() {
+    window.open(
+        "https://pay.cjsystems.co.kr/NewPayment/Apply/PGApply.htm", // 팝업에서 열릴 URL
+        "TCUElectronicFinancialTransactions",         // 팝업창 이름
+        "width=400,height=600,left=800,top=200" // 크기와 위치
+    );
+}
+
+function TCCollectingPersonalInformation() {
+    window.open(
+        "https://pay.cjsystems.co.kr/NewPayment/Apply/IDCollectApply.htm", // 팝업에서 열릴 URL
+        "TCCollectingPersonalInformation",         // 팝업창 이름
+        "width=400,height=600,left=800,top=200" // 크기와 위치
+    );
+}
+
+function TCPPIC() {
+    window.open(
+        "https://pay.cjsystems.co.kr/NewPayment/Apply/IDProvideApply.htm", // 팝업에서 열릴 URL
+        "TCPPIC",         // 팝업창 이름
+        "width=400,height=600,left=800,top=200" // 크기와 위치
+    );
+}

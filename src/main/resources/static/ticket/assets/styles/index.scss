@@ -1060,6 +1060,15 @@
       width: 100%;
       gap: 0.5rem;
       padding-bottom: 0.5rem;
+
+      > button {
+        border: none;
+        padding-left: 1rem;
+        background-color: inherit;
+        cursor: pointer;
+        color: #6868ec;
+        text-decoration: underline;
+      }
     }
 
     > .agree {
@@ -1072,6 +1081,7 @@
       align-items: flex-start;
       width: 100%;
       padding: 1rem 0 1rem 0;
+      gap: 0.2rem;
 
       > div {
         &.agree-div1 {
@@ -1085,9 +1095,15 @@
           font-size: 0.75rem;
           font-weight: 400;
 
+          label {
+            cursor: pointer;
+
+          }
+
           > .agree-all {
             font-weight: 700;
             padding-bottom: 0.2rem;
+
           }
         }
 
@@ -1097,12 +1113,20 @@
           flex-direction: column;
           justify-content: center;
           align-items: flex-start;
-          margin-left: 2rem;
           border-right: 0.1rem solid rgb(190, 190, 189);
-          gap: 0.3rem;
+
 
           > span {
             height: 0.95rem;
+          }
+
+          > button {
+            border: none;
+            background-color: inherit;
+            cursor: pointer;
+            color: #6868ec;
+            text-decoration: underline;
+            font-size: 0.75rem;
           }
         }
 
@@ -1120,6 +1144,9 @@
         > label {
           display: flex;
           flex-direction: row;
+          gap: 0.2rem;
+          cursor: pointer;
+
 
           &.agree-label {
             margin-left: 0.5rem;
@@ -1200,7 +1227,8 @@
       box-sizing: border-box;
       cursor: pointer;
       color: #cccccc;
-      &.seat-right-button-after{
+
+      &.seat-right-button-after {
         background-color: red;
       }
 
@@ -1304,7 +1332,7 @@
         width: 9rem;
         background-color: rgb(29, 29, 28);
 
-        > input{
+        > input {
           border: none;
           width: 9rem;
           font-size: 0.75rem;
@@ -1339,21 +1367,23 @@
           white-space: nowrap;
           background-color: rgb(29, 29, 28);
 
-          &.label2{
+          &.label2 {
             width: 3rem;
           }
 
-          > input{
+          > input {
             background-color: rgb(29, 29, 28);
             color: #cccccc;
 
             border: none;
             font-size: 0.75rem;
           }
-          > [name='theater-day']{
+
+          > [name='theater-day'] {
             width: 5rem;
           }
-          > [name='theater-time']{
+
+          > [name='theater-time'] {
             width: 3rem;
           }
         }

@@ -167,31 +167,31 @@
                         <label class="payment-label">
                             <input class="payment-check card-check" name="payment-check" type="radio" value="card"
                                    checked>
-                            신용카드
+                            <span>신용카드</span>
                         </label>
                         <label class="payment-label">
                             <input class="payment-check" id="cellphone" name="payment-check" type="radio"
                                    value="cellPhone">
-                            휴대폰 결제
+                            <span>휴대폰 결제</span>
                         </label>
                         <label class="payment-label">
                             <input class="payment-check" id="simple-pay" name="payment-check" type="radio"
                                    value="simple-pay">
-                            간편결제
+                            <span>간편결제</span>
                         </label>
                         <label class="payment-label">
                             <input class="payment-check" id="credit" name="payment-check" type="radio" value="credit">
-                            내통장결제
+                            <span>내통장결제</span>
                         </label>
                         <label class="payment-label">
                             <input class="payment-check" id="toss" name="payment-check" type="radio" value="toss">
-                            토스
+                            <span>토스</span>
                         </label>
                     </label>
                 </div>
                 <div class="card-container pay-containers">
                     <div class="card-content">
-                        카드종류
+                        <span>카드종류</span>
                         <label class="card-label">
                             <select name="card">
                                 <option disabled selected>카드를 선택해주세요.</option>
@@ -222,7 +222,7 @@
                     <div class="cellphone-content">
                 <span class="text">
                     <span class="text">결제금액</span>
-                    <span class="cellphone-pay">25,000</span>
+                    <span class="cellphone-pay" id="pay-price-won6"></span>
                     <span class="text">원</span>
                 </span>
                         <span class="text">
@@ -443,7 +443,7 @@
     </div>
     <!------------------------------------------------------------------------------------>
 </main>
-<section id="payment-section" style="display: none;">
+<section id="payment-section" style="display: none">
     <h4>예매내역 확인</h4>
     <form class="pay-form">
         <div class="title">
@@ -471,12 +471,15 @@
                 <span>좌석</span>
             </div>
             <div class="div-content1">
-                <span>위키드(자막)</span>
-                <span>CGV 고양행신</span>
-                <span>1관 6층</span>
-                <span>2024년 12월 1일(일) 20:10~23:00</span>
+                <span id="pay-movie">위키드(자막)</span>
+                <span id="pay-theater">CGV대구</span>
+                <span id="pay-cinema">2관</span>
+                <span id="pay-time">2024년 12월 1일 20:10~23:00</span>
                 <span class="pay-human"></span>
                 <span class="pay-seat"></span>
+                <label>
+                    <input type="text" style="display: none">
+                </label>
             </div>
             <div class="div-title2">
                 <span>결제금액</span>
@@ -488,7 +491,7 @@
                     <span>원</span>
                 </span>
                 <span>
-                    <span class="big-font">카드 결제</span>
+                    <span class="big-font" id="method"></span>
                     <span class="small-red" id="pay-price-won5"></span>
                     <span>원</span>
                 </span>
@@ -498,43 +501,44 @@
             <span>ㆍ인터넷 예매는 온라인상으로 영화상영 시간 20분 전 까지 취소 가능하며 20분 이후에는 현장에서 취소를하셔야합니다.</span>
             <span>ㆍ현장취소를 하는 경우 상영시간 이전까지만 가능하며 영화 상영 시작 시간 이후 취소/환불/결제수단 변경은 불가합니다.</span>
             <span>ㆍ입장 지연에 따른 관람 불편을 최소화하기 위해 본 영화는 10분 후 상영이 시작됩니다.</span>
-            <a href="#">> 예약취소 및 환불규정 안내</a>
+            <button type="button" onclick="ReservationRefundRegulation()">> 예약취소 및 환불규정 안내</button>
         </div>
         <div class="agree">
             <div class="agree-div1">
                 <label class="agree-all">
                     <input type="checkbox" id="checkbox-agree-all">
-                    결제대행 서비스 약관에 모두 동의
+                    <span>결제대행 서비스 약관에 모두 동의</span>
                 </label>
                 <label class="agree-label">
                     <input type="checkbox" class="checkbox-agree">
-                    전자금융거래 이용약관
+                    <span>전자금융거래 이용약관</span>
                 </label>
                 <label class="agree-label">
                     <input type="checkbox" class="checkbox-agree">
-                    개인정보 수집 이용약관
+                    <span>개인정보 수집 이용약관</span>
                 </label>
                 <label class="agree-label">
                     <input type="checkbox" class="checkbox-agree">
-                    개인정보 제공 및 위탁 안내 약관
+                    <span>개인정보 제공 및 위탁 안내 약관</span>
                 </label>
             </div>
             <div class="agree-div2">
                 <span></span>
-                <a href="#">전문확인</a>
-                <a href="#">전문확인</a>
-                <a href="#">전문확인</a>
+                <button type="button" onclick="TCUElectronicFinancialTransactions()">전문확인</button>
+                <button type="button" onclick="TCCollectingPersonalInformation()">전문확인</button>
+                <button type="button" onclick="TCPPIC()">전문확인</button>
+
             </div>
             <div></div>
             <div class="agree-div3">
                 <label>
-                    <input type="checkbox">
+                    <input type="checkbox" id="checkbox-agree-solo">
                     상기 결제 내역을 모두 확인했습니다.
                 </label>
             </div>
         </div>
         <span id="pay-button">
-        <button type="submit" name="real-pay" class="real-pay">결제하기</button>
+        <button type="submit" name="real-pay" class="real-pay" id="real-pay">결제하기</button>
         <button type="button" name="real-cancel" class="real-cancel">취소</button>
     </span>
     </form>
