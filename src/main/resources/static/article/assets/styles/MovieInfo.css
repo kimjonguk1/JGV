@@ -158,30 +158,27 @@ section.active {
   flex: 1;
 }
 #character .director .info .name {
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
+  font-size: 13px;
+  color: #333333;
 }
 #character .director .info .related-works {
-  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
 }
-#character .director .info .related-works span {
-  font-size: 16px;
-  font-weight: bold;
-  color: #666;
+#character .director .info .related-works p {
+  width: 32px;
+  height: 37px;
+  background: url("https://img.cgv.co.kr/R2014/images/title/text_relationmovie.gif") 0 0 no-repeat;
 }
 #character .director .info .related-works .works {
   display: flex;
   gap: 10px;
   justify-content: flex-end;
-  margin-top: 10px;
 }
 #character .director .info .related-works .works img {
   width: 70px;
   height: 100px;
-  border-radius: 5px;
   object-fit: cover;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 #character .actors-list {
   display: flex;
@@ -195,15 +192,12 @@ section.active {
   width: 48%; /* 두 개씩 한 줄에 배치 */
   background: #f9f9f9;
   padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 #character .actors-list .actor img {
   width: 80px;
   height: 100px;
   border-radius: 5px;
   object-fit: cover;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 #character .actors-list .actor .info {
   display: flex;

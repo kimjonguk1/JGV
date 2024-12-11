@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Setter
 @EqualsAndHashCode(of = {"moNum"})
 public class MovieEntity {
-    private int moNum;
+    private Integer moNum;
     private String moTitle;
     private String moDate;
     private int moTime;

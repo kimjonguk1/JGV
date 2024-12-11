@@ -12,7 +12,7 @@ public class Movie_InfoDTO extends Movie_ImageDTO{
     private String genres;
     private String directorName;
     private String directorImage;
-    private String actorNames;
-    private String actorImages;
+    private List<String> actorNames;
+    private List<String> actorImages;
     private String countries;
 }

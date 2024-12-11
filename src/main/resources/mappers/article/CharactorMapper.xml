@@ -24,15 +24,28 @@
         VALUES (#{chnum}, #{monum})
     </insert>
 
-    <delete id="deleteAllCharacter">
-        DELETE FROM jgv.charactor
-    </delete>
+    <select id="selectActorNamesByMovieId" resultType="string">
+        SELECT DISTINCT ch_name
+        FROM jgv.charactor c
+        INNER JOIN jgv.movie_charactor mc on c.ch_num = mc.ch_num
+        WHERE mc.mo_num = #{monum}
+        ORDER BY c.ch_num ASC
+    </select>
+    <select id="selectActorImagesByMovieId" resultType="string">
+        SELECT c_img_url
+        FROM jgv.charactor_image
+        INNER JOIN jgv.charactor c on charactor_image.ch_num = c.ch_num
+        INNER JOIN jgv.movie_charactor mc on c.ch_num = mc.ch_num
+        WHERE mc.mo_num = #{monum}
+        UNION
+        SELECT 'http://img.cgv.co.kr/R2014/images/common/default_230_260.gif' AS c_img_url
+        ORDER BY c_img_url ASC;
+    </select>
 
-    <delete id="deleteAllCharacterImg">
-        DELETE FROM jgv.charactor_image
-    </delete>
-
-    <delete id="deleteAllMovieCharacterMapping">
-        DELETE FROM jgv.movie_charactor
-    </delete>
+    <select id="selectCharacterImgIdByCharIdAndUrl" resultType="Integer">
+        SELECT c_img_num
+        FROM jgv.charactor_image
+        WHERE ch_num = #{ChNum}
+        AND c_img_url = #{characterImage}
+    </select>
 </mapper>

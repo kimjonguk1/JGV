@@ -3,6 +3,9 @@ package dev.jwkim.jgv.mappers.movie;
 import dev.jwkim.jgv.entities.movie.CharactorEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
+
+import java.util.List;
 
 @Mapper
 public interface CharactorMapper {
@@ -14,10 +17,10 @@ public interface CharactorMapper {
     int insertCharacterImg(@Param("ChNum") int ChNum, @Param("imgUrl") String imgUrl);
     // 인물 영화 다대다 매핑
     void insertMovieCharacter(@Param("monum") int monum, @Param("chnum") int chnum);
-    // 인물 데이터 삭제
-    int deleteAllCharacter();
-    // 인물 이미지 테이블 삭제
-    int deleteAllCharacterImg();
-    // 인물 영화 다대다 매핑 테이블 삭제
-    int deleteAllMovieCharacterMapping();
+    // 배우 이름 가져오기
+    List<String> selectActorNamesByMovieId(@Param("monum") int monum);
+    // 배우 이미지 가져오기
+    List<String> selectActorImagesByMovieId(@Param("monum") int monum);
+    // 이미지 가져오기(중복 처리를 위해)
+    Integer selectCharacterImgIdByCharIdAndUrl(@Param("ChNum") int ChNum, @Param("characterImage") String characterImage);
 }
