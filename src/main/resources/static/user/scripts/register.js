@@ -113,6 +113,7 @@ $registerForm['duplicate-nickname-button'].onclick = () => {
         formData.append('usBirth', $registerForm['birth'].value);
         formData.append('usGender', $registerForm['gender'].value);
         formData.append('usContact', $registerForm['contact'].value);
+        formData.append('usEmail', $registerForm['email'].value);
 
         const zipcode = $registerForm['postcode'].value;
         const address = $registerForm['address'].value;
