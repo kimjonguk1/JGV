@@ -53,4 +53,12 @@ public class TicketController {
         response.put(Result.NAMESS, citPrice);
         return response.toString();
     }
+
+    @RequestMapping(value = "/ReservationRefundRegulations", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getReservationRefundRegulations(
+    ) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("ticket/ReservationRefundRegulations");
+        return modelAndView;
+    }
 }
