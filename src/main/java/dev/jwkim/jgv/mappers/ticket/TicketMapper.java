@@ -9,6 +9,8 @@ import dev.jwkim.jgv.entities.ticket.SeatEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDateTime;
+
 @Mapper
 public interface TicketMapper {
     int insertScreen(ScreenEntity screen);
@@ -20,6 +22,13 @@ public interface TicketMapper {
 
     CinemaEntity selectCinemaNumByCinemaType(@Param(value = "citName") String citName,
                                              @Param(value = "thName") String thName);
+
+
+    ScreenEntity[] selectDuplicateScreen(@Param(value = "startDate") LocalDateTime startDate,
+                                         @Param(value = "moNum") int moNum,
+                                         @Param(value = "ciNum") int ciNum);
+
+//    ---------------------------------------
 
     ReservationEntity[] selectSeatByReservationSeNum(
             @Param("ciName") String ciName,

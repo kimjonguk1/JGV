@@ -6,6 +6,7 @@ import dev.jwkim.jgv.entities.theater.CinemaTypeEntity;
 import dev.jwkim.jgv.entities.theater.ScreenEntity;
 import dev.jwkim.jgv.entities.ticket.ReservationEntity;
 import dev.jwkim.jgv.entities.ticket.SeatEntity;
+import dev.jwkim.jgv.exceptions.TransactionalException;
 import dev.jwkim.jgv.mappers.ticket.TicketMapper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -74,7 +76,8 @@ public class TicketService {
 //    }
     // endregion
 
-    public void Crawl(ScreenEntity screen) {
+    @Transactional
+    public void Crawl(ScreenEntity screen) throws TransactionalException {
         // ChromeDriver 경로 설정
         System.setProperty("webdriver.chrome.driver", "./chromedriver.exe"); // chromedriver.exe 경로 지정
 
@@ -89,10 +92,11 @@ public class TicketService {
             // 오늘 날짜 가져오기
             LocalDate currentDate = LocalDate.now();
             for (TheaterCode theater : TheaterCode.values()) {
+                int ciNum = 0;
                 System.out.println(theater.cgvName);
 
-                // 7일 간의 날짜를 반복하며 크롤링
-                for (int i = 0; i < 1; i++) {
+                // 15일 간의 날짜를 반복하며 크롤링
+                for (int i = 0; i < 15; i++) {
                     String date = currentDate.plusDays(i).toString().replace("-", ""); // YYYYMMDD 형식의 날짜
                     System.out.println("상영일: " + date);
 
@@ -100,7 +104,6 @@ public class TicketService {
                     String url = "http://www.cgv.co.kr/theaters/?areacode=11&theaterCode=" + theater.cgvCode + "&date=" + date;
                     // CGV 극장 URL 열기
                     driver.get(url);
-
 
                     // iframe 요소 찾기 및 전환
                     WebElement iframe = driver.findElement(By.id("ifrm_movie_time_table"));
@@ -111,8 +114,11 @@ public class TicketService {
 
                     for (WebElement movieElement : movieElements) {
                         // 영화 제목 추출
-                        String movieTitle = movieElement.findElement(By.cssSelector(".info-movie > a > strong")).getText();
+                        String movieTitle = movieElement.findElement(By.cssSelector(".info-movie > a > strong")).getText().trim();
                         MovieEntity movieNum = this.ticketMapper.selectMovieNumByMovieTitle(movieTitle);
+                        if (movieNum == null) {
+                            break;
+                        }
                         screen.setMoNum(movieNum.getMoNum());
 
                         // 상영 시간표 추출
@@ -123,12 +129,51 @@ public class TicketService {
                             for (WebElement cinema : cinemas) {
                                 String result = "";
                                 for (CinemaCode code : CinemaCode.values()) {
+                                    if (cinema.getText().trim().contains("4DX관")) {
+                                        result = "4DX";
+                                        CinemaEntity cinemaTypeNum = this.ticketMapper.selectCinemaNumByCinemaType(result, theater.cgvName);
+                                        screen.setCiNum(cinemaTypeNum.getCiNum());
+                                        ciNum = cinemaTypeNum.getCiNum();
+                                        break;
+                                    }
+                                    if (cinema.getText().trim().contains("씨네앤포레")) {
+                                        result = "CINE&FORET";
+                                        CinemaEntity cinemaTypeNum = this.ticketMapper.selectCinemaNumByCinemaType(result, theater.cgvName);
+                                        screen.setCiNum(cinemaTypeNum.getCiNum());
+                                        ciNum = cinemaTypeNum.getCiNum();
+                                        break;
+                                    }
+                                    if (cinema.getText().contains("[CGV아트하우스]") || cinema.getText().contains("[영남이공대학교]")) {
+                                        result = cinema.getText();
+                                        CinemaEntity artCinema = this.ticketMapper.selectCinemaNumByCinemaTitle(result.substring(0, 2), theater.cgvName);
+                                        screen.setCiNum(artCinema.getCiNum());
+                                        ciNum = artCinema.getCiNum();
+                                        break;
+                                    }
+                                    if (cinema.getText().contains("비상설")) {
+                                        continue;
+                                    }
                                     if (code.citName.equals(cinema.getText())) {
-                                        CinemaEntity cinemaNum = this.ticketMapper.selectCinemaNumByCinemaType(code.citName, theater.cgvName);
-                                        screen.setCiNum(cinemaNum.getCiNum());
+                                        result = cinema.getText().trim();
+                                        CinemaEntity cinemaTypeNum = this.ticketMapper.selectCinemaNumByCinemaType(result, theater.cgvName);
+                                        screen.setCiNum(cinemaTypeNum.getCiNum());
+                                        ciNum = cinemaTypeNum.getCiNum();
+                                        break;
                                     } else {
-                                        CinemaEntity cinemaNum = this.ticketMapper.selectCinemaNumByCinemaTitle(cinema.getText().substring(0, 2), theater.cgvName);
+                                        screen.setCiNum(0);
+                                    }
+                                }
+                                if (screen.getCiNum() == 0) { // 조건에 맞는 값을 찾지 못한 경우 처리
+                                    if (cinema.getText() != null && cinema.getText().length() >= 3) {
+                                        result = cinema.getText().trim();
+                                        CinemaEntity cinemaNum = this.ticketMapper.selectCinemaNumByCinemaTitle(result.substring(0, 3), theater.cgvName);
                                         screen.setCiNum(cinemaNum.getCiNum());
+                                        ciNum = cinemaNum.getCiNum();
+                                    } else if (cinema.getText() != null && cinema.getText().length() >= 2) {
+                                        result = cinema.getText().trim();
+                                        CinemaEntity cinemaNum = this.ticketMapper.selectCinemaNumByCinemaTitle(result.substring(0, 2), theater.cgvName);
+                                        screen.setCiNum(cinemaNum.getCiNum());
+                                        ciNum = cinemaNum.getCiNum();
                                     }
                                 }
                                 timeTable.append("상영관: ").append(result).append("\n");
@@ -138,17 +183,14 @@ public class TicketService {
                                     String dateTimeString = date + "T" + element.getText();
                                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HH:mm");
                                     screen.setScStartDate(LocalDateTime.parse(dateTimeString, formatter));
-                                    this.ticketMapper.insertScreen(screen);
+                                    ScreenEntity[] screens = this.ticketMapper.selectDuplicateScreen(LocalDateTime.parse(dateTimeString, formatter), this.ticketMapper.selectMovieNumByMovieTitle(movieTitle).getMoNum(), ciNum);
+                                    if (screens.length < 1) {
+                                        this.ticketMapper.insertScreen(screen);
+                                    }
                                 }
                             }
                         }
-
-                        // 출력
-                        System.out.println("------------");
-                        System.out.println("영화: " + movieTitle);
-                        System.out.println(timeTable.toString().trim());
                     }
-                    System.out.println("------------");
                 }
             }
         } catch (Exception e) {
@@ -158,6 +200,8 @@ public class TicketService {
             driver.quit();
         }
     }
+
+//    ---------------------------------------
 
     public ReservationEntity[] selectSeatByReservationNum(String ciName, String thName) {
 

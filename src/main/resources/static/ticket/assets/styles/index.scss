@@ -23,19 +23,34 @@
     justify-content: center;
 
     > .main {
-      height: 25rem;
+      height: 565px;
       @include minmaxWidth(980px);
 
       display: flex;
       flex-direction: row;
 
       > .section {
-        width: 100%;
         height: 100%;
         border-left: 0.15rem solid #d4d3c9;
 
         &:nth-last-child(1) {
           border-right: 0.15rem solid #d4d3c9;
+        }
+
+        &.movie {
+          width: 284px;
+        }
+
+        &.theater {
+          width: 265px;
+        }
+
+        &.day {
+          width: 91px;
+        }
+
+        &.time {
+          width: 346px;
         }
 
         > .header {
@@ -76,6 +91,8 @@
           background-color: #f2f0e5;
 
           .content {
+            box-sizing: border-box;
+            height: 100%;
             padding: 1rem 1rem;
 
             > .order {
@@ -100,13 +117,226 @@
                 }
               }
             }
+
+            > .movie {
+              height: 100%;
+              overflow-y: auto;
+
+              &::-webkit-scrollbar {
+                width: 10px; /* 스크롤바 너비 */
+              }
+
+              &::-webkit-scrollbar-thumb {
+                background-color: rgba(0, 0, 0, .5); /* 스크롤바의 색상 */
+                border-radius: 5px; /* 둥근 모서리 */
+                height: 10%;
+              }
+
+              > .item-container {
+                margin-top: 0.1rem;
+                width: 100%;
+                font-weight: 600;
+                border: 0.1rem solid transparent;
+                box-sizing: border-box;
+                cursor: pointer;
+
+                > .text {
+                  box-sizing: border-box;
+                  width: 100%;
+                  height: 100%;
+                  padding: 0.3rem;
+                  border: 0.1rem solid transparent;
+                  line-height: 1;
+
+                  align-items: center;
+                  display: flex;
+                  flex-direction: row;
+                  gap: 0.3rem;
+                  justify-content: flex-start;
+
+                  > .rating {
+                    width: 1.25rem;
+                    height: 1.294rem;
+                  }
+                }
+
+                &.select {
+                  background-color: #333;
+                  border-color: #000;
+                  color: #ffffff;
+
+                  > .text {
+                    border-color: #5c5c5c;
+                  }
+                }
+              }
+            }
           }
 
           &.theater {
-
             > .content {
               display: flex;
               flex-direction: row;
+
+              > .region-container {
+                width: 50%;
+
+                > .region {
+                  padding: 0.5rem;
+                  margin-bottom: 0.1rem;
+                  background-color: #e6e4d9;
+                  font-size: 0.75rem;
+                  cursor: pointer;
+
+                  align-items: center;
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: flex-end;
+
+                  &.select {
+                    background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/step1/theaterarealist_item_selected.png");
+                    background-repeat: no-repeat;
+                    background-position: right;
+                    background-color: transparent;
+                  }
+                }
+              }
+
+              > .theater-container {
+                width: 50%;
+                overflow-y: auto;
+
+                &::-webkit-scrollbar {
+                  width: 10px; /* 스크롤바 너비 */
+                }
+
+                &::-webkit-scrollbar-thumb {
+                  background-color: rgba(0, 0, 0, .5); /* 스크롤바의 색상 */
+                  border-radius: 5px; /* 둥근 모서리 */
+                  height: 10%;
+                }
+
+                > .theater {
+                  width: 100%;
+                  height: 30px;
+                  font-weight: 600;
+                  border: 0.1rem solid transparent;
+                  box-sizing: border-box;
+                  line-height: 1;
+                  cursor: pointer;
+
+                  align-items: flex-start;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+
+                  > .text {
+                    box-sizing: border-box;
+                    width: 100%;
+                    height: 100%;
+                    padding: 0.4rem;
+                    border: 0.1rem solid transparent;
+                  }
+
+                  &.select {
+                    background-color: #333;
+                    border-color: #000;
+                    color: #ffffff;
+
+                    > .text {
+                      border-color: #5c5c5c;
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          &.day {
+            > .content {
+              padding: 0.5rem 0.5rem;
+              height: 100%;
+              overflow-y: auto;
+              box-sizing: border-box;
+
+              /* 스크롤바 전체 영역 */
+              /* 전체 스크롤바 스타일 */
+              &::-webkit-scrollbar {
+                width: 10px; /* 스크롤바 너비 */
+              }
+
+              &::-webkit-scrollbar-thumb {
+                background-color: rgba(0, 0, 0, .5); /* 스크롤바의 색상 */
+                border-radius: 5px; /* 둥근 모서리 */
+                height: 10%;
+              }
+
+              > .day-container {
+                height: 100%;
+                border: 0.1rem solid transparent;
+                box-sizing: border-box;
+
+                > .title {
+                  align-items: center;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+
+                  > .year, .month {
+                    color: #666;
+                    font-weight: 600;
+                  }
+
+                  > .year {
+                    font-size: 0.8rem;
+                  }
+
+                  > .month {
+                    font-size: 2.5rem;
+                    padding: 0;
+                  }
+                }
+
+                > .day {
+                  border: 0.1rem solid transparent;
+                  box-sizing: border-box;
+                  cursor: pointer;
+
+                  &.select {
+                    background-color: #333;
+                    border-color: #000;
+                    color: #ffffff;
+
+                    > .day-container {
+                      border-color: #5c5c5c;
+                    }
+                  }
+
+                  > .day-container {
+                    padding: 0.5rem 0.5rem;
+                    border: 0.1rem solid transparent;
+
+                    display: flex;
+                    flex-direction: row;
+
+                    > .date {
+                      font-weight: 600;
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          &.time {
+            > .content {
+              align-items: center;
+              display: flex;
+              justify-content: center;
+
+              > .notice {
+                color: #666;
+              }
             }
           }
         }
@@ -1196,208 +1426,160 @@
   width: 100vw;
   background-color: rgb(29, 29, 28);
   height: 7.5rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
   box-sizing: border-box;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-  > .space {
-    max-width: 61.25rem;
-    width: 61.25rem;
+  > .container {
+    @include minmaxWidth(980px);
     height: 100%;
-    background-color: rgb(29, 29, 28);
-    box-sizing: border-box;
+    padding: 10px 0;
+
+    position: relative;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    gap: 0.5rem;
 
-    > .icon-box {
-      height: 5rem;
-      width: 5rem;
-      background-color: rgb(51, 51, 51);
-      border: 0.1rem solid #d4d3c9;
-      border-radius: 1rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      box-sizing: border-box;
-      cursor: pointer;
-      color: #cccccc;
+    > .movie-container {
+      width: 210px;
+      height: 100%;
+      background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_steps.png");
+      background-repeat: no-repeat;
+      background-position: 50% 40px;
 
-      &.seat-right-button-after {
-        background-color: red;
-      }
-
-      > .arrows {
-        box-sizing: border-box;
-        height: 3rem;
-        width: 3rem;
-
-
-        & .seat-right-text {
-          color: #cccccc;
-          font-weight: 700;
-        }
+      &.hidden {
+        display: none;
       }
     }
 
-    > .payment-button {
-      width: 13.75rem;
-      height: 6.75rem;
-      border-radius: 1rem;
-      background-color: red;
+    > .poster-container {
+      width: 210px;
+      height: 100%;
+      box-sizing: border-box;
+
+      align-items: center;
       display: flex;
       flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      box-sizing: border-box;
-      cursor: pointer;
-      border: 0.1rem solid red;
 
-
-      > .check-image {
-        box-sizing: border-box;
-        width: 3rem;
-        height: 3rem;
+      > .poster {
+        > .movie {
+          width: 74px;
+          height: 100%;
+        }
       }
 
-      > .payment-check {
-        color: #ffffff;
-        font-weight: 7000;
-        font-size: 1.5rem;
+      > .movie-info {
+        height: 100%;
+        padding: 1rem 0 1rem 1rem;
+        color: #cccccc;
+        box-sizing: border-box;
+        font-size: 0.85rem;
+        font-weight: 600;
+
+        display: flex;
+        flex-direction: column;
       }
     }
 
-    > div {
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
-      gap: 0.2rem;
-      padding: 0.5rem 0;
+    > .theater-container {
+      width: 185px;
       height: 100%;
-      font-size: 0.75rem;
-      font-weight: 400;
-      text-align: left;
+      background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_steps.png");
+      background-repeat: no-repeat;
+      background-position: 50% -68px;
 
-      &.title {
-        width: 7.5rem;
-        border-right: 0.1rem solid rgb(51, 51, 51);
+      &.hidden {
+        display: none;
+      }
+    }
+
+    > .seat-container {
+      width: 111px;
+      height: 100%;
+      margin: 2rem 0 0 1.5rem;
+      background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_steps.png");
+      background-repeat: no-repeat;
+      background-position: 50% -190px;
+
+      &.hidden {
+        display: none;
+      }
+    }
+
+    > .payment-container {
+      width: 71px;
+      height: 100%;
+      margin: 2rem 0 0 1.5rem;
+      background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_steps.png");
+      background-repeat: no-repeat;
+      background-position: 50% -298px;
+
+      &.hidden {
+        display: none;
+      }
+    }
+
+    .left-button {
+      width: 106px;
+      height: 108px;
+      cursor: pointer;
+      margin-right: 1rem;
+
+      background-image: url("http://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_buttons.png");
+      background-repeat: no-repeat;
+
+      &.hidden {
+        display: none;
       }
 
-      &.theater-title {
-        width: 2.5rem;
+      &.first {
+        background-position: 0 0;
       }
 
-      &.theater-content {
-        width: 9.125rem;
-        border-right: 0.1rem solid rgb(51, 51, 51);
-        user-select: none;
-        pointer-events: none;
+      &.second {
+        background-position: 0 -110px
+      }
+    }
 
+    .right-button {
+      right: 0;
+      width: 106px;
+      height: 108px;
+      position: absolute;
+      cursor: pointer;
+
+      background-image: url("http://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_buttons.png");
+      background-repeat: no-repeat;
+
+      &.hidden {
+        display: none;
       }
 
-      &.seat-title {
-        width: 3rem;
-      }
+      &.first {
+        background-position: 0 -220px;
 
-      &.seat-content {
-        width: 9.125rem;
-        border-right: 0.1rem solid rgb(51, 51, 51);
-      }
-
-      &.price-title {
-        width: 2.5rem;
-      }
-
-      &.price-content {
-        width: 9.125rem;
-      }
-
-      > label {
-        border: none;
-        text-decoration: none;
-        text-overflow: ellipsis;
-        color: #cccccc;
-        height: 1.5rem;
-        text-decoration-color: rgb(204, 204, 204);
-        font-weight: 700;
-        font-size: 0.75rem;
-        white-space: nowrap;
-        width: 9rem;
-        background-color: rgb(29, 29, 28);
-
-        > input {
-          border: none;
-          width: 9rem;
-          font-size: 0.75rem;
-          background-color: rgb(29, 29, 28);
-          color: #cccccc;
-
+        &.after {
+          background-position: -150px -220px;
         }
       }
 
-      > span {
-        text-decoration: none;
-        text-overflow: ellipsis;
-        color: #cccccc;
-        height: 1.5rem;
-        text-decoration-color: rgb(204, 204, 204);
-        font-weight: 700;
-        font-size: 0.75rem;
-        display: flex;
-        flex-direction: row;
-        gap: 0.2rem;
+      &.second {
+        background-position: 0 -330px;
 
-
-        > label {
-          border: none;
-          text-decoration: none;
-          text-overflow: ellipsis;
-          color: #cccccc;
-          height: 1.5rem;
-          text-decoration-color: rgb(204, 204, 204);
-          font-weight: 700;
-          font-size: 0.75rem;
-          white-space: nowrap;
-          background-color: rgb(29, 29, 28);
-
-          &.label2 {
-            width: 3rem;
-          }
-
-          > input {
-            background-color: rgb(29, 29, 28);
-            color: #cccccc;
-
-            border: none;
-            font-size: 0.75rem;
-          }
-
-          > [name='theater-day'] {
-            width: 5rem;
-          }
-
-          > [name='theater-time'] {
-            width: 3rem;
-          }
+        &.after {
+          background-position: -150px -330px;
         }
+      }
 
-        &.poster {
-          height: 6.5rem;
-          width: 4.625rem;
-          display: flex;
-          background-color: white;
-        }
+      &.third {
+        width: 220px;
+        background-position: 0 -550px;
       }
     }
   }
-
 }
 
 .add {
