@@ -86,4 +86,17 @@
         WHERE m.mo_num = #{id}
         GROUP BY m.mo_num
     </select>
+
+    <select id="getRelatedMoviesByDirector" resultType="Map">
+        SELECT m.mo_title AS movieTitle,
+               mi.m_img_url AS movieImage
+        FROM jgv.movie m
+        INNER JOIN jgv.movie_charactor mc ON m.mo_num = mc.mo_num
+        INNER JOIN jgv.charactor c ON mc.ch_num = c.ch_num
+        LEFT JOIN jgv.movie_image mi on m.mo_num = mi.mo_num
+        WHERE c.ch_job = '감독'
+        AND c.ch_name = #{director}
+        ORDER BY m.mo_date DESC
+        LIMIT 5
+    </select>
 </mapper>

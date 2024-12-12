@@ -29,17 +29,20 @@
         FROM jgv.charactor c
         INNER JOIN jgv.movie_charactor mc on c.ch_num = mc.ch_num
         WHERE mc.mo_num = #{monum}
+        AND NOT c.ch_job = '감독'
         ORDER BY c.ch_num ASC
     </select>
     <select id="selectActorImagesByMovieId" resultType="string">
-        SELECT c_img_url
+        SELECT MIN(c_img_url) AS c_img_url
         FROM jgv.charactor_image
-        INNER JOIN jgv.charactor c on charactor_image.ch_num = c.ch_num
-        INNER JOIN jgv.movie_charactor mc on c.ch_num = mc.ch_num
-        WHERE mc.mo_num = #{monum}
-        UNION
-        SELECT 'http://img.cgv.co.kr/R2014/images/common/default_230_260.gif' AS c_img_url
-        ORDER BY c_img_url ASC;
+                 INNER JOIN jgv.charactor c ON charactor_image.ch_num = c.ch_num
+                 INNER JOIN (
+            SELECT DISTINCT ch_num
+            FROM jgv.movie_charactor
+            WHERE mo_num = #{monum}
+        ) mc ON c.ch_num = mc.ch_num
+        WHERE c.ch_job != '감독'
+        GROUP BY c.ch_num;
     </select>
 
     <select id="selectCharacterImgIdByCharIdAndUrl" resultType="Integer">
@@ -47,5 +50,11 @@
         FROM jgv.charactor_image
         WHERE ch_num = #{ChNum}
         AND c_img_url = #{characterImage}
+    </select>
+
+    <select id="isMovieCharacterMappingExists" resultType="Boolean">
+        SELECT COUNT(*)
+        FROM jgv.movie_charactor
+        WHERE mo_num = #{monum} AND ch_num = #{chnum}
     </select>
 </mapper>

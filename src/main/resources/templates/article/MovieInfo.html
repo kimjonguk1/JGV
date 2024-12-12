@@ -69,10 +69,10 @@
                             <div class="related-works">
                                 <p class="related-img"></p>
                                 <div class="works">
-                                    <img src="연관작품1이미지URL" alt="연관 작품 1">
-                                    <img src="연관작품2이미지URL" alt="연관 작품 2">
-                                    <img src="연관작품3이미지URL" alt="연관 작품 3">
-                                    <img src="연관작품4이미지URL" alt="연관 작품 4">
+                                    <div th:each="movie : ${movieInfo.relatedMovies}">
+                                        <img th:src="${movie.movieImage}" alt="">
+                                        <span th:text="${movie.movieTitle}"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -84,10 +84,8 @@
                             <div class="info">
                                 <p class="role">주연</p>
                                 <p class="name" th:text="${actors}">Cate Blanchett</p>
-                                <p class="works">오션스8(2018), 캐롤(2016), 매니페스트(2019)</p>
                             </div>
                         </div>
-                        <!-- 추가 배우 -->
                     </div>
             </div>
         </section>
