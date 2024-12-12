@@ -28,6 +28,7 @@
   width: 980px;
   max-width: 980px;
   min-width: 980px;
+  user-select: none;
   display: flex;
   flex-direction: row;
 }
@@ -108,7 +109,7 @@
   background-position: 50% 100%;
 }
 #main > .main-container > .main > .section .body .content > .movie {
-  height: 100%;
+  height: 94%;
   overflow-y: auto;
 }
 #main > .main-container > .main > .section .body .content > .movie::-webkit-scrollbar {

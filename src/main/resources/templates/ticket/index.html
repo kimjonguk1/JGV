@@ -48,22 +48,10 @@
                                     <span class="name">하얼빈</span>
                                 </div>
                             </li>
-                            <li class="item-container">
+                            <li class="item-container" th:each="movie : ${movies}">
                                 <div class="text">
-                                    <div class="twelve rating"></div>
-                                    <span class="name">하얼빈</span>
-                                </div>
-                            </li>
-                            <li class="item-container">
-                                <div class="text">
-                                    <div class="all rating"></div>
-                                    <span class="name">하얼빈</span>
-                                </div>
-                            </li>
-                            <li class="item-container">
-                                <div class="text">
-                                    <div class="none rating"></div>
-                                    <span class="name">하얼빈</span>
+                                    <div th:class="${movie.getRaGrade() + ' rating'}"></div>
+                                    <span th:text="${movie.getMoTitle()}" class="name"></span>
                                 </div>
                             </li>
                         </ul>
@@ -78,8 +66,9 @@
                     <div class="content">
                         <ul class="region-container">
                             <li class="region select">서울(31)</li>
-                            <li class="region">대구(9)</li>
-                            <li class="region">대구(9)</li>
+                            <li th:each="region : ${regions}"
+                                th:text="${region.getRegName() + '(' + region.getTheaterCount() + ')'}"
+                                class="region"></li>
                         </ul>
                         <ul class="theater-container">
                             <li class="theater select">
@@ -99,10 +88,10 @@
                 <div class="body day">
                     <div class="content">
                         <ul class="day-container">
-                            <li class="title">
-                                <span class="year">2024</span>
-                                <span class="month">12</span>
-                            </li>
+                            <!--                            <li class="title" th:each="pair : ${pairs}">-->
+                            <!--                                <span class="year" th:text="${pair.of()}">2024</span>-->
+                            <!--                                <span class="month">12</span>-->
+                            <!--                            </li>-->
                             <li class="day select">
                                 <div class="day-container">
                                     <span class="week">월</span>

@@ -8,8 +8,11 @@ import dev.jwkim.jgv.entities.ticket.ReservationEntity;
 import dev.jwkim.jgv.entities.ticket.SeatEntity;
 import dev.jwkim.jgv.exceptions.TransactionalException;
 import dev.jwkim.jgv.mappers.ticket.TicketMapper;
+import dev.jwkim.jgv.vos.MovieVo;
+import dev.jwkim.jgv.vos.RegionVo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -21,12 +24,66 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.time.format.TextStyle;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class TicketService {
     private final TicketMapper ticketMapper;
+
+    public MovieVo[] selectAllMovies() {
+        MovieVo[] movies = this.ticketMapper.selectAllMovies();
+        for (MovieVo movie : movies) {
+            switch (movie.getRaGrade()) {
+                case "청소년관람불가" -> movie.setRaGrade("nineteen");
+                case "15세이상관람가" -> movie.setRaGrade("fifteen");
+                case "12세이상관람가" -> movie.setRaGrade("twelve");
+                case "전체관람가" -> movie.setRaGrade("all");
+                case "미정" -> movie.setRaGrade("none");
+            }
+        }
+        return movies;
+    }
+
+    public RegionVo[] selectRegionAndTheaterCount() {
+        return this.ticketMapper.selectRegionAndTheaterCount();
+    }
+
+    @Transactional
+    public List<Pair<Pair<String, Integer>, String>> getWeekdays() {
+        // 화면의 시작 날짜들을 가져옴
+        ScreenEntity[] screens = this.ticketMapper.selectAllScreenDates();
+
+        // 고유 날짜를 저장할 Set
+        Set<String> uniqueDates = new HashSet<>();
+
+        // 날짜 리스트를 돌면서 고유 날짜만 저장
+        for (ScreenEntity screen : screens) {
+            uniqueDates.add(screen.getScStartDate().toString().split("T")[0]);
+        }
+
+        // 날짜와 요일을 저장할 리스트
+        List<Pair<Pair<String, Integer>, String>> dateWithWeekday = new ArrayList<>();
+
+        for (String date : uniqueDates) {
+            // 날짜 문자열을 "yyyy-MM-dd" 형식으로 변환 후 LocalDate로 변환
+            LocalDate localDate = LocalDate.parse(date);
+
+            // 연도와 월을 "year-month" 형식으로 묶어서 저장
+            String yearMonth = localDate.getYear() + "-" + localDate.getMonthValue();
+            int day = localDate.getDayOfMonth();
+
+            // 요일을 구하고, 요일 이름을 한글로 저장
+            String weekday = localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN);
+
+            // Pair로 year-month와 day를 묶고, 요일을 저장
+            dateWithWeekday.add(Pair.of(Pair.of(yearMonth, day), weekday));
+        }
+
+        // 결과 반환
+        return dateWithWeekday;
+    }
 
     @Getter
     public enum TheaterCode {
