@@ -84,6 +84,7 @@ $registerForm['duplicate-nickname-button'].onclick = () => {
 }
 // endregion
 
+// TODO 정규표현식 비밀번호유효성 검사 / 이메일 작성로직 ( select == button ) 배열에 넣고 forEach / 시간 남으면 keyup 됐을때 warning 띄우기
 // region 회원가입
 {
 
@@ -145,7 +146,6 @@ $registerForm['duplicate-nickname-button'].onclick = () => {
         };
         xhr.open('POST', '/user/register');
         xhr.send(formData);
-
 
     }
 }

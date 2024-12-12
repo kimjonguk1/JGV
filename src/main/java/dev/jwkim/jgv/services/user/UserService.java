@@ -56,6 +56,15 @@ public class UserService {
                         user.getUsGender() == null || user.getUsAddr() == null || user.getUsAddr().isEmpty()
 
         ) {
+            System.out.println(user.getUsId());
+            System.out.println(user.getUsPw());
+            System.out.println(user.getUsName());
+            System.out.println(user.getUsNickName());
+            System.out.println(user.getUsBirth());
+            System.out.println(user.getUsGender());
+            System.out.println(user.getUsEmail());
+            System.out.println(user.getUsContact());
+            System.out.println(user.getUsAddr());
 
             return CommonResult.FAILURE;
         }
@@ -133,25 +142,25 @@ public class UserService {
     }
 // endregion
 
-    // region 로그인
+    //region 로그인
     public Result login(UserEntity user) {
         if (user == null ||
                 user.getUsId() == null || user.getUsId().isEmpty() || user.getUsId().length() < 2 || user.getUsId().length() > 20 ||
                 user.getUsPw() == null || user.getUsPw().isEmpty() || user.getUsPw().length() < 8 || user.getUsPw().length() > 100) {
             return CommonResult.FAILURE;
         }
-        UserEntity dbUser = this.userMapper.selectUserByEmail(user.getUsId());
-        if (dbUser == null || dbUser.getUsIsDeleted() != null) {
+        UserEntity dbUser = this.userMapper.selectUserById(user.getUsId());
+        if (dbUser == null || dbUser.isUsIsDeleted()) {
             return CommonResult.FAILURE;
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (!encoder.matches(user.getUsPw(), dbUser.getUsPw())) {
             return CommonResult.FAILURE;
         }
-        if (!dbUser.getUsIsVerified()) {
+        if (!dbUser.isUsIsVerified()) {
             return LoginResult.FAILURE_NOT_VERIFIED;
         }
-        if (dbUser.getUsIsSuspended()) {
+        if (dbUser.isUsIsSuspended()) {
             return LoginResult.FAILURE_SUSPENDED;
         }
         user.setUsPw(dbUser.getUsPw());
@@ -164,10 +173,10 @@ public class UserService {
         user.setUsAddr(dbUser.getUsAddr());
         user.setUsCreatedAt(dbUser.getUsCreatedAt());
         user.setUsUpdatedAt(dbUser.getUsUpdatedAt());
-        user.setUsIsDeleted(dbUser.getUsIsDeleted());
-        user.setUsIsAdmin(dbUser.getUsIsAdmin());
-        user.setUsIsSuspended(dbUser.getUsIsSuspended());
-        user.setUsIsVerified(dbUser.getUsIsVerified());
+        user.setUsIsDeleted(dbUser.isUsIsDeleted());
+        user.setUsIsAdmin(dbUser.isUsIsAdmin());
+        user.setUsIsSuspended(dbUser.isUsIsSuspended());
+        user.setUsIsVerified(dbUser.isUsIsVerified());
 
         return CommonResult.SUCCESS;
     }

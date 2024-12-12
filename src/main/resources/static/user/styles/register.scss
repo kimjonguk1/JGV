@@ -92,6 +92,35 @@ body {
         gap: 1rem;
         justify-content: center;
 
+        > .email-container {
+          border: 2px solid #dddddd;
+          height: 2rem;
+          padding: 0 1rem;
+
+          > .email-label {
+
+            > .value-button {
+              width: 7rem;
+              color: #666666;
+              padding: 0.2rem;
+              position: relative;
+
+            }
+
+            > .email {
+              width: 7rem;
+              color: #666666;
+            }
+
+            > .domain {
+              width: 7rem;
+              color: #666666
+
+
+            }
+          }
+        }
+
         > .label-container {
           align-items: flex-start;
           display: flex;
@@ -147,7 +176,6 @@ body {
 
     cursor: pointer;
     user-select: none;
-
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -188,6 +216,19 @@ body {
 
 }
 
+#domainModal {
+  transform: translate(-97%, 29.7%);
+  background-color: #ffffff;
+  position: absolute;
+  > .modal-content {
+    border-top: 2px solid #cacaca;
+    border-bottom: 2px solid #cacaca;
+    width: 7rem;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    justify-content: center;
 
-
-
+  }
+}

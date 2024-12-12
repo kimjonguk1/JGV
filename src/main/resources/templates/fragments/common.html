@@ -30,21 +30,21 @@
                      alt="현대카드광고">
             </a>
         </li>
-        <li class="item">
+        <li class="item" th:if="${session.user == null}">
             <a th:href="@{'/user/login'}">
                 <img src="https://img.cgv.co.kr/R2014/images/common/ico/loginPassword.png"
                      alt="로그인">
                 <span class="text">로그인</span>
             </a>
         </li>
-        <li class="item">
-            <a th:href="@{'/'}">
+        <li class="item" th:if="${session.user != null}">
+            <a th:href="@{'/logout'}">
                 <img src="https://img.cgv.co.kr/R2014/images/common/ico/loginPassword.png"
                      alt="로그아웃">
                 <span class="text">로그아웃</span>
             </a>
         </li>
-        <li class="item">
+        <li class="item" th:if="${session.user == null}">
             <a th:href="@{'/user/register'}">
                 <img src="https://img.cgv.co.kr/R2014/images/common/ico/loginJoin.png"
                      alt="회원가입">
@@ -52,7 +52,7 @@
             </a>
         </li>
         <li class="item">
-            <a href="">
+            <a th:href="${session.user != null ? '/user/myPage' : '/user/login'}">
                 <img src="https://img.cgv.co.kr/R2014/images/common/ico/loginMember.png"
                      alt="private">
                 <span class="text">MY JGV</span>
