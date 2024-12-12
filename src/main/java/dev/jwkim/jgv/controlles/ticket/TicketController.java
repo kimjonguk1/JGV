@@ -7,6 +7,7 @@ import dev.jwkim.jgv.entities.ticket.SeatEntity;
 import dev.jwkim.jgv.results.Result;
 import dev.jwkim.jgv.services.ticket.TicketService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/ticket")
@@ -26,6 +29,12 @@ public class TicketController {
     public ModelAndView getIndex(
     ) {
         ModelAndView modelAndView = new ModelAndView();
+        MovieVo[] movies = this.ticketService.selectAllMovies();
+        RegionVo[] regions = this.ticketService.selectRegionAndTheaterCount();
+        List<Pair<Pair<String, Integer>, String>> pairs = this.ticketService.getWeekdays();
+        modelAndView.addObject("movies", movies);
+        modelAndView.addObject("regions", regions);
+        modelAndView.addObject("pairs", pairs);
         modelAndView.setViewName("ticket/index");
         return modelAndView;
     }

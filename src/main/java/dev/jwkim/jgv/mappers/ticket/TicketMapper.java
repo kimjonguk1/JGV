@@ -6,6 +6,8 @@ import dev.jwkim.jgv.entities.theater.CinemaTypeEntity;
 import dev.jwkim.jgv.entities.theater.ScreenEntity;
 import dev.jwkim.jgv.entities.ticket.ReservationEntity;
 import dev.jwkim.jgv.entities.ticket.SeatEntity;
+import dev.jwkim.jgv.vos.MovieVo;
+import dev.jwkim.jgv.vos.RegionVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,6 +16,12 @@ import java.time.LocalDateTime;
 @Mapper
 public interface TicketMapper {
     int insertScreen(ScreenEntity screen);
+
+    ScreenEntity[] selectAllScreenDates();
+
+    RegionVo[] selectRegionAndTheaterCount();
+
+    MovieVo[] selectAllMovies();
 
     MovieEntity selectMovieNumByMovieTitle(@Param(value = "moTitle") String moTitle);
 

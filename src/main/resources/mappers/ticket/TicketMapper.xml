@@ -54,6 +54,37 @@
           AND `mo_num` = #{moNum}
           AND `ci_num` = #{ciNum}
     </select>
+    <select id="selectAllMovies"
+            resultType="dev.jwkim.jgv.vos.MovieVo">
+        SELECT `mo_num` AS `moNum`,
+               `mo_title` AS `moTitle`,
+               `mo_date` AS `moDate`,
+               `mo_time` AS `moTime`,
+               `mo_plot` AS `moPlot`,
+               `mo_booking_rate` AS `moBookingRate`,
+               `mo_ending` AS `moEnding`,
+               `movie`.`ra_num` AS `raNum`,
+               `ra_grade` AS `raGrade`
+        FROM `jgv`.`movie`
+                 LEFT JOIN `jgv`.`rating` ra ON movie.ra_num = ra.ra_num
+    </select>
+    <select id="selectRegionAndTheaterCount"
+            resultType="dev.jwkim.jgv.vos.RegionVo">
+        SELECT `reg_num`                                        AS `regNum`,
+               `reg_name`                                       AS `regName`,
+               (SELECT COUNT(0)
+                FROM `jgv`.`theater`
+                WHERE `region`.`reg_num` = `theater`.`reg_num`) AS `theaterCount`
+        FROM `jgv`.`region`
+    </select>
+    <select id="selectAllScreenDates"
+            resultType="dev.jwkim.jgv.entities.theater.ScreenEntity">
+        SELECT `sc_num`        AS `scNum`,
+               `sc_start_date` AS `scStartDate`,
+               `mo_num`        AS `moNum`,
+               `ci_num`        AS `ciNum`
+        FROM `jgv`.`screen`
+    </select>
 <!-- 분리점 -->
     <select id="selectSeatByReservationSeNum" parameterType="dev.jwkim.jgv.entities.ticket.SeatEntity">
         select `se_name` as `seName`
