@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -289,8 +290,11 @@ public class MovieService {
             this.characterService.insertCharacterImageIfNotExists(charId, characterImage);
 
 
-            // 영화와 캐릭터 매핑
-            charactorMapper.insertMovieCharacter(movieId, charId);
+            // 영화와 캐릭터 매핑 (중복 방지)
+            boolean exists = charactorMapper.isMovieCharacterMappingExists(movieId, charId);
+            if (!exists) {
+                charactorMapper.insertMovieCharacter(movieId, charId);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -318,12 +322,18 @@ public class MovieService {
         Movie_InfoDTO movieInfo = movieMapper.getMovieInfoById(movieId);
         List<String> actorNames = charactorMapper.selectActorNamesByMovieId(movieId);
         List<String> actorImages = charactorMapper.selectActorImagesByMovieId(movieId);
+        //연관 작품을 위한 메서드
+        List<Map<String, String>> relatedMovies = getRelatedMovie(movieInfo.getDirectorName());
 
-        System.out.println(actorNames);
-        System.out.println(actorImages);
+        movieInfo.setRelatedMovies(relatedMovies);
         movieInfo.setActorNames(actorNames);
         movieInfo.setActorImages(actorImages);
         return movieInfo;
+    }
+
+    public List<Map<String, String>> getRelatedMovie(String directorName) {
+        List<Map<String, String>> relatedMovies = movieMapper.getRelatedMoviesByDirector(directorName);
+        return relatedMovies;
     }
 
     @Transactional

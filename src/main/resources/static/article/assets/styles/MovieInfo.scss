@@ -181,8 +181,9 @@ section.active {
       flex: 1;
 
       .name {
-        font-size: 13px;
-        color: #333333;
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
       }
 
       .related-works {
@@ -211,48 +212,41 @@ section.active {
   }
 
   .actors-list {
+    display: grid; /* 그리드 레이아웃 활성화 */
+    grid-template-columns: repeat(2, 1fr); /* 한 줄에 두 개씩 배치 */
+    gap: 20px; /* 그리드 아이템 간의 간격 */
+  }
+
+  .actor {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    gap: 10px;
+    align-items: flex-start;
+    background: #f9f9f9;
+    padding: 10px;
 
-    .actor {
+    img {
+      width: 80px;
+      height: 100px;
+      object-fit: cover;
+    }
+
+    .info {
       display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      width: 48%; /* 두 개씩 한 줄에 배치 */
-      background: #f9f9f9;
-      padding: 10px;
+      flex-direction: column;
+      gap: 5px;
 
-      img {
-        width: 80px;
-        height: 100px;
-        border-radius: 5px;
-        object-fit: cover;
+      .role {
+        font-size: 14px;
+        font-weight: bold;
+        color: #ff5a5a;
       }
 
-      .info {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-
-        .role {
-          font-size: 14px;
-          font-weight: bold;
-          color: #ff5a5a;
-        }
-
-        .name {
-          font-size: 16px;
-          font-weight: bold;
-          color: #333;
-        }
-
-        .works {
-          font-size: 14px;
-          color: #666;
-          line-height: 1.4;
-        }
+      .name {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
       }
+
     }
   }
 }

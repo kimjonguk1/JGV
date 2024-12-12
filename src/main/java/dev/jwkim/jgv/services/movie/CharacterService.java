@@ -26,4 +26,6 @@ public class CharacterService {
             charactorMapper.insertCharacterImg(charId, characterImage);
         }
     }
+
+
 }

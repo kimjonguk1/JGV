@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface MovieMapper {
@@ -25,4 +26,6 @@ public interface MovieMapper {
     void updateMovie(MovieEntity movie);
     //영화 기본정보와 상세정보 조회
     Movie_InfoDTO getMovieInfoById(@Param("id") Integer id);
+    //감독 이름으로 영화 찾기
+    List<Map<String, String>> getRelatedMoviesByDirector(String director);
 }

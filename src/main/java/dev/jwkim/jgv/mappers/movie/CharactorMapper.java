@@ -15,6 +15,8 @@ public interface CharactorMapper {
     int insertCharacter(CharactorEntity charactor);
     // 인물 이미지 db 삽입
     int insertCharacterImg(@Param("ChNum") int ChNum, @Param("imgUrl") String imgUrl);
+    // 인물 영화 중복 방지
+    boolean isMovieCharacterMappingExists(@Param("monum") int monum, @Param("chnum") int chnum);
     // 인물 영화 다대다 매핑
     void insertMovieCharacter(@Param("monum") int monum, @Param("chnum") int chnum);
     // 배우 이름 가져오기
