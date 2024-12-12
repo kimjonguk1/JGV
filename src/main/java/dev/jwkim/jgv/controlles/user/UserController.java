@@ -32,7 +32,7 @@ public class UserController {
 
     // region 회원가입
     @RequestMapping(value = "/register", method = RequestMethod.GET, produces =
-            MediaType.APPLICATION_JSON_VALUE)
+            MediaType.TEXT_HTML_VALUE)
     public ModelAndView getRegister() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/register");
@@ -46,25 +46,10 @@ public class UserController {
     ) throws MessagingException {
 
         Result result = this.userService.register(request, user);
-
         JSONObject response = new JSONObject();
         response.put(Result.NAME, result.nameToLower());
         return response.toString();
 
-    }
-// endregion
-
-    // region 로그인
-    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public String getLogin(UserEntity user, HttpSession session) {
-        Result result = this.userService.login(user);
-        if (result == CommonResult.SUCCESS) {
-            session.setAttribute("user", user);
-        }
-        JSONObject response = new JSONObject();
-        response.put(Result.NAME, result.nameToLower());
-        return response.toString();
     }
 // endregion
 
@@ -84,10 +69,40 @@ public class UserController {
     @RequestMapping(value = "login",method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getLogin() {
         ModelAndView modelAndView = new ModelAndView();
+
         modelAndView.setViewName("user/login");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+
+    public String postLogin(UserEntity user, HttpSession session) {
+        Result result = this.userService.login(user);
+        // 로그인 성공 시 세션에 사용자 정보 추가
+        if (result == CommonResult.SUCCESS) {
+            session.setAttribute("user", user);
+            System.out.println("세션에 사용자 정보 저장됨 : " + session.getAttribute("user"));
+
+        }
+        // JSON 응답 생성
+        JSONObject response = new JSONObject();
+        response.put(Result.NAME, result.nameToLower());
+
+        return response.toString();
+    }
+
 // endregion
+
+    // region 마이페이지
+    @RequestMapping(value = "/myPage", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getMyPage() {
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("user/myPage");
+        return modelAndView;
+    }
+    // endregion
 
     // region 아이디 / 닉네임 중복 검사
     @RequestMapping(value = "/check-duplicate-id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -108,4 +123,9 @@ public class UserController {
         return response.toString();
     }
 // endregion
+
+    // region 세션 검사
+
+    // endregion
+
 }

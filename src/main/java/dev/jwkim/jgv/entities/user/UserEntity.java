@@ -24,8 +24,10 @@ public class UserEntity {
     private String usAddr;
     private LocalDateTime usCreatedAt;
     private LocalDateTime usUpdatedAt;
-    private Boolean usIsDeleted;
-    private Boolean usIsAdmin;
-    private Boolean usIsSuspended;
-    private Boolean usIsVerified;
+    // private boolean usIsDeleted; // true , false
+    private boolean usIsDeleted;    // true , false, null
+    private boolean usIsAdmin;
+    private boolean usIsSuspended;
+    private boolean usIsVerified;
+
 }

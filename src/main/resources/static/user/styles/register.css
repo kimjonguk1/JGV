@@ -75,6 +75,25 @@ body > .title-container > span > img {
   gap: 1rem;
   justify-content: center;
 }
+#register-form > table > tr > td[rel=col] > .email-container, #register-form tbody > tr > td[rel=col] > .email-container, #register-form td > tr > td[rel=col] > .email-container, #register-form tr > tr > td[rel=col] > .email-container {
+  border: 2px solid #dddddd;
+  height: 2rem;
+  padding: 0 1rem;
+}
+#register-form > table > tr > td[rel=col] > .email-container > .email-label > .value-button, #register-form tbody > tr > td[rel=col] > .email-container > .email-label > .value-button, #register-form td > tr > td[rel=col] > .email-container > .email-label > .value-button, #register-form tr > tr > td[rel=col] > .email-container > .email-label > .value-button {
+  width: 7rem;
+  color: #666666;
+  padding: 0.2rem;
+  position: relative;
+}
+#register-form > table > tr > td[rel=col] > .email-container > .email-label > .email, #register-form tbody > tr > td[rel=col] > .email-container > .email-label > .email, #register-form td > tr > td[rel=col] > .email-container > .email-label > .email, #register-form tr > tr > td[rel=col] > .email-container > .email-label > .email {
+  width: 7rem;
+  color: #666666;
+}
+#register-form > table > tr > td[rel=col] > .email-container > .email-label > .domain, #register-form tbody > tr > td[rel=col] > .email-container > .email-label > .domain, #register-form td > tr > td[rel=col] > .email-container > .email-label > .domain, #register-form tr > tr > td[rel=col] > .email-container > .email-label > .domain {
+  width: 7rem;
+  color: #666666;
+}
 #register-form > table > tr > td[rel=col] > .label-container, #register-form tbody > tr > td[rel=col] > .label-container, #register-form td > tr > td[rel=col] > .label-container, #register-form tr > tr > td[rel=col] > .label-container {
   align-items: flex-start;
   display: flex;
@@ -147,6 +166,22 @@ body > .title-container > span > img {
 #register-form > .button-container > .submit {
   background-color: #333333;
   color: #ffffff;
+}
+
+#domainModal {
+  transform: translate(-97%, 29.7%);
+  background-color: #ffffff;
+  position: absolute;
+}
+#domainModal > .modal-content {
+  border-top: 2px solid #cacaca;
+  border-bottom: 2px solid #cacaca;
+  width: 7rem;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  justify-content: center;
 }
 
 /*# sourceMappingURL=register.css.map */

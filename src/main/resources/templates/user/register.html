@@ -144,7 +144,8 @@
             </td>
             <td rel="col">
                 <div class="label-container">
-                    <label class="--obj-label" style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 1rem;">
+                    <label class="--obj-label"
+                           style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 1rem;">
                         <input class="_field --obj-filed -border" type="text" id="postcode"
                                placeholder="우편번호를 입력해주세요." name="postcode">
                         <button type="button" class="addr-button" name="addr-button">주소검색</button>
@@ -194,32 +195,37 @@
                 <span>이메일</span>
             </td>
             <td rel="col">
-                <div>
-                    <label data-id="email" class="--obj-label">
-                        <input autocomplete="email" name="email" type="email" class="_field --obj-filed -border"
-                               placeholder="이메일을 입력해 주세요">
+                <div class="email-container">
+                    <label data-id="email" class="email-label">
+                        <input autocomplete="email" name="email" type="email" class="email"
+                               placeholder="이메일 입력">
                     </label>
-<!--                                        <span>@</span>-->
-<!--                                        <label data-id="email-domain" class="&#45;&#45;obj-label">-->
-<!--                                            <input name="email-domain" type="email" placeholder="이메일 도메인"-->
-<!--                                                   class="_field &#45;&#45;obj-filed -border">-->
-<!--                                        </label>-->
-<!--                                        <label class="&#45;&#45;obj-label">-->
-<!--                                            <select name="domain" class="_field &#45;&#45;obj-filed -border">-->
-<!--                                                <option value="self">직접입력</option>-->
-<!--                                                <option value="naver">네이버</option>-->
-<!--                                                <option value="hamail">한메일</option>-->
-<!--                                                <option value="nate">네이트</option>-->
-<!--                                                <option value="gmail">지메일</option>-->
-<!--                                            </select>-->
-<!--                                        </label>-->
+                    <span>@</span>
+                    <label data-id="email" class="email-label">
+                        <input name="domain" type="email" class="domain"
+                               placeholder="직접입력">
+                        <button class="value-button">∨ 직접입력</button>
+                        <label id="domainModal" class="modal">
+                            <label class="modal-content">
+                                <button class="domain-button">naver.com</button>
+                                <button class="domain-button">hanmail.com</button>
+                                <button class="domain-button">gamil.com</button>
+                                <button class="domain-button">yahoo.com</button>
+                                <button class="domain-button">daum.com</button>
+                            </label>
+                        </label>
+                    </label>
+
                 </div>
                 <span>이메일 주소 입력시 사용 가능 특수 문자:-ㆍ_</span>
             </td>
-
         </tr>
         </tbody>
+
+
     </table>
+    <!-- 버튼모달 -->
+
     <label class="--obj-check-label">
         <input class="--obj-filed -input" name="agree" type="checkbox">
         <span class="_box"></span>
