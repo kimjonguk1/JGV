@@ -5,13 +5,13 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>예매</title>
-    <link rel="stylesheet" th:href="@{'/ticket/assets/styles/index.css'}" type="text/css">
+    <link rel="stylesheet" type="text/css" th:href="@{'/ticket/assets/styles/index.css'}">
     <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
-    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}" type="text/css">
-    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}" type="text/css">
+    <link rel="stylesheet" type="text/css" th:href="@{'../../fragments/assets/styles/index.css'}">
+    <link rel="stylesheet" type="text/css" th:href="@{'../../fragments/assets/styles/common.css'}">
     <script defer th:src="@{'/ticket/assets/scripts/index.js'}"></script>
-    <script defer th:src="@{'../../assets/scripts/common.js'}"></script>
+
+    <title>JGV - 티켓 예매</title>
 </head>
 <body>
 <th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
@@ -19,13 +19,10 @@
 <th:block th:replace="~{fragments/common.html :: nav}"></th:block>
 <main id="main">
     <div class="button-container">
-        <a class="content-bar-timetable" href="#">
-            <img class="image" alt="상영시간표" th:src="@{'/ticket/assets/images/titmetable.png'}">
-            &nbsp 상영 시간표</a>
-        <a class="content-bar-retry" href="#">
-            <img class="image" alt="예매다시하기" th:src="@{'/ticket/assets/images/retry.png'}">
-            &nbsp 예매 다시하기</a>
+        <a class="content-bar-timetable" href="#"></a>
+        <a class="content-bar-retry" href="#"></a>
     </div>
+    <!------------------------------------------------------------------------------------>
     <div class="main-container">
         <div class="advertisement-container">
             <a href="#" target="_self" class="advertisement-move">
@@ -33,7 +30,7 @@
                      class="advertisement">
             </a>
         </div>
-        <div class="main">
+        <div class="main mains" data-id="main">
             <div class="section movie">
                 <div class="header">
                     <div class="movie"></div>
@@ -47,57 +44,25 @@
                         <ul class="movie">
                             <li class="item-container select">
                                 <div class="text">
-                                    <img src="data:image/svg+xml;charset=UTF-8, %3csvg width='20' height='20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23age15)'%3e%3cpath d='M17.745 20H2.255A2.256 2.256 0 0 1 0 17.745V2.255A2.255 2.255 0 0 1 2.255 0h15.49A2.253 2.253 0 0 1 20 2.255v15.49A2.254 2.254 0 0 1 17.745 20Z' fill='%23DD742F'/%3e%3cpath d='M4.318 16.891v-9.94H3.217L4.643 3.11h2.761V16.89H4.318ZM16.313 7.815h-4.834v-2.02h5.052V3.107H8.45v7.342h5.177v3.85h-2.183v-1.812H8.45v4.095a.306.306 0 0 0 .307.308h7.556a.306.306 0 0 0 .308-.308V8.125a.307.307 0 0 0-.308-.31Z' fill='%23fff'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='age15'%3e%3cpath fill='%23fff' d='M0 0h20v20H0z'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
-                                         alt="15" class="rating">
+                                    <div class="nineteen rating"></div>
                                     <span class="name">하얼빈</span>
                                 </div>
                             </li>
                             <li class="item-container">
                                 <div class="text">
-                                    <img src="data:image/svg+xml;charset=UTF-8, %3csvg width='20' height='20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23age15)'%3e%3cpath d='M17.745 20H2.255A2.256 2.256 0 0 1 0 17.745V2.255A2.255 2.255 0 0 1 2.255 0h15.49A2.253 2.253 0 0 1 20 2.255v15.49A2.254 2.254 0 0 1 17.745 20Z' fill='%23DD742F'/%3e%3cpath d='M4.318 16.891v-9.94H3.217L4.643 3.11h2.761V16.89H4.318ZM16.313 7.815h-4.834v-2.02h5.052V3.107H8.45v7.342h5.177v3.85h-2.183v-1.812H8.45v4.095a.306.306 0 0 0 .307.308h7.556a.306.306 0 0 0 .308-.308V8.125a.307.307 0 0 0-.308-.31Z' fill='%23fff'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='age15'%3e%3cpath fill='%23fff' d='M0 0h20v20H0z'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
-                                         alt="15" class="rating">
+                                    <div class="twelve rating"></div>
                                     <span class="name">하얼빈</span>
                                 </div>
                             </li>
                             <li class="item-container">
                                 <div class="text">
-                                    <img src="data:image/svg+xml;charset=UTF-8, %3csvg width='20' height='20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23age15)'%3e%3cpath d='M17.745 20H2.255A2.256 2.256 0 0 1 0 17.745V2.255A2.255 2.255 0 0 1 2.255 0h15.49A2.253 2.253 0 0 1 20 2.255v15.49A2.254 2.254 0 0 1 17.745 20Z' fill='%23DD742F'/%3e%3cpath d='M4.318 16.891v-9.94H3.217L4.643 3.11h2.761V16.89H4.318ZM16.313 7.815h-4.834v-2.02h5.052V3.107H8.45v7.342h5.177v3.85h-2.183v-1.812H8.45v4.095a.306.306 0 0 0 .307.308h7.556a.306.306 0 0 0 .308-.308V8.125a.307.307 0 0 0-.308-.31Z' fill='%23fff'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='age15'%3e%3cpath fill='%23fff' d='M0 0h20v20H0z'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
-                                         alt="15" class="rating">
+                                    <div class="all rating"></div>
                                     <span class="name">하얼빈</span>
                                 </div>
                             </li>
                             <li class="item-container">
                                 <div class="text">
-                                    <img src="data:image/svg+xml;charset=UTF-8, %3csvg width='20' height='20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23age15)'%3e%3cpath d='M17.745 20H2.255A2.256 2.256 0 0 1 0 17.745V2.255A2.255 2.255 0 0 1 2.255 0h15.49A2.253 2.253 0 0 1 20 2.255v15.49A2.254 2.254 0 0 1 17.745 20Z' fill='%23DD742F'/%3e%3cpath d='M4.318 16.891v-9.94H3.217L4.643 3.11h2.761V16.89H4.318ZM16.313 7.815h-4.834v-2.02h5.052V3.107H8.45v7.342h5.177v3.85h-2.183v-1.812H8.45v4.095a.306.306 0 0 0 .307.308h7.556a.306.306 0 0 0 .308-.308V8.125a.307.307 0 0 0-.308-.31Z' fill='%23fff'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='age15'%3e%3cpath fill='%23fff' d='M0 0h20v20H0z'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
-                                         alt="15" class="rating">
-                                    <span class="name">하얼빈</span>
-                                </div>
-                            </li>
-                            <li class="item-container">
-                                <div class="text">
-                                    <img src="data:image/svg+xml;charset=UTF-8, %3csvg width='20' height='20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23age15)'%3e%3cpath d='M17.745 20H2.255A2.256 2.256 0 0 1 0 17.745V2.255A2.255 2.255 0 0 1 2.255 0h15.49A2.253 2.253 0 0 1 20 2.255v15.49A2.254 2.254 0 0 1 17.745 20Z' fill='%23DD742F'/%3e%3cpath d='M4.318 16.891v-9.94H3.217L4.643 3.11h2.761V16.89H4.318ZM16.313 7.815h-4.834v-2.02h5.052V3.107H8.45v7.342h5.177v3.85h-2.183v-1.812H8.45v4.095a.306.306 0 0 0 .307.308h7.556a.306.306 0 0 0 .308-.308V8.125a.307.307 0 0 0-.308-.31Z' fill='%23fff'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='age15'%3e%3cpath fill='%23fff' d='M0 0h20v20H0z'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
-                                         alt="15" class="rating">
-                                    <span class="name">하얼빈</span>
-                                </div>
-                            </li>
-                            <li class="item-container">
-                                <div class="text">
-                                    <img src="data:image/svg+xml;charset=UTF-8, %3csvg width='20' height='20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23age15)'%3e%3cpath d='M17.745 20H2.255A2.256 2.256 0 0 1 0 17.745V2.255A2.255 2.255 0 0 1 2.255 0h15.49A2.253 2.253 0 0 1 20 2.255v15.49A2.254 2.254 0 0 1 17.745 20Z' fill='%23DD742F'/%3e%3cpath d='M4.318 16.891v-9.94H3.217L4.643 3.11h2.761V16.89H4.318ZM16.313 7.815h-4.834v-2.02h5.052V3.107H8.45v7.342h5.177v3.85h-2.183v-1.812H8.45v4.095a.306.306 0 0 0 .307.308h7.556a.306.306 0 0 0 .308-.308V8.125a.307.307 0 0 0-.308-.31Z' fill='%23fff'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='age15'%3e%3cpath fill='%23fff' d='M0 0h20v20H0z'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
-                                         alt="15" class="rating">
-                                    <span class="name">하얼빈</span>
-                                </div>
-                            </li>
-                            <li class="item-container">
-                                <div class="text">
-                                    <img src="data:image/svg+xml;charset=UTF-8, %3csvg width='20' height='20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23age15)'%3e%3cpath d='M17.745 20H2.255A2.256 2.256 0 0 1 0 17.745V2.255A2.255 2.255 0 0 1 2.255 0h15.49A2.253 2.253 0 0 1 20 2.255v15.49A2.254 2.254 0 0 1 17.745 20Z' fill='%23DD742F'/%3e%3cpath d='M4.318 16.891v-9.94H3.217L4.643 3.11h2.761V16.89H4.318ZM16.313 7.815h-4.834v-2.02h5.052V3.107H8.45v7.342h5.177v3.85h-2.183v-1.812H8.45v4.095a.306.306 0 0 0 .307.308h7.556a.306.306 0 0 0 .308-.308V8.125a.307.307 0 0 0-.308-.31Z' fill='%23fff'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='age15'%3e%3cpath fill='%23fff' d='M0 0h20v20H0z'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
-                                         alt="15" class="rating">
-                                    <span class="name">하얼빈</span>
-                                </div>
-                            </li>
-                            <li class="item-container">
-                                <div class="text">
-                                    <img src="data:image/svg+xml;charset=UTF-8, %3csvg width='20' height='20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23age15)'%3e%3cpath d='M17.745 20H2.255A2.256 2.256 0 0 1 0 17.745V2.255A2.255 2.255 0 0 1 2.255 0h15.49A2.253 2.253 0 0 1 20 2.255v15.49A2.254 2.254 0 0 1 17.745 20Z' fill='%23DD742F'/%3e%3cpath d='M4.318 16.891v-9.94H3.217L4.643 3.11h2.761V16.89H4.318ZM16.313 7.815h-4.834v-2.02h5.052V3.107H8.45v7.342h5.177v3.85h-2.183v-1.812H8.45v4.095a.306.306 0 0 0 .307.308h7.556a.306.306 0 0 0 .308-.308V8.125a.307.307 0 0 0-.308-.31Z' fill='%23fff'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='age15'%3e%3cpath fill='%23fff' d='M0 0h20v20H0z'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
-                                         alt="15" class="rating">
+                                    <div class="none rating"></div>
                                     <span class="name">하얼빈</span>
                                 </div>
                             </li>
@@ -297,12 +262,12 @@
                     <div class="content">
                         <div class="notice">영화,극장,날짜를 선택해 주세요.</div>
                     </div>
-                    <!--                    <div class="content hidden">-->
-                    <!--                    </div>-->
                 </div>
             </div>
         </div>
-        <div id="main-seat" style="display: none">
+
+        <!------------------------------------------------------------------------------------>
+        <div id="main-seat" class="mains hidden" data-id="main-seat">
             <div class="seat-div">
                 <div class="content">인원/좌석</div>
                 <div class="screen-container">
@@ -378,7 +343,7 @@
             </div>
         </div>
         <!------------------------------------------------------------------------------------>
-        <div id="main-payment" style="display: none">
+        <div id="main-payment" class="mains hidden" data-id="main-payment">
             <div class="left-container">
                 <div class="payment-bar">결제 수단</div>
                 <div class="payment-container" id="payment-container">
@@ -662,7 +627,7 @@
     </div>
     <!------------------------------------------------------------------------------------>
 </main>
-<section id="payment-section" style="display: none">
+<section id="payment-section" class="hidden" data-id="payment-section">
     <h4>예매내역 확인</h4>
     <form class="pay-form">
         <div class="title">
@@ -764,12 +729,13 @@
 </section>
 <section class="control-bar" id="control-bar">
     <div class="container">
-        <div class="first left-button hidden"></div>
-        <div class="second left-button hidden"></div>
+        <div class="first left-button button hidden" data-id="main-seat"></div>
+        <div class="second left-button button hidden" data-id="main-payment"></div>
         <div class="movie-container hidden"></div>
-        <div class="poster-container" data-id="poster">
+        <div class="posters info" data-id="poster">
             <div class="poster">
-                <img class="movie" src="http://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89072/89072_185.JPG" alt="대가족">
+                <img class="movie" src="http://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89072/89072_185.JPG"
+                     alt="대가족">
             </div>
             <div class="movie-info">
                 <div class="title">대가족</div>
@@ -778,30 +744,51 @@
                 <div class="rating">12세 관람가</div>
             </div>
         </div>
-        <img src="https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/split.png" alt="split">
-        <div class="theater-container">
-
+        <img class="info" src="https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/split.png" alt="split">
+        <div class="theater-container hidden"></div>
+        <div class="theater info">
+            <div class="text">
+                <span class="head">극장</span>
+                <a href="#" class="data" id="theater-theater">CGV대구</a>
+            </div>
+            <div class="text">
+                <span class="head">일시</span>
+                <span class="data" id="theater-time">2024.12.13(금) 10:40</span>
+            </div>
+            <div class="text">
+                <span class="head">상영관</span>
+                <span class="data" id="theater-cinema">5관</span>
+            </div>
+            <div class="text" id="theater-human">
+                <span class="head">인원</span>
+            </div>
         </div>
-        <img src="https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/split.png" alt="split">
-        <div class="seat-container">
 
+        <img class="info" src="https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/split.png" alt="split ">
+        <div class="seat-container"></div>
+        <div class="seat info">
+            <div class="text seat-title">
+                <span class="head">좌석명</span>
+            </div>
+            <div class="text seat-content">
+                <span class="head">좌석번호</span>
+            </div>
         </div>
-        <div class="payment-container">
-
+        <img class="info" src="https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/split.png" alt="split ">
+        <div class="price info">
+            <div class="text price-title"></div>
+            <div class="text price-content"></div>
         </div>
-        <div class="first right-button"></div>
-        <div class="second right-button hidden"></div>
-        <div class="third right-button hidden"></div>
-        <!--        <button class="icon-box right">-->
-        <!--            <img class="arrows" src="./assets/images/right-click-before.png" alt="오른쪽 화살표">-->
-        <!--            <span class="text">좌석 선택</span>-->
-        <!--        </button>-->
+        <div class="payment-container"></div>
+        <div class="first right-button" data-id="main"></div>
+        <div class="second right-button hidden" data-id="main-seat"></div>
+        <div class="third right-button hidden" data-id="main-payment"></div>
     </div>
 </section>
 <!------------------------------------------------------------------------------------>
-<div class="add">
+<a href="#" class="add">
     <img class="image" src="https://adimg.cgv.co.kr/images/202411/MorningCalm/996x140.jpg" alt="">
-</div>
+</a>
 
 <th:block th:replace="~{fragments/common.html :: footer}"></th:block>
 </body>
