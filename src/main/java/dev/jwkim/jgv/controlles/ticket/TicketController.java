@@ -1,13 +1,15 @@
 package dev.jwkim.jgv.controlles.ticket;
 
 import dev.jwkim.jgv.entities.theater.CinemaTypeEntity;
-import dev.jwkim.jgv.entities.theater.ScreenEntity;
+import dev.jwkim.jgv.entities.theater.TheaterEntity;
 import dev.jwkim.jgv.entities.ticket.ReservationEntity;
 import dev.jwkim.jgv.entities.ticket.SeatEntity;
 import dev.jwkim.jgv.results.Result;
+import dev.jwkim.jgv.services.theater.TheaterService;
 import dev.jwkim.jgv.services.ticket.TicketService;
+import dev.jwkim.jgv.vos.theater.MovieVo;
+import dev.jwkim.jgv.vos.theater.RegionVo;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -17,35 +19,41 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/ticket")
 @RequiredArgsConstructor
 public class TicketController {
     private final TicketService ticketService;
+    private final TheaterService theaterService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getIndex(
-    ) {
+    public ModelAndView getIndex(@RequestParam(value = "region", required = false) String region,
+                                 @RequestParam(value = "moTitle", required = false) String moTitle) {
         ModelAndView modelAndView = new ModelAndView();
         MovieVo[] movies = this.ticketService.selectAllMovies();
         RegionVo[] regions = this.ticketService.selectRegionAndTheaterCount();
-        List<Pair<Pair<String, Integer>, String>> pairs = this.ticketService.getWeekdays();
+        TheaterEntity[] theaters = this.theaterService.getTheatersByRegion(region);
+        Map<String, String> maps = this.ticketService.getWeekdays();
         modelAndView.addObject("movies", movies);
         modelAndView.addObject("regions", regions);
-        modelAndView.addObject("pairs", pairs);
+        modelAndView.addObject("theaters", theaters);
+        modelAndView.addObject("maps", maps);
         modelAndView.setViewName("ticket/index");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/crawling", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView Crawl(ScreenEntity screen) {
+    @RequestMapping(value = "/movies", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getMovies() {
         ModelAndView modelAndView = new ModelAndView();
-        this.ticketService.Crawl(screen);
-        modelAndView.setViewName("ticket/crawling");
+        MovieVo[] movies = this.ticketService.selectAllMoviesByKorea();
+        modelAndView.addObject("movies", movies);
+        modelAndView.setViewName("ticket/index");
         return modelAndView;
     }
+
+    // --------------------------------------
 
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody

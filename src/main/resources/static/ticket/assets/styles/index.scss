@@ -158,7 +158,7 @@
                   align-items: center;
                   display: flex;
                   flex-direction: row;
-                  gap: 0.3rem;
+                  gap: 0.5rem;
                   justify-content: flex-start;
 
                   > .rating {
@@ -207,7 +207,7 @@
                   }
 
                   > .name {
-                    width: 10rem;
+                    width: 12rem;
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
@@ -356,16 +356,6 @@
                   box-sizing: border-box;
                   cursor: pointer;
 
-                  &.select {
-                    background-color: #333;
-                    border-color: #000;
-                    color: #ffffff;
-
-                    > .day-container {
-                      border-color: #5c5c5c;
-                    }
-                  }
-
                   > .day-container {
                     padding: 0.5rem 0.5rem;
                     border: 0.1rem solid transparent;
@@ -373,8 +363,57 @@
                     display: flex;
                     flex-direction: row;
 
+                    > .week {
+                      &.saturday {
+                        color: #31597e;
+                      }
+
+                      &.sunday {
+                        color: #ad2727;
+                      }
+                    }
+
                     > .date {
                       font-weight: 600;
+
+                      &.saturday {
+                        color: #31597e;
+                      }
+
+                      &.sunday {
+                        color: #ad2727;
+                      }
+                    }
+                  }
+
+                  &.select {
+                    background-color: #333;
+                    border-color: #000;
+                    color: #ffffff;
+
+                    > .day-container {
+                      border-color: #5c5c5c;
+
+
+                      > .week {
+                        &.saturday {
+                          color: #ffffff;
+                        }
+
+                        &.sunday {
+                          color: #ffffff;
+                        }
+                      }
+
+                      > .date {
+                        &.saturday {
+                          color: #ffffff;
+                        }
+
+                        &.sunday {
+                          color: #ffffff;
+                        }
+                      }
                     }
                   }
                 }

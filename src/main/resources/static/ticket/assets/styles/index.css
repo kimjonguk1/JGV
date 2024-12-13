@@ -138,7 +138,7 @@
   align-items: center;
   display: flex;
   flex-direction: row;
-  gap: 0.3rem;
+  gap: 0.5rem;
   justify-content: flex-start;
 }
 #main > .main-container > .main > .section .body .content > .movie > .item-container > .text > .rating {
@@ -181,7 +181,7 @@
   background-attachment: scroll;
 }
 #main > .main-container > .main > .section .body .content > .movie > .item-container > .text > .name {
-  width: 10rem;
+  width: 12rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -301,6 +301,27 @@
   box-sizing: border-box;
   cursor: pointer;
 }
+#main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container {
+  padding: 0.5rem 0.5rem;
+  border: 0.1rem solid transparent;
+  display: flex;
+  flex-direction: row;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container > .week.saturday {
+  color: #31597e;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container > .week.sunday {
+  color: #ad2727;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container > .date {
+  font-weight: 600;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container > .date.saturday {
+  color: #31597e;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container > .date.sunday {
+  color: #ad2727;
+}
 #main > .main-container > .main > .section .body.day > .content > .day-container > .day.select {
   background-color: #333;
   border-color: #000;
@@ -309,14 +330,17 @@
 #main > .main-container > .main > .section .body.day > .content > .day-container > .day.select > .day-container {
   border-color: #5c5c5c;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container {
-  padding: 0.5rem 0.5rem;
-  border: 0.1rem solid transparent;
-  display: flex;
-  flex-direction: row;
+#main > .main-container > .main > .section .body.day > .content > .day-container > .day.select > .day-container > .week.saturday {
+  color: #ffffff;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container > .date {
-  font-weight: 600;
+#main > .main-container > .main > .section .body.day > .content > .day-container > .day.select > .day-container > .week.sunday {
+  color: #ffffff;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container > .day.select > .day-container > .date.saturday {
+  color: #ffffff;
+}
+#main > .main-container > .main > .section .body.day > .content > .day-container > .day.select > .day-container > .date.sunday {
+  color: #ffffff;
 }
 #main > .main-container > .main > .section .body.time > .content {
   align-items: center;

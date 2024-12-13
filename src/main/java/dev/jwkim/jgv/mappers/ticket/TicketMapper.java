@@ -6,8 +6,8 @@ import dev.jwkim.jgv.entities.theater.CinemaTypeEntity;
 import dev.jwkim.jgv.entities.theater.ScreenEntity;
 import dev.jwkim.jgv.entities.ticket.ReservationEntity;
 import dev.jwkim.jgv.entities.ticket.SeatEntity;
-import dev.jwkim.jgv.vos.MovieVo;
-import dev.jwkim.jgv.vos.RegionVo;
+import dev.jwkim.jgv.vos.theater.MovieVo;
+import dev.jwkim.jgv.vos.theater.RegionVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,7 +21,9 @@ public interface TicketMapper {
 
     RegionVo[] selectRegionAndTheaterCount();
 
-    MovieVo[] selectAllMovies();
+    MovieVo[] selectAllMoviesByRating();
+
+    MovieVo[] selectAllMoviesByKorea();
 
     MovieEntity selectMovieNumByMovieTitle(@Param(value = "moTitle") String moTitle);
 

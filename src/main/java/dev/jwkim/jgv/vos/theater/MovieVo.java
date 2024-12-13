@@ -1,6 +1,6 @@
-package dev.jwkim.jgv.vos;
+package dev.jwkim.jgv.vos.theater;
 
-import com.escass.movieproject.entities.MovieEntity;
+import dev.jwkim.jgv.entities.movie.MovieEntity;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,8 +1,180 @@
 const $main = document.getElementById('main');
-const $whiteBlow = document.getElementById('whiteBlow');
 const $mainContainer = $main.querySelector(':scope > .main-container');
-const $mains = Array.from($mainContainer.querySelectorAll(':scope > .mains'));
+const $mainContent = $mainContainer.querySelector(':scope > .main');
+const $movie = $mainContent.querySelector(':scope > .movie > .body > .content > .movie')
+const $movieItems = Array.from($movie.querySelectorAll(':scope > .item-container'));
+const $orderItems = Array.from($mainContent.querySelectorAll(':scope > .movie > .body > .content > .order > .text'));
+const $region = $mainContent.querySelector(':scope > .theater > .body > .content > .region-container')
+const $regionItems = Array.from($region.querySelectorAll(':scope > .region'));
+const $theater = $mainContent.querySelector(':scope > .theater > .body > .content > .theater-container')
+const $theaterItems = Array.from($theater.querySelectorAll(':scope > .theater'));
+const $dayItems = Array.from($mainContent.querySelectorAll(':scope > .day > .body > .content > .day-container > .day'));
 const $controlBar = document.getElementById('control-bar');
+const $movieInfo = $controlBar.querySelectorAll(':scope > .container > [data-id="movieInfo"]')
+const $theaterInfo = $controlBar.querySelectorAll(':scope > .container > [data-id="theaterInfo"]')
+
+$orderItems.forEach((x) => {
+    x.onclick = () => {
+        $orderItems.forEach((item) => {
+            item.classList.remove('select');
+            if (x === item) {
+                item.classList.add('select');
+                if (x.innerText === '가나다순') {
+                    const xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = () => {
+                        if (xhr.readyState !== XMLHttpRequest.DONE) {
+                            return;
+                        }
+                        Loading.hide();
+                        if (xhr.status < 200 || xhr.status >= 300) {
+                            alert('오류 발생');
+                            return;
+                        }
+                        $movie.innerHTML = '';
+                        const $movieItem = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.main > .movie > .body > .content > .movie > .item-container'));
+                        $movieItem.forEach((x) => {
+                            $movie.append(x);
+                            x.onclick = () => {
+                                $movieItem.forEach((item) => {
+                                    item.classList.remove('select');
+                                    if (x === item) {
+                                        item.classList.add('select');
+                                    }
+                                })
+                            }
+                        })
+                    };
+                    xhr.open('GET', './movies');
+                    xhr.send();
+                    Loading.show(0);
+                } else if (x.innerText === '예매율순') {
+                    const xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = () => {
+                        if (xhr.readyState !== XMLHttpRequest.DONE) {
+                            return;
+                        }
+                        Loading.hide();
+                        if (xhr.status < 200 || xhr.status >= 300) {
+                            alert('오류 발생');
+                            return;
+                        }
+                        $movie.innerHTML = '';
+                        const $movieItem = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.main > .movie > .body > .content > .movie > .item-container'));
+                        $movieItem.forEach((x) => {
+                            $movie.append(x);
+                            x.onclick = () => {
+                                $movieItem.forEach((item) => {
+                                    item.classList.remove('select');
+                                    if (x === item) {
+                                        item.classList.add('select');
+                                    }
+                                })
+                            }
+                        })
+                    };
+                    xhr.open('GET', './');
+                    xhr.send();
+                    Loading.show(0);
+                }
+            }
+        })
+    }
+})
+
+$movieItems.forEach((x) => {
+    x.onclick = () => {
+        $movieInfo.forEach((movie) => {
+            movie.classList.add('hidden');
+        })
+        $movieItems.forEach((item) => {
+            item.classList.remove('select');
+            if (x === item) {
+                item.classList.add('select');
+                const xhr = new XMLHttpRequest();
+                const url = new URL(location.href);
+                url.searchParams.set('moTitle', item.innerText);
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState !== XMLHttpRequest.DONE) {
+                        return;
+                    }
+                    Loading.hide();
+                    if (xhr.status < 200 || xhr.status >= 300) {
+                        alert('오류 발생');
+                        return;
+                    }
+                };
+                xhr.open('GET', url.toString());
+                xhr.send();
+                Loading.show(0);
+            }
+        })
+    }
+})
+
+$regionItems.forEach((x) => {
+    x.onclick = () => {
+        $regionItems.forEach((item) => {
+            item.classList.remove('select');
+            if (x === item) {
+                item.classList.add('select');
+                const xhr = new XMLHttpRequest();
+                const url = new URL(location.href);
+                url.searchParams.set('region', x.innerText.split('(')[0]);
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState !== XMLHttpRequest.DONE) {
+                        return;
+                    }
+                    Loading.hide();
+                    if (xhr.status < 200 || xhr.status >= 300) {
+                        alert('오류 발생');
+                        return;
+                    }
+                    $theater.innerHTML = "";
+                    const $theaterItem = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.theater > .body > .content > .theater-container > .theater'));
+                    $theaterItem.forEach((x) => {
+                        $theater.append(x);
+                        x.onclick = () => {
+                            $theaterItem.forEach((item) => {
+                                item.classList.remove('select');
+                                if (x === item) {
+                                    item.classList.add('select');
+                                }
+                            })
+                        }
+                    })
+                };
+                xhr.open('GET', url.toString());
+                xhr.send();
+                Loading.show(0);
+            }
+        })
+    }
+})
+
+$theaterItems.forEach((x) => {
+    x.onclick = () => {
+        $theaterItems.forEach((item) => {
+            item.classList.remove('select');
+            if (x === item) {
+                item.classList.add('select');
+            }
+        })
+    }
+})
+
+$dayItems.forEach((x) => {
+    x.onclick = () => {
+        $dayItems.forEach((item) => {
+            item.classList.remove('select');
+            if (x === item) {
+                item.classList.add('select');
+            }
+        })
+    }
+})
+
+const $whiteBlow = document.getElementById('whiteBlow');
+const $mains = Array.from($mainContainer.querySelectorAll(':scope > .mains'));
 const $seatContainer = $controlBar.querySelector(':scope > .container > .seat-container');
 const $paymentContainer = $controlBar.querySelector(':scope > .container > .payment-container');
 const $leftButtons = Array.from($controlBar.querySelectorAll(':scope > .container > .left-button'));
