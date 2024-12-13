@@ -8,11 +8,10 @@ import dev.jwkim.jgv.entities.ticket.ReservationEntity;
 import dev.jwkim.jgv.entities.ticket.SeatEntity;
 import dev.jwkim.jgv.exceptions.TransactionalException;
 import dev.jwkim.jgv.mappers.ticket.TicketMapper;
-import dev.jwkim.jgv.vos.MovieVo;
-import dev.jwkim.jgv.vos.RegionVo;
+import dev.jwkim.jgv.vos.theater.MovieVo;
+import dev.jwkim.jgv.vos.theater.RegionVo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -33,7 +32,21 @@ public class TicketService {
     private final TicketMapper ticketMapper;
 
     public MovieVo[] selectAllMovies() {
-        MovieVo[] movies = this.ticketMapper.selectAllMovies();
+        MovieVo[] movies = this.ticketMapper.selectAllMoviesByRating();
+        for (MovieVo movie : movies) {
+            switch (movie.getRaGrade()) {
+                case "청소년관람불가" -> movie.setRaGrade("nineteen");
+                case "15세이상관람가" -> movie.setRaGrade("fifteen");
+                case "12세이상관람가" -> movie.setRaGrade("twelve");
+                case "전체관람가" -> movie.setRaGrade("all");
+                case "미정" -> movie.setRaGrade("none");
+            }
+        }
+        return movies;
+    }
+
+    public MovieVo[] selectAllMoviesByKorea() {
+        MovieVo[] movies = this.ticketMapper.selectAllMoviesByKorea();
         for (MovieVo movie : movies) {
             switch (movie.getRaGrade()) {
                 case "청소년관람불가" -> movie.setRaGrade("nineteen");
@@ -51,38 +64,43 @@ public class TicketService {
     }
 
     @Transactional
-    public List<Pair<Pair<String, Integer>, String>> getWeekdays() {
+    public Map<String, String> getWeekdays() {
         // 화면의 시작 날짜들을 가져옴
         ScreenEntity[] screens = this.ticketMapper.selectAllScreenDates();
 
         // 고유 날짜를 저장할 Set
-        Set<String> uniqueDates = new HashSet<>();
+        SortedSet<String> sortedSet = new TreeSet<>();
 
         // 날짜 리스트를 돌면서 고유 날짜만 저장
         for (ScreenEntity screen : screens) {
-            uniqueDates.add(screen.getScStartDate().toString().split("T")[0]);
+            sortedSet.add(screen.getScStartDate().toString().split("T")[0]);
         }
+        // 결과
+        // [2024-12-11, 2024-12-12, 2024-12-13, 2024-12-14, 2024-12-15, 2024-12-16, 2024-12-17, 2024-12-18, 2024-12-19, 2024-12-20, 2024-12-21, 2024-12-22, 2024-12-23, 2024-12-24, 2024-12-25, 2024-12-26]
 
-        // 날짜와 요일을 저장할 리스트
-        List<Pair<Pair<String, Integer>, String>> dateWithWeekday = new ArrayList<>();
-
-        for (String date : uniqueDates) {
-            // 날짜 문자열을 "yyyy-MM-dd" 형식으로 변환 후 LocalDate로 변환
-            LocalDate localDate = LocalDate.parse(date);
-
-            // 연도와 월을 "year-month" 형식으로 묶어서 저장
-            String yearMonth = localDate.getYear() + "-" + localDate.getMonthValue();
-            int day = localDate.getDayOfMonth();
-
-            // 요일을 구하고, 요일 이름을 한글로 저장
-            String weekday = localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN);
-
-            // Pair로 year-month와 day를 묶고, 요일을 저장
-            dateWithWeekday.add(Pair.of(Pair.of(yearMonth, day), weekday));
+        SortedSet<String> sortSet = new TreeSet<>();
+        for (String sort : sortedSet) {
+            sortSet.add(sort.substring(0, 7));
         }
+        // 결과
+        // [2024-12]
+
+        Map<String, String> map = new HashMap<>();
+        for (String title : sortSet) {
+            List<String> list = new ArrayList<>();
+            for (String day : sortedSet) {
+                if (day.contains(title)) {
+                    LocalDate localDate = LocalDate.parse(day, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    list.add(day.split("-")[2] + "-" + localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN).split("요일")[0]);
+                }
+            }
+            map.put(title, list.toString().replace('[', ' ').replace(']', ' '));
+        }
+        // 결과
+        // 2024-12 [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
 
         // 결과 반환
-        return dateWithWeekday;
+        return map;
     }
 
     @Getter

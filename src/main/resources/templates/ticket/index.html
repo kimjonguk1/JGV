@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{'../../fragments/assets/styles/index.css'}">
     <link rel="stylesheet" type="text/css" th:href="@{'../../fragments/assets/styles/common.css'}">
     <script defer th:src="@{'/ticket/assets/scripts/index.js'}"></script>
-
+    <script defer th:src="@{'../../assets/scripts/common.js'}"></script>
     <title>JGV - 티켓 예매</title>
 </head>
 <body>
@@ -42,12 +42,6 @@
                             <div class="text">가나다순</div>
                         </div>
                         <ul class="movie">
-                            <li class="item-container select">
-                                <div class="text">
-                                    <div class="nineteen rating"></div>
-                                    <span class="name">하얼빈</span>
-                                </div>
-                            </li>
                             <li class="item-container" th:each="movie : ${movies}">
                                 <div class="text">
                                     <div th:class="${movie.getRaGrade() + ' rating'}"></div>
@@ -65,17 +59,15 @@
                 <div class="body theater">
                     <div class="content">
                         <ul class="region-container">
-                            <li class="region select">서울(31)</li>
                             <li th:each="region : ${regions}"
                                 th:text="${region.getRegName() + '(' + region.getTheaterCount() + ')'}"
                                 class="region"></li>
                         </ul>
                         <ul class="theater-container">
-                            <li class="theater select">
-                                <span class="text">대구</span>
-                            </li>
-                            <li class="theater">
-                                <span class="text">대구수성</span>
+                            <li class="theater"
+                                th:if="theaters != null"
+                                th:each="theater : ${theaters}">
+                                <span th:text="${theater.getThName().substring(3, theater.getThName().length())}" class="text"></span>
                             </li>
                         </ul>
                     </div>
@@ -87,156 +79,33 @@
                 </div>
                 <div class="body day">
                     <div class="content">
-                        <ul class="day-container">
-                            <!--                            <li class="title" th:each="pair : ${pairs}">-->
-                            <!--                                <span class="year" th:text="${pair.of()}">2024</span>-->
-                            <!--                                <span class="month">12</span>-->
-                            <!--                            </li>-->
-                            <li class="day select">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
+                        <ul class="day-container" th:each="map : ${maps}">
+                            <li class="title">
+                                <span class="year" th:text="${map.getKey().split('-')[0]}"></span>
+                                <span class="month" th:text="${map.getKey().split('-')[1]}"></span>
                             </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
+                            <li class="day" th:each="maps : ${map.getValue().split(',')}">
+                                <div class="day-container"
+                                     th:each="weekday : ${maps}">
+                                    <span class="week"
+                                          th:if="${!weekday.split('-')[1].equals('토') && !weekday.split('-')[1].equals('일')}"
+                                          th:text="${weekday.split('-')[1]}"></span>
+                                    <span class="week saturday"
+                                          th:if="${weekday.split('-')[1].equals('토')}"
+                                          th:text="${weekday.split('-')[1]}"></span>
+                                    <span class="week sunday"
+                                          th:if="${weekday.split('-')[1].equals('일')}"
+                                          th:text="${weekday.split('-')[1]}"></span>
                                     <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
-                                </div>
-                            </li>
-                            <li class="day">
-                                <div class="day-container">
-                                    <span class="week">월</span>
-                                    <span class="stretch"></span>
-                                    <span class="date">9</span>
+                                    <span class="date"
+                                          th:if="${!weekday.split('-')[1].equals('토') && !weekday.split('-')[1].equals('일')}"
+                                          th:text="${weekday.split('-')[0]}"></span>
+                                    <span class="date saturday"
+                                          th:if="${weekday.split('-')[1].equals('토')}"
+                                          th:text="${weekday.split('-')[0]}"></span>
+                                    <span class="date sunday"
+                                          th:if="${weekday.split('-')[1].equals('일')}"
+                                          th:text="${weekday.split('-')[0]}"></span>
                                 </div>
                             </li>
                         </ul>
@@ -720,8 +589,8 @@
     <div class="container">
         <div class="first left-button button hidden" data-id="main-seat"></div>
         <div class="second left-button button hidden" data-id="main-payment"></div>
-        <div class="movie-container hidden"></div>
-        <div class="posters info" data-id="poster">
+        <div class="movie-container" data-id="movieInfo"></div>
+        <div class="posters info hidden" data-id="movieInfo">
             <div class="poster">
                 <img class="movie" src="http://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89072/89072_185.JPG"
                      alt="대가족">
@@ -734,8 +603,8 @@
             </div>
         </div>
         <img class="info" src="https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/split.png" alt="split">
-        <div class="theater-container hidden"></div>
-        <div class="theater info">
+        <div class="theater-container hidden" data-id="theaterInfo"></div>
+        <div class="theater info" data-id="theaterInfo">
             <div class="text">
                 <span class="head">극장</span>
                 <a href="#" class="data" id="theater-theater">CGV대구</a>
