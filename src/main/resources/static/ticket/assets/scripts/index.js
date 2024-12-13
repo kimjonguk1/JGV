@@ -1,4 +1,5 @@
 const $main = document.getElementById('main');
+const $whiteBlow = document.getElementById('whiteBlow');
 const $mainContainer = $main.querySelector(':scope > .main-container');
 const $mains = Array.from($mainContainer.querySelectorAll(':scope > .mains'));
 const $controlBar = document.getElementById('control-bar');
@@ -6,7 +7,9 @@ const $seatContainer = $controlBar.querySelector(':scope > .container > .seat-co
 const $paymentContainer = $controlBar.querySelector(':scope > .container > .payment-container');
 const $leftButtons = Array.from($controlBar.querySelectorAll(':scope > .container > .left-button'));
 const $rightButtons = Array.from($controlBar.querySelectorAll(':scope > .container > .right-button'));
-const $third = $controlBar.querySelector(':scope > .container > .third');
+const $RightThird = $controlBar.querySelector(':scope > .container > .third.right-button');
+const $RightSecond = $controlBar.querySelector(':scope > .container > .second.right-button');
+const $LeftSecond = $controlBar.querySelector(':scope > .container > .second.left-button');
 const $paymentSection = document.getElementById('payment-section');
 
 
@@ -17,6 +20,8 @@ const $realMain = document.getElementById("main");
 let t = 0;
 let m = 0;
 const $seatContent = $controlBar.querySelector(':scope > .container > .seat > .seat-content');
+const $seatInfo = $controlBar.querySelector(':scope > .container > .seat.info');
+const $priceInfo = $controlBar.querySelector(':scope > .container > .price.info');
 const $seatTitle = $controlBar.querySelector(':scope > .container > .seat > .seat-title');
 const $seatCommon = document.createElement('span');
 $seatCommon.className = 'seat-common data';
@@ -33,6 +38,7 @@ const $payPriceWon3 = document.getElementById("pay-price-won3");
 const $payPriceWon4 = document.getElementById("pay-price-won4");
 const $payPriceWon5 = document.getElementById("pay-price-won5");
 const $payPriceWon6 = document.getElementById("pay-price-won6");
+const $payPriceWonInt = document.getElementById("pay-price-won-int");
 
 
 const adults = document.querySelectorAll('.adults');
@@ -85,9 +91,9 @@ const $payMovie = document.getElementById('pay-movie')
 const $payTheater = document.getElementById('pay-theater')
 const $payCinema = document.getElementById('pay-cinema')
 const $payTime = document.getElementById('pay-time')
+const $theaterMovie = document.getElementById('theater-movie');
 const $theaterTheater = document.getElementById('theater-theater');
-const $theaterDay = document.getElementById('theater-day]');
-const $theaterTime = document.getElementById('theater-time]');
+const $theaterTime = document.getElementById('theater-time');
 const $theaterCinema = document.getElementById('theater-cinema');
 
 const $checkboxAgreeAll = document.getElementById('checkbox-agree-all');
@@ -121,201 +127,230 @@ const $CulturePayText = $mainPayment.querySelector(':scope > .left-container >.s
 
 $rightButtons.forEach((x) => {
     x.onclick = () => {
-        $mains.forEach((main) => {
-            main.classList.add('hidden');
-            if (x.getAttribute('data-id') === 'main' &&
-                main.getAttribute('data-id') === 'main-seat') {
-                main.classList.remove('hidden');
+        if (x.classList.contains('after')) {
+            // 메인 바꾸기
 
-
-                const xhr = new XMLHttpRequest();
-                const url = new URL(location.href); //ticket
-                url.searchParams.set('thName', $theaterTheater.innerText);
-                url.searchParams.set('ciName', $theaterCinema.innerText);
-                xhr.onreadystatechange = () => {
-                    if (xhr.readyState !== XMLHttpRequest.DONE) {
-                        return;
-                    }
-                    if (xhr.status < 200 || xhr.status >= 300) {
-                        return;
-                    }
-                    const response = JSON.parse(xhr.responseText);
-                    const result = response['result'];
-                    const result2 = response['results'];
-                    const result3 = response['resultss'];
-                    console.log(result);
-                    console.log(result2);
-                    console.log(result3);
-                    $seatColor.innerText = 40 - result.length;
-
-
-                    rows.forEach(row => {
-                        const tr = document.createElement('tr'); // 행 생성
-                        const th = document.createElement('th');
-                        th.textContent = row;
-                        tr.appendChild(th);
-                        for (let i = 1; i <= 8; i++) {
-                            const td = document.createElement('td');
-                            td.id = `${row}${i}`;
-                            td.className = 'seat';
-                            td.textContent = i;
-                            tr.appendChild(td);
-                            seats.push(td);
-                            if (result2.some(item => item.seName === td.id)) {
-                                td.style.backgroundImage = "url('/ticket/assets/images/icon3.png')"; // 일치하면 배경 변경
-                                td.style.backgroundSize = 'cover'; // 크기 조정
-                                td.style.backgroundPosition = 'center'; // 위치 설정
-                                td.style.pointerEvents = 'none';
-                                td.innerText = '';
-                            }
+            $mains.forEach((main) => {
+                main.classList.add('hidden');
+                if (x.getAttribute('data-id') === 'main' &&
+                    main.getAttribute('data-id') === 'main-seat') {
+                    main.classList.remove('hidden');
+                    const xhr = new XMLHttpRequest();
+                    const url = new URL(location.href); //ticket
+                    url.searchParams.set('thName', $theaterTheater.innerText);
+                    url.searchParams.set('ciName', $theaterCinema.innerText);
+                    xhr.onreadystatechange = () => {
+                        if (xhr.readyState !== XMLHttpRequest.DONE) {
+                            return;
                         }
-                        table.appendChild(tr);
-                    });
-
-                    adults.forEach((radio) => {
-                        radio.addEventListener('change', () => {
-                            t = parseInt(radio.value);
-                            m = parseInt(radio.value);
-                            if (radio.value !== '0') {
-                                $seatCommon.textContent = '일반석';
-                                $seatPriceCommon.textContent = '일반';
-                                $seatPricePay.textContent = '총금액';
-                                price = radio.value * result3[0].citPrice;
-                                const price2 = price.toLocaleString();
-                                const price3 = result3[0].citPrice.toLocaleString();
-
-                                $payPriceWon1.textContent = `${price2}`;
-                                $payPriceWon2.textContent = `${price2}`;
-                                $payPriceWon3.textContent = `${price2}`;
-                                $payPriceWon4.textContent = `${price2}`;
-                                $payPriceWon5.textContent = `${price2}`;
-                                $payPriceWon6.textContent = `${price2}`;
-
-                                $seatPrice.textContent = `${price3} X ${radio.value}`;
-                                $seatPriceAdd.textContent = `${price2}원`;
-                                selectedHuman.push(`일반 ${(radio.value)} 명`);
-                                $seatHuman.textContent = `${selectedHuman.join(', ')}`
-                                $payHuman.textContent = selectedHuman;
+                        if (xhr.status < 200 || xhr.status >= 300) {
+                            return;
+                        }
+                        const response = JSON.parse(xhr.responseText);
+                        const result = response['result'];
+                        const result2 = response['results'];
+                        const result3 = response['resultss'];
+                        console.log(result);
+                        console.log(result2);
+                        console.log(result3);
+                        $seatColor.innerText = 40 - result.length;
+                        // $payMovie.value = `${$theaterMovie.innerText}`;
+                        // $payTheater.value = `${$theaterTheater.innerText}`;
+                        // $payCinema.value = `${$theaterCinema.innerText}`;
+                        // $payTime.value = `${$theaterTime.innerText}`;
+                        $payMovie.innerText = `${$theaterMovie.innerText}`;
+                        $payTheater.innerText = `${$theaterTheater.innerText}`;
+                        $payCinema.innerText = `${$theaterCinema.innerText}`;
+                        $payTime.innerText = `${$theaterTime.innerText}`;
 
 
-                            } else {
-                                $seatCommon.textContent = '';
-                                $seatPriceCommon.textContent = '';
-                                $seatPricePay.textContent = '';
-                                $seatPrice.textContent = '';
-                                $seatPriceAdd.textContent = '';
-                                $seatHuman.textContent = `${selectedHuman.join(', ')}`;
-
-                            }
-
-                            seats.forEach((seat) => {
-                                seat.classList.remove('selected-seat');
-                                const index = selectedHuman.indexOf(`일반 ${(radio.value)} 명`);
-                                if (index !== -1) {
-                                    selectedHuman.splice(index, 1);
+                        rows.forEach(row => {
+                            const tr = document.createElement('tr'); // 행 생성
+                            const th = document.createElement('th');
+                            th.textContent = row;
+                            tr.appendChild(th);
+                            for (let i = 1; i <= 8; i++) {
+                                const td = document.createElement('td');
+                                td.id = `${row}${i}`;
+                                td.className = 'seat';
+                                td.textContent = i;
+                                tr.appendChild(td);
+                                seats.push(td);
+                                if (result2.some(item => item.seName === td.id)) {
+                                    td.style.backgroundImage = "url('/ticket/assets/images/icon3.png')"; // 일치하면 배경 변경
+                                    td.style.backgroundSize = 'cover'; // 크기 조정
+                                    td.style.backgroundPosition = 'center'; // 위치 설정
+                                    td.style.pointerEvents = 'none';
+                                    td.innerText = '';
                                 }
-                            });
-                            selectedSeats = [];
-                            $seatNumber.textContent = '';
+                            }
+                            table.appendChild(tr);
                         });
-                    });
 
-                    seats.forEach((seat) => {
-                        seat.addEventListener('click', () => {
-                            if (t > 0 && !seat.classList.contains('selected-seat')) {
-                                t--;
-                                seat.classList.add('selected-seat');
-                                selectedSeats.push(seat.id);
-                                $seatNumber.textContent = `${selectedSeats.join(', ')}`;
-                            } else {
-                                for (j = 0; j < m; j++) {
-                                    if (seat.id === selectedSeats[j]) {
-                                        t++;
-                                        seat.classList.remove('selected-seat');
-                                        const index = selectedSeats.indexOf(seat.id);
-                                        if (index !== -1) {
-                                            selectedSeats.splice(index, 1);
+                        adults.forEach((radio) => {
+                            radio.addEventListener('change', () => {
+                                t = parseInt(radio.value);
+                                m = parseInt(radio.value);
+                                if (radio.value !== '0') {
+                                    $seatInfo.classList.remove('hidden')
+                                    $priceInfo.classList.remove('hidden')
+                                    $seatCommon.textContent = '일반석';
+                                    $seatPriceCommon.textContent = '일반';
+                                    $seatPricePay.textContent = '총금액';
+                                    price = radio.value * result3[0].citPrice;
+                                    const price2 = price.toLocaleString();
+                                    const price3 = result3[0].citPrice.toLocaleString();
+
+                                    $payPriceWon1.textContent = `${price2}`;
+                                    $payPriceWon2.textContent = `${price2}`;
+                                    $payPriceWon3.textContent = `${price2}`;
+                                    $payPriceWon4.textContent = `${price2}`;
+                                    $payPriceWon5.textContent = `${price2}`;
+                                    $payPriceWon6.textContent = `${price2}`;
+                                    $payPriceWonInt.textContent = `${price}`;
+
+                                    $seatPrice.textContent = `${price3} X ${radio.value}`;
+                                    $seatPriceAdd.textContent = `${price2}원`;
+                                    selectedHuman.push(`일반 ${(radio.value)} 명`);
+                                    $seatHuman.textContent = `${selectedHuman.join(', ')}`
+                                    $payHuman.textContent = selectedHuman;
+
+
+                                } else {
+                                    $RightSecond.classList.remove('after')
+                                    $seatCommon.textContent = '';
+                                    $seatPriceCommon.textContent = '';
+                                    $seatPricePay.textContent = '';
+                                    $seatPrice.textContent = '';
+                                    $seatPriceAdd.textContent = '';
+                                    $seatHuman.textContent = `${selectedHuman.join(', ')}`;
+
+                                }
+
+                                seats.forEach((seat) => {
+                                    seat.classList.remove('selected-seat');
+                                    const index = selectedHuman.indexOf(`일반 ${(radio.value)} 명`);
+                                    if (index !== -1) {
+                                        selectedHuman.splice(index, 1);
+                                    }
+                                });
+                                selectedSeats = [];
+                                $seatNumber.textContent = '';
+                            });
+                        });
+
+                        seats.forEach((seat) => {
+                            seat.addEventListener('click', () => {
+                                if (t > 0 && !seat.classList.contains('selected-seat')) {
+                                    t--;
+                                    seat.classList.add('selected-seat');
+                                    selectedSeats.push(seat.id);
+                                    $seatNumber.textContent = `${selectedSeats.join(', ')}`;
+                                } else {
+                                    for (j = 0; j < m; j++) {
+                                        if (seat.id === selectedSeats[j]) {
+                                            t++;
+                                            seat.classList.remove('selected-seat');
+                                            const index = selectedSeats.indexOf(seat.id);
+                                            if (index !== -1) {
+                                                selectedSeats.splice(index, 1);
+                                            }
+                                            $seatNumber.textContent = `${selectedSeats.join(', ')}`;
+
+                                            // else if (seat.classList.contains('selected-seat')) {
+                                            //         t++;
+                                            //         seat.classList.remove('selected-seat');
+                                            //         const index = selectedSeats.indexOf(seat.id);
+                                            //         if (index !== -1) {
+                                            //             selectedSeats.splice(index, 1);
+                                            //         }
+                                            //         $seatNumber.textContent = `${selectedSeats.join(', ')}`;
                                         }
-                                        $seatNumber.textContent = `${selectedSeats.join(', ')}`;
-
-                                        // else if (seat.classList.contains('selected-seat')) {
-                                        //         t++;
-                                        //         seat.classList.remove('selected-seat');
-                                        //         const index = selectedSeats.indexOf(seat.id);
-                                        //         if (index !== -1) {
-                                        //             selectedSeats.splice(index, 1);
-                                        //         }
-                                        //         $seatNumber.textContent = `${selectedSeats.join(', ')}`;
                                     }
                                 }
-                            }
-                            $paySeat.textContent = selectedSeats;
-                            // if (t === 0 && m !== 0) {
-                            //     $seatRightButtonAfter.style.display = 'flex';
-                            //     $seatRightButtonBefore.style.display = 'none';
-                            // }
+                                $paySeat.textContent = selectedSeats;
+                                if (t === 0 && m !== 0) {
+                                    $RightSecond.classList.add('after');
+                                } else if (t !== 0 && m !== 0) {
+                                    $RightSecond.classList.remove('after')
 
-                        })
-                    });
+                                }
+
+                            })
+                        });
+                    }
+                    xhr.open('GET', url.toString()); //ticket/ciName=2관&thName=CGV대구
+                    xhr.send();
                 }
-                xhr.open('GET', url.toString()); //ticket/ciName=2관&thName=CGV대구
-                xhr.send();
-            }
-            if (x.getAttribute('data-id') === 'main-seat' &&
-                main.getAttribute('data-id') === 'main-payment') {
-                main.classList.remove('hidden');
-            }
+                if (x.getAttribute('data-id') === 'main-seat' &&
+                    main.getAttribute('data-id') === 'main-payment') {
+                    main.classList.remove('hidden');
+                    $priceInfo.classList.add('hidden')
+                }
 
 
-            if ((x.getAttribute('data-id') === 'main-payment' &&
-                main.getAttribute('data-id') === 'main-payment' && pay === "card" && $card.value !== "카드를 선택해주세요.") || (x.getAttribute('data-id') === 'main-payment' &&
-                main.getAttribute('data-id') === 'main-payment' && pay !== "card")) {
-                $paymentSection.classList.remove('hidden');
+                if ((x.getAttribute('data-id') === 'main-payment' &&
+                    main.getAttribute('data-id') === 'main-payment' && pay === "card" && $card.value !== "카드를 선택해주세요.") || (x.getAttribute('data-id') === 'main-payment' &&
+                    main.getAttribute('data-id') === 'main-payment' && pay !== "card")) {
+                    main.classList.remove('hidden');
+                    $paymentSection.classList.remove('hidden');
+                    $RightThird.classList.remove('hidden');
+                    $whiteBlow.classList.remove('hidden')
 
-            } else if (x.getAttribute('data-id') === 'main-payment' &&
-                main.getAttribute('data-id') === 'main-payment' && pay === "card" && $card.value === "카드를 선택해주세요.") {
-                main.classList.remove('hidden');
-                alert("결제수단을 선택해주세요.")
-            }
-        })
-        $rightButtons.forEach((button) => {
-            button.classList.add('hidden');
-            //오른쪽 버튼 바꾸기
-            if (x.getAttribute('data-id') === 'main' &&
-                button.getAttribute('data-id') === 'main-seat') {
-                $seatContainer.classList.add('hidden');
-                $paymentContainer.classList.add('hidden');
-                button.classList.remove('hidden');
-            }
-            if (x.getAttribute('data-id') === 'main-seat' &&
-                button.getAttribute('data-id') === 'main-payment') {
-                button.classList.remove('hidden');
-            }
-            if (x.getAttribute('data-id') === 'main-payment' &&
-                button.getAttribute('data-id') === 'main-payment' && pay === "card" && $card.value === "카드를 선택해주세요.") {
-                button.classList.remove('hidden');
-            }
-        })
-        // 메인 바꾸기
-
+                } else if (x.getAttribute('data-id') === 'main-payment' &&
+                    main.getAttribute('data-id') === 'main-payment' && pay === "card" && $card.value === "카드를 선택해주세요.") {
+                    main.classList.remove('hidden');
+                    alert("결제수단을 선택해주세요.")
+                }
+            })
+            $rightButtons.forEach((button) => {
+                button.classList.add('hidden');
+                //오른쪽 버튼 바꾸기
+                if (x.getAttribute('data-id') === 'main' &&
+                    button.getAttribute('data-id') === 'main-seat') {
+                    $seatContainer.classList.add('hidden');
+                    $paymentContainer.classList.add('hidden');
+                    button.classList.remove('hidden');
+                }
+                if (x.getAttribute('data-id') === 'main-seat' &&
+                    button.getAttribute('data-id') === 'main-payment') {
+                    button.classList.remove('hidden');
+                }
+                if ((x.getAttribute('data-id') === 'main-payment' &&
+                    button.getAttribute('data-id') === 'main-payment' && pay === "card" && $card.value !== "카드를 선택해주세요.") || (x.getAttribute('data-id') === 'main-payment' &&
+                    button.getAttribute('data-id') === 'main-payment' && pay !== "card")) {
+                    button.classList.remove('hidden');
+                } else if (x.getAttribute('data-id') === 'main-payment' &&
+                    button.getAttribute('data-id') === 'main-payment' && pay === "card" && $card.value === "카드를 선택해주세요.") {
+                    button.classList.remove('hidden');
+                }
+            })
 
 
 // 왼쪽버튼 바꾸기
-        $leftButtons.forEach((left) => {
-            left.classList.add('hidden');
-            if (x.getAttribute('data-id') === 'main' &&
-                left.getAttribute('data-id') === 'main-seat') {
-                left.classList.remove('hidden');
-            }
-            if (x.getAttribute('data-id') === 'main-seat' &&
-                left.getAttribute('data-id') === 'main-payment') {
-                left.classList.remove('hidden');
-            }
-            if (x.getAttribute('data-id') === 'main-payment' &&
-                left.getAttribute('data-id') === 'main-payment' && pay === "card" && $card.value === "카드를 선택해주세요.") {
-                left.classList.remove('hidden');
-            }
-        })
+            $leftButtons.forEach((left) => {
+                left.classList.add('hidden');
+                if (x.getAttribute('data-id') === 'main' &&
+                    left.getAttribute('data-id') === 'main-seat') {
+                    left.classList.remove('hidden');
+                    $RightSecond.classList.remove('after')
+
+                }
+                if (x.getAttribute('data-id') === 'main-seat' &&
+                    left.getAttribute('data-id') === 'main-payment') {
+                    left.classList.remove('hidden');
+                }
+                if ((x.getAttribute('data-id') === 'main-payment' &&
+                    left.getAttribute('data-id') === 'main-payment' && pay === "card" && $card.value !== "카드를 선택해주세요.") || (x.getAttribute('data-id') === 'main-payment' &&
+                    left.getAttribute('data-id') === 'main-payment' && pay !== "card")) {
+                    left.classList.remove('hidden');
+                } else if (x.getAttribute('data-id') === 'main-payment' &&
+                    left.getAttribute('data-id') === 'main-payment' && pay === "card" && $card.value === "카드를 선택해주세요.") {
+                    left.classList.remove('hidden');
+
+                }
+            })
+        }
     }
 });
 
@@ -374,13 +409,11 @@ $leftButtons.forEach((x) => {
         })
     }
 })
-$realCancel.onclick = () =>{
+$realCancel.onclick = () => {
     $paymentSection.classList.add('hidden');
-    $mainPayment.classList.remove('hidden');
-    $third.classList.remove('hidden');
+    $whiteBlow.classList.add('hidden')
+
 }
-
-
 
 
 $paymentCheck.forEach((radio) => {
@@ -441,8 +474,6 @@ $cultureCard.addEventListener('change', () => {
 })
 
 
-
-
 $checkboxAgreeAll.addEventListener('change', function () {
     $checkboxAgrees.forEach(checkbox => {
         checkbox.checked = $checkboxAgreeAll.checked;
@@ -488,36 +519,53 @@ function TCPPIC() {
     );
 }
 
-// $payForm.onsubmit = (e) => {
-//     e.preventDefault();
-//
-//     if ($checkboxAgreeAll.checked && $checkboxAgreeSolo) {
-//         const xhr = new XMLHttpRequest();
-//         const formData = new FormData();
-//         formData.append("paPrice", $payForm['pay-price-won5'].innerText);
-//         formData.append("meNum", $payForm['method'].innerText);
-//         formData.append("usNum", $payForm['user'].innerText);
-//
-//
-//         xhr.onreadystatechange = () => {
-//             if (xhr.readyState !== XMLHttpRequest.DONE) {
-//                 return;
-//             }
-//             if (xhr.status < 200 || xhr.status >= 300) {
-//                 alert("오류");
-//                 return;
-//             }
-//
-//         };
-//         xhr.open('POST', location.href);
-//         xhr.send(formData);
-//     } else {
-//         alert("약관을 모두 동의해주세요")
-//
-//     }
-// };
-//
-// const seats = $payForm['pay-seat'];
-// seats.forEach((seat, index) => {
-//     formData.append(`seName${index}`, seat.innerText);
-// });
+$payForm.onsubmit = (e) => {
+    e.preventDefault(); // 기본 폼 제출 방지
+
+    // 약관 동의를 체크했는지 확인
+    if ($checkboxAgreeAll.checked && $checkboxAgreeSolo.checked) {
+        // 새로운 XMLHttpRequest 객체 생성
+        const xhr = new XMLHttpRequest();
+
+        // FormData 객체 생성
+        const formData = new FormData();
+
+        // 폼 데이터 추가 (span의 텍스트는 innerText로 가져오기)
+        formData.append("paPrice", document.getElementById('pay-price-won-int').innerText); // span 요소의 텍스트
+        formData.append("meName", document.getElementById('method').innerText);  // span 요소에서 결제 방법 번호 가져오기
+
+        // 세션에서 userId 값을 가져옴
+        const sessionUsId = sessionStorage.getItem('userId');  // 세션에서 userId를 가져오기
+        if (sessionUsId) {
+            formData.append("usId", sessionUsId);  // 세션에서 가져온 userId 추가
+        } else {
+            console.log('세션에 userId가 없습니다.');
+        }
+
+        // 좌석 정보 처리 (seats가 input 요소가 아니라면 innerText 사용)
+        const seats = Array.from(document.querySelectorAll('.pay-seat'));  // pay-seat 클래스를 가진 모든 요소를 선택
+        seats.forEach((seat, index) => {
+            formData.append(`seName${index}`, seat.innerText.trim());  // span 요소의 텍스트
+        });
+
+        // 요청 상태 변화 처리
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState !== XMLHttpRequest.DONE) {
+                return;
+            }
+            if (xhr.status >= 200 && xhr.status < 300) {
+                alert("결제가 성공적으로 처리되었습니다.");
+            } else {
+                alert("오류가 발생했습니다. 다시 시도해주세요.");
+            }
+        };
+
+        // 요청 설정 및 전송
+        xhr.open('POST', './');  // 실제 결제 처리 URL로 수정
+        xhr.send(formData);
+
+    } else {
+        alert("약관을 모두 동의해주세요");
+    }
+};
+
