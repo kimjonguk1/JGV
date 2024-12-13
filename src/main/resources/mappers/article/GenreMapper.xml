@@ -20,11 +20,12 @@
         VALUES (#{genum}, #{monum})
     </insert>
 
-    <delete id="deleteAllMovieGenre">
-        DELETE FROM jgv.genre
-    </delete>
-
-    <delete id="deleteMovieGenreMapping">
-        DELETE FROM jgv.movie_genere
-    </delete>
+    <select id="isMovieGenreMappingExists" resultType="boolean" parameterType="map">
+        SELECT EXISTS(
+            SELECT 1
+            FROM jgv.movie_country
+            WHERE mo_num = #{monum}
+            AND co_num = #{genum}
+        )
+    </select>
 </mapper>

@@ -19,11 +19,12 @@
         VALUES (#{conum}, #{monum})
     </insert>
 
-    <delete id="deleteAllCountry">
-        DELETE FROM jgv.country
-    </delete>
-
-    <delete id="deleteAllCountryMapping">
-        DELETE FROM jgv.movie_country
-    </delete>
+    <select id="isMovieCountryMappingExists" resultType="boolean" parameterType="map">
+        SELECT EXISTS(
+            SELECT 1
+            FROM jgv.movie_country
+            WHERE mo_num = #{monum}
+              AND co_num = #{conum}
+        )
+    </select>
 </mapper>

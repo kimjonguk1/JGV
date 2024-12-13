@@ -12,8 +12,7 @@ public interface CountryMapper {
     int insertMovieCountry(CountryEntity countryEntity);
     //다대다 매핑 테이블에 db 삽입
     void insertMovieCountryMapping(@Param("monum") int monum, @Param("conum") int conum);
-    //국가 테이블 삭제
-    int deleteAllCountry();
-    //영화 국가 매핑 테이블 삭제
-    int deleteAllCountryMapping();
+
+    //다대다 매핑 테이블 중복 방지
+    boolean isMovieCountryMappingExists(@Param("monum") int monum, @Param("conum") int conum);
 }

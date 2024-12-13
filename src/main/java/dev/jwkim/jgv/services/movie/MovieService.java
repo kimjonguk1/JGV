@@ -199,8 +199,11 @@ public class MovieService {
                     genreMapper.insertMovieGenre(genereEntity);
                     genreId = genereEntity.getGeNum(); // 삽입된 ID 가져오기
                 }
-                // 영화와 장르 매핑
-                genreMapper.insertMovieGenreMapping(movieEntity.getMoNum(), genreId);
+                // 영화와 장르 매핑 (중복 방지)
+                boolean exists = genreMapper.isMovieGenreMappingExists(movieEntity.getMoNum(), genreId);
+                if(!exists) {
+                    genreMapper.insertMovieGenreMapping(movieEntity.getMoNum(), genreId);
+                }
             }
 
             // 제작 국가
@@ -214,7 +217,10 @@ public class MovieService {
                         countryMapper.insertMovieCountry(countryEntity);
                         countryId = countryEntity.getCoNum();
                     }
-                    countryMapper.insertMovieCountryMapping(movieEntity.getMoNum(), countryId);
+                    boolean exists = countryMapper.isMovieCountryMappingExists(movieEntity.getMoNum(), countryId);
+                    if(!exists) {
+                        countryMapper.insertMovieCountryMapping(movieEntity.getMoNum(), countryId);
+                    }
                 }
             }
 
