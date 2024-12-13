@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -57,9 +57,10 @@
             </td>
             <td rel="row">
                 <label class="--obj-label" data-id="id">
-                    <input required maxlength="20" minlength="2" type="text" class="_field --obj-filed -border"
+                    <input required maxlength="20" minlength="6" type="text" class="_field --obj-filed -border"
                            name="id"
                            placeholder="아이디를 입력해주세요.">
+                    <span>아이디는 6~12자의 소문자와 숫자를 포함해야 합니다.</span>
 
                 </label>
                 <button class="duplicate-button" type="button" name="duplicate-id-button">중복확인</button>
@@ -74,9 +75,9 @@
             <td>
                 <label class="--obj-label" data-id="password">
                     <input required autocomplete="off" maxlength="100" minlength="8" type="password" name="password"
-                           class="_field --obj-filed -border"
+                           class="_field --obj-filed -border password"
                            placeholder="비밀번호를 입력해주세요.">
-                    <span class="warning">비밀번호 강도</span>
+                    <span style="font-size: 14px; font-weight: 400;" id="password-strength"></span>
 
                     <span class="text">영문자, 숫자, 특수문자를 모두 조합하여 8~12자리를 입력해주세요.<br>
                                         사용 가능 특수 문자는 !"#$%&'()*+,-./:;&lt;= &gt;?@[]^_`{|}~ 입니다.<br>
@@ -197,24 +198,29 @@
             <td rel="col">
                 <div class="email-container">
                     <label data-id="email" class="email-label">
-                        <input autocomplete="email" name="email" type="email" class="email"
+                        <input autocomplete="on" name="email" type="text" class="email"
                                placeholder="이메일 입력">
                     </label>
                     <span>@</span>
                     <label data-id="email" class="email-label">
-                        <input name="domain" type="email" class="domain"
+                        <input autocomplete="off" name="domain" type="text" class="domain"
                                placeholder="직접입력">
-                        <button class="value-button">∨ 직접입력</button>
-                        <label id="domainModal" class="modal">
-                            <label class="modal-content">
-                                <button class="domain-button">naver.com</button>
-                                <button class="domain-button">hanmail.com</button>
-                                <button class="domain-button">gamil.com</button>
-                                <button class="domain-button">yahoo.com</button>
-                                <button class="domain-button">daum.com</button>
-                            </label>
-                        </label>
                     </label>
+                    <div class="value-button" > 직접입력
+                        <span class="-spring"></span>
+                        <span>v</span>
+                        <!--TODO value-button 의 자식이 되야함 -->
+                        <div id="domainModal" class="modal">
+                            <div class="modal-content">
+                                <button type="button" class="domain-self">직접입력</button>
+                                <button type="button" class="domain-button">naver.com</button>
+                                <button type="button" class="domain-button">hanmail.com</button>
+                                <button type="button" class="domain-button">gmail.com</button>
+                                <button type="button" class="domain-button">yahoo.com</button>
+                                <button type="button" class="domain-button">daum.com</button>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
                 <span>이메일 주소 입력시 사용 가능 특수 문자:-ㆍ_</span>
@@ -227,7 +233,7 @@
     <!-- 버튼모달 -->
 
     <label class="--obj-check-label">
-        <input class="--obj-filed -input" name="agree" type="checkbox">
+        <input class="--obj-filed -input agree" name="agree" type="checkbox">
         <span class="_box"></span>
         <span class="text">
             <a href="#">서비스 이용약관</a> 및

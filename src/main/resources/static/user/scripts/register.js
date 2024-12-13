@@ -1,6 +1,4 @@
 const $registerForm = document.getElementById('register-form');
-const $id = $registerForm.querySelector(':scope > .id');
-
 
 // region 주소 요청
 $registerForm['addr-button'].onclick = () => {
@@ -31,6 +29,7 @@ $registerForm['addr-button'].onclick = () => {
 // endregion
 
 // region ID 중복 체크
+let isIdValid = false;
 $registerForm['duplicate-id-button'].onclick = () => {
     const $usId = $registerForm['id'].value;
 
@@ -48,9 +47,13 @@ $registerForm['duplicate-id-button'].onclick = () => {
         const result = response['result'];
         if (result === 'failure_duplicate_id') {
             alert('이미 사용중인 아이디 입니다.');
-        } else {
-            alert('사용 가능한 아이디 입니다.');
+            return isIdValid = false;
+
         }
+
+        alert('사용 가능한 아이디 입니다.');
+        return isIdValid = true;
+
     };
     xhr.open('GET', '/user/check-duplicate-id?user=' + encodeURIComponent($usId));
     xhr.send();
@@ -58,6 +61,7 @@ $registerForm['duplicate-id-button'].onclick = () => {
 // endregion
 
 // region nickname 중복체크
+let isNicknameValid = false;
 $registerForm['duplicate-nickname-button'].onclick = () => {
     const $nickname = $registerForm['nickname'].value;
 
@@ -75,32 +79,131 @@ $registerForm['duplicate-nickname-button'].onclick = () => {
         const result = response['result'];
         if (result === 'failure_duplicate_nickname') {
             alert('이미 사용중인 닉네임 입니다.');
-        } else {
-            alert('사용 가능한 닉네임 입니다.');
+
+            return isNicknameValid = false;
         }
+        if (result === 'failure') {
+            alert('올바른 닉네임을 입력해주세요. 아이디는 2~20자 입니다.');
+
+            return isNicknameValid = false;
+        }
+
+        alert('사용 가능한 닉네임 입니다.');
+        return isNicknameValid = true;
+
     };
     xhr.open('GET', '/user/check-duplicate-nickname?nickname=' + encodeURIComponent($nickname));
     xhr.send();
 }
 // endregion
 
-// TODO 정규표현식 비밀번호유효성 검사 / 이메일 작성로직 ( select == button ) 배열에 넣고 forEach / 시간 남으면 keyup 됐을때 warning 띄우기
+// region 이메일 버튼
+const $valueButton = document.querySelector('.value-button');
+const $modal = document.getElementById('domainModal');
+const $domainSelf = document.querySelector('.domain-self');
+const $domainButtons = $modal.querySelectorAll('.domain-button');
+const $domainInput = document.querySelector('.domain');
+const $body = document.querySelector('body');
+
+
+$valueButton.addEventListener('click', function (e) {
+    e.stopPropagation();
+    $modal.style.display = 'block';
+});
+
+$domainButtons.forEach(button => {
+    button.addEventListener('click', function () {
+        $domainInput.value = button.textContent.trim();
+        $modal.style.display = 'none';
+    });
+});
+$domainSelf.addEventListener('click', function () {
+    $domainInput.value = '';
+    $domainInput.placeholder = '직접입력';
+    $domainInput.focus();
+    $modal.style.display = 'none';
+});
+$body.addEventListener('click', function (e) {
+    if (!e.target.closest('#domainModal') && !e.target.closest('.value-button')) {
+        $modal.style.display = 'none';
+    }
+});
+$modal.addEventListener('click', function (e) {
+    e.stopPropagation();
+});
+
+
+// endregion
+
+// TODO keyup EventListener 구현
+
+// region 비밀번호 강도 설정
+const $passwordInput = $registerForm[`password`];
+const $strengthDisplay = document.getElementById('password-strength');
+
+const $lowercaseRegex = /[a-z]/;
+const $uppercaseRegex = /[A-Z]/;
+const $numberRegex = /\d/;
+const $specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+
+$passwordInput.addEventListener('keyup', (e) => {
+    const $password = e.target.value;
+    let strength = 0;
+    if ($password.length > 6) {
+        if ($lowercaseRegex.test($password)) strength++;
+        if ($uppercaseRegex.test($password)) strength++;
+        if ($numberRegex.test($password)) strength++;
+        if ($specialCharRegex.test($password)) strength++;
+    }
+
+    let strengthText = '';
+    let strengthColor = '';
+
+    if (strength <= 1) {
+        strengthText = '약함';
+        strengthColor = '#FB4357';
+    } else if (strength === 2) {
+        strengthText = '보통';
+        strengthColor = '#e6731f';
+    } else if (strength > 2) {
+        strengthText = '강함';
+        strengthColor = '#45c645';
+    }
+
+
+    if ($password === '') {
+        $strengthDisplay.style.display = 'none';
+    } else {
+        $strengthDisplay.style.display = 'block';
+    }
+    $strengthDisplay.textContent = `비밀번호 강도: ${strengthText}`;
+    $strengthDisplay.style.color = strengthColor;
+})
+
+
+// endregion
+
 // region 회원가입
 {
 
     $registerForm.onsubmit = (e) => {
         e.preventDefault();
+        const $id = $registerForm['id'].value;
+        const $password = $registerForm['password'].value;
+        const $idRegex = /^(?=.*[a-z])(?=.*\d).{6,20}$/;
+        const $passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;"'<>,.?/\\|`~\-=_]).{8,100}$/;
 
-        if ($registerForm['password'].value.length <= 6 && $registerForm['password'].value.length >= 50) {
+
+        if ($registerForm['password'].value.length < 6 && $registerForm['password'].value.length > 50) {
             alert('올바른 비밀번호를 입력해 주세요.');
         }
         if ($registerForm['password'].value !== $registerForm['passwordCheck'].value) {
             alert('비밀번호가 서로 일치하지 않습니다.');
         }
-        if ($registerForm['contact'].value.length <= 10 && $registerForm['contact'].value.length >= 13) {
+        if ($registerForm['contact'].value.length < 10 && $registerForm['contact'].value.length > 13) {
             alert('올바른 연락처를 입력해주세요.');
         }
-        if ($registerForm['email'].value.length <= 8 && $registerForm['email'].value.length >= 50) {
+        if ($registerForm['email'].value.length < 6 && $registerForm['email'].value.length > 50) {
             alert('올바른 이메일을 입력해주세요.');
         }
         if (!$registerForm['agree'].checked) {
@@ -115,14 +218,20 @@ $registerForm['duplicate-nickname-button'].onclick = () => {
         formData.append('usBirth', $registerForm['birth'].value);
         formData.append('usGender', $registerForm['gender'].value);
         formData.append('usContact', $registerForm['contact'].value);
-        formData.append('usEmail', $registerForm['email'].value);
 
+        // 주소 결합
         const zipcode = $registerForm['postcode'].value;
         const address = $registerForm['address'].value;
         const detailAddress = $registerForm['detailAddress'].value;
         const extraAddress = $registerForm['extraAddress'].value;
         const fullAddress = `${zipcode} ${address} ${detailAddress} ${extraAddress ? extraAddress : ''}`.trim();
         formData.append('usAddr', fullAddress);
+
+        // 이메일 결합
+        const email = $registerForm['email'].value;
+        const domain = $registerForm['domain'].value;
+        const fullEmail = email + '@' + domain;
+        formData.append('usEmail', fullEmail);
 
 
         xhr.onreadystatechange = () => {
@@ -138,8 +247,15 @@ $registerForm['duplicate-nickname-button'].onclick = () => {
 
             if (response['result'] === 'success') {
                 alert('입력하신 이메일로 인증 링크를 전송하였습니다. 계정 인증 후 로그인이 가능하며, 해당 링크는 24시간 이후 만료 됩니다.');
+                return location.href = `/user/login`;
 
-                location.href = `/user/login`;
+            } else if (response['result'] === 'failure') {
+                return location.href = `/user/register`;
+
+            } else if (response['result'] === 'failure_invalid_id') {
+                alert('올바른 아이디 형식이 아닙니다 다시 확인해주세요. 아이디는 소문자와 숫자만 포함되어야 하며, 8~20자여야 합니다.');
+            } else if (response['result'] === 'failure_invalid_password') {
+                alert('비밀번호는 8~100자 사이에 대소문자, 숫자, 특수문자를 포함해야 합니다.');
             } else {
                 alert('서버가 알 수 없는 응답을 반환하였습니다. 잠시 후 다시 시도해 주세요.');
             }
@@ -151,3 +267,4 @@ $registerForm['duplicate-nickname-button'].onclick = () => {
 }
 
 // endregion
+
