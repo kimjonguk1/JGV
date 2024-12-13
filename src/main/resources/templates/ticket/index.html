@@ -644,15 +644,13 @@
                 <span>좌석</span>
             </div>
             <div class="div-content1">
-                <span id="pay-movie">위키드(자막)</span>
-                <span id="pay-theater">CGV대구</span>
-                <span id="pay-cinema">2관</span>
-                <span id="pay-time">2024년 12월 1일 20:10~23:00</span>
+                <span id="pay-movie"></span>
+                <span id="pay-theater"></span>
+                <span id="pay-cinema"></span>
+                <span id="pay-time"></span>
+
                 <span class="pay-human"></span>
                 <span class="pay-seat"></span>
-                <label>
-                    <input type="text" style="display: none">
-                </label>
             </div>
             <div class="div-title2">
                 <span>결제금액</span>
@@ -667,6 +665,8 @@
                     <span class="big-font" id="method"></span>
                     <span class="small-red" id="pay-price-won5"></span>
                     <span>원</span>
+                    <span id="pay-price-won-int" style="display: none"></span>
+
                 </span>
             </div>
         </div>
@@ -727,7 +727,7 @@
                      alt="대가족">
             </div>
             <div class="movie-info">
-                <div class="title">대가족</div>
+                <div class="title" id="theater-movie">대가족</div>
                 <div class="stretch"></div>
                 <div class="genre">2D</div>
                 <div class="rating">12세 관람가</div>
@@ -755,23 +755,23 @@
 
         <img class="info" src="https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/split.png" alt="split ">
         <div class="seat-container"></div>
-        <div class="seat info">
+        <div class="seat info hidden">
             <div class="text seat-title">
                 <span class="head">좌석명</span>
             </div>
-            <div class="text seat-content">
+            <div class="text seat-content ">
                 <span class="head">좌석번호</span>
             </div>
         </div>
-        <img class="info" src="https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/split.png" alt="split ">
-        <div class="price info">
+        <img class="info hidden" src="https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/split.png" alt="split ">
+        <div class="price info hidden">
             <div class="text price-title"></div>
             <div class="text price-content"></div>
         </div>
         <div class="payment-container"></div>
-        <div class="first right-button" data-id="main"></div>
+        <div class="first right-button after" data-id="main"></div>
         <div class="second right-button hidden" data-id="main-seat"></div>
-        <div class="third right-button hidden" data-id="main-payment"></div>
+        <div class="third right-button hidden after" data-id="main-payment"></div>
     </div>
 </section>
 <!------------------------------------------------------------------------------------>
