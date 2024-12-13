@@ -124,8 +124,5 @@ public class UserController {
     }
 // endregion
 
-    // region 세션 검사
-
-    // endregion
 
 }

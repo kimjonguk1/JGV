@@ -19,7 +19,6 @@ main > .contents {
 main > .contents > .video_wrapper {
   width: 980px;
   height: 100%;
-  background-color: blue;
   align-items: flex-start;
   display: flex;
   flex-direction: column;

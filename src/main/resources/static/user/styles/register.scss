@@ -98,25 +98,27 @@ body {
           padding: 0 1rem;
 
           > .email-label {
-
-            > .value-button {
-              width: 7rem;
-              color: #666666;
-              padding: 0.2rem;
-              position: relative;
-
-            }
-
-            > .email {
+            > .email,
+            .domain {
               width: 7rem;
               color: #666666;
             }
+          }
 
-            > .domain {
-              width: 7rem;
-              color: #666666
+          > .value-button {
+            width: 7rem;
+            color: #666666;
+            cursor: pointer;
+            padding: 0.2rem;
+            position: relative;
 
+            align-items: stretch;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
 
+            > .-spring {
+              flex-grow: 1;
             }
           }
         }
@@ -179,8 +181,10 @@ body {
     align-items: center;
     display: flex;
     flex-direction: row;
+    gap: 0.3rem;
     justify-content: center;
     margin-top: 1rem;
+
   }
 
 
@@ -217,18 +221,34 @@ body {
 }
 
 #domainModal {
-  transform: translate(-97%, 29.7%);
+  top: 1.775rem;
+  border: 2px solid #cacaca;
+  left: 0.475rem;
+  display: none;
+  cursor: pointer;
   background-color: #ffffff;
   position: absolute;
+  padding: 0.4rem;
+
   > .modal-content {
-    border-top: 2px solid #cacaca;
-    border-bottom: 2px solid #cacaca;
     width: 7rem;
     align-items: flex-start;
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: 0.4rem;
     justify-content: center;
 
+    > .domain-self:hover {
+      text-decoration: none;
+
+      &:active {
+        text-decoration: underline;
+      }
+    }
+
+    > .domain-button:hover {
+      text-decoration: underline;
+
+    }
   }
 }

@@ -24,6 +24,8 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.time.LocalDateTime;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserService {
@@ -44,6 +46,19 @@ public class UserService {
     // region 회원가입 / 비밀번호 암호화
     @Transactional
     public Result register(HttpServletRequest request, UserEntity user) throws MessagingException {
+        String idRegex = "^(?=.*[a-z])(?=.*\\d).{6,20}$";
+        Pattern idPattern = Pattern.compile(idRegex);
+        Matcher idMatcher = idPattern.matcher(user.getUsId());
+        if (!idMatcher.matches()) {
+            return RegisterResult.FAILURE_INVALID_ID;
+        }
+
+        String passwordRegex = "(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>]).{8,100}$";
+        Pattern passwordPattern = Pattern.compile(passwordRegex);
+        Matcher passwordMatcher = passwordPattern.matcher(user.getUsPw());
+        if (!passwordMatcher.matches()) {
+            return RegisterResult.FAILURE_INVALID_PASSWORD;
+        }
         if (
                 user == null ||
                         user.getUsName() == null ||
@@ -56,15 +71,6 @@ public class UserService {
                         user.getUsGender() == null || user.getUsAddr() == null || user.getUsAddr().isEmpty()
 
         ) {
-            System.out.println(user.getUsId());
-            System.out.println(user.getUsPw());
-            System.out.println(user.getUsName());
-            System.out.println(user.getUsNickName());
-            System.out.println(user.getUsBirth());
-            System.out.println(user.getUsGender());
-            System.out.println(user.getUsEmail());
-            System.out.println(user.getUsContact());
-            System.out.println(user.getUsAddr());
 
             return CommonResult.FAILURE;
         }
@@ -140,7 +146,7 @@ public class UserService {
 
         return CommonResult.SUCCESS;
     }
-// endregion
+// endregion //
 
     //region 로그인
     public Result login(UserEntity user) {
@@ -218,6 +224,10 @@ public class UserService {
         if (this.userMapper.selectUserById(userId) != null) {
             return RegisterResult.FAILURE_DUPLICATE_ID;
         }
+        if (userId == null || userId.length() < 6 || userId.length() > 12) {
+            return CommonResult.FAILURE;
+        }
+
         return CommonResult.SUCCESS;
     }
 
@@ -227,7 +237,11 @@ public class UserService {
         if (this.userMapper.selectUserByNickname(nickname) != null) {
             return RegisterResult.FAILURE_DUPLICATE_NICKNAME;
         }
+        if (nickname == null || nickname.length() < 2 || nickname.length() > 12) {
+            return CommonResult.FAILURE;
+        }
         return CommonResult.SUCCESS;
+
     }
 // endregion
 }

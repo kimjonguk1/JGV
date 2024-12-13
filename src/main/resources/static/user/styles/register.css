@@ -80,19 +80,27 @@ body > .title-container > span > img {
   height: 2rem;
   padding: 0 1rem;
 }
-#register-form > table > tr > td[rel=col] > .email-container > .email-label > .value-button, #register-form tbody > tr > td[rel=col] > .email-container > .email-label > .value-button, #register-form td > tr > td[rel=col] > .email-container > .email-label > .value-button, #register-form tr > tr > td[rel=col] > .email-container > .email-label > .value-button {
+#register-form > table > tr > td[rel=col] > .email-container > .email-label > .email,
+#register-form > table > tr > td[rel=col] > .email-container > .email-label .domain, #register-form tbody > tr > td[rel=col] > .email-container > .email-label > .email,
+#register-form tbody > tr > td[rel=col] > .email-container > .email-label .domain, #register-form td > tr > td[rel=col] > .email-container > .email-label > .email,
+#register-form td > tr > td[rel=col] > .email-container > .email-label .domain, #register-form tr > tr > td[rel=col] > .email-container > .email-label > .email,
+#register-form tr > tr > td[rel=col] > .email-container > .email-label .domain {
   width: 7rem;
   color: #666666;
+}
+#register-form > table > tr > td[rel=col] > .email-container > .value-button, #register-form tbody > tr > td[rel=col] > .email-container > .value-button, #register-form td > tr > td[rel=col] > .email-container > .value-button, #register-form tr > tr > td[rel=col] > .email-container > .value-button {
+  width: 7rem;
+  color: #666666;
+  cursor: pointer;
   padding: 0.2rem;
   position: relative;
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
-#register-form > table > tr > td[rel=col] > .email-container > .email-label > .email, #register-form tbody > tr > td[rel=col] > .email-container > .email-label > .email, #register-form td > tr > td[rel=col] > .email-container > .email-label > .email, #register-form tr > tr > td[rel=col] > .email-container > .email-label > .email {
-  width: 7rem;
-  color: #666666;
-}
-#register-form > table > tr > td[rel=col] > .email-container > .email-label > .domain, #register-form tbody > tr > td[rel=col] > .email-container > .email-label > .domain, #register-form td > tr > td[rel=col] > .email-container > .email-label > .domain, #register-form tr > tr > td[rel=col] > .email-container > .email-label > .domain {
-  width: 7rem;
-  color: #666666;
+#register-form > table > tr > td[rel=col] > .email-container > .value-button > .-spring, #register-form tbody > tr > td[rel=col] > .email-container > .value-button > .-spring, #register-form td > tr > td[rel=col] > .email-container > .value-button > .-spring, #register-form tr > tr > td[rel=col] > .email-container > .value-button > .-spring {
+  flex-grow: 1;
 }
 #register-form > table > tr > td[rel=col] > .label-container, #register-form tbody > tr > td[rel=col] > .label-container, #register-form td > tr > td[rel=col] > .label-container, #register-form tr > tr > td[rel=col] > .label-container {
   align-items: flex-start;
@@ -138,6 +146,7 @@ body > .title-container > span > img {
   align-items: center;
   display: flex;
   flex-direction: row;
+  gap: 0.3rem;
   justify-content: center;
   margin-top: 1rem;
 }
@@ -169,19 +178,31 @@ body > .title-container > span > img {
 }
 
 #domainModal {
-  transform: translate(-97%, 29.7%);
+  top: 1.775rem;
+  border: 2px solid #cacaca;
+  left: 0.475rem;
+  display: none;
+  cursor: pointer;
   background-color: #ffffff;
   position: absolute;
+  padding: 0.4rem;
 }
 #domainModal > .modal-content {
-  border-top: 2px solid #cacaca;
-  border-bottom: 2px solid #cacaca;
   width: 7rem;
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.4rem;
   justify-content: center;
+}
+#domainModal > .modal-content > .domain-self:hover {
+  text-decoration: none;
+}
+#domainModal > .modal-content > .domain-self:hover:active {
+  text-decoration: underline;
+}
+#domainModal > .modal-content > .domain-button:hover {
+  text-decoration: underline;
 }
 
 /*# sourceMappingURL=register.css.map */
