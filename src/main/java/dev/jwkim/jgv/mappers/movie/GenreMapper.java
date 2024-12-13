@@ -12,8 +12,7 @@ public interface GenreMapper {
     Integer selectGenereIdByName(String geName);
     // 다대다 매핑 테이블에 data 삽입
     void insertMovieGenreMapping(@Param("monum") int monum, @Param("genum") int genum);
-    // 모든 데이터 삭제
-    int deleteAllMovieGenre();
-    // 다대다 매핑 테이블 삭제
-    int deleteMovieGenreMapping();
+
+    // 다대다 테이블의 중복 데이터 방지
+    boolean isMovieGenreMappingExists(@Param("monum") int monum, @Param("genum") int genum);
 }

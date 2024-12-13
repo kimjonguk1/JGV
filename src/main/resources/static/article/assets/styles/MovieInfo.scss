@@ -18,6 +18,7 @@ body {
 
     .poster {
       flex: 0 0 200px;
+
       img {
         width: 86%;
       }
@@ -39,8 +40,10 @@ body {
         font-size: 16px;
         margin-bottom: 15px;
         margin-top: 10px;
+
         p {
           margin: 0;
+
           span {
             font-weight: bold;
           }
@@ -49,8 +52,10 @@ body {
 
       .details {
         font-size: 13px;
+
         p {
           margin: 5px 0;
+
           span {
             font-weight: bold;
             color: #333;
@@ -68,7 +73,6 @@ body {
           border-radius: 4px;
           cursor: pointer;
 
-
           &.reserve {
             background-color: #ff4d4f;
             color: #fff;
@@ -82,55 +86,82 @@ body {
     }
   }
 
-  .movie-synopsis {
-    margin-top: 50px;
-    white-space: pre-wrap; /* 줄바꿈과 공백을 유지 */
-    word-wrap: break-word; /* 단어가 길 경우 강제로 줄바꿈 */
-    line-height: 2; /* 줄 간격 조정 */
-    p {
+  .tabs-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px;
 
+    .tabs {
+      flex: 3;
+      background-color: #ff5a5a; /* 빨간 배경 */
+      padding: 8px 15px;
+      max-width: 450px;
+      margin: 0 auto; /* 화면 중앙 정렬 */
+      display: flex;
+      justify-content: center; /* 탭 중앙 정렬 */
+
+
+      .tab-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center; /* 중앙 정렬 */
+        justify-content: center; /* 가운데 정렬 */
+      }
+
+      .tab-item {
+        margin: 0 10px; /* 좌우 간격 조정 */
+        padding: 5px 10px;
+        font-size: 14px; /* 크기 줄이기 */
+        cursor: pointer;
+      }
+
+      .tab-item a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+      }
+
+      .tab-separator {
+        color: white;
+        font-weight: bold;
+        margin: 0 5px;
+        font-size: 14px; /* 크기 조정 */
+      }
     }
   }
 
-  .tabs {
-    background-color: #ff5a5a; /* 빨간 배경 */
-    padding: 8px 15px;
-    max-width: 450px;
-    margin: 0 auto; /* 화면 중앙 정렬 */
-    display: flex;
-    justify-content: center; /* 탭 중앙 정렬 */
-  }
+  #overview {
+    margin-top: 20px;
 
-  .tab-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center; /* 중앙 정렬 */
-    justify-content: center; /* 가운데 정렬 */
-  }
+    .content-container {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
 
-  .tab-item {
-    margin: 0 10px; /* 좌우 간격 조정 */
-    padding: 5px 10px;
-    font-size: 14px; /* 크기 줄이기 */
-    cursor: pointer;
-  }
 
-  .tab-item a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-  }
+      .movie-synopsis {
+        flex: 2;
+        margin-top: 50px;
+        white-space: pre-wrap; /* 줄바꿈과 공백을 유지 */
+        word-wrap: break-word; /* 단어가 길 경우 강제로 줄바꿈 */
+        line-height: 2; /* 줄 간격 조정 */
+      }
 
-  /* 구분선 스타일 */
-  .tab-separator {
-    color: white;
-    font-weight: bold;
-    margin: 0 5px;
-    font-size: 14px; /* 크기 조정 */
+    }
+    .ad {
+      width: 100%;
+      height: 100px;
+      border: 0;
+      aspect-ratio: auto 800 / 90;
+      overflow-clip-margin: content-box;
+      border-right-style: solid;
+    }
   }
 }
+
 
 section {
   display: none; /* 기본적으로 모든 섹션 숨김 */
@@ -144,7 +175,6 @@ section.active {
   font-weight: bold;
 }
 
-// 감독/출연
 #character {
   padding: 20px;
 
@@ -189,11 +219,13 @@ section.active {
       .related-works {
         display: flex;
         justify-content: flex-end;
+        margin-right: 15px;
 
         p {
           width: 32px;
           height: 37px;
           background: url("https://img.cgv.co.kr/R2014/images/title/text_relationmovie.gif") 0 0 no-repeat;
+          margin-right: 5px;
         }
 
         .works {
@@ -201,10 +233,16 @@ section.active {
           gap: 10px;
           justify-content: flex-end;
 
-          img {
-            width: 70px;
-            height: 100px;
-            object-fit: cover;
+          div {
+            img {
+              width: 70px;
+              height: 100px;
+              object-fit: cover;
+            }
+
+            span {
+              display: block;
+            }
           }
         }
       }
@@ -246,8 +284,198 @@ section.active {
         font-weight: bold;
         color: #333;
       }
-
     }
   }
 }
 
+.review-header {
+  margin: 20px 0;
+  padding: 30px;
+  background: #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .bold {
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.8em;
+    color: #212224;
+
+    strong {
+      color: #ff4d4f;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    gap: 10px;
+
+    .write-review-btn {
+      padding: 8px 16px;
+      border: 1px solid #ddd;
+      background-color: #ff5a5a;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .my-review-btn {
+      padding: 8px 16px;
+      border: 1px solid #ddd;
+      background-color: #666;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+  }
+}
+
+.reviews {
+  margin-top: 5px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 한 줄에 두 개씩 */
+  border-top: 1px solid black;
+
+  .review-item {
+    display: flex;
+    gap: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    align-items: flex-start;
+    background-color: #fff;
+    border-radius: 4px;
+
+    &:nth-child(odd) {
+      border-right: 1px solid #ddd;
+    }
+
+    .review-user {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+
+      .profile-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+
+    .review-content {
+      margin-top: 10px;
+      flex: 1;
+      position: relative;
+
+      .user-name {
+        font-weight: bold;
+        color: #333;
+        font-size: 14px;
+        display: inline-block;
+      }
+
+      .menu-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        color: #aaa;
+
+        &::after {
+          content: '⋮';
+        }
+      }
+
+      .review-text {
+        margin: 8px 0;
+        font-size: 14px;
+        color: #555;
+      }
+
+      .spring {
+        height: 100px;
+      }
+
+      .review-footer {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        color: #999;
+
+        .review-date {
+          color: #666;
+        }
+
+
+        .like-btn {
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          color: black;
+        }
+      }
+    }
+  }
+}
+
+.review-sort {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 20px;
+
+  .pagination-btn {
+    padding: 5px 10px;
+    margin: 0 2px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+
+    &.active {
+      color: #ff5a5a;
+    }
+  }
+
+  .review-sort-button {
+    padding: 5px 10px;
+    margin: 0 2px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+
+    &.active {
+      color: #ff5a5a;
+    }
+  }
+}
+
+.paging {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  a {
+    padding: 5px 5px;
+    margin: 0 2px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+
+    &.active {
+      color: #ff5a5a;
+    }
+  }
+}

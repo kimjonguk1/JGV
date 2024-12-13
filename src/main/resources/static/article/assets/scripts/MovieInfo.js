@@ -1,27 +1,42 @@
-const $tabs = document.querySelectorAll('.tabs .tab-item a');
-const $defaultTab = document.querySelector('.tabs .tab-item a[href="#overview"]');
-const $defaultSection = document.getElementById('overview');
-const $sections = document.querySelectorAll('section');
+const $tabsContainer = document.querySelector('.tabs')
+const $sections = document.querySelectorAll('section')
 
-$defaultTab.classList.add('active')
-$defaultSection.classList.add('active')
+document.querySelector('.tab-item a[href = "#overview"]').classList.add('active')
+document.getElementById('overview').classList.add('active')
 
+// 쓰로틀링 적용
+let isThrottling = false;
 
-$tabs.forEach(tab => {
-    tab.addEventListener('click', function (e) {
-        e.preventDefault(); // 기본 링크 동작 방지
+$tabsContainer.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') {
+        e.preventDefault();
 
-        // 모든 탭에서 활성화 클래스 제거
-        $tabs.forEach(t => t.classList.remove('active'));
+        isThrottling = true;
 
-        // 클릭된 탭에 활성화 클래스 추가
-        tab.classList.add('active');
-
-        // 모든 섹션 숨기기
+        // 모든 탭 비활성화
+        document.querySelectorAll('.tabs .tab-item a').forEach(tab => tab.classList.remove('active'));
         $sections.forEach(section => section.classList.remove('active'));
 
-        // 클릭된 탭과 연결된 섹션 표시
-        const targetId = tab.getAttribute('href').substring(1); // # 제거
+        // 클릭된 탭 활성화
+        e.target.classList.add('active');
+        const targetId = e.target.getAttribute('href').substring(1); // # 제거
         document.getElementById(targetId).classList.add('active');
-    });
-});
+        setTimeout(() => {
+            isThrottling = false
+        }, 300)
+    }
+})
+
+
+const $bottomBtn = document.querySelector('.moveBottom');
+const $topBtn = document.querySelector('.moveTop');
+
+$topBtn.onclick = () => {
+    window.scrollTo(0, 0);
+}
+$bottomBtn.onclick = () => {
+    window.scrollTo({
+        top : document.body.scrollHeight,
+        behavior: "smooth"
+    })
+}

@@ -30,7 +30,7 @@
                 <hr>
                 <div class="details">
                     <p>감독: <span class="director" th:text="${movieInfo.getDirectorName()}">곽경택</span></p>
-                    <p>배우: <span class="actors" th:each="actors : ${movieInfo.getActorNames()}" th:text="${actors}">주원, 곽도원, 이유영</span></p>
+                    <p>배우: <span class="actors" th:each="actors : ${movieInfo.getActorNames()}" th:text="${actors} + ','">주원, 곽도원, 이유영</span></p>
                     <p>장르: <span class="genre" th:each="genres : ${movieInfo.getGenres()}" th:text="${genres}">드라마</span></p>
                     <p>기본 정보: <span class="info" th:text="${movieInfo.getGrade()}"></span> , <span class="info" th:text="${movieInfo.getMoTime()} + '분'"></span> , <span class="info" th:each="countries : ${movieInfo.getCountries()}" th:text="${countries}"></span></p>
                     <p>개봉: <span class="release-date" th:text="${movieInfo.getMoDate()}">2024.12.04</span></p>
@@ -40,30 +40,84 @@
                 </div>
             </div>
         </div>
-        <div class="tabs">
-            <ul class="tab-list">
-                <li class="tab-item active"><a href="#overview" class="active">주요정보</a></li>
-                <li class="tab-separator">|</li>
-                <li class="tab-item"><a href="#character">감독/출연</a></li>
-                <li class="tab-separator">|</li>
-                <li class="tab-item"><a href="#review">평점/리뷰</a></li>
-                <li class="tab-separator">|</li>
-                <li class="tab-item"><a href="#schedule">상영시간표</a></li>
-            </ul>
+        <div class="tabs-container">
+            <div class="tabs">
+                <ul class="tab-list">
+                    <li class="tab-item moveTop active"><a href="#overview" class="active">주요정보</a></li>
+                    <li class="tab-separator">|</li>
+                    <li class="tab-item"><a href="#character">감독/출연</a></li>
+                    <li class="tab-separator">|</li>
+                    <li class="tab-item moveBottom"><a href="#overview">평점/리뷰</a></li>
+                    <li class="tab-separator">|</li>
+                    <li class="tab-item"><a href="#schedule">상영시간표</a></li>
+                </ul>
+            </div>
         </div>
-        <section id="overview">
-            <div class="movie-synopsis">
-                <p th:text="${movieInfo.getMoPlot()}">
-                    살리기 위해, 살아남기 위해 하루하루가 마지막 현장인 소방관 팀은
-                    열악한 환경 속에서도 화재 진압과 전원 구조라는 단 하나의 목표로 임기를 다한다.
-                </p>
+        <section id="overview" class="active">
+            <div class="content-container">
+                <div class="movie-synopsis">
+                    <p th:text="${movieInfo.getMoPlot()}">
+                        살리기 위해, 살아남기 위해 하루하루가 마지막 현장인 소방관 팀은
+                        열악한 환경 속에서도 화재 진압과 전원 구조라는 단 하나의 목표로 임기를 다한다.
+                    </p>
+                </div>
+            </div>
+            <img class="ad" src="https://adimg.cgv.co.kr/images/202412/HARBIN/800x90.jpg" alt="">
+            <div class="review-header">
+                <div>
+                <p class="bold">관람일 포함 7일 이내 관람평을 남기시면 <strong>CJ ONE 20P</strong>가 적립됩니다.</p>
+                <p class="notBold"><strong>7,282</strong>명의 실관람객이 평가해주셨습니다.</p>
+                </div>
+                <div class="buttons">
+                    <button class="write-review-btn">평점작성</button>
+                    <button class="my-review-btn">내 평점</button>
+                </div>
+            </div>
+
+            <div class="review-sort">
+                <button class="review-sort-button active">최신순</button>
+                <button class="pagination-btn">추천순</button>
+            </div>
+
+            <div class="reviews">
+<!--                아이템 반복-->
+                <div class="review-item">
+                    <div class="review-user">
+                        <img src="https://via.placeholder.com/50" alt="프로필 이미지" class="profile-img">
+                    </div>
+                    <div class="review-content">
+                        <span class="user-name">칠구</span>
+                        <button class="menu-btn"></button>
+                        <p class="review-text">실화를 바탕으로한 작품이라 교훈적인 내용은 좋네요</p>
+                        <div class="spring"></div>
+                        <div class="review-footer">
+                            <span class="review-date">2024.12.13</span>
+                            <span>&nbsp; | &nbsp;</span>
+                            <img src="http://img.cgv.co.kr/R2014/images/point/ico_point_default.png" alt="like">
+                            <button class="like-btn">&nbsp; 0</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="paging">
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">7</a>
+                <a href="#">8</a>
+                <a href="#">9</a>
+                <a href="#">10</a>
             </div>
         </section>
         <section id="character">
             <div class="movie-people-container">
                     <h2>&nbsp;&nbsp;감독</h2>
                     <div class="director">
-                        <img th:src="${movieInfo.getDirectorImage()}" alt="감독 이미지">
+                        <img th:if="${movieInfo.getDirectorImage()} != null" th:src="${movieInfo.getDirectorImage()}" alt="">
                         <div class="info">
                             <p class="name" th:text="${movieInfo.getDirectorName()}">Todd Haynes</p>
                             <div class="related-works">
@@ -90,9 +144,6 @@
             </div>
         </section>
         <section id="schedule">
-
-        </section>
-        <section id="review">
 
         </section>
     </div>
