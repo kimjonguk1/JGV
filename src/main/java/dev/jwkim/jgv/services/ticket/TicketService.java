@@ -20,6 +20,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -31,7 +32,14 @@ import java.util.*;
 public class TicketService {
     private final TicketMapper ticketMapper;
 
-    public MovieVo[] selectAllMovies() {
+    public MovieVo[] selectAllMovies(String moTitle) {
+        if (moTitle == null || moTitle.isEmpty()) {
+            return null;
+        }
+        return this.ticketMapper.selectAllMoviesByMoTitle(moTitle);
+    }
+
+    public MovieVo[] selectAllMoviesByRating() {
         MovieVo[] movies = this.ticketMapper.selectAllMoviesByRating();
         for (MovieVo movie : movies) {
             switch (movie.getRaGrade()) {
@@ -44,6 +52,7 @@ public class TicketService {
         }
         return movies;
     }
+
 
     public MovieVo[] selectAllMoviesByKorea() {
         MovieVo[] movies = this.ticketMapper.selectAllMoviesByKorea();
@@ -151,6 +160,7 @@ public class TicketService {
 //    }
     // endregion
 
+    // region 크롤링
     @Transactional
     public void Crawl(ScreenEntity screen) throws TransactionalException {
         // ChromeDriver 경로 설정
@@ -165,14 +175,66 @@ public class TicketService {
 
         try {
             // 오늘 날짜 가져오기
-            LocalDate currentDate = LocalDate.now();
+
             for (TheaterCode theater : TheaterCode.values()) {
                 int ciNum = 0;
+                String dateUrl = "http://www.cgv.co.kr/theaters/?areacode=11&theaterCode=" + theater.cgvCode;
+                driver.get(dateUrl);
+
+                // iframe 요소 찾기 및 전환
+                WebElement iframe = driver.findElement(By.id("ifrm_movie_time_table"));
+                driver.switchTo().frame(iframe);
+
+                List<WebElement> dateElements = driver.findElements(By.cssSelector("#slider > .item-wrap.on > .item > li"));
+                List<String> dates = new ArrayList<>();
+                for (WebElement day : dateElements) {
+                    // 영화 제목 추출
+                    String movie = day.findElement(By.cssSelector("a")).getAttribute("href");
+                    if (movie.isEmpty()) {
+                        continue;
+                    }
+                    // URL에서 쿼리 파라미터 추출
+                    URL url = new URL(movie);
+                    String query = url.getQuery();
+
+                    // 쿼리 파라미터가 없다면 건너뜁니다.
+                    if (query == null || query.isEmpty()) {
+                        continue;
+                    }
+
+                    // 쿼리 파라미터 분리
+                    Map<String, String> queryParams = new HashMap<>();
+                    String[] pairs = query.split("&");
+
+                    // 각 파라미터에 대해 처리
+                    for (String pair : pairs) {
+                        String[] keyValue = pair.split("=");
+
+                        // '='가 없거나 keyValue의 길이가 2가 아니라면 건너뜁니다.
+                        if (keyValue.length == 2) {
+                            queryParams.put(keyValue[0], keyValue[1]);
+                        }
+                    }
+
+                    // 'date' 파라미터 값 추출
+                    String date = queryParams.get("date");
+
+                    // date 출력
+                    if (date != null) {
+                        System.out.println(date);  // 예: 20241216
+                        dates.add(date);
+                    }
+
+                    // movie URL 출력
+                    System.out.println(movie);
+
+                }
+                System.out.println(dates);
                 System.out.println(theater.cgvName);
 
                 // 15일 간의 날짜를 반복하며 크롤링
-                for (int i = 0; i < 15; i++) {
-                    String date = currentDate.plusDays(i).toString().replace("-", ""); // YYYYMMDD 형식의 날짜
+                for (int i = 0; i < dates.toArray().length; i++) {
+                    String date = dates.toArray()[i].toString(); // YYYYMMDD 형식의 날짜
                     System.out.println("상영일: " + date);
 
                     // URL에 날짜 파라미터 추가
@@ -180,9 +242,9 @@ public class TicketService {
                     // CGV 극장 URL 열기
                     driver.get(url);
 
-                    // iframe 요소 찾기 및 전환
-                    WebElement iframe = driver.findElement(By.id("ifrm_movie_time_table"));
-                    driver.switchTo().frame(iframe);
+//                    // iframe 요소 찾기 및 전환
+                    WebElement iframes = driver.findElement(By.id("ifrm_movie_time_table"));
+                    driver.switchTo().frame(iframes);
 
                     // 영화 시간표 요소 가져오기
                     List<WebElement> movieElements = driver.findElements(By.cssSelector(".col-times"));
@@ -218,7 +280,9 @@ public class TicketService {
                                         ciNum = cinemaTypeNum.getCiNum();
                                         break;
                                     }
-                                    if (cinema.getText().contains("[CGV아트하우스]") || cinema.getText().contains("[영남이공대학교]")) {
+                                    if (cinema.getText().contains("[CGV아트하우스]") ||
+                                            cinema.getText().contains("[영남이공대학교]") ||
+                                            cinema.getText().contains("[아트기획전관]")) {
                                         result = cinema.getText();
                                         CinemaEntity artCinema = this.ticketMapper.selectCinemaNumByCinemaTitle(result.substring(0, 2), theater.cgvName);
                                         screen.setCiNum(artCinema.getCiNum());
@@ -265,7 +329,13 @@ public class TicketService {
                                 }
                             }
                         }
+
+                        // 출력
+                        System.out.println("------------");
+                        System.out.println("영화: " + movieTitle);
+                        System.out.println(timeTable.toString().trim());
                     }
+                    System.out.println("------------");
                 }
             }
         } catch (Exception e) {
@@ -275,6 +345,7 @@ public class TicketService {
             driver.quit();
         }
     }
+    // endregion
 
 //    ---------------------------------------
 

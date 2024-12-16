@@ -1542,7 +1542,7 @@
 }
 
 .control-bar {
-  width: 100vw;
+  width: 100%;
   background-color: rgb(29, 29, 28);
   height: 7.5rem;
   box-sizing: border-box;
@@ -1562,18 +1562,6 @@
     justify-content: flex-start;
     align-items: center;
 
-    > .movie-container {
-      width: 210px;
-      height: 100%;
-      background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_steps.png");
-      background-repeat: no-repeat;
-      background-position: 50% 40px;
-
-      &.hidden {
-        display: none;
-      }
-    }
-
     > .info {
       user-select: none;
       pointer-events: none;
@@ -1583,32 +1571,73 @@
       }
     }
 
-    > .posters {
-      width: 210px;
+    > .containers {
       height: 100%;
-      box-sizing: border-box;
 
-      align-items: center;
+      position: relative;
       display: flex;
       flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
 
-      > .poster {
-        > .movie {
-          width: 74px;
-          height: 100%;
+      > .movie-container {
+        width: 210px;
+        height: 100%;
+        background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_steps.png");
+        background-repeat: no-repeat;
+        background-position: 50% 40px;
+
+        &.hidden {
+          display: none;
         }
       }
 
-      > .movie-info {
-        height: 100%;
-        padding: 1rem 0 1rem 1rem;
-        color: #cccccc;
-        box-sizing: border-box;
-        font-size: 0.85rem;
-        font-weight: 600;
 
+      > .info {
+        user-select: none;
+        pointer-events: none;
+
+        &.hidden {
+          display: none;
+        }
+      }
+
+      > .posters {
+        width: 210px;
+        height: 100%;
+        box-sizing: border-box;
+
+        align-items: center;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+
+        > .poster {
+          > .movie {
+            width: 74px;
+            height: 100%;
+          }
+        }
+
+        > .movie-info {
+          height: 100%;
+          padding: 1rem 0 1rem 1rem;
+          color: #cccccc;
+          box-sizing: border-box;
+          font-size: 0.85rem;
+          font-weight: 600;
+
+          display: flex;
+          flex-direction: column;
+
+          > .title {
+            pointer-events: all;
+
+            &:hover {
+              cursor: pointer;
+              text-decoration: underline;
+            }
+          }
+        }
       }
     }
 
@@ -1739,6 +1768,7 @@
           font-weight: 700;
           width: 110px;
         }
+
         > .data2 {
           color: red;
           font-size: 0.8rem;

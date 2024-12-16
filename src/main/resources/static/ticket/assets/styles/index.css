@@ -1287,7 +1287,7 @@
 }
 
 .control-bar {
-  width: 100vw;
+  width: 100%;
   background-color: rgb(29, 29, 28);
   height: 7.5rem;
   box-sizing: border-box;
@@ -1308,16 +1308,6 @@
   justify-content: flex-start;
   align-items: center;
 }
-.control-bar > .container > .movie-container {
-  width: 210px;
-  height: 100%;
-  background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_steps.png");
-  background-repeat: no-repeat;
-  background-position: 50% 40px;
-}
-.control-bar > .container > .movie-container.hidden {
-  display: none;
-}
 .control-bar > .container > .info {
   user-select: none;
   pointer-events: none;
@@ -1325,7 +1315,32 @@
 .control-bar > .container > .info.hidden {
   display: none;
 }
-.control-bar > .container > .posters {
+.control-bar > .container > .containers {
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.control-bar > .container > .containers > .movie-container {
+  width: 210px;
+  height: 100%;
+  background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_steps.png");
+  background-repeat: no-repeat;
+  background-position: 50% 40px;
+}
+.control-bar > .container > .containers > .movie-container.hidden {
+  display: none;
+}
+.control-bar > .container > .containers > .info {
+  user-select: none;
+  pointer-events: none;
+}
+.control-bar > .container > .containers > .info.hidden {
+  display: none;
+}
+.control-bar > .container > .containers > .posters {
   width: 210px;
   height: 100%;
   box-sizing: border-box;
@@ -1333,11 +1348,11 @@
   display: flex;
   flex-direction: row;
 }
-.control-bar > .container > .posters > .poster > .movie {
+.control-bar > .container > .containers > .posters > .poster > .movie {
   width: 74px;
   height: 100%;
 }
-.control-bar > .container > .posters > .movie-info {
+.control-bar > .container > .containers > .posters > .movie-info {
   height: 100%;
   padding: 1rem 0 1rem 1rem;
   color: #cccccc;
@@ -1346,6 +1361,13 @@
   font-weight: 600;
   display: flex;
   flex-direction: column;
+}
+.control-bar > .container > .containers > .posters > .movie-info > .title {
+  pointer-events: all;
+}
+.control-bar > .container > .containers > .posters > .movie-info > .title:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 .control-bar > .container > .theater-container {
   width: 185px;

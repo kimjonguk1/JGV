@@ -67,7 +67,8 @@
                             <li class="theater"
                                 th:if="theaters != null"
                                 th:each="theater : ${theaters}">
-                                <span th:text="${theater.getThName().substring(3, theater.getThName().length())}" class="text"></span>
+                                <span th:text="${theater.getThName().substring(3, theater.getThName().length())}"
+                                      class="text"></span>
                             </li>
                         </ul>
                     </div>
@@ -589,58 +590,64 @@
     <div class="container">
         <div class="first left-button button hidden" data-id="main-seat"></div>
         <div class="second left-button button hidden" data-id="main-payment"></div>
-        <div class="movie-container" data-id="movieInfo"></div>
-        <div class="posters info hidden" data-id="movieInfo">
-            <div class="poster">
-                <img class="movie" src="http://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89072/89072_185.JPG"
-                     alt="대가족">
-            </div>
-            <div class="movie-info">
-                <div class="title" id="theater-movie">대가족</div>
-                <div class="stretch"></div>
-                <div class="genre">2D</div>
-                <div class="rating">12세 관람가</div>
+        <div class="containers">
+            <div class="movie-container" data-id="movieInfo"></div>
+            <div class="posters info hidden" data-id="movieInfo">
+                <div th:if="${movieVos != null}"
+                     th:each="vo : ${movieVos}"
+                     class="poster">
+                    <img class="movie" th:src="${vo.getMImgUrl()}"
+                         alt="포스터">
+                </div>
+                <div th:if="${movieVos != null}"
+                     th:each="vo : ${movieVos}"
+                     class="movie-info">
+                    <div th:text="${vo.getMoTitle()}" class="title"></div>
+                    <!--                <div class="stretch"></div>-->
+                    <!--                <div class="genre">2D</div>-->
+                    <!--                <div class="rating">12세 관람가</div>-->
+                </div>
             </div>
         </div>
         <img class="info" src="https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/split.png" alt="split">
-        <div class="theater-container hidden" data-id="theaterInfo"></div>
-        <div class="theater info" data-id="theaterInfo">
+        <div class="theater-container" data-id="theaterInfo"></div>
+        <div class="theater info hidden" data-id="theaterInfo">
             <div class="text">
                 <span class="head">극장</span>
-                <a href="#" class="data" id="theater-theater">CGV대구</a>
+                <a href="#" class="data" id="theater-theater"></a>
             </div>
             <div class="text">
                 <span class="head">일시</span>
-                <span class="data" id="theater-time">2024.12.13(금) 10:40</span>
+                <span class="data" id="theater-time"></span>
             </div>
             <div class="text">
                 <span class="head">상영관</span>
-                <span class="data" id="theater-cinema">5관</span>
+                <span class="data" id="theater-cinema"></span>
             </div>
             <div class="text" id="theater-human">
                 <span class="head">인원</span>
             </div>
         </div>
-
         <img class="info" src="https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/split.png" alt="split ">
         <div class="seat-container"></div>
         <div class="seat info hidden">
             <div class="text seat-title">
                 <span class="head">좌석명</span>
             </div>
-            <div class="text seat-content ">
+            <div class="text seat-content">
                 <span class="head">좌석번호</span>
             </div>
         </div>
-        <img class="info hidden" src="https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/split.png" alt="split ">
+        <img class="info hidden" src="https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/split.png"
+             alt="split ">
         <div class="price info hidden">
             <div class="text price-title"></div>
             <div class="text price-content"></div>
         </div>
         <div class="payment-container"></div>
-        <div class="first right-button after" data-id="main"></div>
+        <div class="first right-button" data-id="main"></div>
         <div class="second right-button hidden" data-id="main-seat"></div>
-        <div class="third right-button hidden after" data-id="main-payment"></div>
+        <div class="third right-button hidden" data-id="main-payment"></div>
     </div>
 </section>
 <!------------------------------------------------------------------------------------>
