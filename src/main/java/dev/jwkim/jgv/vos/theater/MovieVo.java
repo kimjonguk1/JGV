@@ -8,4 +8,5 @@ import lombok.Setter;
 @Setter
 public class MovieVo extends MovieEntity {
     private String raGrade;
+    private String mImgUrl;
 }

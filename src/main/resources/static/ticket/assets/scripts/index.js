@@ -7,12 +7,16 @@ const $orderItems = Array.from($mainContent.querySelectorAll(':scope > .movie > 
 const $region = $mainContent.querySelector(':scope > .theater > .body > .content > .region-container')
 const $regionItems = Array.from($region.querySelectorAll(':scope > .region'));
 const $theater = $mainContent.querySelector(':scope > .theater > .body > .content > .theater-container')
-const $theaterItems = Array.from($theater.querySelectorAll(':scope > .theater'));
-const $dayItems = Array.from($mainContent.querySelectorAll(':scope > .day > .body > .content > .day-container > .day'));
+const $dayContainer = $mainContent.querySelector(':scope > .day > .body > .content > .day-container')
+const $dayTitle = Array.from($dayContainer.querySelectorAll(':scope > .title'))
+const $dayItems = Array.from($dayContainer.querySelectorAll(':scope > .day'));
 const $controlBar = document.getElementById('control-bar');
-const $movieInfo = $controlBar.querySelectorAll(':scope > .container > [data-id="movieInfo"]')
+const $containers = $controlBar.querySelector(':scope > .container > .containers');
+const $theaterTheater = document.getElementById('theater-theater');
 const $theaterInfo = $controlBar.querySelectorAll(':scope > .container > [data-id="theaterInfo"]')
+const $theaterTime = document.getElementById('theater-time');
 
+// region 영화정보
 $orderItems.forEach((x) => {
     x.onclick = () => {
         $orderItems.forEach((item) => {
@@ -83,9 +87,6 @@ $orderItems.forEach((x) => {
 
 $movieItems.forEach((x) => {
     x.onclick = () => {
-        $movieInfo.forEach((movie) => {
-            movie.classList.add('hidden');
-        })
         $movieItems.forEach((item) => {
             item.classList.remove('select');
             if (x === item) {
@@ -102,6 +103,15 @@ $movieItems.forEach((x) => {
                         alert('오류 발생');
                         return;
                     }
+                    const $info = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll(' #control-bar > .container > .containers > [data-id="movieInfo"]'));
+                    $containers.innerHTML = "";
+                    $info.forEach((info) => {
+                        info.classList.add('hidden');
+                        if (info.classList.contains('posters')) {
+                            info.classList.remove('hidden');
+                        }
+                        $containers.append(info);
+                    })
                 };
                 xhr.open('GET', url.toString());
                 xhr.send();
@@ -110,6 +120,7 @@ $movieItems.forEach((x) => {
         })
     }
 })
+// endregion
 
 $regionItems.forEach((x) => {
     x.onclick = () => {
@@ -139,6 +150,13 @@ $regionItems.forEach((x) => {
                                 if (x === item) {
                                     item.classList.add('select');
                                 }
+                                $theaterInfo.forEach((theater) => {
+                                    theater.classList.add('hidden');
+                                    if (theater.classList.contains('theater')) {
+                                        theater.classList.remove('hidden');
+                                    }
+                                    $theaterTheater.innerText = x.innerText;
+                                })
                             })
                         }
                     })
@@ -151,17 +169,6 @@ $regionItems.forEach((x) => {
     }
 })
 
-$theaterItems.forEach((x) => {
-    x.onclick = () => {
-        $theaterItems.forEach((item) => {
-            item.classList.remove('select');
-            if (x === item) {
-                item.classList.add('select');
-            }
-        })
-    }
-})
-
 $dayItems.forEach((x) => {
     x.onclick = () => {
         $dayItems.forEach((item) => {
@@ -169,6 +176,18 @@ $dayItems.forEach((x) => {
             if (x === item) {
                 item.classList.add('select');
             }
+            let array = x.innerText.split('\n');
+            $theaterInfo.forEach((theater) => {
+                theater.classList.add('hidden');
+                if (theater.classList.contains('theater')) {
+                    theater.classList.remove('hidden');
+                }
+                $dayTitle.forEach((day) => {
+                    const $year = day.querySelector('.year');
+                    const $month = day.querySelector('.month');
+                    $theaterTime.innerText = $year.innerText + '.' + $month.innerText + '.' + array[1] + '(' + array[0] + ')';
+                })
+            })
         })
     }
 })
@@ -264,8 +283,6 @@ const $payTheater = document.getElementById('pay-theater')
 const $payCinema = document.getElementById('pay-cinema')
 const $payTime = document.getElementById('pay-time')
 const $theaterMovie = document.getElementById('theater-movie');
-const $theaterTheater = document.getElementById('theater-theater');
-const $theaterTime = document.getElementById('theater-time');
 const $theaterCinema = document.getElementById('theater-cinema');
 
 const $checkboxAgreeAll = document.getElementById('checkbox-agree-all');

@@ -101,6 +101,20 @@
                `ci_num`        AS `ciNum`
         FROM `jgv`.`screen`
     </select>
+    <select id="selectAllMoviesByMoTitle"
+            resultType="dev.jwkim.jgv.vos.theater.MovieVo">
+        SELECT movie.`mo_num`    AS `moNum`,
+               `mo_title`        AS `moTitle`,
+               `mo_date`         AS `moDate`,
+               `mo_time`         AS `moTime`,
+               `mo_plot`         AS `moPlot`,
+               `mo_booking_rate` AS `moBookingRate`,
+               `mo_ending`       AS `moEnding`,
+               `m_img_url`       AS `mImgUrl`
+        FROM `jgv`.`movie`
+                 LEFT JOIN `jgv`.`movie_image` Img ON movie.mo_num = Img.mo_num
+        WHERE `mo_title` = #{moTitle}
+    </select>
 <!-- 분리점 -->
     <select id="selectSeatByReservationSeNum" parameterType="dev.jwkim.jgv.entities.ticket.SeatEntity">
         select `se_name` as `seName`

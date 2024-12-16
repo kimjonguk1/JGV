@@ -1,6 +1,7 @@
 package dev.jwkim.jgv.controlles.ticket;
 
 import dev.jwkim.jgv.entities.theater.CinemaTypeEntity;
+import dev.jwkim.jgv.entities.theater.ScreenEntity;
 import dev.jwkim.jgv.entities.theater.TheaterEntity;
 import dev.jwkim.jgv.entities.ticket.ReservationEntity;
 import dev.jwkim.jgv.entities.ticket.SeatEntity;
@@ -32,11 +33,13 @@ public class TicketController {
     public ModelAndView getIndex(@RequestParam(value = "region", required = false) String region,
                                  @RequestParam(value = "moTitle", required = false) String moTitle) {
         ModelAndView modelAndView = new ModelAndView();
-        MovieVo[] movies = this.ticketService.selectAllMovies();
+        MovieVo[] movies = this.ticketService.selectAllMoviesByRating();
+        MovieVo[] movieVos = this.ticketService.selectAllMovies(moTitle);
         RegionVo[] regions = this.ticketService.selectRegionAndTheaterCount();
         TheaterEntity[] theaters = this.theaterService.getTheatersByRegion(region);
         Map<String, String> maps = this.ticketService.getWeekdays();
         modelAndView.addObject("movies", movies);
+        modelAndView.addObject("movieVos", movieVos);
         modelAndView.addObject("regions", regions);
         modelAndView.addObject("theaters", theaters);
         modelAndView.addObject("maps", maps);
@@ -50,6 +53,14 @@ public class TicketController {
         MovieVo[] movies = this.ticketService.selectAllMoviesByKorea();
         modelAndView.addObject("movies", movies);
         modelAndView.setViewName("ticket/index");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/crawling", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView Crawl(ScreenEntity screen) {
+        ModelAndView modelAndView = new ModelAndView();
+        this.ticketService.Crawl(screen);
+        modelAndView.setViewName("ticket/crawling");
         return modelAndView;
     }
 

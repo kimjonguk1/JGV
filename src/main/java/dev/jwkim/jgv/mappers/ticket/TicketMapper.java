@@ -25,6 +25,8 @@ public interface TicketMapper {
 
     MovieVo[] selectAllMoviesByKorea();
 
+    MovieVo[] selectAllMoviesByMoTitle(@Param(value = "moTitle") String moTitle);
+
     MovieEntity selectMovieNumByMovieTitle(@Param(value = "moTitle") String moTitle);
 
     CinemaEntity selectCinemaNumByCinemaTitle(@Param(value = "ciName") String ciName,
