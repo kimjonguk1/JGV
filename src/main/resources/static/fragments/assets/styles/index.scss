@@ -93,44 +93,48 @@ body {
       border-left: 0.0625rem solid #cacaca;
       padding: 0 0.6rem;
 
+      > .search-form {
+        > .search {
+          align-items: center;
 
-      > .search {
-        align-items: center;
-
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
 
 
-        > .keyword {
-          height: 24px;
-          width: 200px;
-          border: none;
-          line-height: 24px;
-          font-size: 16px;
-          font-weight: 500;
-          outline: none;
+          > .keyword {
+            height: 24px;
+            width: 200px;
+            border: none;
+            line-height: 24px;
+            font-size: 16px;
+            font-weight: 500;
+            outline: none;
 
-          &::placeholder {
-            color: #000000;
-            font-weight: 600;
+            &::placeholder {
+              color: #000000;
+              font-weight: 600;
+            }
+
+          }
+
+          > button {
+
+            background-color: transparent;
+            border: 0.0625rem solid transparent;
+            padding: 0.2rem;
+            position: absolute;
+
+            > img {
+              width: 1.8rem;
+            }
           }
 
         }
-
-        > button {
-
-          background-color: transparent;
-          border: 0.0625rem solid transparent;
-          padding: 0.2rem;
-          position: absolute;
-
-          > img {
-            width: 1.8rem;
-          }
-        }
-
       }
+
+
+
 
     }
 
