@@ -18,5 +18,10 @@ public interface UserMapper {
 
     UserEntity selectUserByNickname(@Param("usNickname") String nickname);
 
+    UserEntity FindUserByEmail(@Param("usName") String name,
+                               @Param("usEmail") String email,
+                               @Param("usContact") String contact);
+
+
     int updateUser(UserEntity user);
 }

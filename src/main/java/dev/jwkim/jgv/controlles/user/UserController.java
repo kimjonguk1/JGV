@@ -124,5 +124,46 @@ public class UserController {
     }
 // endregion
 
+    // region 아이디 / 비밀번호 찾기
+    @RequestMapping(value = "find-id", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getFindId(UserEntity user) {
+        Result result = userService.findUserId(user);
+        ModelAndView modelAndView = new ModelAndView();
+        if (result == CommonResult.SUCCESS) {
+            modelAndView.addObject("name", user.getUsName());
+            modelAndView.addObject("id", user.getUsId());
+        }
+        modelAndView.setViewName("user/find-id");
+        return modelAndView;
+    }
 
+    @RequestMapping(value = "find-id", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String postFindId(UserEntity user) {
+
+        Result result = userService.findUserId(user);
+        JSONObject response = new JSONObject();
+        if (result == CommonResult.SUCCESS) {
+            response.put("name", user.getUsName());
+            response.put("id", user.getUsId());
+            System.out.println(user.getUsName());
+            System.out.println(user.getUsEmail());
+            System.out.println(user.getUsContact());
+            System.out.println(user.getUsPw());
+        }
+        response.put(Result.NAME, result.nameToLower());
+        return response.toString();
+    }
+
+
+
+    @RequestMapping(value = "find-password", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getFindPassword() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("user/find-password");
+        return modelAndView;
+    }
+
+
+    // endregion
 }

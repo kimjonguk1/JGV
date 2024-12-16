@@ -48,10 +48,10 @@
                 </label>
                 <label class="-spring"></label>
                 <label class="user-option">
-                    <a href="#">
+                    <a th:href="@{'/user/find-id'}">
                         <span>아이디 찾기&gt;</span>
                     </a>
-                    <a href="#">
+                    <a th:href="@{'/user/find-password'}">
                         <span>비밀번호 찾기&gt;</span>
                     </a>
                 </label>
@@ -69,7 +69,7 @@
         </div>
 
         <div class="register-button">
-            <a>JGV 회원가입하기</a>
+            <a th:href="@{'/user/register'}">JGV 회원가입하기</a>
         </div>
     </div>
 </main>

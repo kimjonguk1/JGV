@@ -50,6 +50,11 @@ $registerForm['duplicate-id-button'].onclick = () => {
             return isIdValid = false;
 
         }
+        if (result === 'failure') {
+            alert('올바른 아이디를 입력해주세요. 아이디는 6~20자의 소문자 + 숫자 입니다.');
+
+            return isNicknameValid = false;
+        }
 
         alert('사용 가능한 아이디 입니다.');
         return isIdValid = true;
@@ -83,7 +88,7 @@ $registerForm['duplicate-nickname-button'].onclick = () => {
             return isNicknameValid = false;
         }
         if (result === 'failure') {
-            alert('올바른 닉네임을 입력해주세요. 아이디는 2~20자 입니다.');
+            alert('올바른 닉네임을 입력해주세요. 닉네임은 2~20자 입니다.');
 
             return isNicknameValid = false;
         }
