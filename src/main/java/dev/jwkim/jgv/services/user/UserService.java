@@ -7,6 +7,7 @@ import dev.jwkim.jgv.mappers.user.EmailTokenMapper;
 import dev.jwkim.jgv.mappers.user.UserMapper;
 import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.results.Result;
+import dev.jwkim.jgv.results.user.FindResult;
 import dev.jwkim.jgv.results.user.LoginResult;
 import dev.jwkim.jgv.results.user.RegisterResult;
 import dev.jwkim.jgv.results.user.ValidateEmailTokenResult;
@@ -244,4 +245,39 @@ public class UserService {
 
     }
 // endregion
+
+    // region 아이디 , 비밀번호 찾기
+    public Result findUserId(UserEntity user) {
+        UserEntity dbUser = this.userMapper.FindUserByEmail(user.getUsName(), user.getUsEmail(), user.getUsContact());
+
+        if (dbUser == null) {
+
+
+            return CommonResult.FAILURE;
+        }
+
+        if (dbUser.isUsIsDeleted()) {
+            return FindResult.FAILURE_DELETED;
+        }
+        if (dbUser.isUsIsSuspended()) {
+            return LoginResult.FAILURE_SUSPENDED;
+        }
+        if (!dbUser.isUsIsVerified()) {
+            return LoginResult.FAILURE_NOT_VERIFIED;
+        }
+        if (!user.getUsName().equals(dbUser.getUsName()) ||
+                !user.getUsEmail().equals(dbUser.getUsEmail()) ||
+                !user.getUsContact().equals(dbUser.getUsContact())) {
+            return CommonResult.FAILURE;
+        }
+        user.setUsId(dbUser.getUsId());
+        user.setUsName(dbUser.getUsName());
+        user.setUsEmail(dbUser.getUsEmail());
+        user.setUsContact(dbUser.getUsContact());
+
+        return CommonResult.SUCCESS;
+    }
+    // endregion
 }
+
+
