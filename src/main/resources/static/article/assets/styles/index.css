@@ -157,13 +157,13 @@ body > .frame {
   flex-grow: 1;
   flex-shrink: 1;
 }
-#nav > .nav-wrapper > .search-wrapper > .search {
+#nav > .nav-wrapper > .search-wrapper > .search-form > .search {
   align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
 }
-#nav > .nav-wrapper > .search-wrapper > .search > .keyword {
+#nav > .nav-wrapper > .search-wrapper > .search-form > .search > .keyword {
   height: 24px;
   width: 200px;
   border: none;
@@ -172,17 +172,17 @@ body > .frame {
   font-weight: 500;
   outline: none;
 }
-#nav > .nav-wrapper > .search-wrapper > .search > .keyword::placeholder {
+#nav > .nav-wrapper > .search-wrapper > .search-form > .search > .keyword::placeholder {
   color: #000000;
   font-weight: 600;
 }
-#nav > .nav-wrapper > .search-wrapper > .search > button {
+#nav > .nav-wrapper > .search-wrapper > .search-form > .search > button {
   background-color: transparent;
   border: 0.0625rem solid transparent;
   padding: 0.2rem;
   position: absolute;
 }
-#nav > .nav-wrapper > .search-wrapper > .search > button > img {
+#nav > .nav-wrapper > .search-wrapper > .search-form > .search > button > img {
   width: 1.8rem;
 }
 #nav > .nav-wrapper > .nav-menu {

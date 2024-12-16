@@ -99,4 +99,48 @@
         ORDER BY m.mo_date DESC
         LIMIT 5
     </select>
+
+    <select id="findMovieByKeyword" resultType="dev.jwkim.jgv.DTO.Movie_ImageDTO">
+        SELECT m.mo_num AS moNum,
+               mo_title AS moTitle,
+               mo_date AS moDate,
+               mo_time AS moTime,
+               mo_plot AS moPlot,
+               mo_booking_rate AS moBookingRate,
+               ra_num AS raNum,
+               m_img_url AS m_img_url
+        FROM jgv.movie m
+                 LEFT JOIN jgv.movie_image mi on m.mo_num = mi.mo_num
+        WHERE m.mo_title LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+    <select id="findCharacterByKeyword" resultType="dev.jwkim.jgv.DTO.CharacterDTO">
+        SELECT c.ch_num AS chNum,
+               ch_name AS chName,
+               ch_job AS chJob,
+               ch_birth AS chBirth,
+               ch_nation AS chNation,
+               c_img_num AS CImgNum,
+               c_img_url AS CImgUrl
+        FROM jgv.charactor c
+                 LEFT JOIN jgv.charactor_image ci on c.ch_num = ci.ch_num
+        WHERE c.ch_name LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+    <select id="searchMoviesByPersonKeyword" resultType="dev.jwkim.jgv.DTO.Movie_ImageDTO">
+        SELECT m.mo_num AS moNum,
+               mo_title AS moTitle,
+               mo_date AS moDate,
+               mo_time AS moTime,
+               mo_plot AS moPlot,
+               mo_booking_rate AS moBookingRate,
+               mc.ch_num AS chNum,
+               mc.mo_num AS moNum,
+               i.m_img_url AS m_img_url
+        FROM jgv.movie m
+                 INNER JOIN jgv.movie_charactor mc ON m.mo_num = mc.mo_num
+                 INNER JOIN jgv.charactor c ON mc.ch_num = c.ch_num
+        INNER JOIN jgv.movie_image i ON m.mo_num = i.mo_num
+        WHERE c.ch_name LIKE CONCAT('%', #{keyword}, '%')
+    </select>
 </mapper>

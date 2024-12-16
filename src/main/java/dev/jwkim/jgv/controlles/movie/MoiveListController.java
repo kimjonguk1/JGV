@@ -1,8 +1,11 @@
 package dev.jwkim.jgv.controlles.movie;
 
+import dev.jwkim.jgv.DTO.CharacterDTO;
 import dev.jwkim.jgv.DTO.Movie_ImageDTO;
 import dev.jwkim.jgv.DTO.Movie_InfoDTO;
+import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.services.movie.MovieService;
+import dev.jwkim.jgv.services.movie.SearchService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +23,11 @@ import java.util.List;
 @RequestMapping(value = "/movies")
 public class MoiveListController {
     private final MovieService movieService;
+    private final SearchService searchService;
 
-    public MoiveListController(MovieService movieService) {
+    public MoiveListController(MovieService movieService, SearchService searchService) {
         this.movieService = movieService;
+        this.searchService = searchService;
     }
 
     @RequestMapping(value = "/movieList", method = RequestMethod.GET)
@@ -62,6 +67,38 @@ public class MoiveListController {
         mav.setViewName("article/MovieInfo");
         Movie_InfoDTO movieInfo = movieService.selectMovieInfoById(id);
         mav.addObject("movieInfo", movieInfo);
+        return mav;
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public ModelAndView search(@RequestParam String keyword) {
+        ModelAndView mav = new ModelAndView();
+        //영화 검색
+        List<Movie_ImageDTO> movies = searchService.searchMoviesByKeyword(keyword);
+        //인물 검색
+        List<CharacterDTO> people = searchService.searchPeopleByKeyword(keyword);
+        //인물 관련 영화 검색
+        List<Movie_ImageDTO> relatedMovies = searchService.searchMoviesByPersonKeyword(keyword);
+
+        if(movies == null) {
+            movies = new ArrayList<>();
+        }
+
+        if(people == null) {
+            people = new ArrayList<>();
+        }
+
+        if(relatedMovies == null) {
+            relatedMovies = new ArrayList<>();
+        }
+        System.out.println(people);
+        System.out.println(movies);
+        System.out.println(relatedMovies);
+        mav.addObject("people", people);
+        mav.addObject("movies", movies);
+        mav.addObject("relatedMovies", relatedMovies);
+
+        mav.setViewName("article/MovieSearch");
         return mav;
     }
 }

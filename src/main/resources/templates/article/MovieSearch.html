@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JGV</title>
+    <link rel="stylesheet" th:href="@{../../article/assets/styles/index.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{../../assets/styles/common.css}" type="text/css">
+    <script defer th:src="@{../../article/assets/scripts/index.js}" type="text/javascript"></script>
+</head>
+<body>
+
+<th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
+<th:block th:replace="~{fragments/common.html :: header}"></th:block>
+<th:block th:replace="~{fragments/common.html :: nav}"></th:block>
+<main id="main" class="frame main">
+    <h2>영화 검색 결과</h2>
+    <div th:if="${movies.size() > 0 || movies != null}">
+        <ul>
+            <li th:each="movie : ${movies}"  th:if="${movie != null}">
+                <img th:src="${movie.m_img_url}" alt="영화 이미지">
+                <p>영화 제목: <span th:text="${movie.moTitle}"></span></p>
+            </li>
+        </ul>
+    </div>
+    <div th:if="${movies == null || movies.size() == 0}">
+        <p>검색된 영화가 없습니다.</p>
+    </div>
+
+    <h2>인물 검색 결과</h2>
+    <div th:if="${people.size() > 0}">
+        <ul>
+            <li th:each="person : ${people}">
+                <img th:src="${person.cImgUrl}" alt="인물 이미지" width="100">
+                <p>이름: <span th:text="${person.chName}"></span></p>
+                <p>직업: <span th:text="${person.chJob}"></span></p>
+                <p>출생: <span th:text="${person.chBirth}"></span></p>
+                <p>국적: <span th:text="${person.chNation}"></span></p>
+            </li>
+        </ul>
+        <h3>인물 관련 영화</h3>
+        <div th:if="${relatedMovies.size() > 0 || relatedMovies != null}">
+            <ul>
+                <li th:each="movie : ${relatedMovies}">
+                    <img th:src="${movie.m_img_url}" alt="영화 이미지" width="100">
+                    <p>영화 제목: <span th:text="${movie.moTitle}"></span></p>
+                    <p>개봉일: <span th:text="${movie.moDate}"></span></p>
+                    <p>상영 시간: <span th:text="${movie.moTime}"></span>분</p>
+                    <p>예매율: <span th:text="${movie.moBookingRate}"></span>%</p>
+                </li>
+            </ul>
+        </div>
+        <div th:unless="${relatedMovies.size() > 0}">
+            <p>관련 영화가 없습니다.</p>
+        </div>
+    </div>
+    <div th:unless="${people.size() > 0}">
+        <p>검색된 인물이 없습니다.</p>
+    </div>
+</main>
+<th:block th:replace="~{fragments/common.html :: footer}"></th:block>
+
+
+</body>
+</html>
