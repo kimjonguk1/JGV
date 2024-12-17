@@ -8,6 +8,7 @@ import dev.jwkim.jgv.results.CommonResult;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SearchService {
@@ -37,4 +38,9 @@ public class SearchService {
         }
         return this.movieMapper.searchMoviesByPersonKeyword(keyword);
     }
+
+    public List<Map<String, Object>> searchMoviesByActor(String actorName) {
+        return this.movieMapper.findMoviesByActorName(actorName);
+    }
+
 }

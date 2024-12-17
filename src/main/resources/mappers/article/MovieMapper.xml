@@ -143,4 +143,18 @@
         INNER JOIN jgv.movie_image i ON m.mo_num = i.mo_num
         WHERE c.ch_name LIKE CONCAT('%', #{keyword}, '%')
     </select>
+
+    <select id="findMoviesByActorName" resultType="Map">
+        SELECT m.mo_num AS moNum,
+            m.mo_title AS movieTitle,
+        mi.m_img_url AS movieImage
+        FROM jgv.movie m
+        INNER JOIN jgv.movie_charactor mc ON m.mo_num = mc.mo_num
+        INNER JOIN jgv.charactor c ON mc.ch_num = c.ch_num
+        LEFT JOIN jgv.movie_image mi ON m.mo_num = mi.mo_num
+        WHERE c.ch_name = #{actorName}
+        AND c.ch_job IN ('감독', '배우')
+        ORDER BY m.mo_date DESC
+        LIMIT 5
+    </select>
 </mapper>

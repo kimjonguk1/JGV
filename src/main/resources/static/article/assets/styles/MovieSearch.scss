@@ -1,0 +1,124 @@
+.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 20px 0;
+  padding: 30px;
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  border: 1px solid #ededed;
+
+  .carousel-button {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    border: 1px solid #ededed;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &.prev {
+      left: -20px;
+    }
+
+    &.next {
+      right: -20px;
+    }
+
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: 20px;
+    overflow: hidden;
+    width: 90%; // 가로 영역 설정
+    scroll-behavior: smooth;
+
+    .carousel-item {
+      flex: 0 0 100px; // 아이템 크기 고정
+      text-align: center;
+      position: relative;
+
+      .image-wrapper {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%; // 원형
+        overflow: hidden; // 이미지가 밖으로 넘치지 않도록
+        margin: 0 auto; // 가운데 정렬
+        position: relative;
+
+        .person-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover; // 이미지 비율 유지
+          filter: grayscale(100%);
+          transition: transform 0.3s ease, filter 0.3s ease;
+
+          &:hover {
+            transform: scale(1.2); // 이미지 안에서 확대
+            filter: grayscale(0%);
+          }
+        }
+      }
+
+      &.selected {
+        .person-image {
+          filter: grayscale(0%);
+        }
+      }
+
+      .name {
+        margin-top: 10px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+      }
+    }
+
+  }
+}
+
+.person-info {
+  display: flex; // Flexbox를 사용하여 레이아웃 설정
+  align-items: center; // 세로 중앙 정렬
+  justify-content: space-between; // 양쪽 정렬
+  margin-top: 30px;
+  padding: 20px;
+
+  .person-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 20px; // 이미지와 정보 사이 간격
+  }
+
+  .info-details {
+    display: flex;
+    flex-direction: column; // 세로로 나열
+    justify-content: center; // 수직 중앙 정렬
+    gap: 8px;
+
+    .name {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .job, .birth {
+      font-size: 16px;
+      font-weight: bold;
+      color: #666;
+    }
+  }
+}
+

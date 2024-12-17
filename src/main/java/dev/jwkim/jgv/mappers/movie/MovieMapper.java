@@ -42,4 +42,7 @@ public interface MovieMapper {
     List<CharacterDTO> findCharacterByKeyword(@Param("keyword") String keyword);
 
     List<Movie_ImageDTO> searchMoviesByPersonKeyword(@Param("keyword") String keyword);
+
+    // 필모그래피를 위해
+    List<Map<String, Object>> findMoviesByActorName(@Param("actorName")String actorName);
 }
