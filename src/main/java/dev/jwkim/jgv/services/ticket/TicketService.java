@@ -4,6 +4,7 @@ import dev.jwkim.jgv.entities.movie.MovieEntity;
 import dev.jwkim.jgv.entities.theater.CinemaEntity;
 import dev.jwkim.jgv.entities.theater.CinemaTypeEntity;
 import dev.jwkim.jgv.entities.theater.ScreenEntity;
+import dev.jwkim.jgv.entities.theater.TheaterEntity;
 import dev.jwkim.jgv.entities.ticket.MethodEntity;
 import dev.jwkim.jgv.entities.ticket.PaymentEntity;
 import dev.jwkim.jgv.entities.ticket.ReservationEntity;
@@ -15,6 +16,7 @@ import dev.jwkim.jgv.mappers.ticket.TicketMapper;
 import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.vos.theater.MovieVo;
 import dev.jwkim.jgv.vos.theater.RegionVo;
+import dev.jwkim.jgv.vos.theater.ScreenVo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,6 +40,13 @@ public class TicketService {
     private final TicketMapper ticketMapper;
     private final MethodMapper methodMapper;
     private final PaymentMapper paymentMapper;
+
+    // 시간 정보를 찾아오는 것.
+    public ScreenVo[] selectScreenDatesByMovieAndTheaterAndDate(String moTitle, String thName, String scStartDate) {
+        TheaterEntity theater = this.ticketMapper.selectTheater(thName);
+        MovieEntity movie = this.ticketMapper.selectMovieNumByMovieTitle(moTitle);
+        return this.ticketMapper.selectScreenDatesByMovieAndTheaterAndDate(movie.getMoNum(), theater.getThNum(), scStartDate);
+    }
 
     public MovieVo[] selectAllMovies(String moTitle) {
         if (moTitle == null || moTitle.isEmpty()) {

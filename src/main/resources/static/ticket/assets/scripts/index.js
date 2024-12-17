@@ -15,6 +15,87 @@ const $containers = $controlBar.querySelector(':scope > .container > .containers
 const $theaterTheater = document.getElementById('theater-theater');
 const $theaterInfo = $controlBar.querySelectorAll(':scope > .container > [data-id="theaterInfo"]')
 const $theaterTime = document.getElementById('theater-time');
+const $timeContainer = $mainContent.querySelector(':scope > .time > .time > .time-container');
+
+// 지정한 데이터
+const $data = {
+    movie: null,   // 선택된 영화
+    theater: null, // 선택된 지점
+    date: null,    // 선택된 날짜
+};
+
+// 상영 정보를 찾아오는 함수
+function checkScreen() {
+    const {movie, theater, date} = $data;
+    if (movie && theater && date) {
+        const xhr = new XMLHttpRequest();
+        const url = new URL(location.href);
+        url.searchParams.set('moTitle', movie);
+        url.searchParams.set('thName', theater);
+        url.searchParams.set('scStartDate', date);
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState !== XMLHttpRequest.DONE) {
+                return;
+            }
+            Loading.hide();
+            if (xhr.status < 200 || xhr.status >= 300) {
+                alert('오류 발생');
+                return;
+            }
+            const $screen = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.time-table'));
+            $timeContainer.innerHTML = '';
+            $screen.forEach((screen) => {
+                console.log(screen);
+                $timeContainer.append(screen);
+            })
+        };
+        xhr.open('GET', url.toString());
+        xhr.send();
+        Loading.show(0);
+    }
+}
+
+// 영화 정보를 불러오는 함수
+function movieItem($movieItems) {
+    $movieItems.forEach((x) => {
+        x.onclick = () => {
+            $movieItems.forEach((item) => {
+                item.classList.remove('select');
+                if (x === item) {
+                    item.classList.add('select');
+                    const xhr = new XMLHttpRequest();
+                    const url = new URL(location.href);
+                    url.searchParams.set('moTitle', item.innerText);
+                    $data.movie = item.innerText;
+                    xhr.onreadystatechange = () => {
+                        if (xhr.readyState !== XMLHttpRequest.DONE) {
+                            return;
+                        }
+                        Loading.hide();
+                        if (xhr.status < 200 || xhr.status >= 300) {
+                            alert('오류 발생');
+                            return;
+                        }
+                        const $info = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll(' #control-bar > .container > .containers > [data-id="movieInfo"]'));
+                        $containers.innerHTML = "";
+                        $info.forEach((info) => {
+                            info.classList.add('hidden');
+                            if (info.classList.contains('posters')) {
+                                info.classList.remove('hidden');
+                            }
+                            $containers.append(info);
+                        })
+                    };
+                    xhr.open('GET', url.toString());
+                    xhr.send();
+                    Loading.show(0);
+                }
+            })
+            checkScreen();
+        }
+    })
+}
+
 
 // region 영화정보
 $orderItems.forEach((x) => {
@@ -38,6 +119,8 @@ $orderItems.forEach((x) => {
                         const $movieItem = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.main > .movie > .body > .content > .movie > .item-container'));
                         $movieItem.forEach((x) => {
                             $movie.append(x);
+                            movieItem($movieItem);
+                            checkScreen();
                             x.onclick = () => {
                                 $movieItem.forEach((item) => {
                                     item.classList.remove('select');
@@ -66,6 +149,8 @@ $orderItems.forEach((x) => {
                         const $movieItem = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.main > .movie > .body > .content > .movie > .item-container'));
                         $movieItem.forEach((x) => {
                             $movie.append(x);
+                            movieItem($movieItem);
+                            checkScreen();
                             x.onclick = () => {
                                 $movieItem.forEach((item) => {
                                     item.classList.remove('select');
@@ -85,41 +170,7 @@ $orderItems.forEach((x) => {
     }
 })
 
-$movieItems.forEach((x) => {
-    x.onclick = () => {
-        $movieItems.forEach((item) => {
-            item.classList.remove('select');
-            if (x === item) {
-                item.classList.add('select');
-                const xhr = new XMLHttpRequest();
-                const url = new URL(location.href);
-                url.searchParams.set('moTitle', item.innerText);
-                xhr.onreadystatechange = () => {
-                    if (xhr.readyState !== XMLHttpRequest.DONE) {
-                        return;
-                    }
-                    Loading.hide();
-                    if (xhr.status < 200 || xhr.status >= 300) {
-                        alert('오류 발생');
-                        return;
-                    }
-                    const $info = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll(' #control-bar > .container > .containers > [data-id="movieInfo"]'));
-                    $containers.innerHTML = "";
-                    $info.forEach((info) => {
-                        info.classList.add('hidden');
-                        if (info.classList.contains('posters')) {
-                            info.classList.remove('hidden');
-                        }
-                        $containers.append(info);
-                    })
-                };
-                xhr.open('GET', url.toString());
-                xhr.send();
-                Loading.show(0);
-            }
-        })
-    }
-})
+movieItem($movieItems);
 // endregion
 
 $regionItems.forEach((x) => {
@@ -158,6 +209,9 @@ $regionItems.forEach((x) => {
                                     $theaterTheater.innerText = x.innerText;
                                 })
                             })
+                            $data.theater = x.innerText;
+                            $data.theater = 'CGV' + $data.theater;
+                            checkScreen();
                         }
                     })
                 };
@@ -189,6 +243,9 @@ $dayItems.forEach((x) => {
                 })
             })
         })
+        $data.date = $theaterTime.innerText;
+        $data.date = $data.date.split('(')[0].replaceAll('.', '-');
+        checkScreen();
     }
 })
 

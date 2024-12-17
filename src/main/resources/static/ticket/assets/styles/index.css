@@ -186,6 +186,9 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+#main > .main-container > .main > .section .body .content > .movie > .item-container.none {
+  opacity: 0.25;
+}
 #main > .main-container > .main > .section .body .content > .movie > .item-container.select {
   background-color: #333;
   border-color: #000;
@@ -249,6 +252,9 @@
   height: 100%;
   padding: 0.4rem;
   border: 0.1rem solid transparent;
+}
+#main > .main-container > .main > .section .body.theater > .content > .theater-container > .theater.none {
+  opacity: 0.25;
 }
 #main > .main-container > .main > .section .body.theater > .content > .theater-container > .theater.select {
   background-color: #333;
@@ -322,6 +328,9 @@
 #main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container > .date.sunday {
   color: #ad2727;
 }
+#main > .main-container > .main > .section .body.day > .content > .day-container > .day.none {
+  opacity: 0.25;
+}
 #main > .main-container > .main > .section .body.day > .content > .day-container > .day.select {
   background-color: #333;
   border-color: #000;
@@ -347,8 +356,78 @@
   display: flex;
   justify-content: center;
 }
+#main > .main-container > .main > .section .body.time > .content.hidden {
+  display: none;
+}
 #main > .main-container > .main > .section .body.time > .content > .notice {
   color: #666;
+}
+#main > .main-container > .main > .section .body.time > .time-container {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 1rem 1rem;
+}
+#main > .main-container > .main > .section .body.time > .time-container > .time-table {
+  border-top: 0.15rem solid #cfcdc3;
+  padding-bottom: 1rem;
+}
+#main > .main-container > .main > .section .body.time > .time-container > .time-table > .title {
+  padding: 0.5rem 0;
+  cursor: text;
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+}
+#main > .main-container > .main > .section .body.time > .time-container > .time-table > .title > .cinema-type {
+  font-weight: 700;
+  color: #b54d15;
+}
+#main > .main-container > .main > .section .body.time > .time-container > .time-table > .title > .cinema {
+  color: #333;
+  font-weight: 700;
+}
+#main > .main-container > .main > .section .body.time > .time-container > .time-table > .title > .seat {
+  color: #666;
+}
+#main > .main-container > .main > .section .body.time > .time-container > .time-table > .times {
+  width: 309px;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+#main > .main-container > .main > .section .body.time > .time-container > .time-table > .times > .item {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+#main > .main-container > .main > .section .body.time > .time-container > .time-table > .times > .item.select > .time {
+  background-color: #333;
+  border-color: #000;
+  color: #ffffff;
+}
+#main > .main-container > .main > .section .body.time > .time-container > .time-table > .times > .item.select > .time > .text {
+  border-color: #5c5c5c;
+}
+#main > .main-container > .main > .section .body.time > .time-container > .time-table > .times > .item > .time {
+  border: 0.1rem solid #d6d3ce;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: 700;
+  color: #333;
+}
+#main > .main-container > .main > .section .body.time > .time-container > .time-table > .times > .item > .time > .text {
+  width: 2.5rem;
+  border: 0.15rem solid transparent;
+  text-align: center;
+  padding: 0.1rem;
+}
+#main > .main-container > .main > .section .body.time > .time-container > .time-table > .times > .item > .seat {
+  color: #3d7c35;
 }
 
 #whiteBlow {
