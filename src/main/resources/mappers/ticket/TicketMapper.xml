@@ -112,8 +112,37 @@
                `mo_ending`       AS `moEnding`,
                `m_img_url`       AS `mImgUrl`
         FROM `jgv`.`movie`
-                 LEFT JOIN `jgv`.`movie_image` Img ON movie.mo_num = Img.mo_num
+                 LEFT JOIN `jgv`.`movie_image` mi ON `movie`.`mo_num` = `mi`.`mo_num`
         WHERE `mo_title` = #{moTitle}
+    </select>
+    <select id="selectScreenDatesByMovieAndTheaterAndDate"
+            resultType="dev.jwkim.jgv.vos.theater.ScreenVo">
+        SELECT `sc_num`                              AS `scNum`,
+               `sc_start_date`                       AS `scStartDate`,
+               `mo_num`                              AS `moNum`,
+               `screen`.`ci_num`                       AS `ciNum`,
+               `ci_name`                             AS `ciName`,
+               `th_num`                              AS `thNum`,
+               `cit_name`                            AS `citName`,
+               (SELECT COUNT(0)
+                FROM `jgv`.`seat`
+                WHERE seat.`ci_num` = cinema.ci_num) AS `seatCount`
+        FROM `jgv`.`screen`
+                 LEFT JOIN `jgv`.`cinema` ON `screen`.`ci_num` = `cinema`.`ci_num`
+                 LEFT JOIN `jgv`.`cinema_type` cit on `cinema`.`cit_num` = `cit`.`cit_num`
+        WHERE `mo_num` = #{movie}
+          AND `th_num` = #{theater}
+          AND `sc_start_date` LIKE CONCAT('%', #{date}, '%')
+    </select>
+    <select id="selectTheater"
+            resultType="dev.jwkim.jgv.entities.theater.TheaterEntity">
+        SELECT `th_num`  AS `thNum`,
+               `th_name` AS `thName`,
+               `th_addr` AS `thAddr`,
+               `th_img`  AS `thImg`,
+               `reg_num` AS `regNum`
+        FROM `jgv`.`theater`
+        WHERE `th_name` = #{thName}
     </select>
 <!-- 분리점 -->
     <select id="selectSeatByReservationSeNum" parameterType="dev.jwkim.jgv.entities.ticket.SeatEntity">
