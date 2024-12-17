@@ -170,6 +170,7 @@ public class UserService {
         if (dbUser.isUsIsSuspended()) {
             return LoginResult.FAILURE_SUSPENDED;
         }
+        user.setUsNum(dbUser.getUsNum());
         user.setUsPw(dbUser.getUsPw());
         user.setUsName(dbUser.getUsName());
         user.setUsNickName(dbUser.getUsNickName());
@@ -246,7 +247,7 @@ public class UserService {
     }
 // endregion
 
-    // region 아이디 , 비밀번호 찾기
+    // region 아이디 찾기
     public Result findUserId(UserEntity user) {
         UserEntity dbUser = this.userMapper.FindUserByEmail(user.getUsName(), user.getUsEmail(), user.getUsContact());
 
@@ -278,6 +279,91 @@ public class UserService {
         return CommonResult.SUCCESS;
     }
     // endregion
+
+    // region 비밀번호 찾기, 재설정
+
+    public Result findUserPassword(UserEntity user) {
+        UserEntity dbUser = this.userMapper.FindUserById(user.getUsId(), user.getUsEmail(), user.getUsContact());
+        if (dbUser == null) {
+
+            return CommonResult.FAILURE;
+        }
+        if (dbUser.isUsIsDeleted()) {
+            return FindResult.FAILURE_DELETED;
+        }
+        if (dbUser.isUsIsSuspended()) {
+            return LoginResult.FAILURE_SUSPENDED;
+        }
+        if (!dbUser.isUsIsVerified()) {
+            return LoginResult.FAILURE_NOT_VERIFIED;
+        }
+        if (!user.getUsId().equals(dbUser.getUsId()) || !user.getUsEmail().equals(dbUser.getUsEmail()) || !user.getUsContact().equals(dbUser.getUsContact())) {
+            return CommonResult.FAILURE;
+        }
+
+        return CommonResult.SUCCESS;
+    }
+
+
+    @Transactional
+    public Result provokeRecoverPassword(HttpServletRequest request, String email) throws MessagingException {
+        if (email == null || email.length() < 2 || email.length() > 20) {
+            System.out.println("1번");
+            System.out.println(email);
+            return CommonResult.FAILURE;
+        }
+        UserEntity user = this.userMapper.selectUserByEmail(email);
+        if (user == null || user.isUsIsDeleted()) {
+            System.out.println("2번");
+            return CommonResult.FAILURE;
+        }
+        EmailTokenEntity emailToken = new EmailTokenEntity();
+        emailToken.setEmEmail(user.getUsEmail());
+        emailToken.setEmKey(CryptoUtils.hashSha512(String.format("%s%s%f%f",
+                user.getUsEmail(),
+                user.getUsPw(),
+                Math.random(),
+                Math.random())));
+        emailToken.setEmCreatedAt(LocalDateTime.now());
+        emailToken.setEmExpiresAt(LocalDateTime.now().plusDays(24));
+        emailToken.setEmUsed(false);
+
+        if (this.emailTokenMapper.insertEmailToken(emailToken) == 0) {
+            throw new TransactionalException();
+        }
+        String validationLink = String.format
+                ("%s://%s:%d/user/find-password-result?emEmail=%s&key=%s",
+                        request.getScheme(),
+                        request.getServerName(),
+                        request.getServerPort(),
+                        emailToken.getEmEmail(),
+                        emailToken.getEmKey());
+
+        Context context = new Context();
+        context.setVariable("validationLink", validationLink);
+        String mailText = this.templateEngine.process("email/recoverPassword", context);
+
+        MimeMessage mimeMessage = this.mailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+        mimeMessageHelper.setFrom("nyeonjae94@gmail.com");
+        mimeMessageHelper.setTo(emailToken.getEmEmail());
+        mimeMessageHelper.setSubject("[JGV] 비밀번호 재설정 인증 링크");
+        mimeMessageHelper.setText(mailText, true);
+
+        this.mailSender.send(mimeMessage);
+        return CommonResult.SUCCESS;
+    }
+
+    public Result recoverEmail(UserEntity user) {
+        if (user.getUsContact() == null || user.getUsContact().length() < 10 || user.getUsContact().length() > 12) {
+            return CommonResult.FAILURE;
+        }
+        UserEntity dbUser = this.userMapper.selectUserByContact(user.getUsContact());
+        if (dbUser == null || dbUser.isUsIsDeleted()) {
+            return CommonResult.FAILURE;
+        }
+        user.setUsEmail(dbUser.getUsEmail());
+        return CommonResult.SUCCESS;
+    }
+    // endregion
 }
-
-

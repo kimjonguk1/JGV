@@ -27,7 +27,9 @@ $loginForm.onsubmit = (e) => {
         const response = JSON.parse(xhr.responseText);
 
         if (response['result'] === 'success') {
+            sessionStorage.setItem('user', response['results']);
             location.href = '/';
+
         }
         else if (response['result'] === 'failure_suspended') {
             alert('해당 계정은 이용이 정지된 상태입니다. 관리자에게 문의해 주세요.');
