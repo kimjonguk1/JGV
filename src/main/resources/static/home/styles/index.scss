@@ -84,7 +84,18 @@ main {
         flex-direction: column;
         justify-content: center;
         position: absolute;
-
+        object-fit: cover;
+        z-index: 1;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 100%);
+        z-index: 2;
       }
     }
   }
