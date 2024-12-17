@@ -4,10 +4,15 @@ import dev.jwkim.jgv.entities.movie.MovieEntity;
 import dev.jwkim.jgv.entities.theater.CinemaEntity;
 import dev.jwkim.jgv.entities.theater.CinemaTypeEntity;
 import dev.jwkim.jgv.entities.theater.ScreenEntity;
+import dev.jwkim.jgv.entities.ticket.MethodEntity;
+import dev.jwkim.jgv.entities.ticket.PaymentEntity;
 import dev.jwkim.jgv.entities.ticket.ReservationEntity;
 import dev.jwkim.jgv.entities.ticket.SeatEntity;
 import dev.jwkim.jgv.exceptions.TransactionalException;
+import dev.jwkim.jgv.mappers.ticket.MethodMapper;
+import dev.jwkim.jgv.mappers.ticket.PaymentMapper;
 import dev.jwkim.jgv.mappers.ticket.TicketMapper;
+import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.vos.theater.MovieVo;
 import dev.jwkim.jgv.vos.theater.RegionVo;
 import lombok.Getter;
@@ -31,6 +36,8 @@ import java.util.*;
 @RequiredArgsConstructor
 public class TicketService {
     private final TicketMapper ticketMapper;
+    private final MethodMapper methodMapper;
+    private final PaymentMapper paymentMapper;
 
     public MovieVo[] selectAllMovies(String moTitle) {
         if (moTitle == null || moTitle.isEmpty()) {
@@ -367,5 +374,50 @@ public class TicketService {
 
         CinemaTypeEntity[] citPrice = this.ticketMapper.selectSeatByCitPrice(ciName, thName);
         return citPrice;
+    }
+    @Transactional // 트랜잭션 처리 (성공 시 커밋, 실패 시 롤백)
+    public CommonResult insertPayment(String meName, int paPrice, int usNum) {
+        // 결제 방법 번호 조회
+        MethodEntity methodNum = this.methodMapper.selectPaymentMeNum(meName);
+
+        if (methodNum == null) {
+            System.out.println("결제 방법이 존재하지 않습니다: " + meName);
+            return CommonResult.FAILURE;
+        }
+
+        // 유효성 검사 - 결제 금액과 사용자 번호 확인
+        if (paPrice <= 0 || paPrice > 250_000) {
+            System.out.println("유효하지 않은 결제 금액: " + paPrice);
+            return CommonResult.FAILURE;
+        }
+        if (usNum <= 0) {
+            System.out.println("유효하지 않은 사용자 번호: " + usNum);
+            return CommonResult.FAILURE;
+        }
+
+        // PaymentEntity 객체 생성 및 값 설정
+        PaymentEntity payment = new PaymentEntity();
+        payment.setPaPrice(paPrice); // 결제 금액
+        payment.setUsNum(usNum); // 사용자 번호
+        payment.setMeNum(methodNum.getMeNum()); // 결제 방법 번호
+        payment.setPaState(true); // 결제 상태 설정
+        payment.setPaCreatedAt(LocalDateTime.now()); // 생성일 설정
+        payment.setPaDeletedAt(null); // 삭제일 초기화
+
+        // 유효성 검사 - 추가 필드 확인
+        if (payment.getMeNum() <= 0 || payment.getMeNum() > 5) {
+            System.out.println("유효하지 않은 결제 방법 번호: " + payment.getMeNum());
+            return CommonResult.FAILURE;
+        }
+
+        // 결제 정보 DB 삽입
+        int result = this.paymentMapper.insertPayment(payment);
+        if (result <= 0) {
+            System.out.println("결제 정보 삽입 실패: " + payment);
+            return CommonResult.FAILURE;
+        }
+
+        System.out.println("결제 정보 삽입 성공: " + payment);
+        return CommonResult.SUCCESS;
     }
 }
