@@ -117,7 +117,7 @@
             <div class="movie-people-container">
                     <h2>&nbsp;&nbsp;감독</h2>
                     <div class="director">
-                        <img th:if="${movieInfo.getDirectorImage()} != null" th:src="${movieInfo.getDirectorImage()}" alt="">
+                            <img th:if="${movieInfo.getDirectorImage()} != null" th:src="${movieInfo.getDirectorImage()}" alt="">
                         <div class="info">
                             <p class="name" th:text="${movieInfo.getDirectorName()}">Todd Haynes</p>
                             <div class="related-works">

@@ -7,6 +7,7 @@ import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.services.movie.MovieService;
 import dev.jwkim.jgv.services.movie.SearchService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +18,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "/movies")
@@ -70,6 +74,11 @@ public class MoiveListController {
         return mav;
     }
 
+    @RequestMapping(value = "/movieList/person/{id}")
+    public String getPersonDetail(@PathVariable("id") Integer id, Model model) {
+        return null;
+    }
+
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public ModelAndView search(@RequestParam String keyword) {
         ModelAndView mav = new ModelAndView();
@@ -77,8 +86,14 @@ public class MoiveListController {
         List<Movie_ImageDTO> movies = searchService.searchMoviesByKeyword(keyword);
         //인물 검색
         List<CharacterDTO> people = searchService.searchPeopleByKeyword(keyword);
-        //인물 관련 영화 검색
-        List<Movie_ImageDTO> relatedMovies = searchService.searchMoviesByPersonKeyword(keyword);
+        // 인물별 관련 영화 검색 (감독 또는 배우)
+        Map<String, List<Map<String, Object>>> relatedMoviesMap = new HashMap<>();
+        for (CharacterDTO person : people) {
+            List<Map<String, Object>> relatedMovies = searchService.searchMoviesByActor(person.getChName());
+            relatedMoviesMap.put(person.getChName(), relatedMovies);
+        }
+
+
 
         if(movies == null) {
             movies = new ArrayList<>();
@@ -88,15 +103,13 @@ public class MoiveListController {
             people = new ArrayList<>();
         }
 
-        if(relatedMovies == null) {
-            relatedMovies = new ArrayList<>();
-        }
-        System.out.println(people);
-        System.out.println(movies);
-        System.out.println(relatedMovies);
+
+
+
+
         mav.addObject("people", people);
         mav.addObject("movies", movies);
-        mav.addObject("relatedMovies", relatedMovies);
+        mav.addObject("relatedMovies", relatedMoviesMap);
 
         mav.setViewName("article/MovieSearch");
         return mav;
