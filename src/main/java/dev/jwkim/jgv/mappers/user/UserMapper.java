@@ -22,6 +22,9 @@ public interface UserMapper {
                                @Param("usEmail") String email,
                                @Param("usContact") String contact);
 
+    UserEntity FindUserById(@Param("usId") String id,
+                            @Param("usEmail") String email,
+                            @Param("usContact") String contact);
 
     int updateUser(UserEntity user);
 }

@@ -79,15 +79,15 @@ public class UserController {
 
     public String postLogin(UserEntity user, HttpSession session) {
         Result result = this.userService.login(user);
+        JSONObject response = new JSONObject();
         // 로그인 성공 시 세션에 사용자 정보 추가
         if (result == CommonResult.SUCCESS) {
             session.setAttribute("user", user);
-            System.out.println("세션에 사용자 정보 저장됨 : " + session.getAttribute("user"));
-
         }
         // JSON 응답 생성
-        JSONObject response = new JSONObject();
         response.put(Result.NAME, result.nameToLower());
+        response.put(Result.NAMES, user.getUsNum());
+
 
         return response.toString();
     }
@@ -146,10 +146,6 @@ public class UserController {
         if (result == CommonResult.SUCCESS) {
             response.put("name", user.getUsName());
             response.put("id", user.getUsId());
-            System.out.println(user.getUsName());
-            System.out.println(user.getUsEmail());
-            System.out.println(user.getUsContact());
-            System.out.println(user.getUsPw());
         }
         response.put(Result.NAME, result.nameToLower());
         return response.toString();
@@ -161,6 +157,48 @@ public class UserController {
     public ModelAndView getFindPassword() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/find-password");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "find-password", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String postFindPassword(UserEntity user, HttpServletRequest request, @RequestParam(value="usEmail", required = false) String usEmail) throws MessagingException {
+        Result result = userService.findUserPassword(user);
+        this.userService.provokeRecoverPassword(request, usEmail);
+        JSONObject response = new JSONObject();
+        response.put(Result.NAME, result.nameToLower());
+
+        return response.toString();
+    }
+
+    @RequestMapping(value = "find-password-result", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getFindPasswordResult() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("user/find-password-result");
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = "/recover-email", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String recoverEmail(UserEntity user) {
+        Result result = this.userService.recoverEmail(user);
+        JSONObject response = new JSONObject();
+        response.put(Result.NAME, result.nameToLower());
+        if (result == CommonResult.SUCCESS) {
+            response.put("email", user.getUsEmail());
+        }
+        return response.toString();
+    }
+
+    @RequestMapping(value = "/find-password-result",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ModelAndView getRecoverPassword(@RequestParam(value = "userEmail", required = false)String userEmail,
+                                           @RequestParam(value = "key", required = false) String key) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("userEmail", userEmail);
+        modelAndView.addObject("key", key);
+        modelAndView.setViewName("user/find-password-result");
         return modelAndView;
     }
 
