@@ -66,7 +66,7 @@ public class TicketController {
 
     // --------------------------------------
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/seat", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String getSeat(
             @RequestParam(value = "ciName", required = false) String ciName,
@@ -87,6 +87,27 @@ public class TicketController {
     ) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("ticket/ReservationRefundRegulations");
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String postIndex(@RequestParam(value = "meName", required = false) String meName,
+                            @RequestParam(value = "paPrice", required = false) int paPrice,
+                            @RequestParam(value = "usNum", required = false)
+                            int usNum) {
+        Result result = this.ticketService.insertPayment(meName, paPrice, usNum);
+        JSONObject response = new JSONObject();
+        response.put(Result.NAME, result.nameToLower());
+        return response.toString();
+    }
+
+    @RequestMapping(value = "/reservation", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getReservation(
+    ) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("ticket/reservation");
         return modelAndView;
     }
 }

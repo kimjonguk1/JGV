@@ -325,7 +325,7 @@ $rightButtons.forEach((x) => {
                     main.getAttribute('data-id') === 'main-seat') {
                     main.classList.remove('hidden');
                     const xhr = new XMLHttpRequest();
-                    const url = new URL(location.href); //ticket
+                    const url = new URL("http://localhost:8080/ticket/seat"); //ticket
                     url.searchParams.set('thName', $theaterTheater.innerText);
                     url.searchParams.set('ciName', $theaterCinema.innerText);
                     xhr.onreadystatechange = () => {
