@@ -8,9 +8,6 @@
         INSERT INTO jgv.rating (ra_grade)
         VALUES (#{raGrade})
     </insert>
-    <delete id="deleteAllMovieRaiting">
-        DELETE FROM jgv.rating
-    </delete>
 
     <select id="selectRaitingIdByName" resultType="Integer">
         SELECT `ra_num`

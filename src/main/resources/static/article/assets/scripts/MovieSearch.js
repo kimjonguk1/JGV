@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const personInfoContainer = document.querySelector('.person-info');
     const prevButton = document.querySelector('.carousel-button.prev');
     const nextButton = document.querySelector('.carousel-button.next');
-    const filmographyContainer = document.getElementById("filmography");
+    const filmographyContainer = document.createElement('div'); // 필모그래피 컨테이너 추가
+    filmographyContainer.id = 'filmography';
+    personInfoContainer.insertAdjacentElement('afterend', filmographyContainer); // 필모그래피 위치 설정
 
     let currentIndex = 0;
 
@@ -50,16 +52,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 <img src="${imageUrl}" alt="${name}" class="person-image">
             `;
 
-            // 필모그래피 표시
-            const filmography = JSON.parse(this.getAttribute("data-filmo"));
-            filmographyContainer.innerHTML = filmography.map(movie => `
-        <div class="filmography-item">
-          <img src="${movie.m_img_url}" alt="영화 이미지" width="100">
-          <p>${movie.moTitle}</p>
-          <p>개봉일: ${movie.moDate}</p>
-        </div>
-      `).join('');
+            const relatedMoviesJson = this.getAttribute('data-related-movies');
+            const relatedMovies = JSON.parse(relatedMoviesJson);
 
+            console.log("선택된 인물의 필모그래피: ", relatedMovies);
+
+            // 필모그래피를 화면에 표시
+            const filmographyContainer = document.querySelector('.person-info');
+            filmographyContainer.innerHTML = relatedMovies.map(movie => `
+                <div class="filmography-item">
+                <a href="/movies/movieList/movieInfo/${movie.moNum}">
+                    <img src="${movie.movieImage}" alt="영화 이미지" width="100">
+                     </a>
+                    <p>${movie.movieTitle}</p>
+                </div>
+            `).join('');
 
         });
     });

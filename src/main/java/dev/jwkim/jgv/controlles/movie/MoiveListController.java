@@ -1,8 +1,11 @@
 package dev.jwkim.jgv.controlles.movie;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.jwkim.jgv.DTO.CharacterDTO;
 import dev.jwkim.jgv.DTO.Movie_ImageDTO;
 import dev.jwkim.jgv.DTO.Movie_InfoDTO;
+import dev.jwkim.jgv.DTO.RelatedMovieDTO;
 import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.services.movie.MovieService;
 import dev.jwkim.jgv.services.movie.SearchService;
@@ -87,13 +90,30 @@ public class MoiveListController {
         //인물 검색
         List<CharacterDTO> people = searchService.searchPeopleByKeyword(keyword);
         // 인물별 관련 영화 검색 (감독 또는 배우)
-        Map<String, List<Map<String, Object>>> relatedMoviesMap = new HashMap<>();
+        Map<String, String> relatedMoviesJsonMap = new HashMap<>(); // JSON 문자열을 담을 Map
+        ObjectMapper objectMapper = new ObjectMapper(); // JSON 변환을 위한 ObjectMapper
+
         for (CharacterDTO person : people) {
-            List<Map<String, Object>> relatedMovies = searchService.searchMoviesByActor(person.getChName());
-            relatedMoviesMap.put(person.getChName(), relatedMovies);
+            List<RelatedMovieDTO> relatedMovies = searchService.searchMoviesByActor(person.getChName())
+                    .stream()
+                    .map(movieMap -> {
+                        String title = (String) movieMap.get("movieTitle");
+                        String image = (String) movieMap.get("movieImage");
+                        Number moNum = (Number) movieMap.get("moNum");
+                        Integer id = moNum.intValue();
+                        return new RelatedMovieDTO(title, image, id);
+                    }).collect(Collectors.toList());
+
+            try {
+                // 관련 영화 리스트를 JSON 문자열로 변환
+                String jsonString = objectMapper.writeValueAsString(relatedMovies);
+                relatedMoviesJsonMap.put(person.getChName(), jsonString);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                // 변환 실패 시 빈 문자열로 처리
+                relatedMoviesJsonMap.put(person.getChName(), "[]");
+            }
         }
-
-
 
         if(movies == null) {
             movies = new ArrayList<>();
@@ -102,14 +122,9 @@ public class MoiveListController {
         if(people == null) {
             people = new ArrayList<>();
         }
-
-
-
-
-
         mav.addObject("people", people);
         mav.addObject("movies", movies);
-        mav.addObject("relatedMovies", relatedMoviesMap);
+        mav.addObject("relatedMoviesJsonMap", relatedMoviesJsonMap);
 
         mav.setViewName("article/MovieSearch");
         return mav;

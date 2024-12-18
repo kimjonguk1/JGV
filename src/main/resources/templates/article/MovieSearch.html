@@ -18,13 +18,18 @@
 <th:block th:replace="~{fragments/common.html :: nav}"></th:block>
 <main id="main" class="frame main">
     <div th:if="${movies.size() > 0}">
-        <h2>영화 검색 결과</h2>
-        <ul>
+        <h2 th:text="|영화 검색 결과 ${movies.size()}건|"></h2>
+        <ul class="movie-results">
             <li th:each="movie : ${movies}"  th:if="${movie != null}">
                 <a th:href="@{/movies/movieList/movieInfo/{id}(id=${movie.getMoNum()})}">
                 <img th:src="${movie.m_img_url}" alt="영화 이미지">
                 </a>
-                <p>영화 제목: <span th:text="${movie.moTitle}"></span></p>
+                <p><span th:text="${movie.moTitle}"></span></p>
+                <p>
+                    <span th:text="${movie.getMoDate() + ' 개봉'}"></span>
+                    <span style="color: #e0e0e0"> | </span>
+                    <span th:text="${movie.getMoBookingRate() + '%'}"></span>
+                </p>
             </li>
         </ul>
     </div>
@@ -35,8 +40,10 @@
             <div class="carousel-track">
                 <div class="carousel-item"
                      th:each="person : ${people}"
-                     th:attr="data-job=${person.chJob}, data-birth=${person.chBirth},
-                  data-name=${person.chName}">
+                     th:data-job="${person.chJob}"
+                     th:data-birth="${person.chBirth}"
+                     th:data-name="${person.chName}"
+                     th:data-related-movies="${relatedMoviesJsonMap[person.chName]}">
                     <div class="image-wrapper">
                     <img th:src="${person.cImgUrl}" alt="인물 이미지" class="person-image">
                     </div>
@@ -46,17 +53,7 @@
             <button class="carousel-button next">&gt;</button>
         </div>
         <div class="person-info"></div>
-        <div th:each="person : ${people}">
-            <h4 th:text="${person.chName} + '의 필모그래피'"></h4>
-            <ul>
-                <li th:each="movie : ${relatedMovies}">
-                    <a th:href="@{/movies/movieList/movieInfo/{id}(id=${movie.get('moNum')})}">
-                        <img th:src="${movie['movieImage']}" alt="영화 이미지" width="100">
-                    </a>
-                    <p><span th:text="${movie['movieTitle']}"></span></p>
-                </li>
-            </ul>
-        </div>
+        <!-- 인물별 필모그래피 -->
     </div>
 </main>
 <th:block th:replace="~{fragments/common.html :: footer}"></th:block>

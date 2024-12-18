@@ -104,4 +104,39 @@
   color: #666;
 }
 
+main .movie-results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin: 20px auto;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+main .movie-results li {
+  list-style: none;
+  text-align: center;
+  position: relative;
+}
+main .movie-results li a {
+  display: block;
+  overflow: hidden;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+main .movie-results li a img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+main .movie-results li a:hover img {
+  transform: scale(1.1);
+}
+main .movie-results li p {
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
 /*# sourceMappingURL=MovieSearch.css.map */

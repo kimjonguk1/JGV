@@ -12,6 +12,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -49,6 +50,7 @@ public class MovieService {
         this.characterService = characterService;
     }
 
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public boolean insertAllMovies(MovieEntity movieEntity) {
         try {
             // 병렬로 크롤링 및 삽입 작업 수행
@@ -134,6 +136,14 @@ public class MovieService {
         try {
             Document movieDoc = Jsoup.connect(url).timeout(10000).get();
             String rawData = movieDoc.select("div.spec > dl > dt:contains(기본 정보) + dd").text();
+            String movieDate = movieDoc.select("div.spec > dl > dt:contains(개봉) + dd").text();
+            String movieTitle = movieDoc.select("div.box-contents > div.title > strong").text();
+
+            // 중복 확인 (제목, 개봉일이 이미 존재하는 경우 return)
+            Integer existingMovieId = movieMapper.selectMovieByUniqueFields(movieTitle, movieDate);
+            if(existingMovieId != null) {
+                return;
+            }
 
             // 관람 등급
             String raiting = rawData.split("[,.]")[0].trim();
@@ -144,16 +154,9 @@ public class MovieService {
                 raitingMapper.insertMovieRaiting(ratingEntity);
                 raId = ratingEntity.getRaNum();
             }
-
             // 영화 데이터 가져오기
-            String movieTitle = movieDoc.select("div.box-contents > div.title > strong").text();
             movieEntity.setMoTitle(movieTitle);
-
-            // 영화 데이터가 이미 존재하는지 확인 (update를 위해)
-            Integer ifMovieId = movieMapper.selectMovieIdByTitle(movieTitle);
-
             //개봉일
-            String movieDate = movieDoc.select("div.spec > dl > dt:contains(개봉) + dd").text();
             movieEntity.setMoDate(movieDate.split("\\(")[0].trim());
 
             //러닝타임
@@ -170,15 +173,22 @@ public class MovieService {
             String bookingRate = movieDoc.select("strong.percent > span").text().replace("%", "").trim();
             movieEntity.setMoBookingRate(Float.valueOf(bookingRate));
 
+            movieMapper.insertMovie(movieEntity, raId);
+            Integer newMovieId = movieEntity.getMoNum();
+
+            if(newMovieId == null) {
+                throw new IllegalAccessException("failed to insert movie");
+            }
+
+            //관람 등급이 업데이트 될 수 있기 때문에 업데이트 필요
+            Integer currentId = movieMapper.selectMovieRaitingByMovieId(movieEntity.getMoNum());
+            if(!raId.equals(currentId)) {
+                movieMapper.updateMovieRaiting(movieEntity.getMoNum(), raId);
+            }
+
             // 영화 포스터
             String posterUrl = movieDoc.select("span.thumb-image > img").attr("src");
 
-
-
-            // 기존 데이터가 있을 경우
-            if(ifMovieId != null) {
-                movieEntity.setMoNum(ifMovieId);
-            }
             // 영화 포스터가 이미 존재하는지 확인 (업데이트를 위해)
             String ifPosterUrl = movieImageMapper.selectPosterUrlByMovieId(movieEntity.getMoNum());
 
@@ -281,7 +291,7 @@ public class MovieService {
             }
 
             // 데이터베이스에 캐릭터 삽입 (존재하지 않을 경우)
-            Integer charId = charactorMapper.selectCharacterIdByName(name);
+            Integer charId = charactorMapper.selectCharacterIdByUniqueFields(name, charactorEntity.getChBirth(), charactorEntity.getChJob());
             if (charId == null) {
                 charactorMapper.insertCharacter(charactorEntity);
                 charId = charactorEntity.getChNum();
@@ -345,19 +355,30 @@ public class MovieService {
     @Transactional
     public void updateMovieDetails(MovieEntity movieEntity, String posterUrl, Integer raId, String ifPosterUrl) {
         Integer movieId = movieEntity.getMoNum();
+        System.out.println("영화 아이디: " + movieId);
+        System.out.println("영화 포스터 링크: " + posterUrl);
+        System.out.println("기존 포스터 URL: " + ifPosterUrl);
+
         if (movieId != null) {
             // Update 기존 영화 데이터
             movieMapper.updateMovie(movieEntity);
-            // 포스터가 변경된 경우만 업데이트
-            if (posterUrl != null && !posterUrl.equals(ifPosterUrl)) {
-                movieImageMapper.updateMoviePosterUrl(movieEntity.getMoNum(), posterUrl);
-            }
+            movieMapper.updateMovieRaiting(movieId, raId);
         } else {
             // Insert 새로운 영화 데이터
             movieMapper.insertMovie(movieEntity, raId);
-            if (posterUrl != null && !posterUrl.equals(ifPosterUrl)) {
-                movieImageMapper.insertMoviePosterUrl(movieEntity.getMoNum(), posterUrl);
+            movieId = movieEntity.getMoNum(); // 새로 생성된 ID 가져오기
+        }
+
+        // 포스터 삽입 또는 업데이트 로직 분리
+        if (posterUrl != null && !posterUrl.equals(ifPosterUrl)) {
+            if (ifPosterUrl == null) {
+                System.out.println("새 포스터 삽입: " + posterUrl);
+                movieImageMapper.insertMoviePosterUrl(movieId, posterUrl); // 삽입
+            } else {
+                System.out.println("포스터 업데이트: " + posterUrl);
+                movieImageMapper.updateMoviePosterUrl(movieId, posterUrl); // 업데이트
             }
         }
     }
+
 }
