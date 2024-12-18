@@ -10,6 +10,8 @@ import dev.jwkim.jgv.entities.ticket.SeatEntity;
 import dev.jwkim.jgv.vos.theater.MovieVo;
 import dev.jwkim.jgv.vos.theater.RegionVo;
 import dev.jwkim.jgv.vos.theater.ScreenVo;
+import dev.jwkim.jgv.vos.ticket.CinemaTypeVo;
+import dev.jwkim.jgv.vos.ticket.SeatVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -50,15 +52,15 @@ public interface TicketMapper {
 
 //    ---------------------------------------
 
-    ReservationEntity[] selectSeatByReservationSeNum(
+    SeatVo[] selectSeatByReservationSeNum(
             @Param("ciName") String ciName,
-            @Param("thName") String thName);
+            @Param("thName") String thName,
+            @Param("moTitle") String moTitle,
+            @Param("scStartDate") LocalDateTime scStartDate);
 
-    SeatEntity[] selectSeatBySeName(
+    CinemaTypeVo[] selectSeatByCitPrice(
             @Param("ciName") String ciName,
-            @Param("thName") String thName);
-
-    CinemaTypeEntity[] selectSeatByCitPrice(
-            @Param("ciName") String ciName,
-            @Param("thName") String thName);
+            @Param("thName") String thName,
+            @Param("moTitle") String moTitle,
+            @Param("scStartDate") LocalDateTime scStartDate);
 }

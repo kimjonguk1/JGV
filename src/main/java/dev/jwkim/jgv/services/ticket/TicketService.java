@@ -17,6 +17,8 @@ import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.vos.theater.MovieVo;
 import dev.jwkim.jgv.vos.theater.RegionVo;
 import dev.jwkim.jgv.vos.theater.ScreenVo;
+import dev.jwkim.jgv.vos.ticket.CinemaTypeVo;
+import dev.jwkim.jgv.vos.ticket.SeatVo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -365,25 +367,20 @@ public class TicketService {
 
 //    ---------------------------------------
 
-    public ReservationEntity[] selectSeatByReservationNum(String ciName, String thName) {
+    public SeatVo[] selectSeatByReservationNum(String ciName, String thName, String moTitle, LocalDateTime scStartDate) {
 
-        ReservationEntity[] seatNum = this.ticketMapper.selectSeatByReservationSeNum(ciName, thName);
+        SeatVo[] seatNum = this.ticketMapper.selectSeatByReservationSeNum(ciName, thName, moTitle, scStartDate);
 
 
         return seatNum;
     }
 
-    public SeatEntity[] selectSeatBySeatName(String ciName, String thName) {
+    public CinemaTypeVo[] selectSeatByCitPrice(String ciName, String thName, String moTitle, LocalDateTime scStartDate) {
 
-        SeatEntity[] seatName = this.ticketMapper.selectSeatBySeName(ciName, thName);
-        return seatName;
-    }
-
-    public CinemaTypeEntity[] selectSeatByCitPrice(String ciName, String thName) {
-
-        CinemaTypeEntity[] citPrice = this.ticketMapper.selectSeatByCitPrice(ciName, thName);
+        CinemaTypeVo[] citPrice = this.ticketMapper.selectSeatByCitPrice(ciName, thName, moTitle, scStartDate);
         return citPrice;
     }
+
     @Transactional // 트랜잭션 처리 (성공 시 커밋, 실패 시 롤백)
     public CommonResult insertPayment(String meName, int paPrice, int usNum) {
         // 결제 방법 번호 조회
@@ -409,7 +406,7 @@ public class TicketService {
         payment.setPaPrice(paPrice); // 결제 금액
         payment.setUsNum(usNum); // 사용자 번호
         payment.setMeNum(methodNum.getMeNum()); // 결제 방법 번호
-        payment.setPaState(true); // 결제 상태 설정
+        payment.setPaState(false); // 결제 상태 설정
         payment.setPaCreatedAt(LocalDateTime.now()); // 생성일 설정
         payment.setPaDeletedAt(null); // 삭제일 초기화
 

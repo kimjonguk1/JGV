@@ -145,35 +145,34 @@
         WHERE `th_name` = #{thName}
     </select>
 <!-- 분리점 -->
-    <select id="selectSeatByReservationSeNum" parameterType="dev.jwkim.jgv.entities.ticket.SeatEntity">
-        select `se_name` as `seName`
-        from jgv.reservation
-                 left join jgv.seat on reservation.se_num = seat.se_num
-                 left join jgv.cinema on cinema.ci_num = seat.ci_num
+    <select id="selectSeatByCitPrice" resultType="dev.jwkim.jgv.vos.ticket.CinemaTypeVo">
+        select cinema_type.`cit_price` as `citPrice`,
+               `mo_time`               as moTime
+        from jgv.cinema_type
+                 left join jgv.cinema on cinema.cit_num = cinema_type.cit_num
                  left join jgv.theater on cinema.th_num = theater.th_num
+                 left join jgv.screen on cinema.ci_num = screen.ci_num
+                 left join jgv.movie on screen.mo_num = movie.mo_num
         where cinema.`ci_name` = #{ciName}
           and theater.`th_name` = #{thName}
-    </select>
-    <select id="selectSeatBySeName" parameterType="dev.jwkim.jgv.entities.ticket.ReservationEntity">
-        select `re_num` as `reNum`,
-               `sc_num` as `scNum`,
-               seat.`se_num` as `seNum`,
-               `pa_num` as `paNum`,
-               `se_name` as `seName`
-        from jgv.reservation
-                 left join jgv.seat on reservation.se_num = seat.se_num
-                 left join jgv.cinema on cinema.ci_num = seat.ci_num
-                 left join jgv.theater on cinema.th_num = theater.th_num
-        where cinema.`ci_name` = #{ciName}
-          and theater.`th_name` = #{thName}
-    </select>
-    <select id="selectSeatByCitPrice" resultType="dev.jwkim.jgv.entities.theater.CinemaTypeEntity">
-        select `cit_price` as `citPrice`
-        from jgv.cinema
-                 left join jgv.cinema_type on cinema.cit_num = cinema_type.cit_num
-                 left join jgv.theater on cinema.th_num = theater.th_num
-        where cinema.`ci_name` = #{ciName}
-          and theater.`th_name` = #{thName}
+          and movie.`mo_title` = #{moTitle}
+          and sc_start_date = #{scStartDate}
 
+    </select>
+    <select id="selectSeatByReservationSeNum" resultType="dev.jwkim.jgv.vos.ticket.SeatVo">
+        select distinct seat.se_num    as `SeNum`,
+                        se_name        as `seName`,
+                        seat.ci_num    as `ciNum`,
+                        movie.`mo_num` as `moNum`
+        from jgv.seat
+                 left join jgv.reservation on reservation.se_num = seat.se_num
+                 left join jgv.cinema on seat.ci_num = cinema.ci_num
+                 left join jgv.theater on cinema.th_num = theater.th_num
+                 left join jgv.screen on reservation.sc_num = screen.sc_num
+                 left join jgv.movie on screen.mo_num = movie.mo_num
+        where ci_name = #{ciName}
+          and th_name = #{thName}
+          and mo_title = #{moTitle}
+          and sc_start_date = #{scStartDate}
     </select>
 </mapper>
