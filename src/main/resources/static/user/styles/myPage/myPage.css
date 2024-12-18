@@ -1,0 +1,231 @@
+body {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#userInfo {
+  width: 882px;
+  height: 20rem;
+  padding: 60px 40px 0 58px;
+  color: #666666;
+  background-color: #f8f8f8;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+#userInfo > .user-wrapper {
+  width: 100%;
+  border-bottom: 1px solid #cacaca;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+#userInfo > .user-wrapper > h2 {
+  font-size: 3rem;
+  font-weight: 500;
+  color: #000000;
+}
+#userInfo > .user-wrapper > span {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #000000;
+}
+#userInfo > .image-wrapper {
+  width: 135px;
+  height: 135px;
+  background: url("../../images/background.png");
+}
+#userInfo > .image-wrapper > img {
+  width: 135px;
+  height: 135px;
+  border-radius: 999rem;
+}
+
+#user-container {
+  width: 980px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  padding-top: 3rem;
+}
+#user-container > .my-reservation {
+  width: 750px;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+#user-container > .my-reservation > .user-reservation {
+  border: 1px solid #000000;
+  width: 100%;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: stretch;
+  padding: 2rem 0;
+}
+#user-container > .my-reservation > .user-reservation > .reservation-movie {
+  width: 95%;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  margin-right: 1rem;
+}
+#user-container > .my-reservation > .user-reservation > .reservation-movie > .payment {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+  padding-top: 1rem;
+}
+#user-container > .my-reservation > .user-reservation > .reservation-movie > .payment > .payment-text {
+  font-size: 1rem;
+  font-weight: 400;
+}
+#user-container > .my-reservation > .user-reservation > .reservation-movie > .payment > .payment-result {
+  color: #2275a4;
+  font-size: 1rem;
+  font-weight: 500;
+}
+#user-container > .my-reservation > .user-reservation > .reservation-movie > .movie-info {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+  border-bottom: 1px solid #cacaca;
+  padding-bottom: 2rem;
+}
+#user-container > .my-reservation > .user-reservation > .reservation-movie > .movie-info > img {
+  width: 5rem;
+}
+#user-container > .my-reservation > .user-reservation > .reservation-movie > .movie-info > .reservation-info {
+  align-items: stretch;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+#user-container > .my-reservation > .user-reservation > .reservation-movie > .movie-info > .reservation-info > .movie-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding-bottom: 0.7rem;
+}
+#user-container > .my-reservation > .user-reservation > .reservation-movie > .movie-info > .reservation-info > .cinema,
+#user-container > .my-reservation > .user-reservation > .reservation-movie > .movie-info > .reservation-info .schedule,
+#user-container > .my-reservation > .user-reservation > .reservation-movie > .movie-info > .reservation-info .seat {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  font-size: 0.9rem;
+  font-weight: 300;
+  justify-content: flex-start;
+}
+#user-container > .my-reservation > .user-reservation > .reservation-number {
+  width: 5rem;
+  padding: 1rem 2rem;
+}
+#user-container > .my-reservation > .user-reservation > .reservation-number > .number-title {
+  font-size: 0.8rem;
+}
+#user-container > .my-reservation > .user-reservation > .reservation-number > .reservation-date {
+  font-size: 0.8rem;
+}
+#user-container > .my-reservation > .user-reservation > .reservation-number > .number {
+  font-size: 1rem;
+  white-space: nowrap;
+}
+#user-container > .my-reservation > .user-reservation > .reservation-number > .black {
+  font-weight: 500;
+  color: #000000;
+}
+#user-container > .my-reservation > .user-reservation > .reservation-number > .red {
+  font-weight: 500;
+  color: #FB4357;
+}
+#user-container > .my-reservation > .text-box {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: stretch;
+  height: 3rem;
+}
+#user-container > .my-reservation > .text-box > .-spring {
+  flex-grow: 1;
+}
+#user-container > .my-reservation > .text-box > strong {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+#user-container > .my-reservation > .text-box > span {
+  text-align: center;
+}
+#user-container > .user-tap {
+  width: 160px;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  justify-content: flex-start;
+}
+#user-container > .user-tap > .item {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#user-container > .user-tap > .item > .hidden:hover {
+  display: none;
+}
+#user-container > .user-tap > li {
+  color: #666666;
+  font-weight: 400;
+  white-space: nowrap;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+#user-container > .user-tap > li:hover > img {
+  display: block;
+}
+#user-container > .user-tap > li > img {
+  display: none;
+  width: 1rem;
+}
+#user-container > .user-tap > .title {
+  font-size: 1.1rem;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 2rem;
+  background-color: transparent;
+}
+#user-container > .user-tap > .title > a {
+  align-items: flex-start;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  padding-left: 1rem;
+  font-weight: 600;
+  color: #000000;
+}
+
+/*# sourceMappingURL=myPage.css.map */

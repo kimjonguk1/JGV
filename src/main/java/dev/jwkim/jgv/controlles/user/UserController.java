@@ -96,10 +96,42 @@ public class UserController {
 
     // region 마이페이지
     @RequestMapping(value = "/myPage", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMyPage() {
+    public ModelAndView getMyPage(UserEntity user, HttpSession session) {
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("user/myPage");
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("session", session);
+        modelAndView.setViewName("user/myPage/myPage");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/myPage1", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getMyPage1(UserEntity user, HttpSession session) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("session", session);
+        modelAndView.setViewName("user/myPage/myPage1");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/myPage2", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getMyPage2(UserEntity user, HttpSession session) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("session", session);
+        modelAndView.setViewName("user/myPage/myPage2");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/myPage3", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getMyPage3(UserEntity user, HttpSession session) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("session", session);
+        modelAndView.setViewName("user/myPage/myPage3");
         return modelAndView;
     }
     // endregion
@@ -171,13 +203,6 @@ public class UserController {
         return response.toString();
     }
 
-    @RequestMapping(value = "find-password-result", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getFindPasswordResult() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("user/find-password-result");
-        return modelAndView;
-    }
-
 
     @RequestMapping(value = "/recover-email", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -193,15 +218,44 @@ public class UserController {
 
     @RequestMapping(value = "/find-password-result",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ModelAndView getRecoverPassword(@RequestParam(value = "userEmail", required = false)String userEmail,
-                                           @RequestParam(value = "key", required = false) String key) {
+    public ModelAndView getRecoverPassword(@RequestParam(value = "userEmail", required =
+                                                   false)String userEmail,
+                                           @RequestParam(value = "key", required = false) String key,
+                                           @RequestParam(value = "userId", required =
+                                                   false) String userId
+    ) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userEmail", userEmail);
         modelAndView.addObject("key", key);
+        modelAndView.addObject("userId", userId);
+
         modelAndView.setViewName("user/find-password-result");
         return modelAndView;
     }
+    // endregion
 
+    // region 비밀번호 수정
+    @RequestMapping(value = "/find-password-result", method = RequestMethod.PATCH,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String patchRecoverPassword(
+            @RequestParam(value = "usPw", required = false) String password,
+            @RequestParam(value = "userEmail", required = false) String email,
+            @RequestParam(value = "key", required = false) String key)
+    {
+        System.out.println("컨트롤러" + email);
+        System.out.println("컨트롤러" + key);
+        System.out.println("컨트롤러" + password);
 
+        EmailTokenEntity emailToken = new EmailTokenEntity();
+        emailToken.setEmEmail(email);
+        emailToken.setEmKey(key);
+
+        Result result = this.userService.resolveRecoverPassword(emailToken, password);
+        JSONObject response = new JSONObject();
+        response.put(Result.NAME, result.nameToLower());
+
+        return response.toString();
+    }
     // endregion
 }

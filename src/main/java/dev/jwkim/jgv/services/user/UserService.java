@@ -7,10 +7,7 @@ import dev.jwkim.jgv.mappers.user.EmailTokenMapper;
 import dev.jwkim.jgv.mappers.user.UserMapper;
 import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.results.Result;
-import dev.jwkim.jgv.results.user.FindResult;
-import dev.jwkim.jgv.results.user.LoginResult;
-import dev.jwkim.jgv.results.user.RegisterResult;
-import dev.jwkim.jgv.results.user.ValidateEmailTokenResult;
+import dev.jwkim.jgv.results.user.*;
 import dev.jwkim.jgv.utils.CryptoUtils;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -281,6 +278,7 @@ public class UserService {
     // endregion
 
     // region 비밀번호 찾기, 재설정
+    // TODO 추후 비밀번호 재설정시 강도, REGEX 추가
 
     public Result findUserPassword(UserEntity user) {
         UserEntity dbUser = this.userMapper.FindUserById(user.getUsId(), user.getUsEmail(), user.getUsContact());
@@ -332,12 +330,13 @@ public class UserService {
             throw new TransactionalException();
         }
         String validationLink = String.format
-                ("%s://%s:%d/user/find-password-result?emEmail=%s&key=%s",
+                ("%s://%s:%d/user/find-password-result?userEmail=%s&key=%s&userId=%s",
                         request.getScheme(),
                         request.getServerName(),
                         request.getServerPort(),
                         emailToken.getEmEmail(),
-                        emailToken.getEmKey());
+                        emailToken.getEmKey(),
+                        user.getUsId());
 
         Context context = new Context();
         context.setVariable("validationLink", validationLink);
@@ -350,6 +349,8 @@ public class UserService {
         mimeMessageHelper.setSubject("[JGV] 비밀번호 재설정 인증 링크");
         mimeMessageHelper.setText(mailText, true);
 
+        user.setUsEmail(user.getUsEmail());
+        user.setUsId(user.getUsId());
         this.mailSender.send(mimeMessage);
         return CommonResult.SUCCESS;
     }
@@ -363,6 +364,38 @@ public class UserService {
             return CommonResult.FAILURE;
         }
         user.setUsEmail(dbUser.getUsEmail());
+        return CommonResult.SUCCESS;
+    }
+
+
+    @Transactional
+    public Result resolveRecoverPassword(EmailTokenEntity emailToken, String password) {
+        if (emailToken == null ||
+                emailToken.getEmEmail() == null || emailToken.getEmEmail().length() < 8 || emailToken.getEmEmail().length() > 50 ||
+                emailToken.getEmKey() == null || emailToken.getEmKey().length() != 128 ||
+                password == null || password.length() < 8 || password.length() > 50) {
+            System.out.println("1번");
+            return CommonResult.FAILURE;
+        }
+        EmailTokenEntity dbEmailToken =
+                this.emailTokenMapper.selectEmailTokenByUserEmailAndKey(emailToken.getEmEmail(), emailToken.getEmKey());
+        if (dbEmailToken == null || dbEmailToken.isEmUsed()) {
+            System.out.println("2번");
+            return CommonResult.FAILURE;
+        }
+        if (dbEmailToken.getEmExpiresAt().isBefore(LocalDateTime.now())) {
+            return ResolveRecoverPasswordResult.FAILURE_EXPIRED;
+        }
+        dbEmailToken.setEmUsed(true);
+        if (this.emailTokenMapper.updateEmailToken(dbEmailToken) == 0) {
+            throw new TransactionalException();
+        }
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        UserEntity user = this.userMapper.selectUserByEmail(emailToken.getEmEmail());
+        user.setUsPw(passwordEncoder.encode(password));
+        if (this.userMapper.updateUser(user) == 0) {
+            throw new TransactionalException();
+        }
         return CommonResult.SUCCESS;
     }
     // endregion

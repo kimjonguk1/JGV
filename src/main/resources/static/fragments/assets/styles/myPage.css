@@ -1,0 +1,112 @@
+body {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#userInfo {
+  width: 882px;
+  height: 20rem;
+  padding: 60px 40px 0 58px;
+  color: #666666;
+  background-color: #f8f8f8;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+#userInfo > .user-wrapper {
+  width: 100%;
+  border-bottom: 1px solid #cacaca;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+#userInfo > .user-wrapper > h2 {
+  font-size: 3rem;
+  font-weight: 500;
+  color: #000000;
+}
+#userInfo > .user-wrapper > span {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #000000;
+}
+#userInfo > .image-wrapper {
+  width: 135px;
+  height: 135px;
+  background: url("../images/background.png");
+}
+#userInfo > .image-wrapper > img {
+  width: 135px;
+  height: 135px;
+  border-radius: 999rem;
+}
+
+#user-container {
+  width: 980px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  padding-top: 3rem;
+}
+#user-container > .user-tap {
+  width: 160px;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  justify-content: flex-start;
+}
+#user-container > .user-tap > .item {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#user-container > .user-tap > .item > .hidden:hover {
+  display: none;
+}
+#user-container > .user-tap > li {
+  color: #666666;
+  font-weight: 400;
+  white-space: nowrap;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+#user-container > .user-tap > li:hover > img {
+  display: block;
+}
+#user-container > .user-tap > li > img {
+  display: none;
+  width: 1rem;
+}
+#user-container > .user-tap > .title {
+  font-size: 1.1rem;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 2rem;
+  background-color: transparent;
+}
+#user-container > .user-tap > .title > a {
+  align-items: flex-start;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  padding-left: 1rem;
+  font-weight: 600;
+  color: #000000;
+}
+
+/*# sourceMappingURL=myPage.css.map */
