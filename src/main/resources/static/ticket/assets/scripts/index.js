@@ -287,6 +287,8 @@ const $payPriceWon4 = document.getElementById("pay-price-won4");
 const $payPriceWon5 = document.getElementById("pay-price-won5");
 const $payPriceWon6 = document.getElementById("pay-price-won6");
 const $payPriceWonInt = document.getElementById("pay-price-won-int");
+const $SeatDate = document.getElementById("seat-date");
+
 
 
 const adults = document.querySelectorAll('.adults');
@@ -381,10 +383,17 @@ $rightButtons.forEach((x) => {
                 if (x.getAttribute('data-id') === 'main' &&
                     main.getAttribute('data-id') === 'main-seat') {
                     main.classList.remove('hidden');
+                    $SeatDate.innerText = `${$theaterTime.innerText}`;
+                    let rawDateStr = $theaterTime.innerText;
+                    let formattedDate = rawDateStr
+                        .replace(/\([^)]+\)/, "T") // "(금)" 제거
+                        .replace(/\./g, "-"); // "." -> "-"
                     const xhr = new XMLHttpRequest();
                     const url = new URL("http://localhost:8080/ticket/seat"); //ticket
                     url.searchParams.set('thName', $theaterTheater.innerText);
                     url.searchParams.set('ciName', $theaterCinema.innerText);
+                    url.searchParams.set('moTitle', $theaterMovie.innerText);
+                    url.searchParams.set('scStartDate', formattedDate);
                     xhr.onreadystatechange = () => {
                         if (xhr.readyState !== XMLHttpRequest.DONE) {
                             return;
@@ -395,15 +404,10 @@ $rightButtons.forEach((x) => {
                         const response = JSON.parse(xhr.responseText);
                         const result = response['result'];
                         const result2 = response['results'];
-                        const result3 = response['resultss'];
                         console.log(result);
                         console.log(result2);
-                        console.log(result3);
                         $seatColor.innerText = 40 - result.length;
-                        // $payMovie.value = `${$theaterMovie.innerText}`;
-                        // $payTheater.value = `${$theaterTheater.innerText}`;
-                        // $payCinema.value = `${$theaterCinema.innerText}`;
-                        // $payTime.value = `${$theaterTime.innerText}`;
+
                         $payMovie.innerText = `${$theaterMovie.innerText}`;
                         $payTheater.innerText = `${$theaterTheater.innerText}`;
                         $payCinema.innerText = `${$theaterCinema.innerText}`;
@@ -422,7 +426,7 @@ $rightButtons.forEach((x) => {
                                 td.textContent = i;
                                 tr.appendChild(td);
                                 seats.push(td);
-                                if (result2.some(item => item.seName === td.id)) {
+                                if (result.some(item => item.seName === td.id)) {
                                     td.style.backgroundImage = "url('/ticket/assets/images/icon3.png')"; // 일치하면 배경 변경
                                     td.style.backgroundSize = 'cover'; // 크기 조정
                                     td.style.backgroundPosition = 'center'; // 위치 설정
@@ -443,9 +447,9 @@ $rightButtons.forEach((x) => {
                                     $seatCommon.textContent = '일반석';
                                     $seatPriceCommon.textContent = '일반';
                                     $seatPricePay.textContent = '총금액';
-                                    price = radio.value * result3[0].citPrice;
+                                    price = radio.value * result2[0].citPrice;
                                     const price2 = price.toLocaleString();
-                                    const price3 = result3[0].citPrice.toLocaleString();
+                                    const price3 = result2[0].citPrice.toLocaleString();
 
                                     $payPriceWon1.textContent = `${price2}`;
                                     $payPriceWon2.textContent = `${price2}`;
@@ -776,9 +780,6 @@ $payForm.onsubmit = (e) => {
         // FormData 객체 생성
         const formData = new FormData();
 
-        // 폼 데이터 추가 (span의 텍스트는 innerText로 가져오기)
-        formData.append("paPrice", document.getElementById('pay-price-won-int').innerText); // span 요소의 텍스트
-        formData.append("meName", document.getElementById('method').innerText);  // span 요소에서 결제 방법 번호 가져오기
 
         // 세션에서 userId 값을 가져옴
         const sessionUsId = sessionStorage.getItem('userId');  // 세션에서 userId를 가져오기
@@ -787,6 +788,10 @@ $payForm.onsubmit = (e) => {
         } else {
             console.log('세션에 userId가 없습니다.');
         }
+
+        // 폼 데이터 추가 (span의 텍스트는 innerText로 가져오기)
+        formData.append("paPrice", document.getElementById('pay-price-won-int').innerText); // span 요소의 텍스트
+        formData.append("meName", document.getElementById('method').innerText);  // span 요소에서 결제 방법 번호 가져오기
 
         // 좌석 정보 처리 (seats가 input 요소가 아니라면 innerText 사용)
         const seats = Array.from(document.querySelectorAll('.pay-seat'));  // pay-seat 클래스를 가진 모든 요소를 선택
@@ -800,14 +805,19 @@ $payForm.onsubmit = (e) => {
                 return;
             }
             if (xhr.status >= 200 && xhr.status < 300) {
-                alert("결제가 성공적으로 처리되었습니다.");
             } else {
+                alert("오류가 발생했습니다. 다시 시도해주세요.");
+            }
+            const response = JSON.parse(xhr.responseText);
+            console.log(response);
+            if (response['result'] !== "success") {
                 alert("오류가 발생했습니다. 다시 시도해주세요.");
             }
         };
 
+
         // 요청 설정 및 전송
-        xhr.open('POST', './');  // 실제 결제 처리 URL로 수정
+        xhr.open('POST', '../ticket/reservation');  // 실제 결제 처리 URL로 수정
         xhr.send(formData);
 
     } else {

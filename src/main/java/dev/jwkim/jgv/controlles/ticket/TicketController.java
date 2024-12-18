@@ -11,6 +11,8 @@ import dev.jwkim.jgv.services.ticket.TicketService;
 import dev.jwkim.jgv.vos.theater.MovieVo;
 import dev.jwkim.jgv.vos.theater.RegionVo;
 import dev.jwkim.jgv.vos.theater.ScreenVo;
+import dev.jwkim.jgv.vos.ticket.CinemaTypeVo;
+import dev.jwkim.jgv.vos.ticket.SeatVo;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.MediaType;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -97,15 +100,15 @@ public class TicketController {
     @ResponseBody
     public String getSeat(
             @RequestParam(value = "ciName", required = false) String ciName,
-            @RequestParam(value = "thName", required = false) String thName
+            @RequestParam(value = "thName", required = false) String thName,
+            @RequestParam(value = "moTitle", required = false) String moTitle,
+            @RequestParam(value = "scStartDate", required = false) LocalDateTime scStartDate
     ) {
         JSONObject response = new JSONObject();
-        ReservationEntity[] seatNum = this.ticketService.selectSeatByReservationNum(ciName, thName);
-        SeatEntity[] seatName = this.ticketService.selectSeatBySeatName(ciName, thName);
-        CinemaTypeEntity[] citPrice = this.ticketService.selectSeatByCitPrice(ciName, thName);
+        SeatVo[] seatNum = this.ticketService.selectSeatByReservationNum(ciName, thName, moTitle, scStartDate);
+        CinemaTypeVo[] citPrice = this.ticketService.selectSeatByCitPrice(ciName, thName, moTitle, scStartDate);
         response.put(Result.NAME, seatNum);
-        response.put(Result.NAMES, seatName);
-        response.put(Result.NAMESS, citPrice);
+        response.put(Result.NAMES, citPrice);
         return response.toString();
     }
 
@@ -123,7 +126,9 @@ public class TicketController {
     public String postIndex(@RequestParam(value = "meName", required = false) String meName,
                             @RequestParam(value = "paPrice", required = false) int paPrice,
                             @RequestParam(value = "usNum", required = false)
-                            int usNum) {
+                            int usNum,
+                            @RequestParam(value = "seName", required = false)
+                            int seName) {
         Result result = this.ticketService.insertPayment(meName, paPrice, usNum);
         JSONObject response = new JSONObject();
         response.put(Result.NAME, result.nameToLower());

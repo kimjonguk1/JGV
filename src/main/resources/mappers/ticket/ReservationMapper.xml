@@ -4,7 +4,27 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dev.jwkim.jgv.mappers.ticket.ReservationMapper">
     <insert id="insertReservation" parameterType="dev.jwkim.jgv.entities.ticket.ReservationEntity">
-        insert into `jgv`.reservation(`re_num`, `sc_num`, `se_num`, `pa_num`)
-            values (${reNum}, ${scNum}, ${seNum}, ${paNum})
+        insert jgv.reservation(`re_num`, `sc_num`, `se_num`, `pa_num`)
+        VALUES (#{reNum}, #{scNum}, #{seNum}, #{paNum})
     </insert>
+    <select id="selectReservationByScNum" parameterType="dev.jwkim.jgv.entities.theater.ScreenEntity">
+        select screen.`sc_num` as `scNum`
+        from jgv.screen
+                 left join jgv.movie on screen.mo_num = movie.mo_num
+                 left join jgv.cinema on screen.ci_num = cinema.ci_num
+                 left join jgv.theater on cinema.th_num = theater.th_num
+        where movie.`mo_title` = #{moTitle}
+          and cinema.`ci_name` = #{ciName}
+          and theater.`th_name` = #{thName}
+          and sc_start_date = #{scStartDate}
+    </select>
+    <select id="selectPaymentByPaNum"  parameterType="dev.jwkim.jgv.entities.ticket.PaymentEntity">
+        select `pa_num` as `paNum`
+        from jgv.payment
+                 left join jgv.method on payment.me_num = method.me_num
+                 left join jgv.user on payment.us_num = user.us_num
+        where `me_name` = #{meName}
+          and payment.`us_num` = #{usNum}
+          and `pa_state` = false
+    </select>
 </mapper>
