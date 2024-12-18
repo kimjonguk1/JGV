@@ -33,7 +33,7 @@
                     <img th:src="@{${movie.getM_img_url()}}" alt="영화 이미지" class="movie-poster">
                 </a>
                 <div class="movie-info">
-                    <a th:href="@{/movies/{id}(id=${movie.getMoNum()})}" class="movie-title"
+                    <a th:href="@{/movies/movieList/movieInfo/{id}(id=${movie.getMoNum()})}" class="movie-title"
                        th:text="${movie.getMoTitle()}">영화 제목</a>
                 </div>
                 <div class="movie-detail">

@@ -18,6 +18,9 @@ public interface MovieMapper {
     //db에 영화 데이터가 존재하는지 유무만 확인
     int selectMovie();
 
+    //영화 데이터 중복 방지
+    Integer selectMovieByUniqueFields(@Param("movieTitle") String movieTitle, @Param("movieDate")String movieDate);
+
     // 영화 리스트 모두 표시하기
     List<Movie_ImageDTO> selectAllMovies();
 
@@ -26,6 +29,12 @@ public interface MovieMapper {
 
     // 영화 제목으로 id를 들고오기 (업데이트를 위해)
     Integer selectMovieIdByTitle(@Param("movieTitle") String movieTitle);
+
+    // 영화 아이디로 관람 등급 들고오기
+    Integer selectMovieRaitingByMovieId(@Param("moNum") int moNum);
+
+    // 관람 등급 업데이트
+    void updateMovieRaiting(@Param("moNum") int moNum, @Param("raId") int raId);
 
     // 영화 데이터 업데이트
     void updateMovie(MovieEntity movie);
@@ -45,4 +54,5 @@ public interface MovieMapper {
 
     // 필모그래피를 위해
     List<Map<String, Object>> findMoviesByActorName(@Param("actorName")String actorName);
+
 }

@@ -268,13 +268,6 @@ body > .frame {
 #main .movie-container .movie-card:hover {
   transform: translateY(-5px);
 }
-#main .movie-container .movie-card .movie-rank {
-  background-color: #e74c3c;
-  color: white;
-  font-size: 1.1rem;
-  padding: 5px 0;
-  font-weight: bold;
-}
 #main .movie-container .movie-card .movie-poster {
   width: 100%;
   height: auto;

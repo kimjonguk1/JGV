@@ -7,6 +7,5 @@ import dev.jwkim.jgv.entities.movie.RatingEntity;
 @Mapper
 public interface RaitingMapper {
     int insertMovieRaiting(RatingEntity ratingEntity);
-    int deleteAllMovieRaiting();
     Integer selectRaitingIdByName(String RaitingName);
 }

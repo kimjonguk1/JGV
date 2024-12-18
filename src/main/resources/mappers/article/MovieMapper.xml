@@ -40,11 +40,30 @@
                 LEFT JOIN
             jgv.movie_image i ON m.mo_num = i.mo_num
     </select>
+    <select id="selectMovieByUniqueFields" resultType="java.lang.Integer">
+        SELECT *
+        FROM jgv.movie
+        WHERE mo_title = #{movieTitle}
+        AND mo_date = #{movieDate}
+        LIMIT 1
+    </select>
+    
     <select id="selectMovieIdByTitle" parameterType="String" resultType="Integer">
         SELECT mo_num
         FROM jgv.movie
         WHERE mo_title = #{movieTitle}
     </select>
+    <select id="selectMovieRaitingByMovieId" resultType="Integer" parameterType="int">
+        SELECT ra_num
+        FROM jgv.movie
+        WHERE mo_num = #{moNum}
+    </select>
+
+    <update id="updateMovieRaiting" parameterType="map">
+        UPDATE jgv.movie
+        SET ra_num = #{raId}
+        WHERE mo_num = #{moNum}
+    </update>
 
     <update id="updateMovie" parameterType="dev.jwkim.jgv.entities.movie.MovieEntity">
         UPDATE jgv.movie
@@ -120,12 +139,15 @@
                ch_job AS chJob,
                ch_birth AS chBirth,
                ch_nation AS chNation,
-               c_img_num AS CImgNum,
-               c_img_url AS CImgUrl
+               MIN(c_img_num) AS CImgNum, -- 가장 작은 이미지 번호
+               MIN(c_img_url) AS CImgUrl -- 가장 작은 번호의 이미지 URL
         FROM jgv.charactor c
-                 LEFT JOIN jgv.charactor_image ci on c.ch_num = ci.ch_num
+                 LEFT JOIN jgv.charactor_image ci ON c.ch_num = ci.ch_num
         WHERE c.ch_name LIKE CONCAT('%', #{keyword}, '%')
+        GROUP BY c.ch_num, ch_name, ch_job, ch_birth, ch_nation
     </select>
+
+
 
     <select id="searchMoviesByPersonKeyword" resultType="dev.jwkim.jgv.DTO.Movie_ImageDTO">
         SELECT m.mo_num AS moNum,

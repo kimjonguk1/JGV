@@ -5,12 +5,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.parameters.P;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Mapper
 public interface CharactorMapper {
     // 인물 이름으로 chname 조회
-    Integer selectCharacterIdByName(String CharacterName);
+    Integer selectCharacterIdByUniqueFields(String CharacterName, LocalDate date, String job);
     // 인물 저장 후 chnum 한봔
     int insertCharacter(CharactorEntity charactor);
     // 인물 이미지 db 삽입

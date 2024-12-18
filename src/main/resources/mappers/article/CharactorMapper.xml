@@ -8,10 +8,12 @@
         VALUES (#{chName}, #{chJob}, #{chBirth}, #{chNation})
     </insert>
 
-    <select id="selectCharacterIdByName" resultType="Integer">
+    <select id="selectCharacterIdByUniqueFields" resultType="Integer">
         SELECT ch_num
         FROM jgv.charactor
         WHERE ch_name = #{CharacterName}
+        AND ch_birth = #{date}
+        AND ch_job = #{job}
     </select>
 
     <insert id="insertCharacterImg">

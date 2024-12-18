@@ -122,3 +122,45 @@
   }
 }
 
+// Movie Grid 스타일링
+main {
+  .movie-results {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); // 한 줄에 3개
+    gap: 30px; // 각 영화 카드 사이의 간격
+    margin: 20px auto;
+    max-width: 1200px; // 전체 그리드의 최대 너비
+    padding: 0 20px;
+
+    li {
+      list-style: none;
+      text-align: center;
+      position: relative;
+
+      a {
+        display: block;
+        overflow: hidden;
+        border-radius: 10px; // 둥근 모서리 효과
+        transition: transform 0.3s ease;
+
+        img {
+          width: 100%;
+          height: auto;
+          display: block;
+          transition: transform 0.3s ease;
+        }
+
+        &:hover img {
+          transform: scale(1.1); // 이미지 확대 효과
+        }
+      }
+
+      p {
+        margin-top: 10px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #333;
+      }
+    }
+  }
+}
