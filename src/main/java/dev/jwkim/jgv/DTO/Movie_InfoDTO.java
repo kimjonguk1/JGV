@@ -16,5 +16,5 @@ public class Movie_InfoDTO extends Movie_ImageDTO{
     private List<String> actorNames;
     private List<String> actorImages;
     private String countries;
-    private List<Map<String, String>> relatedMovies;
+    private List<Map<String, Object>> relatedMovies;
 }

@@ -15,8 +15,6 @@ public interface MovieMapper {
     // 영화 데이터 insert
     int insertMovie(@Param("movie") MovieEntity movie, @Param("raiting") int rating);
 
-    //db에 영화 데이터가 존재하는지 유무만 확인
-    int selectMovie();
 
     //영화 데이터 중복 방지
     Integer selectMovieByUniqueFields(@Param("movieTitle") String movieTitle, @Param("movieDate")String movieDate);
@@ -43,10 +41,10 @@ public interface MovieMapper {
     Movie_InfoDTO getMovieInfoById(@Param("id") Integer id);
 
     //감독 이름으로 영화 찾기
-    List<Map<String, String>> getRelatedMoviesByDirector(String director);
+    List<Map<String, Object>> getRelatedMoviesByDirector(String director);
 
     //search 키워드로 영화, 인물 찾기
-    List<Movie_ImageDTO> findMovieByKeyword(@Param("keyword") String keyword);
+    List<Movie_ImageDTO> findMovieByKeyword(@Param("keyword") String keyword, int offsetCount, int countPerPage);
 
     List<CharacterDTO> findCharacterByKeyword(@Param("keyword") String keyword);
 
@@ -54,5 +52,11 @@ public interface MovieMapper {
 
     // 필모그래피를 위해
     List<Map<String, Object>> findMoviesByActorName(@Param("actorName")String actorName);
+
+    //인물 id로 영화 찾기(필모그래피)
+    List<Map<String, Object>> findMoviesByCharacterId(@Param("charId") Integer charId);
+
+    //페이징을 위한 영화 카운트
+    int getMovieCountByKeyword(String keyword);
 
 }

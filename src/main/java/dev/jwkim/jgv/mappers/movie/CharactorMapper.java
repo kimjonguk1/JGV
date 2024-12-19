@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface CharactorMapper {
     // 인물 이름으로 chname 조회
-    Integer selectCharacterIdByUniqueFields(String CharacterName, LocalDate date, String job);
+    Integer selectCharacterIdByUniqueFields(String CharacterName, LocalDate birth, String job);
     // 인물 저장 후 chnum 한봔
     int insertCharacter(CharactorEntity charactor);
     // 인물 이미지 db 삽입

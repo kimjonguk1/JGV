@@ -7,14 +7,14 @@ import dev.jwkim.jgv.DTO.Movie_ImageDTO;
 import dev.jwkim.jgv.DTO.Movie_InfoDTO;
 import dev.jwkim.jgv.DTO.RelatedMovieDTO;
 import dev.jwkim.jgv.results.CommonResult;
+import dev.jwkim.jgv.results.movie.SearchResult;
 import dev.jwkim.jgv.services.movie.MovieService;
 import dev.jwkim.jgv.services.movie.SearchService;
+import dev.jwkim.jgv.vos.PageVo;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
@@ -73,20 +73,20 @@ public class MoiveListController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("article/MovieInfo");
         Movie_InfoDTO movieInfo = movieService.selectMovieInfoById(id);
+        System.out.println(movieInfo.getRelatedMovies().get(0));
         mav.addObject("movieInfo", movieInfo);
         return mav;
     }
 
-    @RequestMapping(value = "/movieList/person/{id}")
-    public String getPersonDetail(@PathVariable("id") Integer id, Model model) {
-        return null;
-    }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public ModelAndView search(@RequestParam String keyword) {
+    public ModelAndView search(@RequestParam String keyword,
+                               @RequestParam(value = "page", required = false, defaultValue = "1")int page) {
         ModelAndView mav = new ModelAndView();
         //영화 검색
-        List<Movie_ImageDTO> movies = searchService.searchMoviesByKeyword(keyword);
+        Pair<PageVo, List<Movie_ImageDTO>> pair = searchService.searchMoviesByKeyword(keyword, page);
+        List<Movie_ImageDTO> movies = pair.getRight();
+        PageVo pageVo = pair.getLeft();
         //인물 검색
         List<CharacterDTO> people = searchService.searchPeopleByKeyword(keyword);
         // 인물별 관련 영화 검색 (감독 또는 배우)
@@ -122,11 +122,35 @@ public class MoiveListController {
         if(people == null) {
             people = new ArrayList<>();
         }
+        mav.addObject("keyword", keyword);
         mav.addObject("people", people);
+        mav.addObject("pageVo", pageVo);
         mav.addObject("movies", movies);
         mav.addObject("relatedMoviesJsonMap", relatedMoviesJsonMap);
 
         mav.setViewName("article/MovieSearch");
         return mav;
+    }
+
+    @RequestMapping(value = "/movieList/person/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public SearchResult<?> getPersonDetail(@PathVariable("id") Integer id) {
+        try {
+            // 캐릭터 ID로 영화 조회
+            List<Map<String, Object>> movies = movieService.findMoviesByCharacterId(id);
+
+            if (movies == null || movies.isEmpty()) {
+                // 데이터가 없을 경우 FAILURE 응답 반환
+                return SearchResult.failure("No movies found for this character.");
+            } else {
+                // 성공적으로 데이터를 가져왔을 경우 SUCCESS 응답 반환
+                return SearchResult.success(movies);
+            }
+        } catch (Exception e) {
+            // 예외 발생 시 FAILURE 응답 반환
+            return SearchResult.failure("An error occurred while fetching data: " + e.getMessage());
+        }
+
+
     }
 }

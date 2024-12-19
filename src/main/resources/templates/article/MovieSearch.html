@@ -18,7 +18,7 @@
 <th:block th:replace="~{fragments/common.html :: nav}"></th:block>
 <main id="main" class="frame main">
     <div th:if="${movies.size() > 0}">
-        <h2 th:text="|영화 검색 결과 ${movies.size()}건|"></h2>
+        <h2>영화 검색 결과</h2>
         <ul class="movie-results">
             <li th:each="movie : ${movies}"  th:if="${movie != null}">
                 <a th:href="@{/movies/movieList/movieInfo/{id}(id=${movie.getMoNum()})}">
@@ -32,6 +32,15 @@
                 </p>
             </li>
         </ul>
+        <div class="pagination">
+            <a th:if="${pageVo.requestPage > 1}" th:href="@{/movies/search(keyword=${keyword}, page=${pageVo.requestPage - 1})}" class="prev">&laquo;</a>
+
+            <a th:each="i : ${#numbers.sequence(pageVo.displayMinPage, pageVo.displayMaxPage)}"
+               th:classappend="${pageVo.requestPage == i} ? 'active'"
+               th:href="@{/movies/search(keyword=${keyword}, page=${i})}">[[${i}]]</a>
+
+            <a th:if="${pageVo.requestPage < pageVo.movableMaxPage}" th:href="@{/movies/search(keyword=${keyword}, page=${pageVo.requestPage + 1})}" class="next">&raquo;</a>
+        </div>
     </div>
     <div th:if="${people.size() > 0}">
         <h2>인물 검색 결과</h2>
@@ -40,10 +49,10 @@
             <div class="carousel-track">
                 <div class="carousel-item"
                      th:each="person : ${people}"
-                     th:data-job="${person.chJob}"
-                     th:data-birth="${person.chBirth}"
-                     th:data-name="${person.chName}"
-                     th:data-related-movies="${relatedMoviesJsonMap[person.chName]}">
+                     th:data-char-id="${person.chNum}"
+                th:data-job="${person.chJob}"
+                th:data-birth="${person.chBirth}"
+                th:data-name="${person.chName}">
                     <div class="image-wrapper">
                     <img th:src="${person.cImgUrl}" alt="인물 이미지" class="person-image">
                     </div>

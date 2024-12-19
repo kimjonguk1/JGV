@@ -12,8 +12,8 @@
         SELECT ch_num
         FROM jgv.charactor
         WHERE ch_name = #{CharacterName}
-        AND ch_birth = #{date}
-        AND ch_job = #{job}
+        AND (ch_job = #{job} OR #{job} IS NULL)
+        AND (ch_birth = #{birth} OR #{birth} IS NULL)
     </select>
 
     <insert id="insertCharacterImg">
@@ -55,8 +55,11 @@
     </select>
 
     <select id="isMovieCharacterMappingExists" resultType="Boolean">
-        SELECT COUNT(*)
-        FROM jgv.movie_charactor
-        WHERE mo_num = #{monum} AND ch_num = #{chnum}
+        SELECT EXISTS(
+            SELECT 1
+            FROM jgv.movie_charactor
+            WHERE mo_num = #{monum} AND ch_num = #{chnum}
+        )
+
     </select>
 </mapper>

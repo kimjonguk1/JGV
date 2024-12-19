@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .carousel-container {
   display: flex;
   align-items: center;
@@ -32,25 +33,33 @@
 .carousel-container .carousel-button.next {
   right: -20px;
 }
+.carousel-container .carousel-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
 .carousel-container .carousel-track {
   display: flex;
   gap: 20px;
   overflow: hidden;
-  width: 90%;
+  width: 100%;
+  position: relative;
   scroll-behavior: smooth;
 }
 .carousel-container .carousel-track .carousel-item {
-  flex: 0 0 100px;
+  flex: 0 0 calc(16.6666666667% - 20px);
   text-align: center;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 .carousel-container .carousel-track .carousel-item .image-wrapper {
   width: 120px;
   height: 120px;
   border-radius: 50%;
   overflow: hidden;
-  margin: 0 auto;
-  position: relative;
+  margin-bottom: 10px;
 }
 .carousel-container .carousel-track .carousel-item .image-wrapper .person-image {
   width: 100%;
@@ -62,15 +71,20 @@
 .carousel-container .carousel-track .carousel-item .image-wrapper .person-image:hover {
   transform: scale(1.2);
   filter: grayscale(0%);
-}
-.carousel-container .carousel-track .carousel-item.selected .person-image {
-  filter: grayscale(0%);
+  cursor: pointer;
 }
 .carousel-container .carousel-track .carousel-item .name {
-  margin-top: 10px;
+  margin: 0;
   font-size: 14px;
   font-weight: bold;
   color: #333;
+  text-align: center;
+}
+.carousel-container .carousel-track .carousel-item:hover .name {
+  color: #000;
+}
+.carousel-container .carousel-track .carousel-item.selected .person-image {
+  filter: grayscale(0%);
 }
 
 .person-info {
@@ -137,6 +151,79 @@ main .movie-results li p {
   font-size: 1rem;
   font-weight: bold;
   color: #333;
+}
+
+#filmography {
+  display: flex;
+  flex-wrap: wrap; /* 여러 줄로 나열되도록 설정 */
+  gap: 20px; /* 아이템 간의 간격 */
+  justify-content: start; /* 왼쪽 정렬 */
+  padding: 20px;
+}
+#filmography .filmography-item {
+  flex: 0 1 150px; /* 아이템의 너비를 설정 (최대 150px) */
+  display: flex;
+  flex-direction: column; /* 세로로 정렬 */
+  align-items: center;
+  text-align: center;
+  overflow: hidden; /* 내용 넘칠 경우 숨기기 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+#filmography .filmography-item:hover {
+  transform: translateY(-10px); /* 호버 시 살짝 올라가는 효과 */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 그림자 확대 */
+}
+#filmography .filmography-item img {
+  width: 100%;
+  height: 200px; /* 이미지 고정 높이 */
+  object-fit: cover; /* 이미지 크기에 맞게 조정 */
+  border-bottom: 2px solid #ddd; /* 아래 테두리 추가 */
+}
+#filmography .filmography-item p {
+  margin: 10px 0; /* 텍스트 간격 설정 */
+  font-size: 14px; /* 기본 텍스트 크기 */
+  color: #333;
+}
+#filmography .filmography-item p.title {
+  font-weight: bold; /* 제목 굵게 */
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+#filmography .filmography-item p.year {
+  font-size: 12px;
+  color: #666; /* 연도 색상 변경 */
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.pagination .next, .pagination .prev {
+  width: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.pagination a {
+  margin: 0 5px;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: black;
+  font-size: 16px;
+}
+
+.pagination a:hover {
+  color: #fb4357;
+  text-decoration: underline;
+}
+
+.pagination a.active {
+  color: #fb4357;
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 /*# sourceMappingURL=MovieSearch.css.map */

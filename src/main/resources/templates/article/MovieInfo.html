@@ -29,9 +29,9 @@
                 </div>
                 <hr>
                 <div class="details">
-                    <p>감독: <span class="director" th:text="${movieInfo.getDirectorName()}">곽경택</span></p>
-                    <p>배우: <span class="actors" th:each="actors : ${movieInfo.getActorNames()}" th:text="${actors} + ','">주원, 곽도원, 이유영</span></p>
-                    <p>장르: <span class="genre" th:each="genres : ${movieInfo.getGenres()}" th:text="${genres}">드라마</span></p>
+                    <p>감독: <span class="director" th:text="${movieInfo.getDirectorName()}"></span></p>
+                    <p>배우: <span class="actors" th:each="actors : ${movieInfo.getActorNames()}" th:text="${actors} + ','"></span></p>
+                    <p>장르: <span class="genre" th:each="genres : ${movieInfo.getGenres()}" th:text="${genres}"></span></p>
                     <p>기본 정보: <span class="info" th:text="${movieInfo.getGrade()}"></span> , <span class="info" th:text="${movieInfo.getMoTime()} + '분'"></span> , <span class="info" th:each="countries : ${movieInfo.getCountries()}" th:text="${countries}"></span></p>
                     <p>개봉: <span class="release-date" th:text="${movieInfo.getMoDate()}">2024.12.04</span></p>
                 </div>
@@ -124,7 +124,9 @@
                                 <p class="related-img"></p>
                                 <div class="works">
                                     <div th:each="movie : ${movieInfo.relatedMovies}">
-                                        <img th:src="${movie.movieImage}" alt="">
+                                        <a th:href="@{/movies/movieList/movieInfo/{id}(id=${movie.movieNum})}" class="movie-title">
+                                            <img th:src="${movie.movieImage}" alt="">
+                                        </a>
                                         <span th:text="${movie.movieTitle}"></span>
                                     </div>
                                 </div>
