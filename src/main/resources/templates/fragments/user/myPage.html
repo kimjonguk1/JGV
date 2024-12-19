@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<div class="content main" th:fragment="main">
+    <div class="main-container">
+        <div class="title-container">
+            <h2>MY 예매내역</h2>
+            <span>1건</span>
+        </div>
+        <div class="my-reservation">
+            <div class="reservation-info">
+                <span class="reservation-num">예매번호</span>
+                <span class="num-black">0345-</span>
+                <span class="num-red">1204-3633-1</span>
+                <span class="num-red">29</span>
+                <span class="reservation-num">(2024.12.04)</span>
+            </div>
+            <div class="reservation-container">
+                <div class="reservation-movie">
+                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="예매사진">
+                    <div class="movie-info">
+                        <div class="movie-title">
+                            <span>미세스 그린 애플 - 더 화이트 라운지 인 시네마</span>
+                        </div>
+                        <div class="cinema">
+                            <span>관람 극장</span>
+                            <span class="content">JGV 대구</span>
+                        </div>
+                        <div class="date">
+                            <span>관람 일시</span>
+                            <span class="content">2024.12.12(목) 19:00</span>
+                        </div>
+                        <div class="seat">
+                            <span>관람 좌석</span>
+                            <span class="content">H 03</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="payment">
+                    <span class="text">총 결제 금액</span>
+                    <span class="pay">22,000원</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content reservation" th:fragment="reservation">
+    <div class="my-reservation">
+        <h3>나의 예매내역</h3>
+        <div class="alert">
+            <span class="black">지난</span>
+            <span class="red"> 1개월</span>
+            <span class="black">까지의 예매내역을 확인하실 수 있으며, 영수증은</span>
+            <span class="red"> 신용카드 결제 내역</span>
+            <span class="black">만 출력 가능합니다.</span>
+        </div>
+    </div>
+    <div class="tooltip">
+        <h2 class="black">현장에서 발권하실 경우 꼭 </h2>
+        <h2 class="red"> 예매번호</h2>
+        <h2 class="black">를 확인하세요.</h2>
+    </div>
+    <div class="sub-tooltip">
+        <span>티켓판매기에서 예매번호를 입력하면 티켓을 발급받을 수 있습니다.</span>
+    </div>
+    <div class="reservation-main">
+        <div class="reservation-num">
+            <span class="res-num">예매번호</span>
+            <div class="-spring"></div>
+            <span class="black">0345-</span>
+            <span class="red">1204-3633-129</span>
+        </div>
+        <div class="reservation-info">
+            <div class="image-wrapper">
+                <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화 이미지">
+            </div>
+            <div class="movie-info"><!--col-->
+                <div class="title-container">
+                    <span class="movie">미세스 그린 애플 - 더 화이트 라운지 인 시네마</span>
+                    <div class="-spring"></div>
+                    <span class="pay">22,000원</span>
+                </div>
+                <div class="detail">
+                    <span >관람극장</span>
+                    <span class="black">CGV 대구</span>
+                    <div class="-spring"></div>
+                        <span>관람인원</span>
+                        <span class="black">일반 1</span>
+                </div>
+                <div class="detail">
+                    <span>관람일시</span>
+                    <span class="red">2024.12.12(목) 19:00</span>
+                    <div class="-spring"></div>
+                    <span>관람좌석</span>
+                    <span class="black">H 03</span>
+                </div>
+                <div class="detail">
+                    <span>상영관</span>
+                    <span class="black">5관(Laser)</span>
+                    <div class="-spring"></div>
+                    <span>매수</span>
+                    <span class="black">1매</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="content receipt" th:fragment="receipt">
+    영수증 내용
+</div>
+<div class="content personal" th:fragment="personal">
+    <form id="passwordCheck">
+        <div class="title">
+            <h2>비밀번호 확인</h2>
+        </div>
+        <div class="check-password">
+            <div class="caution">
+                <span>고객님의 개인정보를 위한 절차이오니, JGV 로그인 시 사용하는 비밀번호를 입력해 주세요.</span>
+            </div>
+            <div class="input-wrapper">
+                <label class="id-wrapper --obj-label">
+                    <span class="text">아이디</span>
+                    <span th:text="${session.user.getUsId()}" class="text">rlawhdfb123</span>
+                </label>
+                <label class="--obj-label">
+                    <span class="text">비밀번호</span>
+                    <input class="--obj-filed -border" type="password">
+                </label>
+            </div>
+        </div>
+        <div class="button-container">
+            <button class="complete" type="submit">확인</button>
+            <button class="home">
+                <a th:href="@{'./'}">JGV 첫화면으로</a>
+            </button>
+        </div>
+    </form>
+</div>
+<div class="content withdraw" th:fragment="withdraw">
+    <div id="user-withdraw">
+        <div class="caution">
+            <h2>나의 정보</h2>
+            <h3>회원 탈퇴</h3>
+        </div>
+        <div class="withdraw">
+            <div class="row">
+                <span>고객님의 개인정보 관리는</span>
+                <span style="color: #FB4357"> JGV 홈페이지에서 통합관리</span>
+                <span> 하고 있습니다.</span>
+            </div>
+            <div class="row">
+                <span>그동안 JGV 서비스를 이용해주셔서 감사합니다.</span>
+            </div>
+        </div>
+        <div class="button-container">
+            <button>JGV 회원탈퇴</button>
+        </div>
+    </div>
+</div>
+</html>

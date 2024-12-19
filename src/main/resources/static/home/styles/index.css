@@ -25,7 +25,7 @@ main > .contents > .video_wrapper {
   overflow: hidden;
   justify-content: center;
   position: relative;
-  z-index: 999;
+  z-index: 3;
 }
 main > .contents > .video_wrapper > strong {
   font-size: 2.5rem;
@@ -33,6 +33,7 @@ main > .contents > .video_wrapper > strong {
   color: #ffffff;
   transform: translateY(-100%);
   position: absolute;
+  z-index: 3;
 }
 main > .contents > .video_wrapper > span {
   font-size: 1.5rem;
@@ -40,6 +41,7 @@ main > .contents > .video_wrapper > span {
   color: #ffffff;
   transform: translateY(60%);
   position: relative;
+  z-index: 3;
 }
 main > .contents > .video_wrapper > .link-container {
   background-color: #9e9e9e;
@@ -70,7 +72,7 @@ main > .contents > .video_wrapper > video {
   justify-content: center;
   position: absolute;
   object-fit: cover;
-  z-index: 1;
+  z-index: 0;
 }
 main > .contents > .video_wrapper::after {
   content: "";

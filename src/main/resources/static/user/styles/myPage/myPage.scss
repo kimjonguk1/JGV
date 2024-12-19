@@ -1,0 +1,137 @@
+@import "../../../fragments/assets/styles/global";
+
+@import "main";
+@import "personals";
+@import "receipt";
+@import "reservation";
+@import "withdraw";
+
+
+
+body {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#myPage-main {
+  width: 980px;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+
+  > .profile-container {
+    width: 980px;
+    height: 20rem;
+    background-color: #f8f8f8;
+
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+
+    > .image-wrapper {
+      > img {
+        width: 8.4375rem;
+        border-radius: 999rem;
+        background-color: transparent;
+      }
+    }
+
+    > .user-info {
+      @include flex(row, center, center, 1rem);
+      height: 5rem;
+      border-bottom: 1px solid #e1e1e1;
+
+      > .name {
+        font-size: 2.5rem;
+        font-weight: 500;
+      }
+
+      > .id {
+        font-size: 1.1rem;
+      }
+
+      > .nickname {
+        font-size: 1.3rem;
+        font-weight: 600;
+      }
+    }
+  }
+
+  > .main {
+    @include flex(row, flex-start, flex-start, 1rem);
+    align-self: stretch;
+
+    > .user-tab {
+      align-items: flex-start;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: 13rem;
+
+      > ul {
+        align-items: stretch;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        justify-content: center;
+
+        > .title {
+          font-size: 1.2rem;
+          font-weight: 500;
+
+          > a {
+            color: #000000;
+          }
+        }
+        > .item {
+          align-items: flex-start;
+          display: flex;
+          flex-direction: row;
+          justify-content: stretch;
+          font-size: 0.8rem;
+
+          &:hover > img {
+            display: block;
+          }
+
+          > a {
+            color: #222222;
+            font-weight: 400;
+          }
+
+          > .-spring {
+            flex-grow: 1;
+          }
+
+          > img {
+            display: none;
+            width: 1rem;
+
+          }
+        }
+      }
+    }
+
+
+
+
+    > .main {
+      > .main-container {
+        > .title-container {
+          @include flex(row, center, flex-start, 1rem);
+        }
+      }
+    }
+
+    > .content {
+      flex-grow: 1;
+      flex-shrink: 1;
+    }
+  }
+}
+
