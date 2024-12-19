@@ -1,0 +1,196 @@
+#main {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#main > .header {
+  width: 980px;
+  max-width: 980px;
+  min-width: 980px;
+  height: 10rem;
+}
+#main > .main-container {
+  width: 100%;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  justify-content: center;
+}
+#main > .main-container > .main {
+  height: 565px;
+  width: 980px;
+  max-width: 980px;
+  min-width: 980px;
+  display: flex;
+  flex-direction: row;
+}
+#main > .main-container > .main > .section {
+  height: 100%;
+  border-left: 0.15rem solid #d4d3c9;
+}
+
+.button-container {
+  width: 61.25rem;
+  text-align: center;
+  color: rgb(51, 51, 51);
+  font-weight: 400;
+  height: 4rem;
+  padding: 0 0.09rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+}
+.button-container > .content-bar-timetable, .button-container .content-bar-retry {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 1.875rem;
+  width: 101px;
+  color: rgb(51, 51, 51);
+  background-color: #f2f0e5;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+.button-container > .content-bar-timetable {
+  background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/top_buttons.png");
+  background-repeat: no-repeat;
+  background-position: 0 -90px;
+}
+.button-container > .content-bar-retry {
+  width: 113px;
+  background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/top_buttons.png");
+  background-repeat: no-repeat;
+  background-position: 0 -120px;
+}
+
+#reservation {
+  background-color: rgb(246, 246, 244);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 61.25rem;
+  position: relative;
+  box-sizing: border-box;
+}
+#reservation > .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgb(51, 51, 51);
+  color: #d4d3c9;
+  font-weight: 400;
+  height: 2rem;
+  width: 100%;
+  padding: 0 0.09rem;
+}
+#reservation > .clear-text {
+  padding: 2rem 10rem 2rem 0.2rem;
+  font-weight: 500;
+  font-size: 2.5rem;
+}
+#reservation > .reservation-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 767.111px;
+  padding: 0 1rem 1rem 1rem;
+  border-bottom: 0.1rem solid rgb(51, 51, 51);
+}
+#reservation > .reservation-container > .table-div {
+  height: 10rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10rem;
+  padding-bottom: 2rem;
+}
+#reservation > .reservation-container > .table-div > div > .img {
+  height: 9.7rem;
+  width: 6.875rem;
+}
+#reservation > .reservation-container > .table-div > .table-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  width: 25rem;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+#reservation > .reservation-container > .table-div > .table-container > .title {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+#reservation > .reservation-container > .table-div > .table-container > .title > .text {
+  width: 4rem;
+  display: flex;
+  flex-direction: row;
+}
+#reservation > .reservation-container > .button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+#reservation > .reservation-container > .button > .print {
+  width: 8.125rem;
+  height: 2.8125rem;
+  background-color: red;
+  color: white;
+  margin: 0.2rem;
+  border: 0.1rem solid white;
+  border-radius: 0.4rem;
+}
+#reservation > .reservation-container > .button > .cancel {
+  width: 8.125rem;
+  height: 2.8125rem;
+  border: 0.1rem solid rgb(51, 51, 51);
+  border-radius: 0.4rem;
+}
+#reservation > .text {
+  box-sizing: border-box;
+  padding: 1.5rem 10rem 3rem 3rem;
+  display: flex;
+  flex-direction: row;
+}
+#reservation > .text > .text-title {
+  width: 6rem;
+  font-weight: 700;
+}
+#reservation > .text > .text-content {
+  gap: 0.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 61.25rem;
+  height: 13rem;
+}
+.add > a {
+  width: 100%;
+}
+.add > a .image {
+  width: 61.25rem;
+  height: 8.75rem;
+}
+
+/*# sourceMappingURL=reservation.css.map */
