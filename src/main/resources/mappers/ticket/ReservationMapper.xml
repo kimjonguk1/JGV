@@ -27,4 +27,13 @@
           and payment.`us_num` = #{usNum}
           and `pa_state` = false
     </select>
+    <select id="selectSeatBySeNum" parameterType="dev.jwkim.jgv.entities.ticket.SeatEntity">
+        select `se_num` as `seNum`
+        from jgv.seat
+                 left join jgv.cinema on seat.ci_num = cinema.ci_num
+                 left join jgv.theater on cinema.th_num = theater.th_num
+        where `se_name` = #{seName}
+          and `ci_name` = #{ciName}
+          and `th_name` = #{thName}
+    </select>
 </mapper>

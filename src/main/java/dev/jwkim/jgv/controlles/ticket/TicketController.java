@@ -125,15 +125,32 @@ public class TicketController {
     @ResponseBody
     public String postIndex(@RequestParam(value = "meName", required = false) String meName,
                             @RequestParam(value = "paPrice", required = false) int paPrice,
-                            @RequestParam(value = "usNum", required = false)
-                            int usNum,
-                            @RequestParam(value = "seName", required = false)
-                            int seName) {
+                            @RequestParam(value = "usNum", required = false) int usNum,
+                            @RequestParam(value = "seName", required = false) String[] seNames,  // 여러 좌석 정보 배열로 받기
+                            @RequestParam(value = "moTitle", required = false) String moTitle,
+                            @RequestParam(value = "ciName", required = false) String ciName,
+                            @RequestParam(value = "thName", required = false) String thName,
+                            @RequestParam(value = "scStartDate", required = false) LocalDateTime scStartDate) {
+
+        // seNames 배열이 비어 있는지 체크
+        if (seNames == null || seNames.length == 0) {
+            throw new IllegalArgumentException("좌석 정보가 전달되지 않았습니다.");
+        }
+
+        // 결제 정보 저장
         Result result = this.ticketService.insertPayment(meName, paPrice, usNum);
+
+        // 예약 정보 저장
+        Result results = this.ticketService.insertReservation(moTitle, ciName, thName, scStartDate, meName, usNum, seNames);
+
+        // 응답 데이터 생성
         JSONObject response = new JSONObject();
         response.put(Result.NAME, result.nameToLower());
+        response.put(Result.NAMES, results.nameToLower());
+
         return response.toString();
     }
+
 
     @RequestMapping(value = "/reservation", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getReservation(
