@@ -30,7 +30,7 @@ main {
       overflow: hidden;
       justify-content: center;
       position: relative;
-      z-index: 999;
+      z-index: 3;
 
 
       > strong {
@@ -39,6 +39,7 @@ main {
         color: #ffffff;
         transform: translateY(-100%);
         position: absolute;
+        z-index: 3;
       }
 
       > span {
@@ -47,6 +48,7 @@ main {
         color: #ffffff;
         transform: translateY(60%);
         position: relative;
+        z-index: 3;
       }
 
       > .link-container {
@@ -85,7 +87,7 @@ main {
         justify-content: center;
         position: absolute;
         object-fit: cover;
-        z-index: 1;
+        z-index: 0;
       }
       &::after {
         content: "";

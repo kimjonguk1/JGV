@@ -1,0 +1,120 @@
+.my-reservation {
+
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+  border-bottom: 2px solid #222222;
+  padding-bottom: 0.5rem;
+
+  > h3 {
+
+  }
+
+  > .alert {
+    > .red {
+      color: #FB4357;
+      font-weight: 500;
+    }
+
+    > .black {
+      color: #222222;
+      font-weight: 500;
+    }
+
+  }
+}
+
+.tooltip {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: center;
+  padding-top: 1rem;
+
+  > .black {
+    color: #222222;
+    font-weight: 500;
+  }
+
+  > .red {
+    color: #FB4357;
+    font-weight: 500;
+  }
+}
+
+.sub-tooltip {
+  @include flex(row, center, center, 0.5rem);
+  padding-top: 0.5rem;
+  color: #666666;
+  font-weight: 400;
+}
+
+.reservation-main {
+  @include flex(column, flex-start, flex-start, 1rem);
+
+  > .reservation-num {
+    @include flex(row, center, center);
+    width: 15rem;
+    padding-top: 2rem;
+    > .res-num {
+      font-size: 0.8rem;
+      color: #666666;
+    }
+
+    > .black {
+      color: #222222;
+      font-weight: 500;
+    }
+
+    > .red {
+      color: #FB4357;
+      font-weight: 500;
+    }
+  }
+
+  > .reservation-info {
+    @include flex(row, flex-start, flex-start, 1rem);
+    width: 100%;
+    height: auto;
+
+    > .movie-info {
+      @include flex(column, flex-start, flex-start, 1rem);
+      width: 100%;
+
+      > .detail {
+        @include flex(row, flex-start, center, 0.7rem);
+        width: 70%;
+
+        > .black {
+          color: #222222;
+          font-weight: 500;
+        }
+
+        > .red {
+          color: #FB4357;
+          font-weight: 500;
+        }
+      }
+
+      > .title-container {
+        @include flex(row, flex-start, flex-start, 1rem);
+        width: 100%;
+        border-bottom: 1px solid #666666;
+        padding-bottom: 1rem;
+
+        > .movie {
+          font-size: 1rem;
+          font-weight: 500;
+        }
+
+        > .pay {
+          color: #2275a4;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}

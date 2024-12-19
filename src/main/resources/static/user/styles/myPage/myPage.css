@@ -1,0 +1,524 @@
+.main-container {
+  width: 708px;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+.main-container > .title-container {
+  padding-top: 1rem;
+}
+.main-container > .my-reservation {
+  width: 100%;
+  height: auto;
+  border: 1px solid #666666;
+  padding: 1.5rem;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+.main-container > .my-reservation > .reservation-info {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  justify-content: center;
+}
+.main-container > .my-reservation > .reservation-info > .reservation-num {
+  font-size: 0.7rem;
+  color: #666666;
+  font-weight: 500;
+}
+.main-container > .my-reservation > .reservation-info > .num-black {
+  color: #222222;
+  font-weight: 700;
+}
+.main-container > .my-reservation > .reservation-info > .num-red {
+  color: #FB4357;
+  font-weight: 700;
+}
+.main-container > .my-reservation > .reservation-container {
+  width: 100%;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.main-container > .my-reservation > .reservation-container > .reservation-movie {
+  width: 100%;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e8e8e8;
+}
+.main-container > .my-reservation > .reservation-container > .reservation-movie > .movie-info {
+  width: 100%;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.main-container > .my-reservation > .reservation-container > .reservation-movie > .movie-info > .movie-title {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.main-container > .my-reservation > .reservation-container > .reservation-movie > .movie-info > .cinema, .main-container > .my-reservation > .reservation-container > .reservation-movie > .movie-info .date, .main-container > .my-reservation > .reservation-container > .reservation-movie > .movie-info .seat {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  font-weight: 400;
+  gap: 1rem;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+.main-container > .my-reservation > .reservation-container > .reservation-movie > .movie-info > .cinema > .content, .main-container > .my-reservation > .reservation-container > .reservation-movie > .movie-info .date > .content, .main-container > .my-reservation > .reservation-container > .reservation-movie > .movie-info .seat > .content {
+  font-weight: 700;
+}
+.main-container > .my-reservation > .reservation-container > .reservation-movie > img {
+  width: 55px;
+  height: 70px;
+}
+.main-container > .my-reservation > .reservation-container > .payment {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  padding-top: 1rem;
+}
+.main-container > .my-reservation > .reservation-container > .payment > .text {
+  font-weight: 500;
+}
+.main-container > .my-reservation > .reservation-container > .payment > .pay {
+  font-weight: 700;
+  color: #2275a4;
+}
+
+#passwordCheck {
+  width: 750px;
+  height: 15rem;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  justify-content: flex-start;
+}
+#passwordCheck > .title > h2 {
+  font-weight: 500;
+}
+#passwordCheck > .button-container {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: row;
+  justify-content: center;
+}
+#passwordCheck > .button-container > .complete {
+  width: 3.5rem;
+  height: 27px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: #FB4357;
+  color: #ffffff;
+}
+#passwordCheck > .button-container > .home {
+  width: 7rem;
+  height: 27px;
+  border: 2px solid #7b7b7b;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: transparent;
+}
+#passwordCheck > .button-container > .home > a {
+  color: #7b7b7b;
+}
+#passwordCheck > .check-password {
+  width: 100%;
+  height: 100%;
+  border-top: 1px solid #222222;
+  border-bottom: 1px solid #222222;
+  padding: 0 0.5rem;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+#passwordCheck > .check-password > .input-wrapper {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+}
+#passwordCheck > .check-password > .input-wrapper > .id-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 5rem;
+  justify-content: flex-start;
+}
+#passwordCheck > .check-password > .input-wrapper > .id-wrapper > .text {
+  color: #666666;
+  font-weight: 500;
+}
+#passwordCheck > .check-password > .input-wrapper > label {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 4rem;
+  justify-content: flex-start;
+}
+#passwordCheck > .check-password > .input-wrapper > label > .text {
+  color: #666666;
+  font-weight: 500;
+}
+#passwordCheck > .check-password > .input-wrapper > label > input {
+  height: 1.5rem;
+  width: 7.5rem;
+}
+#passwordCheck > .check-password > .caution {
+  width: 100%;
+  height: 1.5rem;
+  background-color: #e2e2e2;
+  font-size: 0.8rem;
+  font-weight: 400;
+  padding: 0.2rem 0.5rem;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.my-reservation {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+  border-bottom: 2px solid #222222;
+  padding-bottom: 0.5rem;
+}
+.my-reservation > .alert > .red {
+  color: #FB4357;
+  font-weight: 500;
+}
+.my-reservation > .alert > .black {
+  color: #222222;
+  font-weight: 500;
+}
+
+.tooltip {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: center;
+  padding-top: 1rem;
+}
+.tooltip > .black {
+  color: #222222;
+  font-weight: 500;
+}
+.tooltip > .red {
+  color: #FB4357;
+  font-weight: 500;
+}
+
+.sub-tooltip {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: center;
+  padding-top: 0.5rem;
+  color: #666666;
+  font-weight: 400;
+}
+.sub-tooltip > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.reservation-main {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+.reservation-main > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.reservation-main > .reservation-num {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: center;
+  width: 15rem;
+  padding-top: 2rem;
+}
+.reservation-main > .reservation-num > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.reservation-main > .reservation-num > .res-num {
+  font-size: 0.8rem;
+  color: #666666;
+}
+.reservation-main > .reservation-num > .black {
+  color: #222222;
+  font-weight: 500;
+}
+.reservation-main > .reservation-num > .red {
+  color: #FB4357;
+  font-weight: 500;
+}
+.reservation-main > .reservation-info {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+  width: 100%;
+  height: auto;
+}
+.reservation-main > .reservation-info > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.reservation-main > .reservation-info > .movie-info {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: flex-start;
+  width: 100%;
+}
+.reservation-main > .reservation-info > .movie-info > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.reservation-main > .reservation-info > .movie-info > .detail {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  gap: 0.7rem;
+  justify-content: center;
+  width: 70%;
+}
+.reservation-main > .reservation-info > .movie-info > .detail > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.reservation-main > .reservation-info > .movie-info > .detail > .black {
+  color: #222222;
+  font-weight: 500;
+}
+.reservation-main > .reservation-info > .movie-info > .detail > .red {
+  color: #FB4357;
+  font-weight: 500;
+}
+.reservation-main > .reservation-info > .movie-info > .title-container {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+  width: 100%;
+  border-bottom: 1px solid #666666;
+  padding-bottom: 1rem;
+}
+.reservation-main > .reservation-info > .movie-info > .title-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.reservation-main > .reservation-info > .movie-info > .title-container > .movie {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.reservation-main > .reservation-info > .movie-info > .title-container > .pay {
+  color: #2275a4;
+  font-weight: 700;
+}
+
+.withdraw #user-withdraw {
+  width: 780px;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+.withdraw #user-withdraw > .caution {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+}
+.withdraw #user-withdraw > .withdraw {
+  width: 100%;
+  height: 10rem;
+  border-top: 1px solid #9e9e9e;
+  border-bottom: 1px solid #9e9e9e;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+}
+.withdraw #user-withdraw > .withdraw > .row > span {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.withdraw #user-withdraw > .button-container {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.withdraw #user-withdraw > .button-container > button {
+  width: 7rem;
+  height: 27px;
+  background-color: #FB4357;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+body {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#myPage-main {
+  width: 980px;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+#myPage-main > .profile-container {
+  width: 980px;
+  height: 20rem;
+  background-color: #f8f8f8;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+}
+#myPage-main > .profile-container > .image-wrapper > img {
+  width: 8.4375rem;
+  border-radius: 999rem;
+  background-color: transparent;
+}
+#myPage-main > .profile-container > .user-info {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  height: 5rem;
+  border-bottom: 1px solid #e1e1e1;
+}
+#myPage-main > .profile-container > .user-info > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#myPage-main > .profile-container > .user-info > .name {
+  font-size: 2.5rem;
+  font-weight: 500;
+}
+#myPage-main > .profile-container > .user-info > .id {
+  font-size: 1.1rem;
+}
+#myPage-main > .profile-container > .user-info > .nickname {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+#myPage-main > .main {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+  align-self: stretch;
+}
+#myPage-main > .main > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#myPage-main > .main > .user-tab {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 13rem;
+}
+#myPage-main > .main > .user-tab > ul {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+}
+#myPage-main > .main > .user-tab > ul > .title {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+#myPage-main > .main > .user-tab > ul > .title > a {
+  color: #000000;
+}
+#myPage-main > .main > .user-tab > ul > .item {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  font-size: 0.8rem;
+}
+#myPage-main > .main > .user-tab > ul > .item:hover > img {
+  display: block;
+}
+#myPage-main > .main > .user-tab > ul > .item > a {
+  color: #222222;
+  font-weight: 400;
+}
+#myPage-main > .main > .user-tab > ul > .item > .-spring {
+  flex-grow: 1;
+}
+#myPage-main > .main > .user-tab > ul > .item > img {
+  display: none;
+  width: 1rem;
+}
+#myPage-main > .main > .main > .main-container > .title-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+#myPage-main > .main > .main > .main-container > .title-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#myPage-main > .main > .content {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+/*# sourceMappingURL=myPage.css.map */

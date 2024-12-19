@@ -9,16 +9,16 @@ import dev.jwkim.jgv.results.Result;
 import dev.jwkim.jgv.services.user.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Arrays;
 
 @Controller
 @RequestMapping("/user")
@@ -94,16 +94,26 @@ public class UserController {
 
 // endregion
 
+    // http://localhost:8080/user/myPage/receipt
     // region 마이페이지
-    @RequestMapping(value = "/myPage", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMyPage(UserEntity user, HttpSession session) {
 
+
+    @RequestMapping(value = "/myPage/{fragment}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user, HttpSession session, @PathVariable(value = "fragment") String fragment) {
+        String[] validFragments = {"main", "reservation", "receipt", "personal", "withdraw"};
+        if (fragment == null || Arrays.stream(validFragments).noneMatch(x -> x.equals(fragment))) {
+            response.setStatus(404);
+            return null;
+        }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
         modelAndView.addObject("session", session);
+        modelAndView.addObject("fragment", fragment);
         modelAndView.setViewName("user/myPage/myPage");
         return modelAndView;
     }
+
+
     // endregion
 
     // region 아이디 / 닉네임 중복 검사
