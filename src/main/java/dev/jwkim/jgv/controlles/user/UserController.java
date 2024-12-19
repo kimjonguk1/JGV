@@ -104,36 +104,6 @@ public class UserController {
         modelAndView.setViewName("user/myPage/myPage");
         return modelAndView;
     }
-
-    @RequestMapping(value = "/myPage1", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMyPage1(UserEntity user, HttpSession session) {
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("session", session);
-        modelAndView.setViewName("user/myPage/myPage1");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/myPage2", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMyPage2(UserEntity user, HttpSession session) {
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("session", session);
-        modelAndView.setViewName("user/myPage/myPage2");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/myPage3", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMyPage3(UserEntity user, HttpSession session) {
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("session", session);
-        modelAndView.setViewName("user/myPage/myPage3");
-        return modelAndView;
-    }
     // endregion
 
     // region 아이디 / 닉네임 중복 검사
