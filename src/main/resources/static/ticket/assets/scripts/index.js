@@ -341,7 +341,6 @@ const $payMovie = document.getElementById('pay-movie')
 const $payTheater = document.getElementById('pay-theater')
 const $payCinema = document.getElementById('pay-cinema')
 const $payTime = document.getElementById('pay-time')
-const $theaterMovie = document.getElementById('theater-movie');
 const $theaterCinema = document.getElementById('theater-cinema');
 
 const $checkboxAgreeAll = document.getElementById('checkbox-agree-all');
@@ -377,6 +376,7 @@ $rightButtons.forEach((x) => {
     x.onclick = () => {
         if (x.classList.contains('after')) {
             // 메인 바꾸기
+            const $theaterMovie = $containers.querySelector(':scope > .posters > .movie-info > .title');
 
             $mains.forEach((main) => {
                 main.classList.add('hidden');
@@ -412,7 +412,6 @@ $rightButtons.forEach((x) => {
                         $payTheater.innerText = `${$theaterTheater.innerText}`;
                         $payCinema.innerText = `${$theaterCinema.innerText}`;
                         $payTime.innerText = `${$theaterTime.innerText}`;
-
 
                         rows.forEach(row => {
                             const tr = document.createElement('tr'); // 행 생성
@@ -771,7 +770,7 @@ function TCPPIC() {
 
 $payForm.onsubmit = (e) => {
     e.preventDefault(); // 기본 폼 제출 방지
-
+    const $theaterMovie = $containers.querySelector(':scope > .posters > .movie-info > .title');
     // 약관 동의를 체크했는지 확인
     if ($checkboxAgreeAll.checked && $checkboxAgreeSolo.checked) {
         // 새로운 XMLHttpRequest 객체 생성
@@ -780,25 +779,29 @@ $payForm.onsubmit = (e) => {
         // FormData 객체 생성
         const formData = new FormData();
 
-
         // 세션에서 userId 값을 가져옴
-        const sessionUsId = sessionStorage.getItem('userId');  // 세션에서 userId를 가져오기
+        const sessionUsId = sessionStorage.getItem('user').trim();  // 세션에서 userId를 가져오기
         if (sessionUsId) {
-            formData.append("usId", sessionUsId);  // 세션에서 가져온 userId 추가
+            formData.append("usNum", sessionUsId);  // 세션에서 가져온 userId 추가
         } else {
-            console.log('세션에 userId가 없습니다.');
+            return alert('로그인해주세요.');
         }
+        let rawDateStr = $theaterTime.innerText;
+        let formattedDate = rawDateStr
+            .replace(/\([^)]+\)/, "T") // "(금)" 제거
+            .replace(/\./g, "-"); // "." -> "-"
 
         // 폼 데이터 추가 (span의 텍스트는 innerText로 가져오기)
-        formData.append("paPrice", document.getElementById('pay-price-won-int').innerText); // span 요소의 텍스트
-        formData.append("meName", document.getElementById('method').innerText);  // span 요소에서 결제 방법 번호 가져오기
-
-        // 좌석 정보 처리 (seats가 input 요소가 아니라면 innerText 사용)
-        const seats = Array.from(document.querySelectorAll('.pay-seat'));  // pay-seat 클래스를 가진 모든 요소를 선택
-        seats.forEach((seat, index) => {
-            formData.append(`seName${index}`, seat.innerText.trim());  // span 요소의 텍스트
+        formData.append("paPrice", document.getElementById('pay-price-won-int').innerText.trim()); // span 요소의 텍스트
+        formData.append("meName", document.getElementById('method').innerText.trim());  // span 요소에서 결제 방법 번호 가져오기
+        formData.append("moTitle", $theaterMovie.innerText);
+        formData.append("ciName", $theaterCinema.innerText);
+        formData.append("thName", $theaterTheater.innerText);
+        formData.append("scStartDate", formattedDate);
+        selectedSeats.forEach(seat => {
+            console.log(seat)
+            formData.append("seName", seat);
         });
-
         // 요청 상태 변화 처리
         xhr.onreadystatechange = () => {
             if (xhr.readyState !== XMLHttpRequest.DONE) {
@@ -817,11 +820,9 @@ $payForm.onsubmit = (e) => {
 
 
         // 요청 설정 및 전송
-        xhr.open('POST', '../ticket/reservation');  // 실제 결제 처리 URL로 수정
+        xhr.open('POST', location.href);
         xhr.send(formData);
-
     } else {
         alert("약관을 모두 동의해주세요");
     }
 };
-

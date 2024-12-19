@@ -611,18 +611,32 @@
             <div class="movie-container" data-id="movieInfo"></div>
             <div class="posters info hidden" data-id="movieInfo">
                 <div th:if="${movieVos != null}"
-                     th:each="vo : ${movieVos}"
+                     th:each="vos : ${movieVos}"
                      class="poster">
-                    <img class="movie" th:src="${vo.getMImgUrl()}"
+                    <img class="movie" th:src="${vos[0][1]}"
+                         alt="포스터">
+                </div>
+                <div th:if="${Vos != null}"
+                     th:each="vos : ${Vos}"
+                     class="poster">
+                    <img class="movie" th:src="${vos[0][1]}"
                          alt="포스터">
                 </div>
                 <div th:if="${movieVos != null}"
-                     th:each="vo : ${movieVos}"
+                     th:each="vos : ${movieVos}"
                      class="movie-info">
-                    <div th:text="${vo.getMoTitle()}" class="title"></div>
+                    <a href="#" th:text="${vos[0][0]}" class="title"></a>
                     <div class="stretch"></div>
-                    <!--                <div class="cinema-type">2D</div>-->
-                    <!--                <div class="rating">12세 관람가</div>-->
+                    <div class="unique-cinema-type"></div>
+                    <div th:text="${vos[0][2]}" class="unique-rating hidden"></div>
+                </div>
+                <div th:if="${Vos != null}"
+                     th:each="vos : ${Vos}"
+                     class="movie-info">
+                    <a href="#" th:text="${vos[0][0]}" class="title"></a>
+                    <div class="stretch"></div>
+                    <div class="unique-cinema-type"></div>
+                    <div th:text="${vos[0][2]}" class="unique-rating hidden"></div>
                 </div>
             </div>
         </div>
@@ -645,18 +659,18 @@
                 <span class="head">인원</span>
             </div>
         </div>
+
         <img class="info" src="https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/split.png" alt="split ">
         <div class="seat-container"></div>
         <div class="seat info hidden">
             <div class="text seat-title">
                 <span class="head">좌석명</span>
             </div>
-            <div class="text seat-content">
+            <div class="text seat-content ">
                 <span class="head">좌석번호</span>
             </div>
         </div>
-        <img class="info hidden" src="https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/split.png"
-             alt="split ">
+        <img class="info hidden" src="https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/split.png" alt="split ">
         <div class="price info hidden">
             <div class="text price-title"></div>
             <div class="text price-content"></div>
@@ -664,7 +678,7 @@
         <div class="payment-container"></div>
         <div class="first right-button" data-id="main"></div>
         <div class="second right-button hidden" data-id="main-seat"></div>
-        <div class="third right-button hidden" data-id="main-payment"></div>
+        <div class="third right-button hidden after" data-id="main-payment"></div>
     </div>
 </section>
 <!------------------------------------------------------------------------------------>

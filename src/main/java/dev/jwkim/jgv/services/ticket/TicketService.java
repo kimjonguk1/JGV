@@ -12,6 +12,7 @@ import dev.jwkim.jgv.entities.ticket.SeatEntity;
 import dev.jwkim.jgv.exceptions.TransactionalException;
 import dev.jwkim.jgv.mappers.ticket.MethodMapper;
 import dev.jwkim.jgv.mappers.ticket.PaymentMapper;
+import dev.jwkim.jgv.mappers.ticket.ReservationMapper;
 import dev.jwkim.jgv.mappers.ticket.TicketMapper;
 import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.vos.theater.MovieVo;
@@ -42,6 +43,7 @@ public class TicketService {
     private final TicketMapper ticketMapper;
     private final MethodMapper methodMapper;
     private final PaymentMapper paymentMapper;
+    private final ReservationMapper reservationMapper;
 
     // 시간 정보를 찾아오는 것.
     public ScreenVo[] selectScreenDatesByMovieAndTheaterAndDate(String moTitle, String thName, String scStartDate) {
@@ -425,5 +427,57 @@ public class TicketService {
 
         System.out.println("결제 정보 삽입 성공: " + payment);
         return CommonResult.SUCCESS;
+    }
+
+    @Transactional // 트랜잭션 처리 (성공 시 커밋, 실패 시 롤백)
+    public CommonResult insertReservation(String moTitle, String ciName, String thName, LocalDateTime scStartDate, String meName, int usNum, String[] seNames) {
+        // 영화 상영 정보 조회
+        ScreenEntity[] screenEntities = this.reservationMapper.selectReservationByScNum(moTitle, ciName, thName, scStartDate);
+        // 결제 정보 조회
+        PaymentEntity[] paymentEntities = this.reservationMapper.selectPaymentByPaNum(meName, usNum);
+
+        if (screenEntities == null) {
+            System.out.println("영화 정보가 없습니다: " + moTitle + ", " + ciName + ", " + thName + ", " + scStartDate);
+            return CommonResult.FAILURE;
+        }
+
+        if (paymentEntities == null) {
+            System.out.println("결제 내역이 없습니다: " + meName + ", " + usNum);
+            return CommonResult.FAILURE;
+        }
+
+        // 좌석 정보가 올바른지 확인
+        if (seNames == null || seNames.length == 0) {
+            System.out.println("좌석 정보가 잘못되었습니다.");
+            return CommonResult.FAILURE;
+        }
+
+        try {
+            // 여러 좌석에 대해 예약 처리
+            for (String seName : seNames) {
+                // 좌석 정보 조회
+                SeatEntity[] seatEntities = this.reservationMapper.selectSeatBySeNum(seName, ciName, thName);
+
+                if (seatEntities == null || seatEntities.length == 0) {
+                    System.out.println("잘못된 좌석 정보: " + seName);
+                    continue;  // 잘못된 좌석은 건너뛰고 계속 진행
+                }
+
+                // 예약 생성
+                ReservationEntity reservation = new ReservationEntity();
+                reservation.setScNum(screenEntities[0].getScNum());  // 상영 정보 설정
+                reservation.setSeNum(seatEntities[0].getSeNum());  // 좌석 정보 설정
+                reservation.setPaNum(paymentEntities[0].getPaNum());  // 결제 정보 설정
+
+                // 예약 정보 저장
+                this.reservationMapper.insertReservation(reservation);
+                System.out.println("예약 성공! 좌석: " + seName);
+            }
+
+            return CommonResult.SUCCESS;
+        } catch (Exception e) {
+            System.err.println("예약 처리 중 오류 발생: " + e.getMessage());
+            throw new RuntimeException("예약 트랜잭션 실패", e); // 트랜잭션 롤백
+        }
     }
 }

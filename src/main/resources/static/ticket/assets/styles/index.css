@@ -1443,10 +1443,14 @@
 }
 .control-bar > .container > .containers > .posters > .movie-info > .title {
   pointer-events: all;
+  color: #cccccc;
 }
 .control-bar > .container > .containers > .posters > .movie-info > .title:hover {
   cursor: pointer;
   text-decoration: underline;
+}
+.control-bar > .container > .containers > .posters > .movie-info > .unique-rating.hidden {
+  display: none;
 }
 .control-bar > .container > .theater-container {
   width: 185px;
@@ -1456,6 +1460,17 @@
   background-position: 50% -68px;
 }
 .control-bar > .container > .theater-container.hidden {
+  display: none;
+}
+.control-bar > .container > .seat-container {
+  width: 111px;
+  height: 100%;
+  margin: 2rem 0 0 1.5rem;
+  background-image: url("https://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/tnb/tnb_steps.png");
+  background-repeat: no-repeat;
+  background-position: 50% -190px;
+}
+.control-bar > .container > .seat-container.hidden {
   display: none;
 }
 .control-bar > .container > .seat-container {
