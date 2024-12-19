@@ -339,7 +339,7 @@ public class MovieService {
         List<String> actorNames = charactorMapper.selectActorNamesByMovieId(movieId);
         List<String> actorImages = charactorMapper.selectActorImagesByMovieId(movieId);
         //연관 작품을 위한 메서드
-        List<Map<String, String>> relatedMovies = getRelatedMovie(movieInfo.getDirectorName());
+        List<Map<String, Object>> relatedMovies = getRelatedMovie(movieInfo.getDirectorName());
 
         movieInfo.setRelatedMovies(relatedMovies);
         movieInfo.setActorNames(actorNames);
@@ -347,8 +347,8 @@ public class MovieService {
         return movieInfo;
     }
 
-    public List<Map<String, String>> getRelatedMovie(String directorName) {
-        List<Map<String, String>> relatedMovies = movieMapper.getRelatedMoviesByDirector(directorName);
+    public List<Map<String, Object>> getRelatedMovie(String directorName) {
+        List<Map<String, Object>> relatedMovies = movieMapper.getRelatedMoviesByDirector(directorName);
         return relatedMovies;
     }
 
@@ -381,4 +381,8 @@ public class MovieService {
         }
     }
 
+
+    public List<Map<String, Object>> findMoviesByCharacterId(Integer charId) {
+        return movieMapper.findMoviesByCharacterId(charId);
+    }
 }

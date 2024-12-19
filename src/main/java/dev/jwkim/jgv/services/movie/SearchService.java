@@ -5,6 +5,8 @@ import dev.jwkim.jgv.DTO.Movie_ImageDTO;
 import dev.jwkim.jgv.DTO.Movie_InfoDTO;
 import dev.jwkim.jgv.mappers.movie.MovieMapper;
 import dev.jwkim.jgv.results.CommonResult;
+import dev.jwkim.jgv.vos.PageVo;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,11 +20,14 @@ public class SearchService {
         this.movieMapper = movieMapper;
     }
 
-    public List<Movie_ImageDTO> searchMoviesByKeyword (String keyword) {
-        if(keyword == null || keyword.isEmpty()) {
-            return null;
-        }
-        return this.movieMapper.findMovieByKeyword(keyword);
+    public Pair<PageVo, List<Movie_ImageDTO>> searchMoviesByKeyword (String keyword, int requestPage) {
+        int totalCount = movieMapper.getMovieCountByKeyword(keyword);
+
+        PageVo pageVo = new PageVo(requestPage, totalCount);
+
+        List<Movie_ImageDTO> movies = movieMapper.findMovieByKeyword(keyword, pageVo.offsetCount, pageVo.countPerPage);
+
+        return Pair.of(pageVo, movies);
     }
 
     public List<CharacterDTO> searchPeopleByKeyword (String keyword) {

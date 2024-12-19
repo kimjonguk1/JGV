@@ -108,7 +108,8 @@
 
     <select id="getRelatedMoviesByDirector" resultType="Map">
         SELECT m.mo_title AS movieTitle,
-               mi.m_img_url AS movieImage
+               mi.m_img_url AS movieImage,
+               m.mo_num AS movieNum
         FROM jgv.movie m
         INNER JOIN jgv.movie_charactor mc ON m.mo_num = mc.mo_num
         INNER JOIN jgv.charactor c ON mc.ch_num = c.ch_num
@@ -131,6 +132,8 @@
         FROM jgv.movie m
                  LEFT JOIN jgv.movie_image mi on m.mo_num = mi.mo_num
         WHERE m.mo_title LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY m.mo_date DESC
+        LIMIT #{offsetCount}, #{countPerPage}
     </select>
 
     <select id="findCharacterByKeyword" resultType="dev.jwkim.jgv.DTO.CharacterDTO">
@@ -178,5 +181,22 @@
         AND c.ch_job IN ('감독', '배우')
         ORDER BY m.mo_date DESC
         LIMIT 5
+    </select>
+
+    <select id="findMoviesByCharacterId" resultType="Map">
+        SELECT DISTINCT m.mo_num AS moNum,
+                        m.mo_title AS movieTitle,
+                        mi.m_img_url AS movieImage
+        FROM jgv.movie m
+                 INNER JOIN jgv.movie_charactor mc ON m.mo_num = mc.mo_num
+                 LEFT JOIN jgv.movie_image mi ON m.mo_num = mi.mo_num
+        WHERE mc.ch_num = #{charId}
+        ORDER BY m.mo_date DESC
+    </select>
+    
+    <select id="getMovieCountByKeyword" resultType="int">
+        SELECT COUNT(*)
+        FROM jgv.movie
+        WHERE mo_title LIKE CONCAT('%', #{keyword}, '%')
     </select>
 </mapper>
