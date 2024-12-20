@@ -75,7 +75,9 @@ public class MoiveListController {
         mav.setViewName("article/MovieInfo");
         Movie_InfoDTO movieInfo = movieService.selectMovieInfoById(id);
         mav.addObject("movieInfo", movieInfo);
-        mav.addObject("session", session);
+        Object user = session.getAttribute("user");
+        mav.addObject("sessionUser", user);
+        System.out.println(session.getAttribute("user"));
         return mav;
     }
 
