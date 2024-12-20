@@ -1,10 +1,7 @@
 package dev.jwkim.jgv.controlles.ticket;
 
-import dev.jwkim.jgv.entities.theater.CinemaTypeEntity;
 import dev.jwkim.jgv.entities.theater.ScreenEntity;
 import dev.jwkim.jgv.entities.theater.TheaterEntity;
-import dev.jwkim.jgv.entities.ticket.ReservationEntity;
-import dev.jwkim.jgv.entities.ticket.SeatEntity;
 import dev.jwkim.jgv.entities.user.UserEntity;
 import dev.jwkim.jgv.results.Result;
 import dev.jwkim.jgv.services.theater.TheaterService;
@@ -54,15 +51,10 @@ public class TicketController {
             SortedSet<String> thKeys = new TreeSet<>();
             for (MovieVo vo : movieVos) {
                 keys.add(vo.getMoTitle());
-                // 영화제목
                 keys.add(vo.getMImgUrl());
-                // 포스터 이미지
                 keys.add(vo.getRaGrade());
-                // 등급
                 keys.add(String.valueOf(vo.getTheaterCount()));
-                // 영화관 갯수
                 keys.add(vo.getRegName());
-                // 지역 이름
                 thKeys.add(vo.getThName());
             }
             vos.add(new Object[]{keys, thKeys, moMaps});
@@ -82,17 +74,14 @@ public class TicketController {
                     case "전체관람가" -> vo.setRaGrade("all");
                     case "미정" -> vo.setRaGrade("none");
                 }
-                // 영화 제목과 등급을 결합하여 key로 사용
                 String key = vo.getMoTitle() + "&&" + vo.getRaGrade();
-
-                // Map에 저장하여 중복을 제거
                 map.put(key, true);
             }
             vos.add(new Object[]{map, moMaps});
             modelAndView.addObject("theaterVos", vos);
         }
         if (moTitle == null && thName == null && scStartDate != null) {
-            MovieVo[] movieVos = this.ticketService.selectAllMoviesByscStartDate(scStartDate);
+            MovieVo[] movieVos = this.ticketService.selectAllMoviesByScStartDate(scStartDate);
             List<Object[]> vos = new ArrayList<>();
             SortedSet<String> thKeys = new TreeSet<>();
             Map<String, Boolean> map = new HashMap<>();
@@ -104,10 +93,7 @@ public class TicketController {
                     case "전체관람가" -> vo.setRaGrade("all");
                     case "미정" -> vo.setRaGrade("none");
                 }
-                // 영화 제목과 등급을 결합하여 key로 사용
                 String key = vo.getMoTitle() + "&&" + vo.getRaGrade();
-
-                // Map에 저장하여 중복을 제거
                 map.put(key, true);
                 thKeys.add(vo.getThName());
             }
@@ -121,7 +107,7 @@ public class TicketController {
             modelAndView.addObject("moThVos", vos);
         }
         if (moTitle != null && thName == null && scStartDate != null) {
-            MovieVo[] movieVos = this.ticketService.selectAllMoviesBymoTitleAndscStartDate(moTitle, scStartDate);
+            MovieVo[] movieVos = this.ticketService.selectAllMoviesByMoTitleAndScStartDate(moTitle, scStartDate);
             List<Object[]> vos = new ArrayList<>();
             SortedSet<String> thKeys = new TreeSet<>();
             for (MovieVo vo : movieVos) {
@@ -157,26 +143,18 @@ public class TicketController {
             Set<String> MoKeys = new LinkedHashSet<>();
             for (MovieVo vo : movieVos) {
                 MoKeys.add(vo.getMoTitle());
-                // 영화제목
                 MoKeys.add(vo.getMImgUrl());
-                // 포스터 이미지
                 MoKeys.add(vo.getRaGrade());
-                // 등급
                 MoKeys.add(String.valueOf(vo.getTheaterCount()));
-                // 영화관 갯수
                 MoKeys.add(vo.getRegName());
-                // 지역 이름
             }
             vos.add(new Object[]{MoKeys});
             for (ScreenVo screen : screens) {
                 List<String> keys = new ArrayList<>();
                 List<String> contents = new ArrayList<>();
                 keys.add(screen.getCitName());
-                // 2D
                 keys.add(screen.getCiName());
-                // 5관
                 keys.add(String.valueOf(screen.getSeatCount()));
-                // 40석
                 contents.add(String.valueOf(screen.getScStartDate()));
                 contents.add(String.valueOf(screen.getSeatCount()));
                 times.computeIfAbsent(keys, k -> new ArrayList<>()).add(contents);
