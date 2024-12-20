@@ -14,6 +14,7 @@
         WHERE ch_name = #{CharacterName}
         AND (ch_job = #{job} OR #{job} IS NULL)
         AND (ch_birth = #{birth} OR #{birth} IS NULL)
+        LIMIT 1
     </select>
 
     <insert id="insertCharacterImg">
