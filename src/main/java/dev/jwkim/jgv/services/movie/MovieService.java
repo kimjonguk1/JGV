@@ -51,6 +51,7 @@ public class MovieService {
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
+    // 트랜잭션 격리 수준 (동시성 이슈를 해결하기 위해)
     public boolean insertAllMovies(MovieEntity movieEntity) {
         try {
             // 병렬로 크롤링 및 삽입 작업 수행
