@@ -11,6 +11,7 @@ import dev.jwkim.jgv.results.movie.SearchResult;
 import dev.jwkim.jgv.services.movie.MovieService;
 import dev.jwkim.jgv.services.movie.SearchService;
 import dev.jwkim.jgv.vos.PageVo;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,12 +70,12 @@ public class MoiveListController {
     }
 
     @RequestMapping(value = "/movieList/movieInfo/{id}")
-    public ModelAndView getMovieDetail(@PathVariable("id") Integer id) {
+    public ModelAndView getMovieDetail(@PathVariable("id") Integer id, HttpSession session) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("article/MovieInfo");
         Movie_InfoDTO movieInfo = movieService.selectMovieInfoById(id);
-        System.out.println(movieInfo.getRelatedMovies().get(0));
         mav.addObject("movieInfo", movieInfo);
+        mav.addObject("session", session);
         return mav;
     }
 
@@ -122,6 +123,9 @@ public class MoiveListController {
         if(people == null) {
             people = new ArrayList<>();
         }
+        System.out.println(keyword);
+        System.out.println(people);
+        System.out.println(pageVo);
         mav.addObject("keyword", keyword);
         mav.addObject("people", people);
         mav.addObject("pageVo", pageVo);
