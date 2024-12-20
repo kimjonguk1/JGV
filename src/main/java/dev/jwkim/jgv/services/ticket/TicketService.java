@@ -28,6 +28,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URL;
@@ -529,7 +530,7 @@ public class TicketService {
         return citPrice;
     }
 
-    @Transactional // 트랜잭션 처리 (성공 시 커밋, 실패 시 롤백)
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED) // 모든 예외에 대해 롤백
     public CommonResult insertPayment(String meName, int paPrice, int usNum) {
         // 결제 방법 번호 조회
         MethodEntity methodNum = this.methodMapper.selectPaymentMeNum(meName);
@@ -575,10 +576,12 @@ public class TicketService {
         return CommonResult.SUCCESS;
     }
 
-    @Transactional // 트랜잭션 처리 (성공 시 커밋, 실패 시 롤백)
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED) // 모든 예외에 대해 롤백
     public CommonResult insertReservation(String moTitle, String ciName, String thName, LocalDateTime scStartDate, String meName, int usNum, String[] seNames) {
         // 영화 상영 정보 조회
         ScreenEntity[] screenEntities = this.reservationMapper.selectReservationByScNum(moTitle, ciName, thName, scStartDate);
+
         // 결제 정보 조회
         PaymentEntity[] paymentEntities = this.reservationMapper.selectPaymentByPaNum(meName, usNum);
 
@@ -591,6 +594,9 @@ public class TicketService {
             System.out.println("결제 내역이 없습니다: " + meName + ", " + usNum);
             return CommonResult.FAILURE;
         }
+
+        // 결제 정보의 상태를 업데이트할 PaymentEntity 가져오기
+        PaymentEntity payment = paymentEntities[0]; // 첫 번째 결제 정보를 가져옴
 
         // 좌석 정보가 올바른지 확인
         if (seNames == null || seNames.length == 0) {
@@ -613,11 +619,19 @@ public class TicketService {
                 ReservationEntity reservation = new ReservationEntity();
                 reservation.setScNum(screenEntities[0].getScNum());  // 상영 정보 설정
                 reservation.setSeNum(seatEntities[0].getSeNum());  // 좌석 정보 설정
-                reservation.setPaNum(paymentEntities[0].getPaNum());  // 결제 정보 설정
+                reservation.setPaNum(payment.getPaNum());  // 결제 정보 설정
 
                 // 예약 정보 저장
                 this.reservationMapper.insertReservation(reservation);
                 System.out.println("예약 성공! 좌석: " + seName);
+            }
+
+            // 모든 예약이 성공했으므로 결제 상태를 업데이트
+            payment.setPaState(true);
+            int updatedRows = this.paymentMapper.updatePaymentState(payment.getPaNum(), payment.isPaState());
+            if (updatedRows <= 0) {
+                System.out.println("결제 상태 업데이트 실패. PaNum: " + payment.getPaNum());
+                return CommonResult.FAILURE;
             }
 
             return CommonResult.SUCCESS;
