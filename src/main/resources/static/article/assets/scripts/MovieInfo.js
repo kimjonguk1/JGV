@@ -1,8 +1,12 @@
 const $tabsContainer = document.querySelector('.tabs')
 const $sections = document.querySelectorAll('section')
+const $writeReviewButton = document.querySelector('.write-review-btn');
+const $myReviewButton = document.querySelector('.my-review-btn');
+const $modal = document.querySelector('.reserve-modal');
 
 document.querySelector('.tab-item a[href = "#overview"]').classList.add('active')
 document.getElementById('overview').classList.add('active')
+
 
 // 쓰로틀링 적용
 let isThrottling = false;
@@ -40,3 +44,26 @@ $bottomBtn.onclick = () => {
         behavior: "smooth"
     })
 }
+
+$writeReviewButton.addEventListener('click', () => {
+    console.log(sessionUser)
+    if(sessionUser !== 'null') {
+        $modal.style.display = 'block'
+        console.log('세션 있음');
+    }else {
+        const result = confirm('로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?');
+        if(result) {
+            window.location.href = '/user/login'
+        } else {
+            return;
+        }
+    }
+})
+
+$myReviewButton.addEventListener('click', () => {
+    if(sessionUser) {
+        window.location.href = '/user/my-review'
+    } else {
+        window.location.href = '/user/login'
+    }
+})

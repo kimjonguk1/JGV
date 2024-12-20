@@ -17,6 +17,7 @@
 <th:block th:replace="~{fragments/common.html :: header}"></th:block>
 <th:block th:replace="~{fragments/common.html :: nav}"></th:block>
 <main id="main" class="frame main">
+    <div class="reserve-modal" style="display: none"></div>
     <div class="movie-detail-container" th:if="${movieInfo != null}">
         <div class="movie-header">
             <div class="poster">
@@ -157,4 +158,7 @@
 <th:block th:replace="~{fragments/common.html :: footer}"></th:block>
 
 </body>
+<script th:inline="javascript">
+    const sessionUser = /*[[${sessionUser != null ? '"' + sessionUser + '"' : 'null'}]]*/ null;
+</script>
 </html>
