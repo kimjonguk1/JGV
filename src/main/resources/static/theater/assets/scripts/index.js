@@ -2,6 +2,14 @@ const $main = document.getElementById('main');
 const $items = $main.querySelector(':scope > .img > .main');
 const $theater = Array.from($items.querySelectorAll(':scope > .item'));
 const $itemContainer = $main.querySelector(':scope > .img > .theater-container > .item-container');
+const $buttonContainer = $main.querySelector(':scope > .button-container');
+const $buttons = Array.from($buttonContainer.querySelectorAll(':scope > .button'));
+const $informations = Array.from($main.querySelectorAll(':scope > .information'));
+const $selects = Array.from($buttonContainer.querySelectorAll(':scope > .button > .select'));
+const $cinemaInformation = $main.querySelector(':scope > .information[data-id="cinema"]');
+const $dayContainers = $cinemaInformation.querySelector(':scope > .cinema-info > .cinema-header > .day-containers');
+const $dayContainer = $dayContainers.querySelector(':scope > .day-container')
+const $days = Array.from($dayContainer.querySelectorAll(':scope > .item'))
 
 {
     $theater.forEach(($item) => {
@@ -43,7 +51,12 @@ const $itemContainer = $main.querySelector(':scope > .img > .theater-container >
                                 alert('오류 발생');
                                 return;
                             }
-                            console.log(xhr1.responseText);
+                            const $days = Array.from(new DOMParser().parseFromString(xhr1.responseText, 'text/html').querySelectorAll('.day-container'));
+                            console.log($days);
+                            $dayContainer.innerHTML = '';
+                            $days.forEach((day) => {
+                                $dayContainer.replaceWith(day);
+                            })
                         }
                         xhr1.open('GET', url1.toString());
                         xhr1.send();
@@ -162,10 +175,6 @@ const $itemContainer = $main.querySelector(':scope > .img > .theater-container >
 //     }
 // })
 
-const $buttonContainer = $main.querySelector(':scope > .button-container');
-const $buttons = Array.from($buttonContainer.querySelectorAll(':scope > .button'));
-const $informations = Array.from($main.querySelectorAll(':scope > .information'));
-const $selects = Array.from($buttonContainer.querySelectorAll(':scope > .button > .select'));
 $buttons.forEach(($item) => {
     $item.onclick = () => {
         $selects.forEach((x) => {
@@ -183,9 +192,6 @@ $buttons.forEach(($item) => {
     }
 })
 
-const $cinemaInformation = $main.querySelector(':scope > .information[data-id="cinema"]');
-const $dayContainer = $cinemaInformation.querySelector(':scope > .cinema-info > .cinema-header > .day-containers');
-const $days = Array.from($dayContainer.querySelectorAll(':scope > .day-container > .item'))
 $days.forEach(($item) => {
     $item.onclick = () => {
         $days.forEach((y) => {

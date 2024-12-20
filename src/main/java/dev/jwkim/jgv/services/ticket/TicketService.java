@@ -46,8 +46,12 @@ public class TicketService {
     private final PaymentMapper paymentMapper;
     private final ReservationMapper reservationMapper;
 
-    // 시간 정보를 찾아오는 것.
     public ScreenVo[] selectScreenDatesByMovieAndTheaterAndDate(String moTitle, String thName, String scStartDate) {
+        if (moTitle == null || moTitle.isEmpty() || moTitle.length() > 100 ||
+                thName == null || thName.isEmpty() || thName.length() > 30 ||
+                scStartDate == null || scStartDate.isEmpty() || scStartDate.length() > 10) {
+            return null;
+        }
         TheaterEntity theater = this.ticketMapper.selectTheater(thName);
         MovieEntity movie = this.ticketMapper.selectMovieNumByMovieTitle(moTitle);
         return this.ticketMapper.selectScreenDatesByMovieAndTheaterAndDate(movie.getMoNum(), theater.getThNum(), scStartDate);
@@ -67,14 +71,14 @@ public class TicketService {
         return this.ticketMapper.selectAllMoviesByThName(thName);
     }
 
-    public MovieVo[] selectAllMoviesByscStartDate(String scStartDate) {
+    public MovieVo[] selectAllMoviesByScStartDate(String scStartDate) {
         if (scStartDate == null || scStartDate.isEmpty()) {
             return null;
         }
         return this.ticketMapper.selectAllMoviesByscStartDate(scStartDate);
     }
 
-    public MovieVo[] selectAllMoviesBymoTitleAndscStartDate(String moTitle, String scStartDate) {
+    public MovieVo[] selectAllMoviesByMoTitleAndScStartDate(String moTitle, String scStartDate) {
         if (moTitle == null || moTitle.isEmpty() ||
                 scStartDate == null || scStartDate.isEmpty()) {
             return null;
@@ -134,15 +138,11 @@ public class TicketService {
         for (MovieVo screen : screens) {
             sortedSet.add(screen.getScStartDate().toString().split("T")[0]);
         }
-        // 결과
-        // [2024-12-11, 2024-12-12, 2024-12-13, 2024-12-14, 2024-12-15, 2024-12-16, 2024-12-17, 2024-12-18, 2024-12-19, 2024-12-20, 2024-12-21, 2024-12-22, 2024-12-23, 2024-12-24, 2024-12-25, 2024-12-26]
 
         SortedSet<String> sortSet = new TreeSet<>();
         for (String sort : sortedSet) {
             sortSet.add(sort.substring(0, 7));
         }
-        // 결과
-        // [2024-12]
 
         Map<String, String> map = new TreeMap<>();
         for (String title : sortSet) {
@@ -155,34 +155,21 @@ public class TicketService {
             }
             map.put(title, list.toString().replace('[', ' ').replace(']', ' '));
         }
-        // 결과
-        // 2024-12 [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
-
-        // 결과 반환
         return map;
     }
 
 
     public Map<String, String> getWeekdaysByMoTitle(String moTitle) {
-        // 화면의 시작 날짜들을 가져옴
         MovieVo[] screens = this.ticketMapper.selectAllMoviesByMoTitle(moTitle);
-
-        // 고유 날짜를 저장할 Set
         SortedSet<String> sortedSet = new TreeSet<>();
-
-        // 날짜 리스트를 돌면서 고유 날짜만 저장
         for (MovieVo screen : screens) {
             sortedSet.add(screen.getScStartDate().toString().split("T")[0]);
         }
-        // 결과
-        // [2024-12-11, 2024-12-12, 2024-12-13, 2024-12-14, 2024-12-15, 2024-12-16, 2024-12-17, 2024-12-18, 2024-12-19, 2024-12-20, 2024-12-21, 2024-12-22, 2024-12-23, 2024-12-24, 2024-12-25, 2024-12-26]
 
         SortedSet<String> sortSet = new TreeSet<>();
         for (String sort : sortedSet) {
             sortSet.add(sort.substring(0, 7));
         }
-        // 결과
-        // [2024-12]
 
         Map<String, String> map = new TreeMap<>();
         for (String title : sortSet) {
@@ -195,33 +182,20 @@ public class TicketService {
             }
             map.put(title, list.toString().replace('[', ' ').replace(']', ' '));
         }
-        // 결과
-        // 2024-12 [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
-
-        // 결과 반환
         return map;
     }
 
     public Map<String, String> getWeekdaysByThName(String thName) {
-        // 화면의 시작 날짜들을 가져옴
         MovieVo[] screens = this.ticketMapper.selectAllMoviesByThName(thName);
-
-        // 고유 날짜를 저장할 Set
         SortedSet<String> sortedSet = new TreeSet<>();
-
-        // 날짜 리스트를 돌면서 고유 날짜만 저장
         for (MovieVo screen : screens) {
             sortedSet.add(screen.getScStartDate().toString().split("T")[0]);
         }
-        // 결과
-        // [2024-12-11, 2024-12-12, 2024-12-13, 2024-12-14, 2024-12-15, 2024-12-16, 2024-12-17, 2024-12-18, 2024-12-19, 2024-12-20, 2024-12-21, 2024-12-22, 2024-12-23, 2024-12-24, 2024-12-25, 2024-12-26]
 
         SortedSet<String> sortSet = new TreeSet<>();
         for (String sort : sortedSet) {
             sortSet.add(sort.substring(0, 7));
         }
-        // 결과
-        // [2024-12]
 
         Map<String, String> map = new TreeMap<>();
         for (String title : sortSet) {
@@ -234,33 +208,20 @@ public class TicketService {
             }
             map.put(title, list.toString().replace('[', ' ').replace(']', ' '));
         }
-        // 결과
-        // 2024-12 [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
-
-        // 결과 반환
         return map;
     }
 
     public Map<String, String> getWeekdays() {
-        // 화면의 시작 날짜들을 가져옴
         ScreenEntity[] screens = this.ticketMapper.selectAllScreenDates();
-
-        // 고유 날짜를 저장할 Set
         SortedSet<String> sortedSet = new TreeSet<>();
-
-        // 날짜 리스트를 돌면서 고유 날짜만 저장
         for (ScreenEntity screen : screens) {
             sortedSet.add(screen.getScStartDate().toString().split("T")[0]);
         }
-        // 결과
-        // [2024-12-11, 2024-12-12, 2024-12-13, 2024-12-14, 2024-12-15, 2024-12-16, 2024-12-17, 2024-12-18, 2024-12-19, 2024-12-20, 2024-12-21, 2024-12-22, 2024-12-23, 2024-12-24, 2024-12-25, 2024-12-26]
 
         SortedSet<String> sortSet = new TreeSet<>();
         for (String sort : sortedSet) {
             sortSet.add(sort.substring(0, 7));
         }
-        // 결과
-        // [2024-12]
 
         Map<String, String> map = new TreeMap<>();
         for (String title : sortSet) {
@@ -273,10 +234,6 @@ public class TicketService {
             }
             map.put(title, list.toString().replace('[', ' ').replace(']', ' '));
         }
-        // 결과
-        // 2024-12 [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
-
-        // 결과 반환
         return map;
     }
 
@@ -321,77 +278,51 @@ public class TicketService {
     }
     // endregion
 
-    // region 열거형 예시
-//    public class EnumExample {
-//        public static void main(String[] args) {
-//            // enum을 for-each 문으로 반복
-//            for (TheaterCode color : TheaterCode.values()) {
-//                System.out.println(color.name() + " " + color.ordinal());
-//            }
-//        }
-//    }
-    // endregion
-
     // region 크롤링
     @Transactional
     public void Crawl(ScreenEntity screen) throws TransactionalException {
-        // ChromeDriver 경로 설정
-        System.setProperty("webdriver.chrome.driver", "./chromedriver.exe"); // chromedriver.exe 경로 지정
+        System.setProperty("webdriver.chrome.driver", "./chromedriver.exe");
 
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-blink-features=AutomationControlled"); // 자동화 브라우저 감지 비활성화
-        options.addArguments("--headless"); // 브라우저 창을 띄우지 않고 실행 (옵션)
+        options.addArguments("--disable-blink-features=AutomationControlled");
+        options.addArguments("--headless");
 
-        // WebDriver 생성
         WebDriver driver = new ChromeDriver();
 
         try {
-            // 오늘 날짜 가져오기
-
             for (TheaterCode theater : TheaterCode.values()) {
                 int ciNum = 0;
                 String dateUrl = "http://www.cgv.co.kr/theaters/?areacode=11&theaterCode=" + theater.cgvCode;
                 driver.get(dateUrl);
 
-                // iframe 요소 찾기 및 전환
                 WebElement iframe = driver.findElement(By.id("ifrm_movie_time_table"));
                 driver.switchTo().frame(iframe);
 
                 List<WebElement> dateElements = driver.findElements(By.cssSelector("#slider > .item-wrap.on > .item > li"));
                 List<String> dates = new ArrayList<>();
                 for (WebElement day : dateElements) {
-                    // 영화 제목 추출
                     String movie = day.findElement(By.cssSelector("a")).getAttribute("href");
                     if (movie.isEmpty()) {
                         continue;
                     }
-                    // URL에서 쿼리 파라미터 추출
+
                     URL url = new URL(movie);
                     String query = url.getQuery();
-
-                    // 쿼리 파라미터가 없다면 건너뜁니다.
                     if (query == null || query.isEmpty()) {
                         continue;
                     }
 
-                    // 쿼리 파라미터 분리
                     Map<String, String> queryParams = new HashMap<>();
                     String[] pairs = query.split("&");
 
-                    // 각 파라미터에 대해 처리
                     for (String pair : pairs) {
                         String[] keyValue = pair.split("=");
-
-                        // '='가 없거나 keyValue의 길이가 2가 아니라면 건너뜁니다.
                         if (keyValue.length == 2) {
                             queryParams.put(keyValue[0], keyValue[1]);
                         }
                     }
 
-                    // 'date' 파라미터 값 추출
                     String date = queryParams.get("date");
-
-                    // date 출력
                     if (date != null) {
                         dates.add(date);
                     }
@@ -399,25 +330,19 @@ public class TicketService {
                 System.out.println(dates);
                 System.out.println(theater.cgvName);
 
-                // 오늘을 기준으로 해당 영화관에 존재하는 날짜만 크롤링
                 for (int i = 0; i < dates.toArray().length; i++) {
                     String date = dates.toArray()[i].toString(); // YYYYMMDD 형식의 날짜
                     System.out.println("상영일: " + date);
 
-                    // URL에 날짜 파라미터 추가
                     String url = "http://www.cgv.co.kr/theaters/?areacode=11&theaterCode=" + theater.cgvCode + "&date=" + date;
-                    // CGV 극장 URL 열기
                     driver.get(url);
 
-//                    // iframe 요소 찾기 및 전환
                     WebElement iframes = driver.findElement(By.id("ifrm_movie_time_table"));
                     driver.switchTo().frame(iframes);
 
-                    // 영화 시간표 요소 가져오기
                     List<WebElement> movieElements = driver.findElements(By.cssSelector(".col-times"));
 
                     for (WebElement movieElement : movieElements) {
-                        // 영화 제목 추출
                         String movieTitle = movieElement.findElement(By.cssSelector(".info-movie > a > strong")).getText().trim();
                         MovieEntity movieNum = this.ticketMapper.selectMovieNumByMovieTitle(movieTitle);
                         if (movieNum == null) {
@@ -425,7 +350,6 @@ public class TicketService {
                         }
                         screen.setMoNum(movieNum.getMoNum());
 
-                        // 상영 시간표 추출
                         List<WebElement> timeTables = movieElement.findElements(By.cssSelector(".type-hall"));
                         StringBuilder timeTable = new StringBuilder();
                         for (WebElement table : timeTables) {
@@ -469,7 +393,7 @@ public class TicketService {
                                         screen.setCiNum(0);
                                     }
                                 }
-                                if (screen.getCiNum() == 0) { // 조건에 맞는 값을 찾지 못한 경우 처리
+                                if (screen.getCiNum() == 0) {
                                     if (cinema.getText() != null && cinema.getText().length() >= 3) {
                                         result = cinema.getText().trim();
                                         CinemaEntity cinemaNum = this.ticketMapper.selectCinemaNumByCinemaTitle(result.substring(0, 3), theater.cgvName);
@@ -496,8 +420,6 @@ public class TicketService {
                                 }
                             }
                         }
-
-                        // 출력
                         System.out.println("------------");
                         System.out.println("영화: " + movieTitle);
                         System.out.println(timeTable.toString().trim());
@@ -508,7 +430,6 @@ public class TicketService {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            // 브라우저 닫기
             driver.quit();
         }
     }
