@@ -8,4 +8,9 @@
             `pa_price`, `pa_state`, `pa_created_at`, `pa_deleted_at`, `us_num`, `me_num`)
         VALUES (#{paPrice}, #{paState}, #{paCreatedAt}, #{paDeletedAt}, #{usNum}, #{meNum});
     </insert>
+    <update id="updatePaymentState" parameterType="dev.jwkim.jgv.entities.ticket.PaymentEntity">
+        UPDATE jgv.payment
+        SET pa_state = #{paState}
+        WHERE pa_num = #{paNum}
+    </update>
 </mapper>

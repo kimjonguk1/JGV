@@ -290,12 +290,14 @@
     <!-- 분리점 -->
     <select id="selectSeatByCitPrice" resultType="dev.jwkim.jgv.vos.ticket.CinemaTypeVo">
         select cinema_type.`cit_price` as `citPrice`,
-               `mo_time`               as moTime
+               `mo_time`               as moTime,
+               `m_img_url`               as `mImgUrl`
         from jgv.cinema_type
                  left join jgv.cinema on cinema.cit_num = cinema_type.cit_num
                  left join jgv.theater on cinema.th_num = theater.th_num
                  left join jgv.screen on cinema.ci_num = screen.ci_num
                  left join jgv.movie on screen.mo_num = movie.mo_num
+                 left join jgv.movie_image on movie.mo_num = movie_image.mo_num
         where cinema.`ci_name` = #{ciName}
           and theater.`th_name` = #{thName}
           and movie.`mo_title` = #{moTitle}

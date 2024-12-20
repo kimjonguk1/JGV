@@ -9,5 +9,6 @@ import lombok.Setter;
 @Setter
 public class CinemaTypeVo extends CinemaTypeEntity {
     private int moTime;
-    private int moNum;
+    private String mImgUrl;
+
 }

@@ -1126,9 +1126,10 @@ $payForm.onsubmit = (e) => {
                 alert("오류가 발생했습니다. 다시 시도해주세요.");
             }
             const response = JSON.parse(xhr.responseText);
-            console.log(response);
-            if (response['result'] !== "success") {
-                alert("오류가 발생했습니다. 다시 시도해주세요.");
+            if (response['result'] === "success") {
+                alert("결제가 완료되었습니다.");
+                window.location.href = ("../../ticket/reservation")
+
             }
         };
 
