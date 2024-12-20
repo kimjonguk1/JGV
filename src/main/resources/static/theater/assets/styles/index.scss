@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: center;
 
-  .imax {
+  .IMAX {
     width: 5rem;
     height: 1rem;
     background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
@@ -15,7 +15,7 @@
     display: flex;
   }
 
-  .dx {
+  .DX {
     width: 5rem;
     height: 1rem;
     background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
@@ -24,7 +24,7 @@
     display: flex;
   }
 
-  .screenX {
+  .SCREENX {
     width: 5rem;
     height: 1rem;
     background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
@@ -33,7 +33,7 @@
     display: flex;
   }
 
-  .cine {
+  .CINE\&FORET {
     width: 5rem;
     height: 1rem;
     background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
@@ -142,35 +142,37 @@
       }
     }
 
-    > .item-container {
-      width: 52.5rem;
-      flex-wrap: wrap;
-      margin: 1rem 0 0 5rem;
+    > .theater-container {
+      > .item-container {
+        width: 52.5rem;
+        flex-wrap: wrap;
+        margin: 1rem 0 0 5rem;
 
-      align-items: center;
-      display: flex;
-      flex-direction: row;
-      gap: 0.5rem;
-      justify-content: flex-start;
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+        justify-content: flex-start;
 
-      > .item {
-        padding-right: 0.5rem;
-        font-size: 0.8rem;
-        font-weight: 600;
-        border-right: 0.1rem solid #6e6c6d;
-        color: #dbdbdb;
-        cursor: pointer;
+        > .item {
+          padding-right: 0.5rem;
+          font-size: 0.8rem;
+          font-weight: 600;
+          border-right: 0.1rem solid #6e6c6d;
+          color: #dbdbdb;
+          cursor: pointer;
 
-        &.select {
-          color: #ffffff;
-        }
+          &.select {
+            color: #ffffff;
+          }
 
-        &:hover {
-          color: #ffffff;
-        }
+          &:hover {
+            color: #ffffff;
+          }
 
-        &:nth-last-child(1) {
-          border: none;
+          &:nth-last-child(1) {
+            border: none;
+          }
         }
       }
     }
@@ -348,7 +350,7 @@
   }
 
   > .information {
-    width: 100%;
+    width: 980px;
     margin-bottom: 3rem;
 
     display: flex;
@@ -605,6 +607,7 @@
                 width: 2.3rem;
                 padding: 0.3rem 1rem;
                 border: 0.1rem solid #cbcabe;
+                cursor: pointer;
 
                 align-items: center;
                 display: flex;

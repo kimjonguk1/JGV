@@ -1,7 +1,7 @@
 const $main = document.getElementById('main');
 const $items = $main.querySelector(':scope > .img > .main');
 const $theater = Array.from($items.querySelectorAll(':scope > .item'));
-const $itemContainer = $main.querySelector(':scope > .img > .item-container');
+const $itemContainer = $main.querySelector(':scope > .img > .theater-container > .item-container');
 
 {
     $theater.forEach(($item) => {
@@ -10,7 +10,6 @@ const $itemContainer = $main.querySelector(':scope > .img > .item-container');
             $item.classList.add('select'); // 선택한 지역에 관련해서 select class 부여
             const url = new URL(location.href);
             url.searchParams.set('region', $item.innerText);
-            let responses = [];
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = () => {
                 if (xhr.readyState !== XMLHttpRequest.DONE) {
@@ -21,21 +20,20 @@ const $itemContainer = $main.querySelector(':scope > .img > .item-container');
                     alert('오류 발생');
                     return;
                 }
-                const response = JSON.parse(xhr.responseText);
-                $itemContainer.innerText = "";
-                response['result'].forEach((x) => {
-                    responses.push(x);
-                    const $li = document.createElement('li');
-                    $li.innerText = x['thName'];
-                    $li.classList.add('item');
-                    $itemContainer.append($li); // 지역 밑에 있는 각 영화관 불러오기
-                });
-                const $containerItems = Array.from($itemContainer.querySelectorAll(':scope > .item'));
-                $containerItems.forEach(($item) => {
-                    $item.onclick = () => {
-                        url.searchParams.set('theater', $item.innerText);
-                        let counts = [];
+                $itemContainer.innerHTML = "";
+                const $container = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.img > .theater-container > .item-container > .item'));
+                $container.forEach((x) => {
+                    $itemContainer.append(x);
+                    x.onclick = () => {
+                        $container.forEach((item) => {
+                            item.classList.remove('select');
+                            if (item === x) {
+                                item.classList.add('select');
+                            }
+                        })
                         const xhr1 = new XMLHttpRequest();
+                        const url1 = new URL(location.href);
+                        url1.searchParams.set('theater', x.innerText);
                         xhr1.onreadystatechange = () => {
                             if (xhr1.readyState !== XMLHttpRequest.DONE) {
                                 return;
@@ -45,69 +43,19 @@ const $itemContainer = $main.querySelector(':scope > .img > .item-container');
                                 alert('오류 발생');
                                 return;
                             }
-                            const result = JSON.parse(xhr1.responseText);
-                            counts = result['theater'].slice(1, -1).split(",");
-                            $containerItems.forEach((x) => x.classList.remove('select'));
-                            $item.classList.add('select');
-                            responses.forEach((item) => {
-                                if (item['thName'] === $item.innerText) {
-                                    let $addr = item['thAddr'].slice(1, -1).split(",").map(item => item.trim());
-                                    $addr = [$addr[0], $addr.slice(1).join(", ")];
-                                    const $theaterHead = new DOMParser().parseFromString(`
-        <div class="theater-container">
-            <div class="header">
-                <span class="text">${item['thName']}</span>
-                <span class="stretch"></span>
-                <span class="button">단체/대관 문의</span>
-            </div>
-        </div>
-`, 'text/html').querySelector('.header');
-                                    const $theater = new DOMParser().parseFromString(`
-    <div class="theater-container">
-        <div class="img">
-            <img src="${item['thImg']}" alt="" class="image">
-            <div class="theater-info-container">
-                <div class="small-container">
-                    <div class="header">
-                        <div class="info-container">
-                            <div class="theater-info">${$addr[0]}<br>${$addr[1]}</div>
-                        </div>
-                        <a href="#" class="theater-info guide" target="_blank">위치 / 주차 안내 ></a>
-                        <div class="stretch"></div>
-                        <div class="cinema-type">
-                            <a href="#" class="screenX" target="_blank"></a>
-                            <a href="#" class="screenX" target="_blank"></a>
-                            <a href="#" class="screenX" target="_blank"></a>
-                        </div>
-                    </div>
-                    <div class="theater-info">${counts[0]}관/${counts[1]}석</div>
-                </div>
-                <div class="stretch"></div>
-                <div class="notice-container">
-                    <div class="theater-info">공지사항</div>
-                    <a href="#" class="button"></a>
-                </div>
-            </div>
-        </div>
-    </div>`, 'text/html').querySelector('.img');
-                                    const $theaterContainer = $main.querySelector(':scope > .theater-container')
-                                    $theaterContainer.innerHTML = "";
-                                    $theaterContainer.append($theaterHead);
-                                    $theaterContainer.append($theater);
-                                }
-                            })
-                        };
-                        xhr1.open('GET', url.toString());
+                            console.log(xhr1.responseText);
+                        }
+                        xhr1.open('GET', url1.toString());
                         xhr1.send();
                         Loading.show(0);
                     }
                 })
-            };
+            }
             xhr.open('GET', url.toString());
             xhr.send();
             Loading.show(0);
         }
-    })
+    });
 }
 
 // $theater.forEach(($item) => {

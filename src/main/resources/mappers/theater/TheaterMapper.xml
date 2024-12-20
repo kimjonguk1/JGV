@@ -11,25 +11,36 @@
     </select>
     <select id="getTheatersByRegion"
             resultType="dev.jwkim.jgv.entities.theater.TheaterEntity">
-        SELECT `th_num`  AS `thNum`,
-               `th_name` AS `thName`,
-               `th_addr` AS `thAddr`,
-               `th_img`  AS `thImg`
+        SELECT `th_num`            AS `thNum`,
+               `th_name`           AS `thName`,
+               `th_addr`           AS `thAddr`,
+               `th_img`            AS `thImg`
         FROM `jgv`.`theater`
                  LEFT JOIN jgv.region reg ON theater.reg_num = reg.reg_num
         WHERE `reg_name` = #{region}
     </select>
-    <select id="getCinemaCountByTheater" resultType="_int">
-        SELECT COUNT(0)
-        FROM `jgv`.`cinema`
-                 LEFT JOIN jgv.theater t on t.th_num = cinema.th_num
-        WHERE `th_name` = #{theater}
-    </select>
-    <select id="getSeatCountByCinema" resultType="_int">
-        SELECT COUNT(0)
-        FROM `jgv`.`seat`
-                 LEFT JOIN `jgv`.`cinema` ON `seat`.`ci_num` = cinema.`ci_num`
-                 LEFT JOIN `jgv`.`theater` ON theater.`th_num` = cinema.`th_num`
+    <select id="selectAllTheaters"
+            resultType="dev.jwkim.jgv.vos.theater.TheaterVo">
+        SELECT `theater`.`th_num` AS `thNum`,
+               `th_name`          AS `thName`,
+               `th_addr`          AS `thAddr`,
+               `th_img`           AS `thImg`,
+               `reg_num`          AS `regNum`,
+               `cit_name`         AS `citName`,
+               `sc_start_date`    AS `scStartDate`,
+               (SELECT COUNT(0)
+                FROM `jgv`.`cinema`
+                         LEFT JOIN jgv.theater t on t.th_num = cinema.th_num
+                WHERE `th_name` = #{theater}) AS `cinemaCount`,
+               (SELECT COUNT(0)
+                FROM `jgv`.`seat`
+                         LEFT JOIN `jgv`.`cinema` ON `seat`.`ci_num` = cinema.`ci_num`
+                         LEFT JOIN `jgv`.`theater` ON theater.`th_num` = cinema.`th_num`
+                WHERE `th_name` = #{theater}) AS `seatCount`
+        FROM `jgv`.`theater`
+                 LEFT JOIN `jgv`.`cinema` `c` on `theater`.`th_num` = `c`.`th_num`
+                 LEFT JOIN `jgv`.`cinema_type` ON `c`.`cit_num` = `cinema_type`.`cit_num`
+                 LEFT JOIN `jgv`.`screen` ON `c`.`ci_num` = `screen`.`ci_num`
         WHERE `th_name` = #{theater}
     </select>
 </mapper>
