@@ -59,7 +59,13 @@
                 th:rel="${region.getRegName()}">
             </li>
         </ul>
-        <ul class="item-container"></ul>
+        <div class="theater-container">
+            <ul class="item-container">
+                <li class="item"
+                    th:each="theater : ${theaters}"
+                    th:text="${theater.getThName()}"></li>
+            </ul>
+        </div>
     </div>
     <div class="line-wrapper">
         <div class="line">
@@ -78,17 +84,50 @@
                 <div class="small-container">
                     <div class="header">
                         <div class="info-container">
-                            <div class="theater-info">대구광역시 북구 칠성동2가 20-1 스펙트럼시티 4층<br>
-                                대구광역시 북구 침산로 93 스펙트럼시티 4층
-                            </div>
+                            <div class="theater-info">대구광역시 북구 칠성동2가 20-1 스펙트럼시티 4층<br>대구광역시 북구 침산로 93 스펙트럼시티 4층</div>
                         </div>
                         <a href="#" class="theater-info guide" target="_blank">위치 / 주차 안내 ></a>
                         <div class="stretch"></div>
                         <div class="cinema-type">
-                            <a href="#" class="imax" target="_blank"></a>
-                            <a href="#" class="dx" target="_blank"></a>
-                            <a href="#" class="screenX" target="_blank"></a>
-                            <a href="#" class="cine" target="_blank"></a>
+                            <a href="#" class="IMAX" target="_blank"></a>
+                            <a href="#" class="DX" target="_blank"></a>
+                            <a href="#" class="SCREENX" target="_blank"></a>
+                            <a href="#" class="CINE&FORET" target="_blank"></a>
+                        </div>
+                    </div>
+                    <div class="theater-info">6관/874석</div>
+                </div>
+                <div class="stretch"></div>
+                <div class="notice-container">
+                    <div class="theater-info">공지사항</div>
+                    <a href="#" class="button"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="theater-container"
+         th:if="${theaterVos != null}"
+         th:each="vos : ${theaterVos}">
+        <div class="header">
+            <span th:text="${vos.key[0]}" class="text"></span>
+            <span class="stretch"></span>
+            <span class="button">단체/대관 문의</span>
+        </div>
+        <div class="img">
+            <img src="https://img.cgv.co.kr/Theater/Theater/2022/1223/16717573376930.png" alt="" class="image">
+            <div class="theater-info-container">
+                <div class="small-container">
+                    <div class="header">
+                        <div class="info-container">
+                            <div th:utext="${vos.key[1] + '<br>' + vos.key[2]}" class="theater-info"></div>
+                        </div>
+                        <a href="#" class="theater-info guide" target="_blank">위치 / 주차 안내 ></a>
+                        <div class="stretch"></div>
+                        <div class="cinema-type">
+                            <a href="#" class="IMAX" target="_blank"></a>
+                            <a href="#" class="DX" target="_blank"></a>
+                            <a href="#" class="SCREENX" target="_blank"></a>
+                            <a href="#" class="CINE&FORET" target="_blank"></a>
                         </div>
                     </div>
                     <div class="theater-info">6관/874석</div>

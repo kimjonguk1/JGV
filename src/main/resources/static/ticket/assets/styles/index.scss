@@ -333,97 +333,102 @@
                 height: 10%;
               }
 
-              > .day-container {
-                height: 100%;
-                border: 0.1rem solid transparent;
-                box-sizing: border-box;
+              > .content-container {
 
-                > .title {
-                  align-items: center;
-                  display: flex;
-                  flex-direction: column;
-                  justify-content: center;
-
-                  > .year, .month {
-                    color: #666;
-                    font-weight: 600;
-                  }
-
-                  > .year {
-                    font-size: 0.8rem;
-                  }
-
-                  > .month {
-                    font-size: 2.5rem;
-                    padding: 0;
-                  }
-                }
-
-                > .day {
+                > .day-container {
+                  height: auto;
                   border: 0.1rem solid transparent;
                   box-sizing: border-box;
-                  cursor: pointer;
 
-                  > .day-container {
-                    padding: 0.5rem 0.5rem;
-                    border: 0.1rem solid transparent;
+                  > .title {
+                    padding-top: 1rem;
 
+                    align-items: center;
                     display: flex;
-                    flex-direction: row;
+                    flex-direction: column;
+                    justify-content: center;
 
-                    > .week {
-                      &.saturday {
-                        color: #31597e;
-                      }
-
-                      &.sunday {
-                        color: #ad2727;
-                      }
-                    }
-
-                    > .date {
+                    > .year, .month {
+                      color: #666;
                       font-weight: 600;
+                    }
 
-                      &.saturday {
-                        color: #31597e;
-                      }
+                    > .year {
+                      font-size: 0.8rem;
+                    }
 
-                      &.sunday {
-                        color: #ad2727;
-                      }
+                    > .month {
+                      font-size: 2.5rem;
+                      padding: 0;
                     }
                   }
 
-                  &.none {
-                    opacity: 0.25;
-                  }
-
-                  &.select {
-                    background-color: #333;
-                    border-color: #000;
-                    color: #ffffff;
+                  > .day {
+                    border: 0.1rem solid transparent;
+                    box-sizing: border-box;
+                    cursor: pointer;
 
                     > .day-container {
-                      border-color: #5c5c5c;
+                      padding: 0.5rem 0.5rem;
+                      border: 0.1rem solid transparent;
 
+                      display: flex;
+                      flex-direction: row;
 
                       > .week {
                         &.saturday {
-                          color: #ffffff;
+                          color: #31597e;
                         }
 
                         &.sunday {
-                          color: #ffffff;
+                          color: #ad2727;
                         }
                       }
 
                       > .date {
+                        font-weight: 600;
+
                         &.saturday {
-                          color: #ffffff;
+                          color: #31597e;
                         }
 
                         &.sunday {
-                          color: #ffffff;
+                          color: #ad2727;
+                        }
+                      }
+                    }
+
+                    &.none {
+                      opacity: 0.25;
+                    }
+
+                    &.select {
+                      background-color: #333;
+                      border-color: #000;
+                      color: #ffffff;
+
+                      > .day-container {
+                        border-color: #5c5c5c;
+
+
+                        > .week {
+                          &.saturday {
+                            color: #ffffff;
+                          }
+
+                          &.sunday {
+                            color: #ffffff;
+                          }
+                        }
+
+                        > .date {
+                          &.saturday {
+                            color: #ffffff;
+                          }
+
+                          &.sunday {
+                            color: #ffffff;
+                          }
                         }
                       }
                     }

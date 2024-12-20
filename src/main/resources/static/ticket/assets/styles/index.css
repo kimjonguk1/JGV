@@ -280,75 +280,76 @@
   border-radius: 5px; /* 둥근 모서리 */
   height: 10%;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container {
-  height: 100%;
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container {
+  height: auto;
   border: 0.1rem solid transparent;
   box-sizing: border-box;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .title {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .title {
+  padding-top: 1rem;
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .title > .year, #main > .main-container > .main > .section .body.day > .content > .day-container > .title .month {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .title > .year, #main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .title .month {
   color: #666;
   font-weight: 600;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .title > .year {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .title > .year {
   font-size: 0.8rem;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .title > .month {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .title > .month {
   font-size: 2.5rem;
   padding: 0;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .day {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .day {
   border: 0.1rem solid transparent;
   box-sizing: border-box;
   cursor: pointer;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .day > .day-container {
   padding: 0.5rem 0.5rem;
   border: 0.1rem solid transparent;
   display: flex;
   flex-direction: row;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container > .week.saturday {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .day > .day-container > .week.saturday {
   color: #31597e;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container > .week.sunday {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .day > .day-container > .week.sunday {
   color: #ad2727;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container > .date {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .day > .day-container > .date {
   font-weight: 600;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container > .date.saturday {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .day > .day-container > .date.saturday {
   color: #31597e;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .day > .day-container > .date.sunday {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .day > .day-container > .date.sunday {
   color: #ad2727;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .day.none {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .day.none {
   opacity: 0.25;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .day.select {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .day.select {
   background-color: #333;
   border-color: #000;
   color: #ffffff;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .day.select > .day-container {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .day.select > .day-container {
   border-color: #5c5c5c;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .day.select > .day-container > .week.saturday {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .day.select > .day-container > .week.saturday {
   color: #ffffff;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .day.select > .day-container > .week.sunday {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .day.select > .day-container > .week.sunday {
   color: #ffffff;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .day.select > .day-container > .date.saturday {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .day.select > .day-container > .date.saturday {
   color: #ffffff;
 }
-#main > .main-container > .main > .section .body.day > .content > .day-container > .day.select > .day-container > .date.sunday {
+#main > .main-container > .main > .section .body.day > .content > .content-container > .day-container > .day.select > .day-container > .date.sunday {
   color: #ffffff;
 }
 #main > .main-container > .main > .section .body.time > .content {

@@ -2,6 +2,7 @@ package dev.jwkim.jgv.mappers.theater;
 
 import dev.jwkim.jgv.entities.theater.RegionEntity;
 import dev.jwkim.jgv.entities.theater.TheaterEntity;
+import dev.jwkim.jgv.vos.theater.TheaterVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,7 +12,5 @@ public interface TheaterMapper {
 
     TheaterEntity[] getTheatersByRegion(@Param(value = "region") String region);
 
-    int getCinemaCountByTheater(@Param(value = "theater") String theater);
-
-    int getSeatCountByCinema(@Param(value = "theater") String theater);
+    TheaterVo[] selectAllTheaters(@Param(value = "theater") String theater);
 }

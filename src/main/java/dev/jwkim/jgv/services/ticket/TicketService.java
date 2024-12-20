@@ -59,6 +59,36 @@ public class TicketService {
         return this.ticketMapper.selectAllMoviesByMoTitle(moTitle);
     }
 
+    public MovieVo[] selectAllMoviesByThName(String thName) {
+        if (thName == null || thName.isEmpty()) {
+            return null;
+        }
+        return this.ticketMapper.selectAllMoviesByThName(thName);
+    }
+
+    public MovieVo[] selectAllMoviesByscStartDate(String scStartDate) {
+        if (scStartDate == null || scStartDate.isEmpty()) {
+            return null;
+        }
+        return this.ticketMapper.selectAllMoviesByscStartDate(scStartDate);
+    }
+
+    public MovieVo[] selectAllMoviesBymoTitleAndscStartDate(String moTitle, String scStartDate) {
+        if (moTitle == null || moTitle.isEmpty() ||
+                scStartDate == null || scStartDate.isEmpty()) {
+            return null;
+        }
+        return this.ticketMapper.selectAllMoviesByMoTitleAndScStartDate(moTitle, scStartDate);
+    }
+
+    public MovieVo[] selectAllMoviesByThNameAndScStartDate(String thName, String scStartDate) {
+        if (thName == null || thName.isEmpty() ||
+                scStartDate == null || scStartDate.isEmpty()) {
+            return null;
+        }
+        return this.ticketMapper.selectAllMoviesByThNameAndScStartDate(thName, scStartDate);
+    }
+
     public MovieVo[] selectAllMoviesByRating() {
         MovieVo[] movies = this.ticketMapper.selectAllMoviesByRating();
         for (MovieVo movie : movies) {
@@ -72,7 +102,6 @@ public class TicketService {
         }
         return movies;
     }
-
 
     public MovieVo[] selectAllMoviesByKorea() {
         MovieVo[] movies = this.ticketMapper.selectAllMoviesByKorea();
@@ -92,7 +121,125 @@ public class TicketService {
         return this.ticketMapper.selectRegionAndTheaterCount();
     }
 
-    @Transactional
+
+    public Map<String, String> getWeekdaysByMoTitleAndThName(String moTitle, String thName) {
+        // 화면의 시작 날짜들을 가져옴
+        MovieVo[] screens = this.ticketMapper.selectAllMoviesByMoTitleAndThName(moTitle, thName);
+
+        // 고유 날짜를 저장할 Set
+        SortedSet<String> sortedSet = new TreeSet<>();
+
+        // 날짜 리스트를 돌면서 고유 날짜만 저장
+        for (MovieVo screen : screens) {
+            sortedSet.add(screen.getScStartDate().toString().split("T")[0]);
+        }
+        // 결과
+        // [2024-12-11, 2024-12-12, 2024-12-13, 2024-12-14, 2024-12-15, 2024-12-16, 2024-12-17, 2024-12-18, 2024-12-19, 2024-12-20, 2024-12-21, 2024-12-22, 2024-12-23, 2024-12-24, 2024-12-25, 2024-12-26]
+
+        SortedSet<String> sortSet = new TreeSet<>();
+        for (String sort : sortedSet) {
+            sortSet.add(sort.substring(0, 7));
+        }
+        // 결과
+        // [2024-12]
+
+        Map<String, String> map = new TreeMap<>();
+        for (String title : sortSet) {
+            List<String> list = new ArrayList<>();
+            for (String day : sortedSet) {
+                if (day.contains(title)) {
+                    LocalDate localDate = LocalDate.parse(day, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    list.add(day.split("-")[2] + "-" + localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN).split("요일")[0]);
+                }
+            }
+            map.put(title, list.toString().replace('[', ' ').replace(']', ' '));
+        }
+        // 결과
+        // 2024-12 [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
+
+        // 결과 반환
+        return map;
+    }
+
+
+    public Map<String, String> getWeekdaysByMoTitle(String moTitle) {
+        // 화면의 시작 날짜들을 가져옴
+        MovieVo[] screens = this.ticketMapper.selectAllMoviesByMoTitle(moTitle);
+
+        // 고유 날짜를 저장할 Set
+        SortedSet<String> sortedSet = new TreeSet<>();
+
+        // 날짜 리스트를 돌면서 고유 날짜만 저장
+        for (MovieVo screen : screens) {
+            sortedSet.add(screen.getScStartDate().toString().split("T")[0]);
+        }
+        // 결과
+        // [2024-12-11, 2024-12-12, 2024-12-13, 2024-12-14, 2024-12-15, 2024-12-16, 2024-12-17, 2024-12-18, 2024-12-19, 2024-12-20, 2024-12-21, 2024-12-22, 2024-12-23, 2024-12-24, 2024-12-25, 2024-12-26]
+
+        SortedSet<String> sortSet = new TreeSet<>();
+        for (String sort : sortedSet) {
+            sortSet.add(sort.substring(0, 7));
+        }
+        // 결과
+        // [2024-12]
+
+        Map<String, String> map = new TreeMap<>();
+        for (String title : sortSet) {
+            List<String> list = new ArrayList<>();
+            for (String day : sortedSet) {
+                if (day.contains(title)) {
+                    LocalDate localDate = LocalDate.parse(day, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    list.add(day.split("-")[2] + "-" + localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN).split("요일")[0]);
+                }
+            }
+            map.put(title, list.toString().replace('[', ' ').replace(']', ' '));
+        }
+        // 결과
+        // 2024-12 [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
+
+        // 결과 반환
+        return map;
+    }
+
+    public Map<String, String> getWeekdaysByThName(String thName) {
+        // 화면의 시작 날짜들을 가져옴
+        MovieVo[] screens = this.ticketMapper.selectAllMoviesByThName(thName);
+
+        // 고유 날짜를 저장할 Set
+        SortedSet<String> sortedSet = new TreeSet<>();
+
+        // 날짜 리스트를 돌면서 고유 날짜만 저장
+        for (MovieVo screen : screens) {
+            sortedSet.add(screen.getScStartDate().toString().split("T")[0]);
+        }
+        // 결과
+        // [2024-12-11, 2024-12-12, 2024-12-13, 2024-12-14, 2024-12-15, 2024-12-16, 2024-12-17, 2024-12-18, 2024-12-19, 2024-12-20, 2024-12-21, 2024-12-22, 2024-12-23, 2024-12-24, 2024-12-25, 2024-12-26]
+
+        SortedSet<String> sortSet = new TreeSet<>();
+        for (String sort : sortedSet) {
+            sortSet.add(sort.substring(0, 7));
+        }
+        // 결과
+        // [2024-12]
+
+        Map<String, String> map = new TreeMap<>();
+        for (String title : sortSet) {
+            List<String> list = new ArrayList<>();
+            for (String day : sortedSet) {
+                if (day.contains(title)) {
+                    LocalDate localDate = LocalDate.parse(day, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    list.add(day.split("-")[2] + "-" + localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN).split("요일")[0]);
+                }
+            }
+            map.put(title, list.toString().replace('[', ' ').replace(']', ' '));
+        }
+        // 결과
+        // 2024-12 [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
+
+        // 결과 반환
+        return map;
+    }
+
     public Map<String, String> getWeekdays() {
         // 화면의 시작 날짜들을 가져옴
         ScreenEntity[] screens = this.ticketMapper.selectAllScreenDates();
@@ -114,7 +261,7 @@ public class TicketService {
         // 결과
         // [2024-12]
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new TreeMap<>();
         for (String title : sortSet) {
             List<String> list = new ArrayList<>();
             for (String day : sortedSet) {
@@ -132,6 +279,7 @@ public class TicketService {
         return map;
     }
 
+    // region 크롤링을 위한 영화관 열거형
     @Getter
     public enum TheaterCode {
         DAEGU("CGV대구", "0345"),
@@ -147,18 +295,20 @@ public class TicketService {
         private final String cgvName;
         private final String cgvCode;
 
-        TheaterCode(String cgvName, String cgvNumber) {
+        TheaterCode(String cgvName, String cgvCode) {
             this.cgvName = cgvName;
-            this.cgvCode = cgvNumber;
+            this.cgvCode = cgvCode;
         }
     }
+    // endregion
 
+    // region 크롤링을 위한 영화관 타입 열거형
     @Getter
     public enum CinemaCode {
         NORMAL("2D"),
         IMAX("IMAX"),
         FOURDX("4DX"),
-        SCREENX("SCRRENX"),
+        SCREENX("SCREENX"),
         RECLINER("리클라이너"),
         CINE("CINE&FORET");
 
@@ -168,6 +318,7 @@ public class TicketService {
             this.citName = citName;
         }
     }
+    // endregion
 
     // region 열거형 예시
 //    public class EnumExample {
@@ -241,18 +392,13 @@ public class TicketService {
 
                     // date 출력
                     if (date != null) {
-                        System.out.println(date);  // 예: 20241216
                         dates.add(date);
                     }
-
-                    // movie URL 출력
-                    System.out.println(movie);
-
                 }
                 System.out.println(dates);
                 System.out.println(theater.cgvName);
 
-                // 15일 간의 날짜를 반복하며 크롤링
+                // 오늘을 기준으로 해당 영화관에 존재하는 날짜만 크롤링
                 for (int i = 0; i < dates.toArray().length; i++) {
                     String date = dates.toArray()[i].toString(); // YYYYMMDD 형식의 날짜
                     System.out.println("상영일: " + date);

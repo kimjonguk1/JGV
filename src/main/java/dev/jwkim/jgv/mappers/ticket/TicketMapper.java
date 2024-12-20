@@ -31,11 +31,24 @@ public interface TicketMapper {
 
     RegionVo[] selectRegionAndTheaterCount();
 
+    MovieVo[] selectAllMoviesByMoTitle(@Param(value = "moTitle") String moTitle);
+
+    MovieVo[] selectAllMoviesByThName(@Param(value = "thName") String thName);
+
+    MovieVo[] selectAllMoviesByscStartDate(@Param(value = "scStartDate") String scStartDate);
+
+    MovieVo[] selectAllMoviesByMoTitleAndThName(@Param(value = "moTitle") String moTitle,
+                                                @Param(value = "thName") String thName);
+
+    MovieVo[] selectAllMoviesByMoTitleAndScStartDate(@Param(value = "moTitle") String moTitle,
+                                                     @Param(value = "scStartDate") String scStartDate);
+
+    MovieVo[] selectAllMoviesByThNameAndScStartDate(@Param(value = "thName") String thName,
+                                                    @Param(value = "scStartDate") String scStartDate);
+
     MovieVo[] selectAllMoviesByRating();
 
     MovieVo[] selectAllMoviesByKorea();
-
-    MovieVo[] selectAllMoviesByMoTitle(@Param(value = "moTitle") String moTitle);
 
     MovieEntity selectMovieNumByMovieTitle(@Param(value = "moTitle") String moTitle);
 
@@ -44,7 +57,6 @@ public interface TicketMapper {
 
     CinemaEntity selectCinemaNumByCinemaType(@Param(value = "citName") String citName,
                                              @Param(value = "thName") String thName);
-
 
     ScreenEntity[] selectDuplicateScreen(@Param(value = "startDate") LocalDateTime startDate,
                                          @Param(value = "moNum") int moNum,
