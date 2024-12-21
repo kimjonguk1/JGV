@@ -272,3 +272,15 @@ body {
     }
   }
 }
+
+#changeNickname,
+#change-password {
+  @include flex(row, center, center);
+  height: 2rem;
+  width: 5rem;
+  background-color: #ffffff;
+  border: 1px solid #cacaca;
+  border-radius: 0.2rem;
+  color: #000000;
+  cursor: pointer;
+}

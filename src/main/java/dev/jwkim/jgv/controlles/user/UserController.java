@@ -97,6 +97,7 @@ public class UserController {
 // endregion
 
     // http://localhost:8080/user/myPage/receipt
+
     // region 마이페이지
 
 
@@ -122,9 +123,7 @@ public class UserController {
                                            @RequestParam(value = "password") String password) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         Boolean passwordMatches = encoder.matches(password, user.getUsPw()); // true, false, null
-        System.out.println(user.getUsPw());
-        System.out.println(password);
-        System.out.println(passwordMatches);
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("passwordMatches", passwordMatches);
         modelAndView.setViewName("user/myPage/modify");
@@ -282,8 +281,6 @@ public class UserController {
         UserEntity users = (UserEntity) session.getAttribute("user");
         Result result = this.userService.modifyNickname(users, nickname);
         JSONObject response = new JSONObject();
-        System.out.println(users.getUsEmail());
-        System.out.println(users.getUsNickName());
         response.put(Result.NAME, result.nameToLower());
 
         return response.toString();
@@ -326,8 +323,7 @@ public class UserController {
     @ResponseBody
     public String patchReservationCancel(HttpSession session, UserEntity user) {
         UserEntity users = (UserEntity) session.getAttribute("user");
-        PaymentEntity payment = (PaymentEntity) session.getAttribute("payment");
-        Result result = this.userService.reservationCancel(users, payment);
+        Result result = this.userService.reservationCancel(users);
         JSONObject response = new JSONObject();
         response.put(Result.NAME, result.nameToLower());
 
@@ -336,6 +332,29 @@ public class UserController {
 
     // endregion
 
+    // region 회원 탈퇴
+
+    @RequestMapping(value = "/myPage/userWithdraw", method = RequestMethod.GET,
+            produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getUserWithdraw(HttpSession session, UserEntity user) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("session", session);
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("user/myPage/userWithdraw");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/myPage/userWithdraw", method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String deleteUser(HttpSession session, UserEntity user) {
+        UserEntity users = (UserEntity) session.getAttribute("user");
+        Result result = this.userService.withdrawUser(users);
+        JSONObject response = new JSONObject();
+        response.put(Result.NAME, result.nameToLower());
+        return response.toString();
+    }
+    // endregion
 
 
 }
