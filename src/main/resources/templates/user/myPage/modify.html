@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>회원가입</title>
+    <link rel="stylesheet" th:href="@{'./assets/styles/index.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}" type="text/css">
+    <link rel="stylesheet" href="/user/styles/myPage/modify.css" type="text/css">
+    <script defer th:src="@{'./assets/scripts/index.js'}" type="text/javascript"></script>
+    <script defer src="/user/scripts/myPage/modify.js" type="text/javascript"></script>
+    <script th:if="${passwordMatches == null}">
+        alert('올바르지 않은 접근입니다.');
+        if (history.length > 1) {
+            history.back();
+        } else {
+            window.close();
+        }
+    </script>
+    <script th:if="${passwordMatches == false}">
+        alert('비밀번호가 올바르지 않습니다.');
+        if (history.length > 1) {
+            history.back();
+        } else {
+            window.close();
+        }
+    </script>
+</head>
+<body th:if="${passwordMatches == true}">
+<th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
+<th:block th:replace="~{fragments/common.html :: header}"></th:block>
+<th:block th:replace="~{fragments/common.html :: nav}"></th:block>
+<div class="main-title">
+    <h1>회원정보 수정</h1>
+    <span>회원님의 소중한 정보를 안전하게 관리하세요.</span>
+</div>
+<div class="frame title-container">
+    <h1>기본정보</h1>
+    <div class="-spring"></div>
+
+</div>
+<form id="register-form" class="frame">
+    <table class="table">
+        <tbody>
+        <tr>
+            <td style="border-top: 2px solid #000000;">
+                <span>이름</span>
+            </td>
+            <td style="border-top: 2px solid #000000;">
+                <label class="--obj-label">
+                    <span th:text="${session.user.getUsName()}"></span>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>아이디</span>
+            </td>
+            <td>
+                <label class="--obj-label" >
+                    <span th:text="${session.user.getUsId()}"></span>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>닉네임</span>
+            </td>
+            <td>
+                <label class="--obj-label" style="
+display: flex; flex-direction: row; align-items: center; justify-content: flex-start;">
+                    <span th:text="${session.user.getUsNickName()}"></span>
+                    <button id="changeNickname" class="modify" type="button">변경하기 &gt;</button>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>생년월일</span>
+            </td>
+            <td>
+                <label class="--obj-label" >
+                    <span th:text="${session.user.getUsBirth()}"></span>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>휴대전화번호</span>
+            </td>
+            <td>
+                <label class="--obj-label" >
+                    <span th:text="${session.user.getUsContact()}"></span>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>이메일</span>
+            </td>
+            <td>
+                <label class="--obj-label" >
+                    <span th:text="${session.user.getUsEmail()}"></span>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>주소</span>
+            </td>
+            <td>
+                <label class="--obj-label" >
+                    <span th:text="${session.user.getUsAddr()}"></span>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>비밀번호</span>
+            </td>
+            <td>
+                <label class="--obj-label" >
+                    <button id="change-password" class="modify" type="button">변경하기
+                        &gt;</button>
+                </label>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="button-container frame">
+        <button class="cancel" type="button" th:href="@{'/user/myPage/main'}">
+            <a th:href="'./main'">취소</a>
+        </button>
+        <button class="submit" type="submit">수정</button>
+    </div>
+</form>
+
+
+<th:block th:replace="~{fragments/common.html :: footer}"></th:block>
+</body>
+</html>

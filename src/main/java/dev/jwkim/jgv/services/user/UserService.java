@@ -306,14 +306,12 @@ public class UserService {
     @Transactional
     public Result provokeRecoverPassword(HttpServletRequest request, String email) throws MessagingException {
         if (email == null || email.length() < 2 || email.length() > 20) {
-            System.out.println("1번");
-            System.out.println(email);
+
             return CommonResult.FAILURE;
         }
         UserEntity user = this.userMapper.selectUserByEmail(email);
         if (user == null || user.isUsIsDeleted()) {
-            System.out.println("2번");
-            return CommonResult.FAILURE;
+
         }
         EmailTokenEntity emailToken = new EmailTokenEntity();
         emailToken.setEmEmail(user.getUsEmail());
@@ -374,13 +372,11 @@ public class UserService {
                 emailToken.getEmEmail() == null || emailToken.getEmEmail().length() < 8 || emailToken.getEmEmail().length() > 50 ||
                 emailToken.getEmKey() == null || emailToken.getEmKey().length() != 128 ||
                 password == null || password.length() < 8 || password.length() > 50) {
-            System.out.println("1번");
             return CommonResult.FAILURE;
         }
         EmailTokenEntity dbEmailToken =
                 this.emailTokenMapper.selectEmailTokenByUserEmailAndKey(emailToken.getEmEmail(), emailToken.getEmKey());
         if (dbEmailToken == null || dbEmailToken.isEmUsed()) {
-            System.out.println("2번");
             return CommonResult.FAILURE;
         }
         if (dbEmailToken.getEmExpiresAt().isBefore(LocalDateTime.now())) {
@@ -398,5 +394,56 @@ public class UserService {
         }
         return CommonResult.SUCCESS;
     }
+    // endregion
+
+    // region 회원 정보 수정
+    public Result modifyNickname(UserEntity user, String nickname) {
+
+        if (user == null || user.isUsIsDeleted() || nickname.length() < 2 || nickname.length() > 10) {
+            return CommonResult.FAILURE;
+        }
+        UserEntity dbUser = this.userMapper.selectUserByNickname(nickname);
+        if (dbUser != null && !nickname.equals(user.getUsNickName())) {
+
+            return RegisterResult.FAILURE_DUPLICATE_NICKNAME;
+        }
+        user.setUsNickName(nickname);
+        if (this.userMapper.updateUser(user) == 0) {
+            throw new TransactionalException();
+        }
+
+        return CommonResult.SUCCESS;
+    }
+
+    public Result modifyPassword(UserEntity user, String password) {
+        String passwordRegex = "(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>]).{8,100}$";
+        Pattern passwordPattern = Pattern.compile(passwordRegex);
+        Matcher passwordMatcher = passwordPattern.matcher(password);
+        if (!passwordMatcher.matches()) {
+            return RegisterResult.FAILURE_INVALID_PASSWORD;
+        }
+        if (user == null || user.isUsIsDeleted() || password.length() < 8 || password.length() > 100) {
+            return CommonResult.FAILURE;
+        }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        user.setUsPw(encoder.encode(password));
+
+        if (this.userMapper.updateUser(user) == 0) {
+            throw new TransactionalException();
+        }
+        return CommonResult.SUCCESS;
+    }
+
+    public Result reservationCancel(UserEntity user) {
+        if (user == null) {
+            return CommonResult.FAILURE;
+        }
+        // pa.state 가 이미 0일때 return ReservationResult.FAILURE_CANCEL_COMPLETE;
+
+        // setPaState(false);
+        return CommonResult.SUCCESS;
+    }
+
     // endregion
 }
