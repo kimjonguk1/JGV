@@ -68,6 +68,7 @@ body {
   font-size: 1rem;
   font-weight: 700;
   border-radius: 0.3rem;
+  cursor: pointer;
 }
 #modify-form > .button-container > .submit {
   background-color: #000;
@@ -78,6 +79,7 @@ body {
   font-weight: 700;
   color: #ffffff;
   border-radius: 0.3rem;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=modify-nickname.css.map */

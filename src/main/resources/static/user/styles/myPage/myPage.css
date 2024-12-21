@@ -127,6 +127,7 @@
   font-weight: 600;
   background-color: #FB4357;
   color: #ffffff;
+  cursor: pointer;
 }
 #passwordCheck > .button-container > .home {
   width: 7rem;
@@ -206,6 +207,9 @@
   border-bottom: 2px solid #222222;
   padding-bottom: 0.5rem;
 }
+.my-reservation > h3 {
+  padding-top: 2rem;
+}
 .my-reservation > .alert > .red {
   color: #FB4357;
   font-weight: 500;
@@ -248,11 +252,11 @@
 }
 
 .reservation-main {
-  align-items: flex-start;
+  align-items: center;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  justify-content: flex-start;
+  justify-content: center;
 }
 .reservation-main > .-spring {
   flex-grow: 1;
@@ -290,7 +294,7 @@
   gap: 1rem;
   justify-content: flex-start;
   width: 100%;
-  height: auto;
+  height: 15rem;
 }
 .reservation-main > .reservation-info > .-spring {
   flex-grow: 1;
@@ -560,6 +564,7 @@
   color: #ffffff;
   font-size: 0.9rem;
   font-weight: 600;
+  cursor: pointer;
 }
 
 body {

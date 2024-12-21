@@ -169,6 +169,7 @@ public class UserService {
         if (dbUser.isUsIsSuspended()) {
             return LoginResult.FAILURE_SUSPENDED;
         }
+
         user.setUsNum(dbUser.getUsNum());
         user.setUsPw(dbUser.getUsPw());
         user.setUsName(dbUser.getUsName());
@@ -437,19 +438,32 @@ public class UserService {
         return CommonResult.SUCCESS;
     }
 
-    public Result reservationCancel(UserEntity user, PaymentEntity payment) {
-        if (user == null || payment.getPaDeletedAt() == null || payment.getUsNum() < 0) {
+    public Result reservationCancel(UserEntity user) {
+        if (user == null) {
             return CommonResult.FAILURE;
         }
-        if (!payment.isPaState()) {
-
-            return ReservationResult.FAILURE_CANCEL_COMPLETE;
-        }
         // pa.state 가 이미 0일때 return ReservationResult.FAILURE_CANCEL_COMPLETE;
-
-        payment.setPaState(false);
+        // setPaState(false);
         return CommonResult.SUCCESS;
     }
 
+    // endregion
+
+    // region 회원탈퇴
+    public Result withdrawUser(UserEntity user) {
+        UserEntity dbUser = this.userMapper.selectUserById(user.getUsId());
+
+        if (dbUser == null || user.isUsIsDeleted()) {
+            return CommonResult.FAILURE;
+        }
+        if (user.getUsNum() == 0) {
+            return CommonResult.FAILURE;
+        }
+        user.setUsIsDeleted(true);
+        if (this.userMapper.updateUser(user) == 0) {
+            throw new TransactionalException();
+        }
+        return CommonResult.SUCCESS;
+    }
     // endregion
 }

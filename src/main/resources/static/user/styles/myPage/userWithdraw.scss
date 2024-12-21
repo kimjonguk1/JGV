@@ -57,7 +57,7 @@ body {
 
             > th {
               height: 2rem;
-              width: 30%;
+              width: 20%;
               background-color: #e2e2e0;
               border: 1px solid #000000;
               color: #888888;
@@ -87,6 +87,39 @@ body {
           color: #ffffff;
           font-weight: 500;
         }
+      }
+    }
+
+    > .warning {
+      @include flex(column, center, center, 1rem);
+    }
+
+    > .button-container {
+      width: 100%;
+      @include flex(row, center, center, 1rem);
+
+      > .cancel {
+        background-color: transparent;
+        border: 1px solid #555555;
+        cursor: pointer;
+        width: 7rem;
+        height: 1.9rem;
+        font-size: 1rem;
+        font-weight: 700;
+        border-radius: 0.3rem;
+      }
+
+      > .accept {
+        background-color: #FB4357;
+        border: 1px solid #FB4357;
+        cursor: pointer;
+        width: 7rem;
+        height: 1.9rem;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #ffffff;
+        border-radius: 0.3rem;
+
       }
     }
   }

@@ -364,4 +364,25 @@ body > .title-container > span > img {
   text-decoration: underline;
 }
 
+#changeNickname,
+#change-password {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: center;
+  height: 2rem;
+  width: 5rem;
+  background-color: #ffffff;
+  border: 1px solid #cacaca;
+  border-radius: 0.2rem;
+  color: #000000;
+  cursor: pointer;
+}
+#changeNickname > .-spring,
+#change-password > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
 /*# sourceMappingURL=modify.css.map */
