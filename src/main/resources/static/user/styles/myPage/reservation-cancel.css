@@ -1,0 +1,117 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  border: 3px solid #222222;
+}
+
+.reservation-info {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #f8f8f8;
+}
+.reservation-info > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.reservation-info > .movie-info {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  width: 100%;
+  height: 30rem;
+}
+.reservation-info > .movie-info > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.reservation-info > .movie-info > .title-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: flex-start;
+  width: 100%;
+  padding-bottom: 0.5rem;
+}
+.reservation-info > .movie-info > .title-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.reservation-info > .movie-info > .title-container > span {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.reservation-info > .movie-info > .detail {
+  width: 100%;
+}
+.reservation-info > .movie-info > .detail > table {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+}
+.reservation-info > .movie-info > .detail > table > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.reservation-info > .movie-info > .detail > table > caption {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #222222;
+}
+.reservation-info > .movie-info > .detail > table > tbody {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+.reservation-info > .movie-info > .detail > table > tbody > tr {
+  height: 2rem;
+  width: 100%;
+  border: 1px solid #000000;
+  padding: 0.5rem;
+}
+.reservation-info > .movie-info > .detail > table > tbody > tr > th {
+  height: 2rem;
+  width: 30%;
+  background-color: #e2e2e0;
+  border: 1px solid #000000;
+  color: #888888;
+  padding: 0.5rem;
+}
+.reservation-info > .movie-info > .detail > table > tbody > tr > td {
+  width: 100%;
+  border: 1px solid #000000;
+  padding: 0.5rem;
+  font-weight: 500;
+}
+.reservation-info > .movie-info > .detail > .button-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  width: 100%;
+}
+.reservation-info > .movie-info > .detail > .button-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.reservation-info > .movie-info > .detail > .button-container > .cancel {
+  width: 6rem;
+  height: 1.8rem;
+  background-color: #FB4357;
+  border: 1px solid #FB4357;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/*# sourceMappingURL=reservation-cancel.css.map */

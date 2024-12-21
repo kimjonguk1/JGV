@@ -110,11 +110,26 @@
                `mo_plot`         AS `moPlot`,
                `mo_booking_rate` AS `moBookingRate`,
                `mo_ending`       AS `moEnding`,
-               `m_img_url`       AS `mImgUrl`
+               `m_img_url`       AS `mImgUrl`,
+               `ra_grade`        AS `raGrade`,
+               `sc_start_date`   AS `scStartDate`,
+               `th_name`         AS `thName`,
+               (SELECT COUNT(DISTINCT `th_name`)
+                FROM `jgv`.`theater`
+                         LEFT JOIN `jgv`.`cinema` ON `cinema`.`th_num` = `theater`.`th_num`
+                         LEFT JOIN `jgv`.`screen` ON `cinema`.`ci_num` = `screen`.`ci_num`
+                WHERE `screen`.`mo_num` = movie.`mo_num`) AS `theaterCount`,
+               `reg_name` AS `regName`
         FROM `jgv`.`movie`
                  LEFT JOIN `jgv`.`movie_image` mi ON `movie`.`mo_num` = `mi`.`mo_num`
+                 LEFT JOIN `jgv`.`rating` ON `movie`.`ra_num` = `rating`.`ra_num`
+                 LEFT JOIN `jgv`.`screen` ON movie.mo_num = screen.mo_num
+                 LEFT JOIN `jgv`.`cinema` ON screen.ci_num = cinema.ci_num
+                 LEFT JOIN `jgv`.`theater` ON cinema.th_num = theater.th_num
+                 LEFT JOIN `jgv`.`region` ON theater.reg_num = region.reg_num
         WHERE `mo_title` = #{moTitle}
     </select>
+
     <select id="selectScreenDatesByMovieAndTheaterAndDate"
             resultType="dev.jwkim.jgv.vos.theater.ScreenVo">
         SELECT `sc_num`                              AS `scNum`,
