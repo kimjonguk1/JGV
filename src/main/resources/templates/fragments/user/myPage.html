@@ -17,7 +17,8 @@
             </div>
             <div class="reservation-container">
                 <div class="reservation-movie">
-                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="예매사진">
+                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg"
+                         alt="예매사진">
                     <div class="movie-info">
                         <div class="movie-title">
                             <span>미세스 그린 애플 - 더 화이트 라운지 인 시네마</span>
@@ -72,7 +73,8 @@
         </div>
         <div class="reservation-info">
             <div class="image-wrapper">
-                <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화 이미지">
+                <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg"
+                     alt="영화 이미지">
             </div>
             <div class="movie-info"><!--col-->
                 <div class="title-container">
@@ -81,11 +83,11 @@
                     <span class="pay">22,000원</span>
                 </div>
                 <div class="detail">
-                    <span >관람극장</span>
+                    <span>관람극장</span>
                     <span class="black">CGV 대구</span>
                     <div class="-spring"></div>
-                        <span>관람인원</span>
-                        <span class="black">일반 1</span>
+                    <span>관람인원</span>
+                    <span class="black">일반 1</span>
                 </div>
                 <div class="detail">
                     <span>관람일시</span>
@@ -102,7 +104,60 @@
                     <span class="black">1매</span>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="movie-receipt">
+        <div class="receipt">
+            <div class="result-title">
+            <h3>결제 내역</h3>
+            </div>
+            <div class="result">
+                <div class="result-pay underline">
+                    <span class="result-text">총 결제금액</span>
+                    <div class="-spring"></div>
+                    <span class="result-payment">22,000원</span>
+                </div>
+                <div class="result-pay">
+                    <span class="payment-method">└&nbsp;&nbsp;휴대폰결제</span>
+                    <div class="-spring"></div>
+                    <span class="method-payment">22,000원</span>
+                </div>
+            </div>
+            <div class="reservation-cancel">
+                <button class="reservation-cancel-button" type="button">
+                    예매취소
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="cancel-container">
+        <div class="title-container">
+            <span class="main-title">MY 취소내역</span>
+            <span class="sub-title">상영일 기준 지난 7일 동안의 취소내역입니다.</span>
+        </div>
+        <div class="cancel-history">
+            <table>
+                <thead>
+                <tr class="first-row">
+                    <th>관람 JGV</th>
+                    <th>관람 일시</th>
+                    <th>취소일</th>
+                    <th>결제취소 금액</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>대구 아카데미</td>
+                    <td>2024-12-09</td>
+                    <td>2024-12-12</td>
+                    <td>22,000원</td>
+                </tr>
+                <tr>
+                    <td colspan="5">고객님의 최근 취소내역이 존재하지 않습니다.</td>
 
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -110,7 +165,7 @@
     영수증 내용
 </div>
 <div class="content personal" th:fragment="personal">
-    <form id="passwordCheck">
+    <form id="passwordCheck" method="post">
         <div class="title">
             <h2>비밀번호 확인</h2>
         </div>
@@ -121,11 +176,12 @@
             <div class="input-wrapper">
                 <label class="id-wrapper --obj-label">
                     <span class="text">아이디</span>
-                    <span th:text="${session.user.getUsId()}" class="text">rlawhdfb123</span>
+                    <span th:text="${session.user.getUsId()}"
+                          class="text"></span>
                 </label>
                 <label class="--obj-label">
                     <span class="text">비밀번호</span>
-                    <input class="--obj-filed -border" type="password">
+                    <input class="--obj-filed -border" name="password" type="password">
                 </label>
             </div>
         </div>

@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -66,7 +67,7 @@ public class UserController {
 // endregion
 
     // region 로그인
-    @RequestMapping(value = "login",method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    @RequestMapping(value = "login", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getLogin() {
         ModelAndView modelAndView = new ModelAndView();
 
@@ -114,6 +115,30 @@ public class UserController {
     }
 
 
+
+    @RequestMapping(value = "/myPage/personal", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView postMyPagePersonal(@SessionAttribute("user") UserEntity user,
+                                           @RequestParam(value = "password") String password) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        Boolean passwordMatches = encoder.matches(password, user.getUsPw()); // true, false, null
+        System.out.println(user.getUsPw());
+        System.out.println(password);
+        System.out.println(passwordMatches);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("passwordMatches", passwordMatches);
+        modelAndView.setViewName("user/myPage/modify");
+        return modelAndView;
+    }
+
+//    @RequestMapping(value = "/myPage/modify", method = RequestMethod.GET, produces =
+//            MediaType.TEXT_HTML_VALUE)
+//    public ModelAndView getModify(HttpSession session, UserEntity user) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.addObject("session", session);
+//        modelAndView.addObject("user", user);
+//        modelAndView.setViewName("user/myPage/modify");
+//        return modelAndView;
+//    }
     // endregion
 
     // region 아이디 / 닉네임 중복 검사
@@ -164,7 +189,6 @@ public class UserController {
     }
 
 
-
     @RequestMapping(value = "find-password", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getFindPassword() {
         ModelAndView modelAndView = new ModelAndView();
@@ -174,7 +198,7 @@ public class UserController {
 
     @RequestMapping(value = "find-password", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String postFindPassword(UserEntity user, HttpServletRequest request, @RequestParam(value="usEmail", required = false) String usEmail) throws MessagingException {
+    public String postFindPassword(UserEntity user, HttpServletRequest request, @RequestParam(value = "usEmail", required = false) String usEmail) throws MessagingException {
         Result result = userService.findUserPassword(user);
         this.userService.provokeRecoverPassword(request, usEmail);
         JSONObject response = new JSONObject();
@@ -196,10 +220,10 @@ public class UserController {
         return response.toString();
     }
 
-    @RequestMapping(value = "/find-password-result",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/find-password-result", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ModelAndView getRecoverPassword(@RequestParam(value = "userEmail", required =
-                                                   false)String userEmail,
+                                                   false) String userEmail,
                                            @RequestParam(value = "key", required = false) String key,
                                            @RequestParam(value = "userId", required =
                                                    false) String userId
@@ -221,11 +245,7 @@ public class UserController {
     public String patchRecoverPassword(
             @RequestParam(value = "usPw", required = false) String password,
             @RequestParam(value = "userEmail", required = false) String email,
-            @RequestParam(value = "key", required = false) String key)
-    {
-        System.out.println("컨트롤러" + email);
-        System.out.println("컨트롤러" + key);
-        System.out.println("컨트롤러" + password);
+            @RequestParam(value = "key", required = false) String key) {
 
         EmailTokenEntity emailToken = new EmailTokenEntity();
         emailToken.setEmEmail(email);
@@ -238,4 +258,82 @@ public class UserController {
         return response.toString();
     }
     // endregion
+
+    // region 회원 수정 팝업창
+    @RequestMapping( value = "/myPage/modifyNickname", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView patchModifyNickname(HttpSession session, UserEntity user) {
+
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("session", session);
+        modelAndView.addObject("user", user);
+        UserEntity users = (UserEntity) session.getAttribute("user");
+
+
+        modelAndView.setViewName("user/myPage/modify-nickname");
+        return modelAndView;
+    }
+
+    @RequestMapping( value = "/myPage/modifyNickname", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String patchModifyNickname(HttpSession session, UserEntity user,
+                                      @RequestParam(value = "usNickname", required = false) String nickname) {
+        UserEntity users = (UserEntity) session.getAttribute("user");
+        Result result = this.userService.modifyNickname(users, nickname);
+        JSONObject response = new JSONObject();
+        System.out.println(users.getUsEmail());
+        System.out.println(users.getUsNickName());
+        response.put(Result.NAME, result.nameToLower());
+
+        return response.toString();
+    }
+
+    @RequestMapping( value = "/myPage/modifyPassword", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getModifyPassword(HttpSession session, UserEntity user) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("session", session);
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("user/myPage/modify-password");
+        return modelAndView;
+    }
+
+    @RequestMapping( value = "/myPage/modifyPassword", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String patchModifyPassword(HttpSession session, UserEntity user,
+                                      @RequestParam(value = "usPw", required = false) String password) {
+        UserEntity users = (UserEntity) session.getAttribute("user");
+        Result result = this.userService.modifyPassword(users, password);
+        JSONObject response = new JSONObject();
+        response.put(Result.NAME, result.nameToLower());
+
+        return response.toString();
+    }
+
+    @RequestMapping(value = "/myPage/reservationCancel", method = RequestMethod.GET,
+            produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getReservationCancel(HttpSession session, UserEntity user) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("session", session);
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("user/myPage/reservation-cancel");
+        return modelAndView;
+    }
+
+    @RequestMapping( value = "/myPage/reservationCancel", method = RequestMethod.PATCH,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String patchReservationCancel(HttpSession session, UserEntity user) {
+        UserEntity users = (UserEntity) session.getAttribute("user");
+        Result result = this.userService.reservationCancel(users);
+        JSONObject response = new JSONObject();
+        response.put(Result.NAME, result.nameToLower());
+
+        return response.toString();
+    }
+
+    // endregion
+
+
+
 }
