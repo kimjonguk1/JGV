@@ -1,6 +1,7 @@
 package dev.jwkim.jgv.controlles.user;
 
 
+import dev.jwkim.jgv.entities.ticket.PaymentEntity;
 import dev.jwkim.jgv.entities.user.EmailTokenEntity;
 import dev.jwkim.jgv.entities.user.UserEntity;
 import dev.jwkim.jgv.exceptions.MessageRemovedException;
@@ -325,7 +326,8 @@ public class UserController {
     @ResponseBody
     public String patchReservationCancel(HttpSession session, UserEntity user) {
         UserEntity users = (UserEntity) session.getAttribute("user");
-        Result result = this.userService.reservationCancel(users);
+        PaymentEntity payment = (PaymentEntity) session.getAttribute("payment");
+        Result result = this.userService.reservationCancel(users, payment);
         JSONObject response = new JSONObject();
         response.put(Result.NAME, result.nameToLower());
 

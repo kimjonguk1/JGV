@@ -1,5 +1,6 @@
 package dev.jwkim.jgv.services.user;
 
+import dev.jwkim.jgv.entities.ticket.PaymentEntity;
 import dev.jwkim.jgv.entities.user.EmailTokenEntity;
 import dev.jwkim.jgv.entities.user.UserEntity;
 import dev.jwkim.jgv.exceptions.TransactionalException;
@@ -7,6 +8,7 @@ import dev.jwkim.jgv.mappers.user.EmailTokenMapper;
 import dev.jwkim.jgv.mappers.user.UserMapper;
 import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.results.Result;
+import dev.jwkim.jgv.results.reservation.ReservationResult;
 import dev.jwkim.jgv.results.user.*;
 import dev.jwkim.jgv.utils.CryptoUtils;
 import jakarta.mail.MessagingException;
@@ -435,13 +437,17 @@ public class UserService {
         return CommonResult.SUCCESS;
     }
 
-    public Result reservationCancel(UserEntity user) {
-        if (user == null) {
+    public Result reservationCancel(UserEntity user, PaymentEntity payment) {
+        if (user == null || payment.getPaDeletedAt() == null || payment.getUsNum() < 0) {
             return CommonResult.FAILURE;
+        }
+        if (!payment.isPaState()) {
+
+            return ReservationResult.FAILURE_CANCEL_COMPLETE;
         }
         // pa.state 가 이미 0일때 return ReservationResult.FAILURE_CANCEL_COMPLETE;
 
-        // setPaState(false);
+        payment.setPaState(false);
         return CommonResult.SUCCESS;
     }
 
