@@ -1,0 +1,286 @@
+@charset "UTF-8";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import "../../../fragments/assets/styles/global";
+@import "../../../../static/assets/styles/common";
+
+
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+
+  > .main-title {
+    @include flex(column, center, center, 1rem);
+    padding-top: 3rem;
+    > h1 {
+      font-size: 3rem;
+      font-weight: 500;
+    }
+    > span {
+      font-size: 1rem;
+      color: #555555;
+    }
+  }
+
+  > .title-container {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    margin-top: 2rem;
+    padding: 1rem;
+
+    > h1 {
+      font-weight: 400;
+    }
+
+    > .-spring {
+      flex-grow: 1;
+    }
+
+    > span {
+      top: 5rem;
+      font-size: 0.9rem;
+      font-weight: 300;
+
+      > img {
+        width: 0.6rem;
+      }
+    }
+  }
+
+}
+
+#register-form {
+  width: 100%;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  > table, tbody, td, tr {
+    border-bottom: 1px solid #dddddd;
+    border-collapse: collapse;
+    padding: 2rem;
+
+
+    > tr {
+      > td {
+        > img {
+          width: 0.9rem;
+        }
+      }
+
+      > td[rel="row"] {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        justify-content: flex-start;
+
+        > .gender-container {
+          align-items: center;
+          display: flex;
+          flex-direction: row;
+          gap: 2rem;
+          justify-content: center;
+        }
+
+        > .duplicate-button {
+          height: 2.125rem;
+          width: 4.875rem;
+          background-color: #333333;
+          border: 0.0625rem solid #333333;
+          border-radius: 0.1875rem;
+          color: #ffffff;
+          cursor: pointer;
+          font-size: 0.875rem;
+          font-weight: 500;
+          vertical-align: center;
+          padding: 0 15px;
+          white-space: nowrap;
+        }
+      }
+
+      > td[rel="col"] {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        justify-content: center;
+
+        > .email-container {
+          border: 2px solid #dddddd;
+          height: 2rem;
+          padding: 0 1rem;
+
+          > .email-label {
+            > .email,
+            .domain {
+              width: 7rem;
+              color: #666666;
+            }
+          }
+
+          > .value-button {
+            width: 7rem;
+            color: #666666;
+            cursor: pointer;
+            padding: 0.2rem;
+            position: relative;
+
+            align-items: stretch;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+
+            > .-spring {
+              flex-grow: 1;
+            }
+          }
+        }
+
+        > .label-container {
+          align-items: flex-start;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 1rem;
+
+          > .--obj-label {
+            > .addr-button {
+              height: 2.125rem;
+              width: 4.875rem;
+              background-color: #333333;
+              border: 0.0625rem solid #333333;
+              border-radius: 0.1875rem;
+              color: #ffffff;
+              cursor: pointer;
+              font-size: 0.875rem;
+              font-weight: 500;
+              vertical-align: center;
+              padding: 0 15px;
+              white-space: nowrap;
+
+            }
+          }
+        }
+
+        > span {
+          color: #666666;
+        }
+
+        > div {
+          align-items: center;
+          display: flex;
+          flex-direction: row;
+          gap: 0.5rem;
+          justify-content: flex-start;
+
+          > span {
+            color: #666666;
+          }
+        }
+      }
+
+
+      > td:nth-child(odd) {
+        background-color: #f8f8f8;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  > .--obj-check-label {
+
+    cursor: pointer;
+    user-select: none;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 0.3rem;
+    justify-content: center;
+    margin-top: 1rem;
+
+  }
+
+
+  > .button-container {
+    height: 5rem;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+    justify-content: center;
+
+    > button {
+      border: 0.0625rem solid #333333;
+      border-radius: 0.2rem;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      height: 2.375rem;
+      padding: 0 2rem;
+      width: 10rem;
+      white-space: nowrap;
+
+       > a {
+         color: #222222;
+       }
+    }
+
+    > .cancel {
+      background-color: transparent;
+    }
+
+    > .submit {
+      background-color: #333333;
+      color: #ffffff;
+    }
+  }
+
+}
+
+#domainModal {
+  top: 1.775rem;
+  border: 2px solid #cacaca;
+  left: 0.475rem;
+  display: none;
+  cursor: pointer;
+  background-color: #ffffff;
+  position: absolute;
+  padding: 0.4rem;
+
+  > .modal-content {
+    width: 7rem;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    justify-content: center;
+
+    > .domain-self:hover {
+      text-decoration: none;
+
+      &:active {
+        text-decoration: underline;
+      }
+    }
+
+    > .domain-button:hover {
+      text-decoration: underline;
+
+    }
+  }
+}
+
+#changeNickname,
+#change-password {
+  @include flex(row, center, center);
+  height: 2rem;
+  width: 5rem;
+  background-color: #ffffff;
+  border: 1px solid #cacaca;
+  border-radius: 0.2rem;
+  color: #000000;
+  cursor: pointer;
+}

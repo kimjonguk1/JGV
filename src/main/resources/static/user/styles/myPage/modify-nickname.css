@@ -1,0 +1,85 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+
+#modify-form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center 2rem;
+  width: 100%;
+}
+#modify-form > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#modify-form > .title-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: flex-start;
+  width: 100%;
+}
+#modify-form > .title-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#modify-form > .content {
+  width: 100%;
+  padding-bottom: 1rem;
+}
+#modify-form > .content > table {
+  width: 100%;
+  height: 12rem;
+  border-bottom: 1px solid #555555;
+  border-collapse: collapse;
+}
+#modify-form > .content > table > thead {
+  height: 2.5rem;
+  background-color: #e2e2e0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #666666;
+}
+#modify-form > .content > table > tbody {
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+}
+#modify-form > .button-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  justify-content: center;
+}
+#modify-form > .button-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#modify-form > .button-container > .cancel {
+  background-color: transparent;
+  border: 1px solid #555555;
+  width: 7rem;
+  height: 1.9rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+#modify-form > .button-container > .submit {
+  background-color: #000;
+  border: 1px solid #555555;
+  width: 7rem;
+  height: 1.9rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=modify-nickname.css.map */

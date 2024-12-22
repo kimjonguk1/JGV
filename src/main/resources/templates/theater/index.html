@@ -72,7 +72,7 @@
             <img src="https://img.cgv.co.kr/R2014/images/title/h3_theater.gif" alt="영화관" class="theater">
         </div>
     </div>
-    <div class="theater-container">
+    <div class="theater-container" th:if="${theaterVos == null}">
         <div class="header">
             <span class="text">CGV대구</span>
             <span class="stretch"></span>
@@ -91,11 +91,9 @@
                         <div class="cinema-type">
                             <a href="#" class="IMAX" target="_blank"></a>
                             <a href="#" class="DX" target="_blank"></a>
-                            <a href="#" class="SCREENX" target="_blank"></a>
-                            <a href="#" class="CINE&FORET" target="_blank"></a>
                         </div>
                     </div>
-                    <div class="theater-info">6관/874석</div>
+                    <div class="theater-info">8관/320석</div>
                 </div>
                 <div class="stretch"></div>
                 <div class="notice-container">
@@ -109,28 +107,25 @@
          th:if="${theaterVos != null}"
          th:each="vos : ${theaterVos}">
         <div class="header">
-            <span th:text="${vos.key[0]}" class="text"></span>
+            <span th:text="${vos[0][0]}" class="text"></span>
             <span class="stretch"></span>
             <span class="button">단체/대관 문의</span>
         </div>
         <div class="img">
-            <img src="https://img.cgv.co.kr/Theater/Theater/2022/1223/16717573376930.png" alt="" class="image">
+            <img th:src="${vos[0][3]}" alt="" class="image">
             <div class="theater-info-container">
                 <div class="small-container">
                     <div class="header">
                         <div class="info-container">
-                            <div th:utext="${vos.key[1] + '<br>' + vos.key[2]}" class="theater-info"></div>
+                            <div th:utext="${vos[0][1]} + '<br>' + ${vos[0][2]}" class="theater-info"></div>
                         </div>
                         <a href="#" class="theater-info guide" target="_blank">위치 / 주차 안내 ></a>
                         <div class="stretch"></div>
-                        <div class="cinema-type">
-                            <a href="#" class="IMAX" target="_blank"></a>
-                            <a href="#" class="DX" target="_blank"></a>
-                            <a href="#" class="SCREENX" target="_blank"></a>
-                            <a href="#" class="CINE&FORET" target="_blank"></a>
+                        <div class="cinema-type" th:each="vo : ${vos[1]}">
+                            <a href="#" th:class="${vo}" target="_blank"></a>
                         </div>
                     </div>
-                    <div class="theater-info">6관/874석</div>
+                    <div class="theater-info" th:text="${vos[0][5]} + '관/' + ${vos[0][4]} + '석'"></div>
                 </div>
                 <div class="stretch"></div>
                 <div class="notice-container">
@@ -161,9 +156,27 @@
     <div class="information" data-id="cinema">
         <div class="cinema-info">
             <div class="cinema-header">
+                <div class="day-containers"
+                     th:if="${theaterVos != null}"
+                     th:each="vos : ${theaterVos}">
+                    <button class="before"></button>
+                    <ul class="day-container"
+                        th:each="vo : ${vos[2]}">
+                        <li class="item select"
+                            th:each="date : ${vo.value.split(',')}">
+                            <div class="small-container">
+                                <div th:text="${vo.key} + '월'" class="day"></div>
+                                <div th:text="${date.split('-')[1]}" class="day"></div>
+                            </div>
+                            <div th:text="${date.split('-')[0]}" class="day"></div>
+                        </li>
+                    </ul>
+                    <button class="after"></button>
+                </div>
                 <div class="day-containers">
                     <button class="before"></button>
-                    <ul class="day-container">
+                    <ul class="day-container"
+                        th:if="${theaterVos == null}">
                         <li class="item select">
                             <div class="small-container">
                                 <div class="day">12월</div>

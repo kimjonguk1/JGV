@@ -1,0 +1,388 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+body button, body input, body select {
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  font: inherit;
+  margin: 0;
+  outline: none;
+  padding: 0;
+}
+body .--obj-label {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  text-align: left;
+  user-select: none;
+}
+body .--obj-label > .text {
+  color: #888888;
+  font-size: 1em;
+}
+body .--obj-filed {
+  color: #888888;
+  font-size: 1rem;
+  height: 2rem;
+  transition-duration: 250ms;
+  transition-property: border-color;
+  transition-timing-function: ease;
+  padding: 0 1.2rem;
+}
+body .--obj-filed.-border {
+  border: 0.135rem solid #dddddd;
+  color: #888888;
+}
+body .--obj-filed.-border:hover {
+  border-color: rgb(246.5, 246.5, 246.5);
+}
+body .--obj-filed.-border:focus {
+  border: 0.135rem solid #000000;
+  border-radius: 0.2rem;
+}
+body .--obj-filed .stretch {
+  flex-grow: 1;
+}
+body .stretch {
+  flex-grow: 1;
+}
+body a {
+  text-decoration: none;
+}
+body ol, body ul {
+  list-style-type: none;
+  padding-inline-start: 0;
+}
+
+.---loading {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(2.5rem);
+  background-color: rgba(33, 33, 33, 0.7529411765);
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  transition-duration: 250ms;
+  transition-property: opacity;
+  transition-timing-function: ease;
+  user-select: none;
+  z-index: 100;
+}
+.---loading > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.---loading.-visible {
+  opacity: 1;
+  pointer-events: all;
+}
+.---loading.-visible ._icon {
+  top: 0;
+  opacity: 1;
+  transition-duration: 125ms;
+}
+.---loading.-visible ._text {
+  top: 0;
+  opacity: 1;
+  transition-delay: 500ms;
+  color: #ffffff;
+}
+.---loading ._icon {
+  top: 0.5rem;
+  width: 3rem;
+  animation-name: anim;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  opacity: 0;
+  position: relative;
+  transition-duration: 250ms;
+  transition-property: top, opacity;
+  transition-timing-function: ease;
+}
+@keyframes anim {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+.---loading ._text {
+  top: 0.5rem;
+  font-size: 1.25rem;
+  opacity: 0;
+  position: relative;
+  transition-duration: 250ms;
+  transition-property: top, opacity;
+  transition-timing-function: ease;
+}
+
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+body > .main-title {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  padding-top: 3rem;
+}
+body > .main-title > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+body > .main-title > h1 {
+  font-size: 3rem;
+  font-weight: 500;
+}
+body > .main-title > span {
+  font-size: 1rem;
+  color: #555555;
+}
+body > .title-container {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+body > .title-container > h1 {
+  font-weight: 400;
+}
+body > .title-container > .-spring {
+  flex-grow: 1;
+}
+body > .title-container > span {
+  top: 5rem;
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+body > .title-container > span > img {
+  width: 0.6rem;
+}
+
+#register-form {
+  width: 100%;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#register-form > table, #register-form tbody, #register-form td, #register-form tr {
+  border-bottom: 1px solid #dddddd;
+  border-collapse: collapse;
+  padding: 2rem;
+}
+#register-form > table > tr > td > img, #register-form tbody > tr > td > img, #register-form td > tr > td > img, #register-form tr > tr > td > img {
+  width: 0.9rem;
+}
+#register-form > table > tr > td[rel=row], #register-form tbody > tr > td[rel=row], #register-form td > tr > td[rel=row], #register-form tr > tr > td[rel=row] {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+#register-form > table > tr > td[rel=row] > .gender-container, #register-form tbody > tr > td[rel=row] > .gender-container, #register-form td > tr > td[rel=row] > .gender-container, #register-form tr > tr > td[rel=row] > .gender-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  justify-content: center;
+}
+#register-form > table > tr > td[rel=row] > .duplicate-button, #register-form tbody > tr > td[rel=row] > .duplicate-button, #register-form td > tr > td[rel=row] > .duplicate-button, #register-form tr > tr > td[rel=row] > .duplicate-button {
+  height: 2.125rem;
+  width: 4.875rem;
+  background-color: #333333;
+  border: 0.0625rem solid #333333;
+  border-radius: 0.1875rem;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  vertical-align: center;
+  padding: 0 15px;
+  white-space: nowrap;
+}
+#register-form > table > tr > td[rel=col], #register-form tbody > tr > td[rel=col], #register-form td > tr > td[rel=col], #register-form tr > tr > td[rel=col] {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+}
+#register-form > table > tr > td[rel=col] > .email-container, #register-form tbody > tr > td[rel=col] > .email-container, #register-form td > tr > td[rel=col] > .email-container, #register-form tr > tr > td[rel=col] > .email-container {
+  border: 2px solid #dddddd;
+  height: 2rem;
+  padding: 0 1rem;
+}
+#register-form > table > tr > td[rel=col] > .email-container > .email-label > .email,
+#register-form > table > tr > td[rel=col] > .email-container > .email-label .domain, #register-form tbody > tr > td[rel=col] > .email-container > .email-label > .email,
+#register-form tbody > tr > td[rel=col] > .email-container > .email-label .domain, #register-form td > tr > td[rel=col] > .email-container > .email-label > .email,
+#register-form td > tr > td[rel=col] > .email-container > .email-label .domain, #register-form tr > tr > td[rel=col] > .email-container > .email-label > .email,
+#register-form tr > tr > td[rel=col] > .email-container > .email-label .domain {
+  width: 7rem;
+  color: #666666;
+}
+#register-form > table > tr > td[rel=col] > .email-container > .value-button, #register-form tbody > tr > td[rel=col] > .email-container > .value-button, #register-form td > tr > td[rel=col] > .email-container > .value-button, #register-form tr > tr > td[rel=col] > .email-container > .value-button {
+  width: 7rem;
+  color: #666666;
+  cursor: pointer;
+  padding: 0.2rem;
+  position: relative;
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+#register-form > table > tr > td[rel=col] > .email-container > .value-button > .-spring, #register-form tbody > tr > td[rel=col] > .email-container > .value-button > .-spring, #register-form td > tr > td[rel=col] > .email-container > .value-button > .-spring, #register-form tr > tr > td[rel=col] > .email-container > .value-button > .-spring {
+  flex-grow: 1;
+}
+#register-form > table > tr > td[rel=col] > .label-container, #register-form tbody > tr > td[rel=col] > .label-container, #register-form td > tr > td[rel=col] > .label-container, #register-form tr > tr > td[rel=col] > .label-container {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+#register-form > table > tr > td[rel=col] > .label-container > .--obj-label > .addr-button, #register-form tbody > tr > td[rel=col] > .label-container > .--obj-label > .addr-button, #register-form td > tr > td[rel=col] > .label-container > .--obj-label > .addr-button, #register-form tr > tr > td[rel=col] > .label-container > .--obj-label > .addr-button {
+  height: 2.125rem;
+  width: 4.875rem;
+  background-color: #333333;
+  border: 0.0625rem solid #333333;
+  border-radius: 0.1875rem;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  vertical-align: center;
+  padding: 0 15px;
+  white-space: nowrap;
+}
+#register-form > table > tr > td[rel=col] > span, #register-form tbody > tr > td[rel=col] > span, #register-form td > tr > td[rel=col] > span, #register-form tr > tr > td[rel=col] > span {
+  color: #666666;
+}
+#register-form > table > tr > td[rel=col] > div, #register-form tbody > tr > td[rel=col] > div, #register-form td > tr > td[rel=col] > div, #register-form tr > tr > td[rel=col] > div {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+#register-form > table > tr > td[rel=col] > div > span, #register-form tbody > tr > td[rel=col] > div > span, #register-form td > tr > td[rel=col] > div > span, #register-form tr > tr > td[rel=col] > div > span {
+  color: #666666;
+}
+#register-form > table > tr > td:nth-child(odd), #register-form tbody > tr > td:nth-child(odd), #register-form td > tr > td:nth-child(odd), #register-form tr > tr > td:nth-child(odd) {
+  background-color: #f8f8f8;
+  font-size: 1rem;
+}
+#register-form > .--obj-check-label {
+  cursor: pointer;
+  user-select: none;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+#register-form > .button-container {
+  height: 5rem;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.8rem;
+  justify-content: center;
+}
+#register-form > .button-container > button {
+  border: 0.0625rem solid #333333;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  height: 2.375rem;
+  padding: 0 2rem;
+  width: 10rem;
+  white-space: nowrap;
+}
+#register-form > .button-container > button > a {
+  color: #222222;
+}
+#register-form > .button-container > .cancel {
+  background-color: transparent;
+}
+#register-form > .button-container > .submit {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+#domainModal {
+  top: 1.775rem;
+  border: 2px solid #cacaca;
+  left: 0.475rem;
+  display: none;
+  cursor: pointer;
+  background-color: #ffffff;
+  position: absolute;
+  padding: 0.4rem;
+}
+#domainModal > .modal-content {
+  width: 7rem;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  justify-content: center;
+}
+#domainModal > .modal-content > .domain-self:hover {
+  text-decoration: none;
+}
+#domainModal > .modal-content > .domain-self:hover:active {
+  text-decoration: underline;
+}
+#domainModal > .modal-content > .domain-button:hover {
+  text-decoration: underline;
+}
+
+#changeNickname,
+#change-password {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: center;
+  height: 2rem;
+  width: 5rem;
+  background-color: #ffffff;
+  border: 1px solid #cacaca;
+  border-radius: 0.2rem;
+  color: #000000;
+  cursor: pointer;
+}
+#changeNickname > .-spring,
+#change-password > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+/*# sourceMappingURL=modify.css.map */

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/user/styles/myPage/userWithdraw.css"
+          type="text/css">
+    <script defer src="/user/scripts/myPage/userWithdraw.js" type="text/javascript"></script>
+    <title>회원탈퇴</title>
+</head>
+<body>
+<div class="reservation-info">
+    <div class="movie-info">
+        <div class="detail">
+            <table>
+                <caption>회원정보</caption>
+                <tbody>
+                <tr>
+                    <th>회원 아이디</th>
+                    <td colspan="3" th:text="${session.user.getUsId()}"></td>
+                </tr>
+                <tr>
+                    <th>회원번호</th>
+                    <td th:text="${session.user.getUsNum()}"></td>
+                    <th>생성일</th>
+                    <td th:text="${session.user.getUsCreatedAt()}"></td>
+                </tr>
+                <tr>
+                    <th>회원연락처</th>
+                    <td th:text="${session.user.getUsContact()}"></td>
+                    <th>성별</th>
+                    <td th:text="${session.user.getUsGender()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="warning">
+            <span class="text">"회원 탈퇴 시 예매 내역 및 개인정보가 모두 삭제되며, 복구가 불가능합니다."</span>
+            <span class="text">"정말로 JGV 회원탈퇴를 진행할까요?"</span>
+        </div>
+        <div class="button-container">
+            <button class="cancel" type="button">취소</button>
+            <button class="accept" type="button">탈퇴하기</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,126 @@
+@import "../../../fragments/assets/styles/global";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  border: 3px solid #222222;
+}
+
+.reservation-info {
+  @include flex(column, flex-start, center, 1rem);
+  padding: 2rem;
+  background-color: #f8f8f8;
+
+  > .movie-info {
+    @include flex(column, flex-start, center, 1rem);
+    width: 100%;
+    height: 30rem;
+
+    > .title-container {
+      @include flex(row, center, flex-start);
+      width: 100%;
+      padding-bottom: 0.5rem;
+
+      > span {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+    }
+
+    > .detail {
+
+      width: 100%;
+      > table {
+        @include flex(column, flex-start, center, 1rem);
+        width: 100%;
+        text-align: center;
+
+        > caption {
+          font-size: 1rem;
+          font-weight: 500;
+          color: #222222;
+        }
+
+
+        > tbody {
+          width: 100%;
+          border-collapse: collapse;
+          white-space: nowrap;
+
+
+
+          > tr {
+            height: 2rem;
+            width: 100%;
+            border: 1px solid #000000;
+            padding: 0.5rem;
+
+            > th {
+              height: 2rem;
+              width: 20%;
+              background-color: #e2e2e0;
+              border: 1px solid #000000;
+              color: #888888;
+              padding: 0.5rem;
+            }
+
+            > td {
+              width: 100%;
+              border: 1px solid #000000;
+              padding: 0.5rem;
+              font-weight: 500;
+
+            }
+          }
+        }
+      }
+
+      > .button-container {
+        @include flex(column, center, center);
+        width: 100%;
+
+        > .cancel {
+          width: 6rem;
+          height: 1.8rem;
+          background-color: #FB4357;
+          border: 1px solid #FB4357;
+          color: #ffffff;
+          font-weight: 500;
+        }
+      }
+    }
+
+    > .warning {
+      @include flex(column, center, center, 1rem);
+    }
+
+    > .button-container {
+      width: 100%;
+      @include flex(row, center, center, 1rem);
+
+      > .cancel {
+        background-color: transparent;
+        border: 1px solid #555555;
+        cursor: pointer;
+        width: 7rem;
+        height: 1.9rem;
+        font-size: 1rem;
+        font-weight: 700;
+        border-radius: 0.3rem;
+      }
+
+      > .accept {
+        background-color: #FB4357;
+        border: 1px solid #FB4357;
+        cursor: pointer;
+        width: 7rem;
+        height: 1.9rem;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #ffffff;
+        border-radius: 0.3rem;
+
+      }
+    }
+  }
+}

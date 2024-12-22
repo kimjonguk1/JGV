@@ -1,0 +1,71 @@
+@import "../../../fragments/assets/styles/global";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+
+}
+#modify-form {
+  @include flex(column, center, center 2rem);
+  width: 100%;
+
+ > .title-container {
+   @include flex(row, center, flex-start);
+   width: 100%;
+ }
+
+  > .content {
+    width: 100%;
+    padding-bottom: 1rem;
+
+    > table {
+      width: 100%;
+      height: 12rem;
+      border-bottom: 1px solid #555555;
+      border-collapse: collapse;
+
+      > thead {
+        height: 2.5rem;
+        background-color: #e2e2e0;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #666666;
+
+      }
+      > tbody {
+        font-size: 1rem;
+        font-weight: 700;
+        text-align: center;
+      }
+    }
+
+  }
+
+  > .button-container {
+    @include flex(row, center, center, 1.5rem);
+
+    > .cancel {
+      background-color: transparent;
+      border: 1px solid #555555;
+      width: 7rem;
+      height: 1.9rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 0.3rem;
+      cursor: pointer;
+    }
+
+    > .submit {
+      background-color: #000;
+      border: 1px solid #555555;
+      width: 7rem;
+      height: 1.9rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      border-radius: 0.3rem;
+      cursor: pointer;
+
+    }
+  }
+}
