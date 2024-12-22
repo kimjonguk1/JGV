@@ -138,14 +138,9 @@ public class MovieService {
             Document movieDoc = Jsoup.connect(url).timeout(10000).get();
             String rawData = movieDoc.select("div.spec > dl > dt:contains(기본 정보) + dd").text();
             String movieDate = movieDoc.select("div.spec > dl > dt:contains(개봉) + dd").text();
+            // 개봉 연도만 추출
+            String releaseYear = movieDate.split("\\.")[0];
             String movieTitle = movieDoc.select("div.box-contents > div.title > strong").text();
-
-            // 중복 확인 (제목, 개봉일이 이미 존재하는 경우 return)
-            Integer existingMovieId = movieMapper.selectMovieByUniqueFields(movieTitle, movieDate);
-            if(existingMovieId != null) {
-                return;
-            }
-
             // 관람 등급
             String raiting = rawData.split("[,.]")[0].trim();
             RatingEntity ratingEntity = new RatingEntity();
@@ -154,6 +149,12 @@ public class MovieService {
             if (raId == null) {
                 raitingMapper.insertMovieRaiting(ratingEntity);
                 raId = ratingEntity.getRaNum();
+            }
+
+            // 중복 확인 (제목, 개봉일(개봉년도 기준)이 이미 존재하는 경우 return)
+            Integer existingMovieId = movieMapper.selectMovieByUniqueFields(movieTitle, releaseYear);
+            if(existingMovieId != null) {
+                return;
             }
             // 영화 데이터 가져오기
             movieEntity.setMoTitle(movieTitle);
