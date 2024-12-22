@@ -44,7 +44,7 @@
         SELECT *
         FROM jgv.movie
         WHERE mo_title = #{movieTitle}
-        AND mo_date = #{movieDate}
+        AND YEAR(mo_date) = #{movieDate}
         LIMIT 1
     </select>
     

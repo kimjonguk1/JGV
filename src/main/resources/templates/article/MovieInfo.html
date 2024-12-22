@@ -17,7 +17,20 @@
 <th:block th:replace="~{fragments/common.html :: header}"></th:block>
 <th:block th:replace="~{fragments/common.html :: nav}"></th:block>
 <main id="main" class="frame main">
-    <div class="reserve-modal" style="display: none"></div>
+    <div class="reserve-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>평점 작성</h2>
+                <button class="close-button" id="closeModal">x</button>
+            </div>
+            <p class="movie-title" th:text="${movieInfo.getMoTitle()}"></p>
+            <p class="viewer-name" th:text="${session.user.getUsName()}">사용자 이름</p>
+            <textarea id="reviewText" placeholder="운영원칙에 어긋나는 게시물로 판단되는 글은 제재 조치를 받을 수 있습니다." maxlength="280"></textarea>
+            <div class="modal-action">
+                <button id="submitReview">작성완료!</button>
+            </div>
+        </div>
+    </div>
     <div class="movie-detail-container" th:if="${movieInfo != null}">
         <div class="movie-header">
             <div class="poster">
