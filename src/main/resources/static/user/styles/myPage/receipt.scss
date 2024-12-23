@@ -1,0 +1,105 @@
+@import "../../../fragments/assets/styles/global";
+
+
+.print-receipt {
+  @include flex(column, flex-start, center, 1rem);
+  width: 91%;
+  height: auto;
+
+  > .title-container {
+    @include flex(column, flex-start, center, 1rem);
+    width: 100%;
+
+
+    > .main-text {
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    > .sub-text {
+      font-size: 1rem;
+      font-weight: 400;
+    }
+  }
+
+  > .check-period {
+    width: 100%;
+    height: 4rem;
+    background-color: #f3f2e7;
+    border: 1px solid #656560;
+    padding: 2rem;
+    @include flex(row, center, flex-start, 1rem);
+
+    > label {
+
+      > select {
+        background-color: #f6f6f6;
+        border: 1px solid #666666;
+        color: #666666;
+        font-size: 1rem;
+        font-weight: 500;
+        padding: 0.3rem;
+
+      }
+    }
+
+    > .button-container {
+      @include flex(row, center, center);
+      background-color: #222222;
+      width: 5rem;
+      height: 2rem;
+
+      > button {
+        width: 4.8rem;
+        height: 1.8rem;
+        border: 0.1px solid #f2f2f2;
+        color: #f2f2f2;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+    }
+
+    > .period-text {
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    > .notice {
+      @include flex(column, flex-start, center, 0.5rem);
+
+      > span {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #666666;
+      }
+    }
+  }
+
+  > .detail {
+    @include flex(column, flex-start, center, 0.7rem);
+    width: 100%;
+    padding-top: 2rem;
+
+    > .detail-text {
+      width: 100%;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    > .detail-receipt {
+      @include flex(column, flex-start, center, 1rem);
+      width: 100%;
+      height: 5rem;
+      border-top: 1px solid #d6d4cb;
+      border-bottom: 1px solid #d6d4cb;
+      padding: 0 2rem;
+
+       > .text {
+         color: #666666;
+       }
+    }
+
+  }
+}
+
+

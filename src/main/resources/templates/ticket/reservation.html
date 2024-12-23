@@ -90,7 +90,9 @@
                 </div>
                 <div class="button">
                     <button type="button" name="print" class="print" id="print">예매정보 출력</button>
-                    <button type="button" name="cancel" class="cancel">예매확인/취소</button>
+                    <button type="button" name="cancel" class="cancel">
+                        <a th:href="@{'../user/myPage/reservation'}">예매확인 취소</a>
+                    </button>
                 </div>
             </div>
             <div class="text">
