@@ -564,6 +564,8 @@ $dayContainer.forEach((days) => {
     })
 })
 
+// ---------------------------------- 분리점
+
 const $whiteBlow = document.getElementById('whiteBlow');
 const $mains = Array.from($mainContainer.querySelectorAll(':scope > .mains'));
 const $seatContainer = $controlBar.querySelector(':scope > .container > .seat-container');
@@ -689,6 +691,14 @@ $rightButtons.forEach((x) => {
     x.onclick = () => {
         if (x.classList.contains('after')) {
             // 메인 바꾸기
+            if (sessionStorage.getItem('user') === null) {
+                const userCheck = confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")
+                if (userCheck) {
+                    window.location.replace('.././user/login');
+                } else {
+                    window.location.reload();
+                }
+            }
             const $theaterMovie = $containers.querySelector(':scope > .posters > .movie-info > .title');
 
             $mains.forEach((main) => {

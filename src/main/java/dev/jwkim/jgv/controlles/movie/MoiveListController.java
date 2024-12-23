@@ -3,17 +3,17 @@ package dev.jwkim.jgv.controlles.movie;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.jwkim.jgv.DTO.*;
-import dev.jwkim.jgv.entities.user.ReviewEntity;
-import dev.jwkim.jgv.results.CommonResult;
+import dev.jwkim.jgv.entities.theater.RegionEntity;
 import dev.jwkim.jgv.results.movie.SearchResult;
 import dev.jwkim.jgv.services.movie.MovieService;
 import dev.jwkim.jgv.services.movie.SearchService;
+import dev.jwkim.jgv.services.theater.TheaterService;
 import dev.jwkim.jgv.services.user.ReviewService;
 import dev.jwkim.jgv.vos.PageVo;
+import dev.jwkim.jgv.vos.theater.TheaterVo;
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,10 +21,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -33,11 +30,13 @@ public class MoiveListController {
     private final MovieService movieService;
     private final SearchService searchService;
     private final ReviewService reviewService;
+    private final TheaterService theaterService;
 
-    public MoiveListController(MovieService movieService, SearchService searchService, ReviewService reviewService) {
+    public MoiveListController(MovieService movieService, SearchService searchService, ReviewService reviewService, TheaterService theaterService) {
         this.movieService = movieService;
         this.searchService = searchService;
         this.reviewService = reviewService;
+        this.theaterService = theaterService;
     }
 
     @RequestMapping(value = "/movieList", method = RequestMethod.GET)
@@ -72,7 +71,12 @@ public class MoiveListController {
     }
 
     @RequestMapping(value = "/movieList/movieInfo/{id}")
-    public ModelAndView getMovieDetail(@PathVariable("id") Integer id, HttpSession session, @RequestParam(value = "page", required = false, defaultValue = "1")int page) {
+    public ModelAndView getMovieDetail(@PathVariable("id") Integer id,
+                                       HttpSession session,
+                                       @RequestParam(value = "page", required = false, defaultValue = "1")int page,
+                                       @RequestParam(value = "region", required = false) String region,
+                                       @RequestParam(value = "movie", required = false) String movie,
+                                       @RequestParam(value = "date", required = false) String date) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("article/MovieInfo");
         // 영화 정보를 표시하기 위해
@@ -96,6 +100,34 @@ public class MoiveListController {
                 }
             }
         }
+        RegionEntity[] regions = this.theaterService.findRegionAll();
+        if (region != null) {
+            TheaterVo[] theaterVos = this.theaterService.selectAllTheatersByRegion(region, movie);
+            Map<String, String> maps = this.theaterService.getWeekdaysByRegion(region, movie);
+            Set<String> keys = new LinkedHashSet<>();
+            List<Object[]> values = new ArrayList<>();
+            Set<String> types = new LinkedHashSet<>();
+            for (TheaterVo theaterVo : theaterVos) {
+                keys.add(theaterVo.getThName());
+                keys.add(theaterVo.getThAddr().split("\n")[0]);
+                keys.add(theaterVo.getThAddr().split("\n")[1]);
+                keys.add(theaterVo.getThImg());
+                keys.add(String.valueOf(theaterVo.getSeatCount()));
+                keys.add(String.valueOf(theaterVo.getCinemaCount()));
+                if (theaterVo.getCitName().equals("4DX")) {
+                    theaterVo.setCitName("DX");
+                }
+                types.add(theaterVo.getCitName());
+            }
+            values.add(new Object[]{keys, types, maps});
+            mav.addObject("theaterVos", values);
+        }
+        if (date != null && region != null) {
+            Map<Set<String>, Map<Set<String>, Set<String>>> screenVos = this.theaterService.selectAllScreensByRegion(date, region, movie);
+            mav.addObject("screenVos", screenVos);
+        }
+        mav.addObject("sessionUser", user);
+        mav.addObject("regions", regions);
         mav.addObject("pageVo", pageVo);
         mav.addObject("articles", articles != null ? articles : new ReviewDTO[0]);
         return mav;

@@ -27,17 +27,17 @@ public class TheaterController {
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getIndex(
             @RequestParam(value = "region", required = false) String region,
-            @RequestParam(value = "theater", required = false) String theater) {
+            @RequestParam(value = "theater", required = false) String theater,
+            @RequestParam(value = "date", required = false) String date) {
         ModelAndView modelAndView = new ModelAndView();
         RegionEntity[] regions = this.theaterService.findRegionAll();
         TheaterEntity[] theaters = this.theaterService.getTheatersByRegion(region);
         if (theater != null) {
             TheaterVo[] theaterVos = this.theaterService.selectAllTheaters(theater);
-            Map<Set<String>, List<Set<String>>> theaterMap = new HashMap<>();
+            Map<String, String> maps = this.theaterService.getWeekdays(theater);
             Set<String> keys = new LinkedHashSet<>();
-            List<Set<String>> values = new ArrayList<>();
+            List<Object[]> values = new ArrayList<>();
             Set<String> types = new LinkedHashSet<>();
-            SortedSet<String> times = new TreeSet<>();
             for (TheaterVo theaterVo : theaterVos) {
                 keys.add(theaterVo.getThName());
                 keys.add(theaterVo.getThAddr().split("\n")[0]);
@@ -45,22 +45,21 @@ public class TheaterController {
                 keys.add(theaterVo.getThImg());
                 keys.add(String.valueOf(theaterVo.getSeatCount()));
                 keys.add(String.valueOf(theaterVo.getCinemaCount()));
+                keys.add(theaterVo.getThParking());
                 if (theaterVo.getCitName().equals("4DX")) {
                     theaterVo.setCitName("DX");
                 }
                 types.add(theaterVo.getCitName());
-                times.add(String.valueOf(theaterVo.getScStartDate()).split("T")[0]);
             }
-            values.add(types);
-            values.add(times);
-            theaterMap.computeIfAbsent(keys, k -> new ArrayList<>()).addAll(values);
-            System.out.println(theaterMap);
-            modelAndView.addObject("theaterVos", theaterMap);
+            values.add(new Object[]{keys, types, maps});
+            modelAndView.addObject("theaterVos", values);
         }
-//        Map<String, List<String>> maps = this.theaterService.Crawl();
+        if (date != null && theater != null) {
+            Map<Set<String>, Map<Set<String>, Set<String>>> screenVos = this.theaterService.selectAllScreens(date, theater);
+            modelAndView.addObject("screenVos", screenVos);
+        }
         modelAndView.addObject("regions", regions);
         modelAndView.addObject("theaters", theaters);
-//        modelAndView.addObject("maps", maps);
         modelAndView.setViewName("theater/index");
         return modelAndView;
     }
