@@ -4,6 +4,7 @@ public interface Result {
     String NAME = "result";
     String NAMES = "results";
 
+
     String name();
 
     default String nameToLower() {

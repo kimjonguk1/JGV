@@ -316,7 +316,7 @@
         where cinema.`ci_name` = #{ciName}
           and theater.`th_name` = #{thName}
           and movie.`mo_title` = #{moTitle}
-          and sc_start_date = #{scStartDate}
+          and `sc_start_date` LIKE CONCAT('%', #{scStartDate}, '%')
 
     </select>
     <select id="selectSeatByReservationSeNum" resultType="dev.jwkim.jgv.vos.ticket.SeatVo">
@@ -333,6 +333,6 @@
         where ci_name = #{ciName}
           and th_name = #{thName}
           and mo_title = #{moTitle}
-          and sc_start_date = #{scStartDate}
+          and `sc_start_date` LIKE CONCAT('%', #{scStartDate}, '%')
     </select>
 </mapper>

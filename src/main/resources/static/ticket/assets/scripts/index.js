@@ -577,9 +577,7 @@ const $paymentSection = document.getElementById('payment-section');
 
 
 const $mainPayment = document.getElementById("main-payment");
-const $mainSeat = document.getElementById("main-seat");
 const $payForm = $paymentSection.querySelector(':scope > .pay-form');
-const $realMain = document.getElementById("main");
 let t = 0;
 let m = 0;
 const $seatContent = $controlBar.querySelector(':scope > .container > .seat > .seat-content');
@@ -603,6 +601,7 @@ const $payPriceWon5 = document.getElementById("pay-price-won5");
 const $payPriceWon6 = document.getElementById("pay-price-won6");
 const $payPriceWonInt = document.getElementById("pay-price-won-int");
 const $SeatDate = document.getElementById("seat-date");
+const $posterImg = document.getElementById("poster-img");
 
 
 
@@ -684,7 +683,7 @@ const $paycoContainer = $mainPayment.querySelector(':scope > .left-container > .
 const $cultureCard = document.querySelector('input[name="culture-card"]');
 const $noneCulturePayText = $mainPayment.querySelector(':scope > .left-container >.simple-pay-container > .naver-pay-container > .none-culture-pay-text')
 const $CulturePayText = $mainPayment.querySelector(':scope > .left-container >.simple-pay-container > .naver-pay-container > .culture-pay-text')
-
+let $theaterTheater2 = "";
 
 $rightButtons.forEach((x) => {
     x.onclick = () => {
@@ -698,13 +697,14 @@ $rightButtons.forEach((x) => {
                     main.getAttribute('data-id') === 'main-seat') {
                     main.classList.remove('hidden');
                     $SeatDate.innerText = `${$theaterTime.innerText}`;
+                    $theaterTheater2 = `${$theaterTheater.innerText.substring(0, $theaterTheater.innerText.length - 1)}`;
                     let rawDateStr = $theaterTime.innerText;
                     let formattedDate = rawDateStr
                         .replace(/\([^)]+\)/, "T") // "(금)" 제거
                         .replace(/\./g, "-"); // "." -> "-"
                     const xhr = new XMLHttpRequest();
                     const url = new URL("http://localhost:8080/ticket/seat"); //ticket
-                    url.searchParams.set('thName', $theaterTheater.innerText);
+                    url.searchParams.set('thName', $theaterTheater2);
                     url.searchParams.set('ciName', $theaterCinema.innerText);
                     url.searchParams.set('moTitle', $theaterMovie.innerText);
                     url.searchParams.set('scStartDate', formattedDate);
@@ -723,9 +723,23 @@ $rightButtons.forEach((x) => {
                         $seatColor.innerText = 40 - result.length;
 
                         $payMovie.innerText = `${$theaterMovie.innerText}`;
-                        $payTheater.innerText = `${$theaterTheater.innerText}`;
+                        $payTheater.innerText = `${$theaterTheater2}`;
                         $payCinema.innerText = `${$theaterCinema.innerText}`;
                         $payTime.innerText = `${$theaterTime.innerText}`;
+
+                        // 얘안됨
+                        // 주어진 날짜와 시간
+                        let givenDate = new Date(formattedDate);
+
+                        // 추가 분을 밀리초로 변환
+                        let minutesToAdd = `${result2[0].moTime}`
+                        let millisecondsToAdd = minutesToAdd * 60 * 1000;
+                        // 새로운 시간을 계산
+                        givenDate.setTime(givenDate.getTime() + millisecondsToAdd);
+
+// 새로운 날짜와 시간을 ISO 8601 형식으로 출력
+                        console.log(givenDate.toISOString());  // 2024-12-18T20:16:00.000Z
+
 
                         rows.forEach(row => {
                             const tr = document.createElement('tr'); // 행 생성
@@ -777,6 +791,7 @@ $rightButtons.forEach((x) => {
                                     selectedHuman.push(`일반 ${(radio.value)} 명`);
                                     $seatHuman.textContent = `${selectedHuman.join(', ')}`
                                     $payHuman.textContent = selectedHuman;
+                                    $posterImg.src = `${result2[0].MImgUrl}`
 
 
                                 } else {
@@ -1110,7 +1125,7 @@ $payForm.onsubmit = (e) => {
         formData.append("meName", document.getElementById('method').innerText.trim());  // span 요소에서 결제 방법 번호 가져오기
         formData.append("moTitle", $theaterMovie.innerText);
         formData.append("ciName", $theaterCinema.innerText);
-        formData.append("thName", $theaterTheater.innerText);
+        formData.append("thName", $theaterTheater2);
         formData.append("scStartDate", formattedDate);
         selectedSeats.forEach(seat => {
             console.log(seat)
@@ -1122,14 +1137,26 @@ $payForm.onsubmit = (e) => {
                 return;
             }
             if (xhr.status >= 200 && xhr.status < 300) {
+
             } else {
                 alert("오류가 발생했습니다. 다시 시도해주세요.");
             }
             const response = JSON.parse(xhr.responseText);
-            if (response['result'] === "success") {
+            if (response['result'] === "success" && response['results'] === "success") {
                 alert("결제가 완료되었습니다.");
+                // 결제 완료 후 sessionStorage에 상태 저장
+                sessionStorage.setItem('paymentComplete', 'true');
+                // 예매 정보도 sessionStorage에 저장
+                sessionStorage.setItem('meName', document.getElementById('method').innerText);
+                sessionStorage.setItem('moTitle', $theaterMovie.innerText);
+                sessionStorage.setItem('ciName', $theaterCinema.innerText);
+                sessionStorage.setItem('thName', $theaterTheater2);
+                sessionStorage.setItem('scStartDate', $theaterTime.innerText);
+                sessionStorage.setItem('paPrice', $seatPriceAdd.innerText);
+                sessionStorage.setItem('human', $seatHuman.innerText);
+                sessionStorage.setItem('seName', $seatNumber.innerText);
+                sessionStorage.setItem('poster', $posterImg.src);
                 window.location.href = ("../../ticket/reservation")
-
             }
         };
 
