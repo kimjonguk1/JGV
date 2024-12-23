@@ -4,8 +4,8 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": -274.3978,
-    "scrollLeft": -350,
+    "scrollTop": -538.3978,
+    "scrollLeft": -215,
     "zoomLevel": 0.73,
     "show": 431,
     "database": 4,
@@ -463,11 +463,11 @@
         "comment": "리뷰/평점",
         "columnIds": [
           "akVrbxxT-2eHOslBZX69B",
-          "qo8eflenFMklmAsaEJYYh",
           "dGFKO-zqEDKqAy2wutvg5",
           "_0U2b4eBBWeQOhUjYgzfW",
           "wpc7QpG551qkif9tMSgih",
           "0XYJxuM3FztwetLcw_HWI",
+          "nHHHYpdLj2iNLR6spfXne",
           "BBqiuYhIH-0hl8IypUnOx",
           "YDf74-GdVCJgCvkEX6L2_"
         ],
@@ -478,6 +478,7 @@
           "_0U2b4eBBWeQOhUjYgzfW",
           "wpc7QpG551qkif9tMSgih",
           "0XYJxuM3FztwetLcw_HWI",
+          "nHHHYpdLj2iNLR6spfXne",
           "BBqiuYhIH-0hl8IypUnOx",
           "YDf74-GdVCJgCvkEX6L2_"
         ],
@@ -490,7 +491,7 @@
           "color": ""
         },
         "meta": {
-          "updateAt": 1731487126394,
+          "updateAt": 1734924442197,
           "createAt": 1731314312027
         }
       },
@@ -3132,6 +3133,26 @@
           "updateAt": 1733465196817,
           "createAt": 1733465196816
         }
+      },
+      "nHHHYpdLj2iNLR6spfXne": {
+        "id": "nHHHYpdLj2iNLR6spfXne",
+        "tableId": "z-0o2n9RxJCHMQKpOrReu",
+        "name": "re_liked",
+        "comment": "좋아요 수",
+        "dataType": "INT",
+        "default": "0",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1734924466486,
+          "createAt": 1734924439322
+        }
       }
     },
     "relationshipEntities": {
@@ -4557,7 +4578,7 @@
     "qo8eflenFMklmAsaEJYYh": [
       "tableColumnEntities",
       1731314332523,
-      -1,
+      1734915701773,
       {
         "comment": 1731314344100,
         "name": 1731314361372,
@@ -5396,6 +5417,18 @@
       1733465196811,
       -1,
       {}
+    ],
+    "nHHHYpdLj2iNLR6spfXne": [
+      "tableColumnEntities",
+      1734924439317,
+      -1,
+      {
+        "name": 1734924448476,
+        "dataType": 1734924451047,
+        "default": 1734924453920,
+        "comment": 1734924466268,
+        "options(notNull)": 1734924466485
+      }
     ]
   }
 }

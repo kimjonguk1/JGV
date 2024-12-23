@@ -2,14 +2,13 @@ package dev.jwkim.jgv.controlles.movie;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.jwkim.jgv.DTO.CharacterDTO;
-import dev.jwkim.jgv.DTO.Movie_ImageDTO;
-import dev.jwkim.jgv.DTO.Movie_InfoDTO;
-import dev.jwkim.jgv.DTO.RelatedMovieDTO;
+import dev.jwkim.jgv.DTO.*;
+import dev.jwkim.jgv.entities.user.ReviewEntity;
 import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.results.movie.SearchResult;
 import dev.jwkim.jgv.services.movie.MovieService;
 import dev.jwkim.jgv.services.movie.SearchService;
+import dev.jwkim.jgv.services.user.ReviewService;
 import dev.jwkim.jgv.vos.PageVo;
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.tuple.Pair;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -32,10 +32,12 @@ import java.util.stream.Collectors;
 public class MoiveListController {
     private final MovieService movieService;
     private final SearchService searchService;
+    private final ReviewService reviewService;
 
-    public MoiveListController(MovieService movieService, SearchService searchService) {
+    public MoiveListController(MovieService movieService, SearchService searchService, ReviewService reviewService) {
         this.movieService = movieService;
         this.searchService = searchService;
+        this.reviewService = reviewService;
     }
 
     @RequestMapping(value = "/movieList", method = RequestMethod.GET)
@@ -70,14 +72,32 @@ public class MoiveListController {
     }
 
     @RequestMapping(value = "/movieList/movieInfo/{id}")
-    public ModelAndView getMovieDetail(@PathVariable("id") Integer id, HttpSession session) {
+    public ModelAndView getMovieDetail(@PathVariable("id") Integer id, HttpSession session, @RequestParam(value = "page", required = false, defaultValue = "1")int page) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("article/MovieInfo");
+        // 영화 정보를 표시하기 위해
         Movie_InfoDTO movieInfo = movieService.selectMovieInfoById(id);
         mav.addObject("movieInfo", movieInfo);
+        //세션을 위해
         Object user = session.getAttribute("user");
         mav.addObject("sessionUser", user);
-        System.out.println(session.getAttribute("user"));
+        // 영화 리뷰를 표시하기 위해
+        Pair<PageVo, ReviewDTO[]> pair = this.reviewService.getReviewById(id, page);
+        PageVo pageVo = pair.getLeft();
+        ReviewDTO[] articles = pair.getRight();
+        // 리뷰 정렬을 위한 타임스탬프 생성
+        if (articles != null) {
+            for (ReviewDTO article : articles) {
+                if (article.getReCreatedAt() != null) {
+                    article.setReCreatedAtTimestamp(article.getReCreatedAt()
+                            .atZone(ZoneId.systemDefault())
+                            .toInstant()
+                            .toEpochMilli());
+                }
+            }
+        }
+        mav.addObject("pageVo", pageVo);
+        mav.addObject("articles", articles != null ? articles : new ReviewDTO[0]);
         return mav;
     }
 
