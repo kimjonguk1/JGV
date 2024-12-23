@@ -13,4 +13,10 @@
         SET pa_state = #{paState}
         WHERE pa_num = #{paNum}
     </update>
+    <delete id="deletePayment" parameterType="int">
+        delete
+        from jgv.payment
+        where pa_num = #{paNum}
+          and pa_state = false
+    </delete>
 </mapper>

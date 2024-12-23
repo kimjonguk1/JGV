@@ -13,7 +13,7 @@
 
     <title>JGV - 티켓 예매 완료</title>
 </head>
-<body>
+<body style="display: none">
 <th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
 <th:block th:replace="~{fragments/common.html :: header}"></th:block>
 <th:block th:replace="~{fragments/common.html :: nav}"></th:block>
@@ -39,58 +39,57 @@
             <div class="reservation-container">
                 <div class="table-div">
                     <div>
-                        <img class="img" src="/ticket/assets/images/icon3.png" alt="#">
+                        <img class="img" id="poster" alt="#">
                     </div>
                     <div class="table-container">
                         <div class="number-content title">
                             <span class="text">예매번호</span>
-                            <span class="number red">1</span>
+                            <span class="number red" id="number">1</span>
                         </div>
                         <div class="movie-content title">
                             <span class="text">영화</span>
-                            <span class="movie">미세스</span>
+                            <span class="movie" id="movie"></span>
                         </div>
                         <div class="cinema-content title">
                             <span class="text">극장</span>
                             <span class="cinema-container">
-                            <span class="theater">CGV대구</span>
-                            <span class="cinema">5관</span>
+                            <span class="theater" id="thName"></span>
+                            <span class="cinema" id="ciName"></span>
                         </span>
                         </div>
                         <div class="date-content title">
                             <span class="text">일시</span>
                             <span class="date-container">
-                            <span class="date">2021년5월4월5일</span>
-                            <span class="time">12:00~19:00</span>
+                            <span class="date" id="scStartDate"></span>
+                            <span class="text">~</span>
+                            <span class="time">19:00</span>
                         </span>
                         </div>
                         <div class="human-content title">
                             <span class="text">인원</span>
-                            <span class="human">일반 1명</span>
+                            <span class="human" id="human"></span>
                         </div>
                         <div class="seat-content title">
                             <span class="text">좌석</span>
-                            <span class="seat">G3</span>
+                            <span class="seat" id="seName"></span>
                         </div>
                         <div class="price-content title">
                             <span class="text">결제금액</span>
                             <span class="price-container">
-                            <span class="price red">22,000</span>
-                            <span>원</span>
+                            <span class="price red" id="paPrice"></span>
                         </span>
                         </div>
                         <div class="payment-content title">
                             <span class="text">결제수단</span>
                             <span class="payment-container">
-                            <span class="payment weight">휴대폰 결제</span>
-                            <span class="price red">22,000</span>
-                            <span>원</span>
+                            <span class="payment weight" id="meName"></span>
+                            <span class="price red" id="paPrice2"></span>
                         </span>
                         </div>
                     </div>
                 </div>
                 <div class="button">
-                    <button type="button" name="print" class="print" id="real-pay">예매정보 출력</button>
+                    <button type="button" name="print" class="print" id="print">예매정보 출력</button>
                     <button type="button" name="cancel" class="cancel">예매확인/취소</button>
                 </div>
             </div>

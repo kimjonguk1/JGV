@@ -11,4 +11,7 @@ public interface PaymentMapper {
     int updatePaymentState(@Param("paNum") int paNum,
                            @Param("paState") boolean paState);
 
+    int deletePayment(@Param("paNum") int paNum);
+
+
 }
