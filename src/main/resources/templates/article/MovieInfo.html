@@ -24,9 +24,16 @@
                 <button class="close-button" id="closeModal">x</button>
             </div>
             <p class="movie-title" th:text="${movieInfo.getMoTitle()}"></p>
-            <p class="viewer-name" th:text="${session.user.getUsName()}">사용자 이름</p>
-            <textarea id="reviewText" placeholder="운영원칙에 어긋나는 게시물로 판단되는 글은 제재 조치를 받을 수 있습니다." maxlength="280"></textarea>
+            <hr>
+            <div class="review-userInfo">
+                <img class="profile-img" src="http://img.cgv.co.kr/R2014/images/common/default_profile.gif" alt="profile">
+                <span class="user-name" th:if="${sessionUser != null}" th:text="${session.user.getUsName()}">사용자 이름</span>
+            </div>
+            <label class="label">
+                <textarea id="reviewText" placeholder="운영원칙에 어긋나는 게시물로 판단되는 글은 제재 조치를 받을 수 있습니다." maxlength="280"></textarea>
+            </label>
             <div class="modal-action">
+                <span id="charCount">0 / 280 (byte)</span>
                 <button id="submitReview">작성완료!</button>
             </div>
         </div>
@@ -44,7 +51,7 @@
                 <hr>
                 <div class="details">
                     <p>감독: <span class="director" th:text="${movieInfo.getDirectorName()}"></span></p>
-                    <p>배우: <span class="actors" th:each="actors : ${movieInfo.getActorNames()}" th:text="${actors} + ','"></span></p>
+                    <p>배우: <span class="actors" th:each="actors : ${movieInfo.getActorNames()}" th:text="${actors} + ' '"></span></p>
                     <p>장르: <span class="genre" th:each="genres : ${movieInfo.getGenres()}" th:text="${genres}"></span></p>
                     <p>기본 정보: <span class="info" th:text="${movieInfo.getGrade()}"></span> , <span class="info" th:text="${movieInfo.getMoTime()} + '분'"></span> , <span class="info" th:each="countries : ${movieInfo.getCountries()}" th:text="${countries}"></span></p>
                     <p>개봉: <span class="release-date" th:text="${movieInfo.getMoDate()}">2024.12.04</span></p>
@@ -89,42 +96,39 @@
             </div>
 
             <div class="review-sort">
-                <button class="review-sort-button active">최신순</button>
-                <button class="pagination-btn">추천순</button>
+                <button class="review-sort-button active" onclick="sortReviews('latest')">최신순</button>
+                <button class="review-sort-button" onclick="sortReviews('recommend')">추천순</button>
             </div>
 
             <div class="reviews">
 <!--                아이템 반복-->
-                <div class="review-item">
+                <div class="review-item" th:each="article : ${articles}"
+                th:attr="data-timestamp=${article.getReCreatedAtTimestamp()}, data-likes=${article.getReLiked()}">
                     <div class="review-user">
                         <img src="https://via.placeholder.com/50" alt="프로필 이미지" class="profile-img">
                     </div>
                     <div class="review-content">
-                        <span class="user-name">칠구</span>
+                        <span class="user-name" th:text="${article.getUsNickName()}">칠구</span>
                         <button class="menu-btn"></button>
-                        <p class="review-text">실화를 바탕으로한 작품이라 교훈적인 내용은 좋네요</p>
+                        <p class="review-text" th:text="${article.getReContent()}">실화를 바탕으로한 작품이라 교훈적인 내용은 좋네요</p>
                         <div class="spring"></div>
                         <div class="review-footer">
-                            <span class="review-date">2024.12.13</span>
+                            <span class="review-date" th:text="${#temporals.format(article.getReCreatedAt(), 'yyyy-MM-dd HH:mm')}">2024.12.13</span>
                             <span>&nbsp; | &nbsp;</span>
-                            <img src="http://img.cgv.co.kr/R2014/images/point/ico_point_default.png" alt="like">
-                            <button class="like-btn">&nbsp; 0</button>
+                            <button class="like-btn">
+                                <img src="http://img.cgv.co.kr/R2014/images/point/ico_point_default.png" alt="like">
+                            </button>
+                            <span class="like-count" th:text="${article.getReLiked()}"></span>
                         </div>
                     </div>
                 </div>
 
             </div>
-            <div class="paging">
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a href="#">6</a>
-                <a href="#">7</a>
-                <a href="#">8</a>
-                <a href="#">9</a>
-                <a href="#">10</a>
+            <div class="paging" th:if="${pageVo.displayMaxPage > pageVo.displayMinPage}">
+                <a class="page" th:each="page : ${#numbers.sequence(pageVo.displayMinPage, pageVo.displayMaxPage)}"
+                   th:text="${page}"
+                   th:href="@{'/movies/movieList/movieInfo/' + ${movieInfo.moNum} (page=${page})}"
+                   th:classappend="${page == pageVo.requestPage} ? 'active'"></a>
             </div>
         </section>
         <section id="character">

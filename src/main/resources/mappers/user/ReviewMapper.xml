@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.jwkim.jgv.mappers.user.ReviewMapper">
+    <insert id="insertReview">
+        INSERT INTO jgv.review (re_content, re_created_at, re_updated_at, re_deleted_at, re_liked, mo_num, us_num)
+        VALUES (#{reContent}, #{reCreatedAt}, #{reUpdatedAt}, #{reDeletedAt},#{reLiked}, #{moNum}, #{usNum})
+    </insert>
+
+    <select id="selectArticleCountByMovieId" resultType="_int">
+        SELECT COUNT(0)
+        FROM jgv.review
+        WHERE mo_num = #{id}
+        AND re_deleted_at IS NULL
+    </select>
+
+    <select id="selectArticleByMovieId" resultType="dev.jwkim.jgv.DTO.ReviewDTO">
+        SELECT r.re_num AS 'reNum',
+               r.re_content AS 'reContent',
+               r.re_created_at AS 'reCreatedAt',
+               r.re_updated_at AS 'reUpdatedAt',
+               r.re_deleted_at AS 'reDeletedAt',
+               r.re_liked AS 'reLiked',
+               r.mo_num AS 'moNum',
+               r.us_num AS 'usNum',
+               u.us_nickname AS 'usNickName'
+        FROM jgv.review r
+        LEFT JOIN jgv.user u on u.us_num = r.us_num
+        WHERE mo_num = #{id}
+        AND re_deleted_at IS NULL
+        ORDER BY re_num DESC
+        LIMIT #{limitCount} OFFSET #{offsetCount}
+    </select>
+</mapper>

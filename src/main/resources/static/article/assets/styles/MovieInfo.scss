@@ -388,7 +388,7 @@ section.active {
         background: none;
         border: none;
         cursor: pointer;
-        font-size: 18px;
+        font-size: 20px;
         color: #aaa;
 
         &::after {
@@ -399,7 +399,9 @@ section.active {
       .review-text {
         margin: 8px 0;
         font-size: 14px;
-        color: #555;
+        color: black;
+        white-space: pre-wrap; /* 줄바꿈과 공백 유지 */
+        word-wrap: break-word; /* 단어가 너무 길 경우 강제로 줄바꿈 */
       }
 
       .spring {
@@ -425,6 +427,11 @@ section.active {
           display: flex;
           align-items: center;
           gap: 5px;
+          color: black;
+        }
+
+        .like-count {
+          margin-left: 6px;
           color: black;
         }
       }
@@ -496,7 +503,7 @@ section.active {
 
 
   .modal-content {
-    background-color: #fff;
+    background-color: #F6F6F4;
     border-radius: 8px;
     width: 700px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -547,44 +554,84 @@ section.active {
 
     // 나머지 모달 스타일
     .movie-title {
-      font-size: 16px;
+      font-size: 30px;
       font-weight: bold;
+      text-align: center;
       color: #555;
       margin: 20px 0;
     }
 
-    textarea#reviewText {
-      width: calc(100% - 20px);
-      height: 120px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 10px;
-      font-size: 14px;
-      resize: none;
-      outline: none;
-      margin: 10px;
+    .review-userInfo {
+      margin-top: 10px;
+      display: flex;
+      align-items: center; /* 세로 중앙 정렬 */
+      justify-content: center; /* 가로 중앙 정렬 */
+      flex-direction: column; /* 이미지와 이름을 세로로 배치 */
 
-      &:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      .profile-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 5px; /* 이미지와 이름 간격 추가 */
+      }
+
+      .user-name {
+        font-size: 14px; /* 이름 글꼴 크기 */
+        font-weight: bold;
+        color: #333;
+        text-align: center; /* 텍스트 중앙 정렬 */
       }
     }
 
+
+    .label {
+      display: flex;
+      justify-content: center;
+      align-items: center; /* 세로 중앙 정렬 */
+      flex-direction: column; /* 자식 요소를 세로로 배치 */
+      height: 100%; /* 부모 요소 높이를 100%로 설정 */
+      margin-top: 10px;
+      width: 100%;
+
+      textarea#reviewText {
+        width: 600px;
+        height: 90px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 14px;
+        resize: none;
+        outline: none;
+        margin: 0 auto;
+        display: block;
+
+      }
+    }
+
+
+
+
+
     .modal-action {
-      margin: 20px 0;
+      margin: 10px 40px 35px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
 
       button#submitReview {
-        background-color: #007bff;
+        background-color: #FB4357;
         color: #fff;
-        padding: 10px 20px;
+        padding: 6px 15px;
         border: none;
-        border-radius: 5px;
         font-size: 14px;
         cursor: pointer;
+      }
 
-        &:hover {
-          background-color: #0056b3;
-        }
+      #charCount {
+        font-size: 15px;
+        text-align: right;
+        margin-right: 10px;
       }
     }
   }
