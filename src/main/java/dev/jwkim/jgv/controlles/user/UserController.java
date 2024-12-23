@@ -67,14 +67,18 @@ public class UserController {
     }
 // endregion
 
-    // region 로그인
+    //     region 로그인
     @RequestMapping(value = "login", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getLogin() {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView getLogin(HttpSession session) {
+        if (session.getAttribute("user") != null) {
+            return new ModelAndView("redirect:/");
+        }
 
+        ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/login");
         return modelAndView;
     }
+
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -88,11 +92,11 @@ public class UserController {
         }
         // JSON 응답 생성
         response.put(Result.NAME, result.nameToLower());
-        response.put(Result.NAMES, user.getUsNum());
-
 
         return response.toString();
     }
+
+
 
 // endregion
 
@@ -115,7 +119,6 @@ public class UserController {
         modelAndView.setViewName("user/myPage/myPage");
         return modelAndView;
     }
-
 
 
     @RequestMapping(value = "/myPage/personal", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
@@ -260,7 +263,7 @@ public class UserController {
     // endregion
 
     // region 회원 수정 팝업창
-    @RequestMapping( value = "/myPage/modifyNickname", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    @RequestMapping(value = "/myPage/modifyNickname", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView patchModifyNickname(HttpSession session, UserEntity user) {
 
 
@@ -274,7 +277,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping( value = "/myPage/modifyNickname", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/myPage/modifyNickname", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String patchModifyNickname(HttpSession session, UserEntity user,
                                       @RequestParam(value = "usNickname", required = false) String nickname) {
@@ -286,7 +289,7 @@ public class UserController {
         return response.toString();
     }
 
-    @RequestMapping( value = "/myPage/modifyPassword", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    @RequestMapping(value = "/myPage/modifyPassword", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getModifyPassword(HttpSession session, UserEntity user) {
 
         ModelAndView modelAndView = new ModelAndView();
@@ -296,7 +299,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping( value = "/myPage/modifyPassword", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/myPage/modifyPassword", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String patchModifyPassword(HttpSession session, UserEntity user,
                                       @RequestParam(value = "usPw", required = false) String password) {
@@ -318,7 +321,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping( value = "/myPage/reservationCancel", method = RequestMethod.PATCH,
+    @RequestMapping(value = "/myPage/reservationCancel", method = RequestMethod.PATCH,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String patchReservationCancel(HttpSession session, UserEntity user) {

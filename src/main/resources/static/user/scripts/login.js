@@ -1,4 +1,26 @@
-$loginForm = document.getElementById('login-form');
+ const $loginForm = document.getElementById('login-form');
+
+
+    const savedId = localStorage.getItem('rememberId');
+    if (savedId) {
+        $loginForm['id'].value = savedId;
+        $loginForm['rememberId'].checked = true;
+        $loginForm['password'].focus();
+    }
+    $loginForm.addEventListener('submit', () => {
+        const isRememberChecked = $loginForm['rememberId'].checked;
+        const enteredId = $loginForm['id'].value.trim();
+
+        if (isRememberChecked) {
+
+            localStorage.setItem('rememberId', enteredId);
+        } else {
+
+            localStorage.removeItem('rememberId');
+        }
+    });
+
+
 
 // region 로그인
 $loginForm.onsubmit = (e) => {
