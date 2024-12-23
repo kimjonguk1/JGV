@@ -159,3 +159,121 @@ function sortReviews(sort) {
     document.querySelectorAll('.review-sort-button').forEach(button => button.classList.remove('active'));
     document.querySelector(`.review-sort-button[onclick="sortReviews('${sort}')"]`).classList.add('active');
 }
+
+{
+    const $schedule = document.getElementById('schedule');
+    const $items = $schedule.querySelector(':scope > .main');
+    const $theater = Array.from($items.querySelectorAll(':scope > .item'));
+    const $screens = $schedule.querySelector(':scope > .cinema-info > .items');
+    const $movie = document.querySelector('.movie-info > .title');
+
+    {
+        window.onload = () => {
+            const $regions = document.querySelector('[rel="대구"]');
+            $regions.click();
+        }
+    }
+
+    $theater.forEach(($item) => {
+        $item.onclick = () => {
+            $theater.forEach((x) => x.classList.remove('select'));
+            $item.classList.add('select'); // 선택한 지역에 관련해서 select class 부여
+            const url = new URL(location.href);
+            url.searchParams.set('region', $item.innerText);
+            url.searchParams.set('movie', $movie.innerText);
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState !== XMLHttpRequest.DONE) {
+                    return;
+                }
+                Loading.hide();
+                if (xhr.status < 200 || xhr.status >= 300) {
+                    alert('오류 발생');
+                    return;
+                }
+                const $dayContainer = $schedule.querySelector('.day-containers');
+                $dayContainer.innerHTML = '';
+                const $dayContainers = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelector('.day-containers');
+                const $days = $dayContainers.querySelector(':scope > .day-container');
+                const $items = Array.from($days.querySelectorAll(':scope > .item'));
+                const $dayButtons = Array.from($dayContainers.querySelectorAll(':scope > .button'));
+                const $beforeButton = $dayContainers.querySelector(':scope > .before');
+                const $afterButton = $dayContainers.querySelector(':scope > .after');
+                $dayContainer.append($beforeButton);
+                $dayContainer.append($afterButton);
+                $dayContainer.append($days);
+                $items.forEach((item, index) => {
+                    if (index >= 9) {
+                        item.classList.add('hidden');
+                    }
+                    item.onclick = () => {
+                        $items.forEach((it) => {
+                            it.classList.remove('select');
+                            if (item === it) {
+                                it.classList.add('select');
+                                const currentDate = new Date();
+                                let year = currentDate.getFullYear();
+                                const currentMonth = currentDate.getMonth() + 1;
+                                const month = item.querySelector(':scope > .small-container > .day:nth-child(1)');
+                                if (month.innerText.substring(0, 2) < currentMonth) {
+                                    year += 1;
+                                }
+                                const day = item.querySelector(':scope > .day');
+                                url.searchParams.set('date', year + '-' + month.innerText.substring(0, 2) + '-' + day.innerText);
+                                const xhr = new XMLHttpRequest();
+                                xhr.onreadystatechange = () => {
+                                    if (xhr.readyState !== XMLHttpRequest.DONE) {
+                                        return;
+                                    }
+                                    Loading.hide();
+                                    if (xhr.status < 200 || xhr.status >= 300) {
+                                        alert('오류 발생');
+                                        return;
+                                    }
+                                    $screens.innerHTML = '';
+                                    const $screenContainer = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.items > .item');
+                                    $screenContainer.forEach((screen) => {
+                                        $screens.append(screen);
+                                    })
+                                }
+                                xhr.open('GET', url.toString());
+                                xhr.send();
+                                Loading.show(0);
+                            }
+                        })
+                    }
+                })
+                if ($items.length > 0) {
+                    $items[0].click();
+                }
+                let Index = 0;
+                $dayButtons.forEach((dayButton) => {
+                    dayButton.onclick = () => {
+                        if (dayButton.classList.contains('after')) {
+                            Index += 9;
+                        }
+                        if (dayButton.classList.contains('before')) {
+                            Index -= 9;
+                        }
+                        if (Index < 0) {
+                            Index = 0;
+                        }
+                        if (Index >= $items.length) {
+                            Index = Index - 9;
+                        }
+                        $items.forEach((iem, index) => {
+                            if (index >= Index && index < Index + 9) {
+                                iem.classList.remove('hidden');
+                            } else {
+                                iem.classList.add('hidden');
+                            }
+                        })
+                    }
+                })
+            }
+            xhr.open('GET', url.toString());
+            xhr.send();
+            Loading.show(0);
+        }
+    })
+}

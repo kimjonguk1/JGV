@@ -10,6 +10,14 @@ const $cinemaInformation = $main.querySelector(':scope > .information[data-id="c
 const $dayContainers = $cinemaInformation.querySelector(':scope > .cinema-info > .cinema-header > .day-containers');
 const $dayContainer = $dayContainers.querySelector(':scope > .day-container')
 const $days = Array.from($dayContainer.querySelectorAll(':scope > .item'))
+const $screens = $cinemaInformation.querySelector(':scope > .cinema-info > .items');
+
+{
+    window.onload = () => {
+        const $regions = document.querySelector('[rel="대구"]');
+        $regions.click();
+    }
+}
 
 {
     $theater.forEach(($item) => {
@@ -39,28 +47,145 @@ const $days = Array.from($dayContainer.querySelectorAll(':scope > .item'))
                                 item.classList.add('select');
                             }
                         })
-                        const xhr1 = new XMLHttpRequest();
-                        const url1 = new URL(location.href);
-                        url1.searchParams.set('theater', x.innerText);
-                        xhr1.onreadystatechange = () => {
-                            if (xhr1.readyState !== XMLHttpRequest.DONE) {
+                        const xhr = new XMLHttpRequest();
+                        url.searchParams.set('theater', x.innerText);
+                        xhr.onreadystatechange = () => {
+                            if (xhr.readyState !== XMLHttpRequest.DONE) {
                                 return;
                             }
                             Loading.hide();
-                            if (xhr1.status < 200 || xhr1.status >= 300) {
+                            if (xhr.status < 200 || xhr.status >= 300) {
                                 alert('오류 발생');
                                 return;
                             }
-                            const $days = Array.from(new DOMParser().parseFromString(xhr1.responseText, 'text/html').querySelectorAll('.day-container'));
-                            console.log($days);
-                            $dayContainer.innerHTML = '';
-                            $days.forEach((day) => {
-                                $dayContainer.replaceWith(day);
+                            const $days = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelector('.day-container');
+                            const $beforeButton = $dayContainers.querySelector(':scope > .before');
+                            const $afterButton = $dayContainers.querySelector(':scope > .after');
+                            const $dayContainer = document.createElement('ul');
+                            $dayContainer.classList.add('day-container');
+                            $dayContainers.innerHTML = '';
+                            $dayContainers.append($beforeButton);
+                            $dayContainers.append($afterButton);
+                            $dayContainers.append($dayContainer);
+                            const $items = Array.from($days.querySelectorAll(':scope > .item'));
+                            const $dayButtons = Array.from($dayContainers.querySelectorAll(':scope > .button'));
+                            $items.forEach((item, index) => {
+                                if (index >= 8) {
+                                    item.classList.add('hidden');
+                                }
+                                $dayContainer.append(item);
+                                const $buttonContainer = $main.querySelector(':scope > .button-container');
+                                const $selects = Array.from($buttonContainer.querySelectorAll(':scope > .button > .select'));
+                                $selects.forEach((button) => {
+                                    if (button.dataset.id === "cinema") {
+                                        button.click();
+                                    }
+                                });
+                                item.onclick = () => {
+                                    $items.forEach((it) => {
+                                        it.classList.remove('select');
+                                        if (item === it) {
+                                            it.classList.add('select');
+                                            const currentDate = new Date();
+                                            let year = currentDate.getFullYear();
+                                            const currentMonth = currentDate.getMonth() + 1;
+                                            const month = item.querySelector(':scope > .small-container > .day:nth-child(1)');
+                                            if (month < currentMonth || (month === currentMonth)) {
+                                                year += 1;
+                                            }
+                                            const day = item.querySelector(':scope > .day');
+                                            url.searchParams.set('date', year + '-' + month.innerText.substring(0, 2) + '-' + day.innerText);
+                                            const xhr = new XMLHttpRequest();
+                                            xhr.onreadystatechange = () => {
+                                                if (xhr.readyState !== XMLHttpRequest.DONE) {
+                                                    return;
+                                                }
+                                                Loading.hide();
+                                                if (xhr.status < 200 || xhr.status >= 300) {
+                                                    alert('오류 발생');
+                                                    return;
+                                                }
+                                                $screens.innerHTML = '';
+                                                const $screenContainer = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.cinema-info > .items > .item');
+                                                $screenContainer.forEach((screen) => {
+                                                    $screens.append(screen);
+                                                })
+                                                const $theaterInfo = document.querySelector('.theater-info.guide');
+                                                const $main = document.getElementById('main');
+                                                const $buttons = Array.from($buttonContainer.querySelectorAll(':scope > .button'));
+                                                const $informations = Array.from($main.querySelectorAll(':scope > .information'));
+
+                                                $buttons.forEach(($item) => {
+                                                    $theaterInfo.onclick = () => {
+                                                        $selects.forEach((x) => {
+                                                            x.classList.add('hidden');
+                                                            if (x.getAttribute('data-id') === $item.getAttribute('data-id')) {
+                                                                x.classList.remove('hidden');
+                                                            }
+                                                        })
+                                                        $informations.forEach((x) => {
+                                                            x.classList.add('hidden');
+                                                            if (x.getAttribute('data-id') === $item.getAttribute('data-id')) {
+                                                                x.classList.remove('hidden');
+                                                            }
+                                                        });
+                                                    }
+                                                })
+                                            }
+                                            xhr.open('GET', url.toString());
+                                            xhr.send();
+                                            Loading.show(0);
+                                        }
+                                    })
+                                }
                             })
+                            if ($items.length > 0) {
+                                $items[0].click();
+                            }
+                            let Index = 0;
+                            $dayButtons.forEach((dayButton) => {
+                                dayButton.onclick = () => {
+                                    if (dayButton.classList.contains('after')) {
+                                        Index += 8;
+                                    }
+                                    if (dayButton.classList.contains('before')) {
+                                        Index -= 8;
+                                    }
+                                    if (Index < 0) {
+                                        Index = 0;
+                                    }
+                                    if (Index >= $items.length) {
+                                        Index = Index - 8;
+                                    }
+                                    $items.forEach((iem, index) => {
+                                        if (index >= Index && index < Index + 8) {
+                                            iem.classList.remove('hidden');
+                                        } else {
+                                            iem.classList.add('hidden');
+                                        }
+                                    })
+                                }
+                            })
+                            const $theaterContainer = document.querySelector(' #main > .theater-container');
+                            const $theaters = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll(' #main > .theater-container'));
+                            $theaters.forEach((theater) => {
+                                $theaterContainer.replaceWith(theater);
+                            })
+                            const $busInfo = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelector('.bus.detail');
+                            const $carInfo = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelector('.car.detail');
+                            const $bus = document.querySelector('.bus.detail');
+                            const $car = document.querySelector('.car.detail');
+                            $bus.innerHTML = '';
+                            $bus.replaceWith($busInfo);
+                            $car.innerHTML = '';
+                            $car.replaceWith($carInfo);
                         }
-                        xhr1.open('GET', url1.toString());
-                        xhr1.send();
+                        xhr.open('GET', url.toString());
+                        xhr.send();
                         Loading.show(0);
+                    }
+                    if (x.innerText === 'CGV대구') {
+                        x.click();  // 클릭 이벤트 트리거
                     }
                 })
             }
@@ -70,110 +195,6 @@ const $days = Array.from($dayContainer.querySelectorAll(':scope > .item'))
         }
     });
 }
-
-// $theater.forEach(($item) => {
-//     $item.onclick = () => {
-//         $theater.forEach((x) => x.classList.remove('select'));
-//         $item.classList.add('select');
-//         const url = new URL(location.href)
-//         url.searchParams.set('region', $item.innerText);
-//         const xhr = new XMLHttpRequest();
-//         xhr.onreadystatechange = () => {
-//             if (xhr.readyState !== XMLHttpRequest.DONE) {
-//                 return;
-//             }
-//             if (xhr.status < 200 || xhr.status >= 300) {
-//                 alert('오류 발생');
-//                 return;
-//             }
-//             const response = JSON.parse(xhr.responseText);
-//             let responses = [];
-//             $itemContainer.innerText = "";
-//             response['result'].forEach((x) => {
-//                 responses.push(x);
-//                 const $li = document.createElement('li');
-//                 $li.innerText = x['thName'];
-//                 $li.classList.add('item');
-//                 $itemContainer.append($li);
-//             });
-//             const $containerItems = Array.from($itemContainer.querySelectorAll(':scope > .item'));
-//             $containerItems.forEach(($item) => {
-//                 $item.onclick = () => {
-//                     const xhr1 = new XMLHttpRequest();
-//                     xhr1.onreadystatechange = () => {
-//                         if (xhr1.readyState !== XMLHttpRequest.DONE) {
-//                             return;
-//                         }
-//                         if (xhr1.status < 200 || xhr1.status >= 300) {
-//                             alert('오류 발생');
-//                             return;
-//                         }
-//                         let counts = [];
-//                         url.searchParams.set('theater', $item.innerText);
-//                         console.log(url.toString());
-//                         console.log($item.innerText);
-//                         console.log(response['theater']);
-//                         counts = response['theater'].slice(1, -1).split(",");
-//                         console.log(counts);
-//                         $containerItems.forEach((x) => x.classList.remove('select'));
-//                         $item.classList.add('select');
-//                         responses.forEach((item) => {
-//                             if (item['thName'] === $item.innerText) {
-//                                 let $addr = item['thAddr'].slice(1, -1).split(",").map(item => item.trim());
-//                                 $addr = [$addr[0], $addr.slice(1).join(", ")];
-//                                 const $theaterHead = new DOMParser().parseFromString(`
-//         <div class="theater-container">
-//             <div class="header">
-//                 <span class="text">${item['thName']}</span>
-//                 <span class="stretch"></span>
-//                 <span class="button">단체/대관 문의</span>
-//             </div>
-//         </div>
-// `, 'text/html').querySelector('.header');
-//                                 const $theater = new DOMParser().parseFromString(`
-//     <div class="theater-container">
-//         <div class="img">
-//             <img src="${item['thImg']}" alt="" class="image">
-//             <div class="theater-info-container">
-//                 <div class="small-container">
-//                     <div class="header">
-//                         <div class="info-container">
-//                             <div class="theater-info">${$addr[0]}<br>${$addr[1]}</div>
-//                         </div>
-//                         <a href="#" class="theater-info guide" target="_blank">위치 / 주차 안내 ></a>
-//                         <div class="stretch"></div>
-//                         <div class="cinema-type">
-//                             <a href="#" class="screenX" target="_blank"></a>
-//                             <a href="#" class="screenX" target="_blank"></a>
-//                             <a href="#" class="screenX" target="_blank"></a>
-//                         </div>
-//                     </div>
-//                     <div class="theater-info">${counts[0]}관/${counts[1]}석</div>
-//                 </div>
-//                 <div class="stretch"></div>
-//                 <div class="notice-container">
-//                     <div class="theater-info">공지사항</div>
-//                     <a href="#" class="button"></a>
-//                 </div>
-//             </div>
-//         </div>
-//     </div>`, 'text/html').querySelector('.img');
-//                                 const $theaterContainer = $main.querySelector(':scope > .theater-container')
-//                                 $theaterContainer.innerHTML = "";
-//                                 $theaterContainer.append($theaterHead);
-//                                 $theaterContainer.append($theater);
-//                             }
-//                         })
-//                     };
-//                     xhr1.open('GET', url.toString());
-//                     xhr1.send();
-//                 }
-//             })
-//         }
-//         xhr.open('GET', url.toString());
-//         xhr.send();
-//     }
-// })
 
 $buttons.forEach(($item) => {
     $item.onclick = () => {

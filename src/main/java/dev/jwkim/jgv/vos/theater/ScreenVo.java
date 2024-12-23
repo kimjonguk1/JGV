@@ -9,7 +9,14 @@ import lombok.Setter;
 public class ScreenVo extends ScreenEntity {
     private String ciName;
     private int thNum;
-    private int citNum;
     private String citName;
     private int seatCount;
+    private String moTitle;
+    private String moDate;
+    private int moTime;
+    private String geName;
+    private int citNum;
+    private String raGrade;
+    private int usedSeatCount;
+    private String thName;
 }

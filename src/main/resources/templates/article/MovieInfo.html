@@ -164,7 +164,68 @@
             </div>
         </section>
         <section id="schedule">
-
+            <ul class="main">
+                <li class="item"
+                    th:each="region : ${regions}"
+                    th:text="${region.getRegName()}"
+                    th:rel="${region.getRegName()}">
+                </li>
+            </ul>
+            <div class="cinema-info">
+                <div class="notice">* 시간을 클릭하시면 빠른 예매를 할 수 있습니다.</div>
+                <div class="day-containers">
+                    <button class="before button"></button>
+                    <ul class="day-container"
+                        th:if="${theaterVos != null}"
+                        th:each="vos : ${theaterVos}">
+                        <th:block th:each="vo : ${vos[2]}">
+                            <li class="item" th:each="date, iterStat : ${vo.value.split(',')}">
+                                <div class="small-container">
+                                    <div th:text="${vo.key.split('-')[1]} + '월'" class="day"></div>
+                                    <div th:text="${date.split('-')[1]}" class="day"></div>
+                                </div>
+                                <div th:text="${date.split('-')[0].trim()}" class="day"></div>
+                            </li>
+                        </th:block>
+                    </ul>
+                    <button class="after button"></button>
+                </div>
+                <ul class="items">
+                    <li class="item"
+                        th:if="${screenVos != null}"
+                        th:each="screen : ${screenVos}">
+                        <a href="#" th:utext="${screen.key[7].substring(0, 3)} + '<br>' + ${screen.key[7].substring(3)}" class="theater"></a>
+                        <div class="screens">
+                            <div class="screen-container"
+                                 th:each="scVal : ${screen.value}">
+                                <div class="theater-info">
+                                    <img class="arrow"
+                                         src="https://img.cgv.co.kr/r2014/images/common/ico/ico_arrow03.png"
+                                         alt="화살표">
+                                    <span th:if="${!scVal.key[1].equals('DX')}" th:text="${scVal.key[1]}"
+                                          class="text"></span>
+                                    <span th:if="${scVal.key[1].equals('DX')}" th:text="4 + ${scVal.key[1]}"
+                                          class="text"></span>
+                                    <img src="https://img.cgv.co.kr/r2014/images/common/bg/bg_li_vline.gif" alt="작대기">
+                                    <span th:if="${scVal.key[0].replace('&&', '').trim().equals(scVal.key[1])}"
+                                          th:classappend="${scVal.key[0].replace('&&', '').trim()}" class="text"></span>
+                                    <span th:if="${!scVal.key[0].replace('&&', '').trim().equals(scVal.key[1])}"
+                                          th:text="${scVal.key[0]}" class="text"></span>
+                                    <img src="https://img.cgv.co.kr/r2014/images/common/bg/bg_li_vline.gif" alt="작대기">
+                                    <span th:text="'총 ' + ${screen.key[4]} + '석'" class="text"></span>
+                                </div>
+                                <div class="time-table-container">
+                                    <a href="#" class="time-table" th:each="sc : ${scVal.value}">
+                                        <div th:text="${sc.split(',')[0].replace('[', '')}" class="time"></div>
+                                        <div th:text="${sc.split(',')[1].replace(']', '')} + '석'" class="seat"></div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="notice-footer">* 입장 지연에 따른 관람 불편을 최소화하기 위해 영화는 10분 후 상영이 시작됩니다.</div>
+            </div>
         </section>
     </div>
     <div class="movie-no-data" th:if="${movieInfo == null}">
