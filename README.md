@@ -9,7 +9,7 @@
 | <a href="https://github.com/Nyeonjae"><img src="https://avatars.githubusercontent.com/u/185048916?v=4" width="80"></a> | <a href="https://github.com/geniyuls"><img src="https://avatars.githubusercontent.com/u/181185824?v=4" width="80"></a> | <a href="https://github.com/escurse"><img src="https://avatars.githubusercontent.com/u/180259666?v=4" width="80"></a> | <a href="https://github.com/kimjonguk1"><img src="https://avatars.githubusercontent.com/u/148532342?v=4" width="80"></a> |
 |:-----:|:-----:|:-----:|:-----:|
 | :crown:전현재 | 김종율 | 박재형 | 김종욱 |
-| 회원(회원가입, 마이페이지), 리뷰(평점) | 예매, 좌석 | 상영정보, 영화관 | 영화정보, 영화 검색, 인물 검색 |
+| 회원(회원가입, 마이페이지) | 예매, 좌석 | 상영정보, 영화관 | 영화정보, 영화 검색, 인물 검색, 리뷰(평점) |
 
 ## 개발 환경
 | **기술 스택** | **설명**                     |

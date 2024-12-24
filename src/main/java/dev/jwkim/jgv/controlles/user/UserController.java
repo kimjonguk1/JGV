@@ -73,7 +73,6 @@ public class UserController {
         if (session.getAttribute("user") != null) {
             return new ModelAndView("redirect:/");
         }
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/login");
         return modelAndView;
@@ -92,7 +91,6 @@ public class UserController {
         }
         // JSON 응답 생성
         response.put(Result.NAME, result.nameToLower());
-
         return response.toString();
     }
 
@@ -106,18 +104,27 @@ public class UserController {
 
 
     @RequestMapping(value = "/myPage/{fragment}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user, HttpSession session, @PathVariable(value = "fragment") String fragment) {
+    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user, HttpSession session, @PathVariable(value = "fragment") String fragment, HttpServletRequest request) {
         String[] validFragments = {"main", "reservation", "receipt", "personal", "withdraw"};
         if (fragment == null || Arrays.stream(validFragments).noneMatch(x -> x.equals(fragment))) {
             response.setStatus(404);
             return null;
         }
+
+        else if (session.getAttribute("user") == null) {
+            String requestedUrl = request.getRequestURI();
+            return new ModelAndView("redirect:/user/login?redirect=" + requestedUrl);
+        }
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
         modelAndView.addObject("session", session);
         modelAndView.addObject("fragment", fragment);
         modelAndView.setViewName("user/myPage/myPage");
+
         return modelAndView;
+
+
     }
 
 

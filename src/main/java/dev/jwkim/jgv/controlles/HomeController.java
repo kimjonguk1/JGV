@@ -28,11 +28,16 @@ public class HomeController {
     }
     // endregion
 
+    // region 로그아웃
+
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public ModelAndView logout(HttpSession session) {
-        session.setAttribute("user", null);
+        session.invalidate();
+//        session.setAttribute("user", null);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
+
+    // endregion
 }

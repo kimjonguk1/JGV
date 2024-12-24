@@ -15,8 +15,11 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +27,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -220,6 +224,39 @@ public class UserService {
     }
 // endregion
 
+    // region 토큰 미인증 계정 삭제
+    @Configuration
+    @EnableScheduling
+    public class SchedulerConfiguration {
+    }
+
+    @Scheduled(cron = "0 1 * * * ?")
+    public Result deleteUnverifiedUsers() {
+        LocalDateTime now = LocalDateTime.now();
+        List<UserEntity> unverifiedUsers = this.userMapper.selectUnverifiedUsersWithExpiredToken(now);
+
+        if (unverifiedUsers != null && !unverifiedUsers.isEmpty()) {
+            int deletedCount = 0;
+            for (UserEntity user : unverifiedUsers) {
+                int rowsAffected = this.userMapper.deleteUserById(user.getUsId());
+                if (rowsAffected > 0) {
+                    deletedCount++;
+                }
+            }
+
+            if (deletedCount > 0) {
+                System.out.println("ㅋㅋ 지움");
+                return CommonResult.SUCCESS;  // 일부 사용자 삭제 성공
+            } else {
+                return CommonResult.FAILURE;  // 삭제된 사용자가 없음
+            }
+        }
+        System.out.println("실패임 ㅋㅋ ");
+        return CommonResult.FAILURE;  // 미인증 사용자 없음
+    }
+
+    // endregion
+
     // region 아이디 , 닉네임 중복검사
     @Transactional
     public Result checkDuplicateUser(String userId) {
@@ -284,6 +321,8 @@ public class UserService {
     // TODO 추후 비밀번호 재설정시 강도, REGEX 추가
 
     public Result findUserPassword(UserEntity user) {
+
+
         UserEntity dbUser = this.userMapper.FindUserById(user.getUsId(), user.getUsEmail(), user.getUsContact());
         if (dbUser == null) {
 
@@ -437,16 +476,6 @@ public class UserService {
         }
         return CommonResult.SUCCESS;
     }
-
-    public Result reservationCancel(UserEntity user) {
-        if (user == null) {
-            return CommonResult.FAILURE;
-        }
-        // pa.state 가 이미 0일때 return ReservationResult.FAILURE_CANCEL_COMPLETE;
-        // setPaState(false);
-        return CommonResult.SUCCESS;
-    }
-
     // endregion
 
     // region 회원탈퇴
@@ -465,5 +494,18 @@ public class UserService {
         }
         return CommonResult.SUCCESS;
     }
+    // endregion
+
+    // region 예매 취소
+
+    public Result reservationCancel(UserEntity user) {
+        if (user == null) {
+            return CommonResult.FAILURE;
+        }
+        // pa.state 가 이미 0일때 return ReservationResult.FAILURE_CANCEL_COMPLETE;
+        // setPaState(false);
+        return CommonResult.SUCCESS;
+    }
+
     // endregion
 }

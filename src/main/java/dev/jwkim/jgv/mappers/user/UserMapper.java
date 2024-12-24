@@ -4,6 +4,9 @@ import dev.jwkim.jgv.entities.user.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 
 @Mapper
 public interface UserMapper {
@@ -27,4 +30,10 @@ public interface UserMapper {
                             @Param("usContact") String contact);
 
     int updateUser(UserEntity user);
+
+    // 이메일 미인증 계정 삭제
+    List<UserEntity> selectUnverifiedUsersWithExpiredToken(@Param("now") LocalDateTime now);
+
+    int deleteUserById(@Param("usId") String id);
+
 }

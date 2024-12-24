@@ -22,7 +22,6 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-
     // 주기적으로 실행되는 크롤링 작업 (매개변수 없음)
     @Scheduled(cron = "0 0 0 * * ?") // 매일 0시 0분에 실행
     public void scheduledCrawling() {
@@ -40,4 +39,5 @@ public class MovieController {
         mav.addObject("message", "크롤링이 완료되었습니다.");
         return mav;
     }
+
 }

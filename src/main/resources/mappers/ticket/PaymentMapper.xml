@@ -19,4 +19,21 @@
         where pa_num = #{paNum}
           and pa_state = false
     </delete>
+    <select id="selectPaymentNum" resultType="_int">
+        select payment.pa_num as `paNum`
+        from jgv.payment
+                 left join jgv.reservation on payment.pa_num = reservation.pa_num
+                 left join jgv.screen on reservation.sc_num = screen.sc_num
+                 left join jgv.seat on reservation.se_num = seat.se_num
+                 left join jgv.cinema on seat.ci_num = cinema.ci_num
+                 left join jgv.theater on cinema.th_num = theater.th_num
+                 left join jgv.movie on screen.mo_num = movie.mo_num
+        WHERE mo_title = #{moTitle}
+          AND ci_name = #{ciName}
+          AND th_name = #{thName}
+          and `sc_start_date` LIKE CONCAT('%', #{scStartDate}, '%')
+          and pa_price = #{paPrice}
+          and us_num = #{usNum}
+        limit 1
+    </select>
 </mapper>
