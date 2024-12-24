@@ -135,7 +135,11 @@
                                target="_blank"></a>
                         </div>
                     </div>
-                    <div class="theater-info" th:text="${vos[0][5]} + '관/' + ${vos[0][4]} + '석'"></div>
+                    <div class="theater-info">
+                        <div class="tel">1544-1122</div>
+                        <div class="infos" th:text="${vos[0][5]} + '관/' + ${vos[0][4]} + '석'"></div>
+                        <div class="recliner" th:if="${vos[0][0].equals('CGV대구연경')}">전좌석 리클라이너</div>
+                    </div>
                 </div>
                 <div class="stretch"></div>
                 <div class="notice-container">
@@ -359,11 +363,16 @@
                         <div th:classappend="${screen.key[0]}" class="rating"></div>
                         <a th:text="${screen.key[1]}" href="#" class="text"></a>
                         <div class="date-notice">
-                            <span th:if="${screen.key[3] <= #dates.format(#dates.createNow(), 'yyyy.MM.dd')}" class="able">상영중</span>
-                            <span th:if="${screen.key[3] > #dates.format(#dates.createNow(), 'yyyy.MM.dd')}" class="reservation">예매중</span>
-                            <span th:if="${screen.key[3] > #dates.format(#dates.createNow(), 'yyyy.MM.dd')}" th:text="${screen.key[7].replace('P', 'D').substring(0, screen.key[7].length() - 1)}" class="dDay"></span>
+                            <span th:if="${screen.key[3] <= #dates.format(#dates.createNow(), 'yyyy.MM.dd')}"
+                                  class="able">상영중</span>
+                            <span th:if="${screen.key[3] > #dates.format(#dates.createNow(), 'yyyy.MM.dd')}"
+                                  class="reservation">예매중</span>
+                            <span th:if="${screen.key[3] > #dates.format(#dates.createNow(), 'yyyy.MM.dd')}"
+                                  th:text="${screen.key[7].replace('P', 'D').substring(0, screen.key[7].length() - 1)}"
+                                  class="dDay"></span>
                         </div>
-                        <span th:text="${screen.key[6].replace('[', '').replace(']', '') + '/' + screen.key[2] + '분/' + screen.key[3] + ' 개봉'}" class="long-text"></span>
+                        <span th:text="${screen.key[6].replace('[', '').replace(']', '') + '/' + screen.key[2] + '분/' + screen.key[3] + ' 개봉'}"
+                              class="long-text"></span>
                     </div>
                     <div class="screen-container"
                          th:each="scVal : ${screen.value}">
@@ -371,7 +380,8 @@
                             <img class="arrow" src="https://img.cgv.co.kr/r2014/images/common/ico/ico_arrow03.png"
                                  alt="화살표">
                             <span th:if="${!scVal.key[1].equals('DX')}" th:text="${scVal.key[1]}" class="text"></span>
-                            <span th:if="${scVal.key[1].equals('DX')}" th:text="4 + ${scVal.key[1]}" class="text"></span>
+                            <span th:if="${scVal.key[1].equals('DX')}" th:text="4 + ${scVal.key[1]}"
+                                  class="text"></span>
                             <img src="https://img.cgv.co.kr/r2014/images/common/bg/bg_li_vline.gif" alt="작대기">
                             <span th:if="${scVal.key[0].replace('&', '').trim().equals(scVal.key[1])}"
                                   th:classappend="${scVal.key[0].replace('&', '').trim()}" class="text"></span>
@@ -408,7 +418,8 @@
                 <span class="bus"></span>
                 <span class="text">교통안내</span>
                 <span class="stretch"></span>
-                <a href="#" class="find">실시간 빠른 길 찾기</a>
+                <a href="https://map.naver.com/p/?title=CGV%EB%8C%80%EA%B5%AC&lng=128.5897380095846&lat=35.885288432104254&zoom=15&type=0"
+                   target="_blank" class="find">실시간 빠른 길 찾기</a>
             </div>
             <div class="bus detail"
                  th:if="${theaterVos != null}"

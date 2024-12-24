@@ -14,6 +14,7 @@
     <script defer th:src="@{'./assets/scripts/index.js'}" type="text/javascript"></script>
     <script defer src="/user/scripts/login.js" type="text/javascript"></script>
     <script defer src="/fragments/assets/scripts/common.js" type="text/javascript"></script>
+    <script defer th:src="@{./home/scripts/index.js}"></script>
 </head>
 <body>
 <th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
@@ -108,42 +109,51 @@
     <div id="theater">
         <div class="background">
             <div class="title-container">
-                <h3>특별관</h3>
+                <h3>상영관</h3>
             </div>
             <div class="theater-list"><!--row-->
                 <div class="image-wrapper">
-                    <a href="#">
-                        <img src="https://img.cgv.co.kr//Front/Main/2024/1203/17331884315310.png" alt="상영관이미지">
-                    </a>
+                    <div class="IMAX special" rel="IMAX"></div>
+                    <div class="DX special hidden" rel="DX"></div>
+                    <div class="SCREENX special hidden" rel="SCREENX"></div>
+                    <div class="RECLINER special hidden" rel="RECLINER"></div>
+                    <div class="CINE special hidden" rel="CINE"></div>
                 </div>
                 <div class="item-container">
                     <div class="item">
-                        <a class="text" href="#">
-                            <span class="title">SUITE CINEMA</span>
+                        <div class="text" rel="IMAX">
+                            <span class="title">IMAX</span>
                             <div class="-spring"></div>
-                            <span class="sub-text">#호텔 컨셉의 프리미엄관</span>
-                        </a>
+                            <span class="sub-text">#궁극의 몰입감</span>
+                        </div>
                     </div>
                     <div class="item">
-                        <a class="text" href="#">
-                            <span class="title">CINE & LIVINGROOM</span>
-                            <div class="-spring"></div>
-                            <span class="sub-text">#신개념 소셜 상영관</span>
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a class="text" href="#">
+                        <div class="text" rel="DX">
                             <span class="title">4DX</span>
                             <div class="-spring"></div>
                             <span class="sub-text">#모션시트 #오감체험</span>
-                        </a>
+                        </div>
                     </div>
                     <div class="item">
-                        <a class="text" href="#">
-                            <span class="title">CINE de CHEF</span>
+                        <div class="text" rel="SCREENX">
+                            <span class="title">SCREENX</span>
                             <div class="-spring"></div>
-                            <span class="sub-text">#쉐프가 있는 영화관</span>
-                        </a>
+                            <span class="sub-text">#3면 확장 스크린</span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="text" rel="RECLINER">
+                            <span class="title">PREMIUM</span>
+                            <div class="-spring"></div>
+                            <span class="sub-text">#리클라이너 상영관</span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="text" rel="CINE">
+                            <span class="title">CINE & FORET</span>
+                            <div class="-spring"></div>
+                            <span class="sub-text">#자연 컨셉의 힐링 상영관</span>
+                        </div>
                     </div>
                 </div>
             </div>

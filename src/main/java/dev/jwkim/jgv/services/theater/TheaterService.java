@@ -67,9 +67,6 @@ public class TheaterService {
             if (screen.getCitNum() != 1 && screen.getCitNum() != 5) {
                 screen.setCiName(screen.getCitName() + "&&");
             }
-            if (screen.getCitNum() == 5) {
-                screen.setCitName("2D");
-            }
             values.add(screen.getCiName());
             values.add(screen.getCitName());
             timeList.add(String.valueOf(screen.getScStartDate()).split("T")[1]);
@@ -120,9 +117,6 @@ public class TheaterService {
             }
             if (screen.getCitNum() != 1 && screen.getCitNum() != 5) {
                 screen.setCiName(screen.getCitName() + "&&");
-            }
-            if (screen.getCitNum() == 5) {
-                screen.setCitName("2D");
             }
             values.add(screen.getCiName());
             values.add(screen.getCitName());
