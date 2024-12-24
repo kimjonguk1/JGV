@@ -165,4 +165,38 @@
 
         LIMIT 1
     </select>
+
+    <select id="selectUnverifiedUsersWithExpiredToken"
+            resultType="dev.jwkim.jgv.entities.user.UserEntity">
+        SELECT us_num          AS `usNum`,
+               us_id           AS `usId`,
+               us_pw           AS `usPw`,
+               us_name         AS `usName`,
+               us_nickname     AS `usNickName`,
+               us_birth        AS `usBirth`,
+               us_gender       AS `usGender`,
+               us_email        AS `usEmail`,
+               us_contact      AS `usContact`,
+               us_addr         AS `usAddr`,
+               us_created_at   AS `usCreatedAt`,
+               us_updated_at   AS `usUpdatedAt`,
+               us_is_deleted   AS `usIsDeleted`,
+               us_is_admin     AS `usIsAdmin`,
+               us_is_suspended AS `usIsSuspended`,
+               us_verified     AS `usIsVerified`,
+               em_email        AS `emEmail`,
+               em_key          AS `emKey`,
+               em_created_at   AS `emCreatedAt`,
+               em_expires_at   AS `emExpiresAt`,
+               em_is_used      AS `emIsUsed`
+        FROM `jgv`.`user`
+                 JOIN `jgv`.`email_tokens` ON user.`us_email` = email_tokens.`em_email`
+        WHERE `us_verified` = FALSE
+          AND #{now} > em_expires_at
+    </select>
+
+    <delete id="deleteUserById">
+        DELETE FROM `jgv`.`user` WHERE `us_id` = #{usId}
+    </delete>
+
 </mapper>
