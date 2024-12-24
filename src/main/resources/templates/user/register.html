@@ -8,8 +8,10 @@
     <title>회원가입</title>
     <link rel="stylesheet" th:href="@{'./assets/styles/index.css'}" type="text/css">
     <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
-    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}" type="text/css">
-    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}"
+          type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}"
+          type="text/css">
     <link rel="stylesheet" href="/user/styles/register.css" type="text/css">
     <script defer th:src="@{'./assets/scripts/index.js'}" type="text/javascript"></script>
     <script defer src="/user/scripts/register.js" type="text/javascript"></script>
@@ -27,7 +29,7 @@
     <h1>기본정보</h1>
     <div class="-spring"></div>
     <span>
-         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+         <img src="/user/images/register_check.png"
               alt="checkmark">
         표시는 필수 입력 항목입니다.
     </span>
@@ -37,7 +39,7 @@
         <tbody>
         <tr>
             <td style="border-top: 2px solid #000000;">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                <img src="/user/images/register_check.png"
                      alt="checkmark">
                 <span>이름</span>
             </td>
@@ -51,33 +53,38 @@
         </tr>
         <tr>
             <td>
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                <img src="/user/images/register_check.png"
                      alt="checkmark">
                 <span>아이디</span>
             </td>
             <td rel="row">
                 <label class="--obj-label" data-id="id">
-                    <input required maxlength="20" minlength="6" type="text" class="_field --obj-filed -border"
+                    <input required maxlength="20" minlength="6" type="text"
+                           class="_field --obj-filed -border"
                            name="id"
                            placeholder="아이디를 입력해주세요.">
-<!--                    <span>아이디는 6~12자의 소문자와 숫자를 포함해야 합니다.</span>-->
+                    <!--                    <span>아이디는 6~12자의 소문자와 숫자를 포함해야 합니다.</span>-->
 
                 </label>
-                <button class="duplicate-button" type="button" name="duplicate-id-button">중복확인</button>
+                <button class="duplicate-button" type="button" name="duplicate-id-button">
+                    중복확인
+                </button>
             </td>
         </tr>
         <tr>
             <td>
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                <img src="/user/images/register_check.png"
                      alt="checkmark">
                 <span>비밀번호</span>
             </td>
             <td>
                 <label class="--obj-label" data-id="password">
-                    <input required autocomplete="off" maxlength="100" minlength="8" type="password" name="password"
+                    <input required autocomplete="off" maxlength="100" minlength="8"
+                           type="password" name="password"
                            class="_field --obj-filed -border password"
                            placeholder="비밀번호를 입력해주세요.">
-                    <span style="font-size: 14px; font-weight: 400;" id="password-strength"></span>
+                    <span style="font-size: 14px; font-weight: 400;"
+                          id="password-strength"></span>
 
                     <span class="text">영문자, 숫자, 특수문자를 모두 조합하여 8~12자리를 입력해주세요.<br>
                                         사용 가능 특수 문자는 !"#$%&'()*+,-./:;&lt;= &gt;?@[]^_`{|}~ 입니다.<br>
@@ -93,13 +100,14 @@
         </tr>
         <tr>
             <td>
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                <img src="/user/images/register_check.png"
                      alt="checkmark">
                 <span>비밀번호 확인</span>
             </td>
             <td>
                 <label class="--obj-label">
-                    <input required autocomplete="off" maxlength="100" minlength="8" type="password"
+                    <input required autocomplete="off" maxlength="100" minlength="8"
+                           type="password"
                            name="passwordCheck" class="_field --obj-filed -border"
                            placeholder="비밀번호를 재입력해주세요.">
                 </label>
@@ -107,39 +115,44 @@
         </tr>
         <tr>
             <td>
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                <img src="/user/images/register_check.png"
                      alt="checkmark">
                 <span>닉네임</span>
             </td>
             <!--추후 닉네임 글자수 조정 및 서비스 로직에 추가-->
             <td rel="row">
                 <label class="--obj-label" data-id="id">
-                    <input required maxlength="20" minlength="2" type="text" class="_field --obj-filed -border"
+                    <input required maxlength="20" minlength="2" type="text"
+                           class="_field --obj-filed -border"
                            name="nickname"
                            placeholder="닉네임을 입력해주세요.">
                 </label>
-                <button class="duplicate-button" type="button" name="duplicate-nickname-button">중복확인</button>
+                <button class="duplicate-button" type="button"
+                        name="duplicate-nickname-button">중복확인
+                </button>
                 <!--- alert로 중복 알림 설정하기 --->
             </td>
         </tr>
         <tr>
             <td>
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                <img src="/user/images/register_check.png"
                      alt="checkmark">
                 <span>성별</span>
             </td>
             <td rel="row">
                 <label class="--obj-label gender-container">
                     <span>남자</span>
-                    <input required type="radio" name="gender" value="M" class="_field --obj-filed -border" checked>
+                    <input required type="radio" name="gender" value="M"
+                           class="_field --obj-filed -border" checked>
                     <span>여자</span>
-                    <input required type="radio" name="gender" value="F" class="_field --obj-filed -border">
+                    <input required type="radio" name="gender" value="F"
+                           class="_field --obj-filed -border">
                 </label>
             </td>
         </tr>
         <tr>
             <td>
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                <img src="/user/images/register_check.png"
                      alt="checkmark">
                 <span>주소</span>
             </td>
@@ -147,9 +160,12 @@
                 <div class="label-container">
                     <label class="--obj-label"
                            style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 1rem;">
-                        <input class="_field --obj-filed -border" type="text" id="postcode"
+                        <input class="_field --obj-filed -border" type="text"
+                               id="postcode"
                                placeholder="우편번호를 입력해주세요." name="postcode">
-                        <button type="button" class="addr-button" name="addr-button">주소검색</button>
+                        <button type="button" class="addr-button" name="addr-button">
+                            주소검색
+                        </button>
                     </label>
                     <label class="--obj-label">
                         <input class="_field --obj-filed -border" type="text" id="address"
@@ -157,35 +173,36 @@
                     </label>
                 </div>
                 <label class="--obj-label">
-                    <input class="_field --obj-filed -border" type="text" id="detailAddress"
-                           placeholder="상세주소 입력" name="detailAddress">
                     <input class="_field --obj-filed -border" type="text"
-                           id="extraAddress" placeholder="참고항목" name="extraAddress">
+                           id="extraAddress" placeholder="상세주소 입력" name="extraAddress">
                 </label>
             </td>
         </tr>
         <tr>
             <td>
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                <img src="/user/images/register_check.png"
                      alt="checkmark">
                 <span>생년월일</span>
             </td>
             <td>
                 <label class="--obj-label" data-id="birth">
-                    <input required name="birth" class="_field --obj-filed -border" type="date" value="1900-01-01">
+                    <input required name="birth" class="_field --obj-filed -border"
+                           type="date" value="1900-01-01">
                 </label>
             </td>
         </tr>
         <tr>
             <td>
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                <img src="/user/images/register_check.png"
                      alt="checkmark">
                 <span>휴대전화번호</span>
             </td>
             <td>
                 <label class="--obj-label" data-id="contact">
-                    <input autocomplete="off" maxlength="13" minlength="10" required type="tel"
-                           name="contact" placeholder="'-' 없이 입력" spellcheck="false" class="_field --obj-filed -border">
+                    <input autocomplete="off" maxlength="13" minlength="10" required
+                           type="tel"
+                           name="contact" placeholder="'-' 없이 입력" spellcheck="false"
+                           class="_field --obj-filed -border">
                 </label>
             </td>
         </tr>
@@ -206,18 +223,27 @@
                         <input autocomplete="off" name="domain" type="text" class="domain"
                                placeholder="직접입력">
                     </label>
-                    <div class="value-button" > 직접입력
-                        <span class="-spring"></span>
-                        <span>v</span>
-                        <!--TODO value-button 의 자식이 되야함 -->
+                    <div class="value-button">
+                        <span style=" display: flex; align-items: center;
+                        flex-direction: row; justify-content: center; gap: 1rem;">
+                            직접입력
+                            <img style="width: 1rem;" src="/user/images/emailSelect.png"
+                                 alt="도메인선택">
+                        </span>
                         <div id="domainModal" class="modal">
                             <div class="modal-content">
                                 <button type="button" class="domain-self">직접입력</button>
-                                <button type="button" class="domain-button">naver.com</button>
-                                <button type="button" class="domain-button">hanmail.com</button>
-                                <button type="button" class="domain-button">gmail.com</button>
-                                <button type="button" class="domain-button">yahoo.com</button>
-                                <button type="button" class="domain-button">daum.com</button>
+                                <button type="button" class="domain-button"
+                                        value="naver.com">네이버
+                                </button>
+                                <button type="button" class="domain-button"
+                                        value="hanmail.com">한메일
+                                </button>
+                                <button type="button" class="domain-button"
+                                        value="gmail.com">구글</button>
+                                <button type="button" class="domain-button"
+                                        value="yahoo.com">야후</button>
+                                <button type="button" class="domain-button" value="daum.net"></button>
                             </div>
                         </div>
                     </div>

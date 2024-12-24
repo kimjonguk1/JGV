@@ -8,7 +8,7 @@ $cancel.onclick = () => {
 $modifyNickname.onsubmit = (e) => {
     e.preventDefault();
 
-    if ($modifyNickname['nickname'].value.length < 2 && $modifyNickname['nickname'].value,length > 10) {
+    if ($modifyNickname['nickname'].value.length < 2 && $modifyNickname['nickname'].value.length > 10) {
         alert('올바른 닉네임을 입력해주세요 닉네임은 2~10 자리 입니다.');
     }
 
@@ -33,6 +33,7 @@ $modifyNickname.onsubmit = (e) => {
         }
         if (response['result'] === 'success') {
             alert("닉네임 변경에 성공하였습니다.");
+
             window.opener.location.reload();
             window.close();
         }
