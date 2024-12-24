@@ -100,6 +100,7 @@ public class MoiveListController {
                 }
             }
         }
+        //상영시간표 표시를 위하여
         RegionEntity[] regions = this.theaterService.findRegionAll();
         if (region != null) {
             TheaterVo[] theaterVos = this.theaterService.selectAllTheatersByRegion(region, movie);

@@ -381,6 +381,7 @@ section.active {
         display: inline-block;
       }
 
+
       .menu-btn {
         position: absolute;
         top: 0;
@@ -391,9 +392,51 @@ section.active {
         font-size: 20px;
         color: #aaa;
 
-        &::after {
-          content: '⋮';
+      }
+
+      .menu-dropdown {
+        position: absolute;
+        top: 25px;
+        right: 0;
+        background-color: #333;
+        color: white;
+        border-radius: 5px;
+        padding: 5px 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        font-size: 14px;
+        z-index: 1000;
+        white-space: nowrap;
+
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+
+          li {
+            padding: 5px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+
+            &:hover {
+              background-color: #444;
+            }
+
+            &.edit-review::before {
+              content: '✏️';
+              margin-right: 8px;
+            }
+
+            &.delete-review::before {
+              content: '🗑️';
+              margin-right: 8px;
+            }
+          }
         }
+      }
+
+      .hidden {
+        display: none;
       }
 
       .review-text {
@@ -419,7 +462,7 @@ section.active {
         }
 
 
-        .like-btn {
+        #like-btn {
           background: none;
           border: none;
           cursor: pointer;

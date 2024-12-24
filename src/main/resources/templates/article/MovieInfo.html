@@ -10,6 +10,7 @@
     <link rel="stylesheet" th:href="@{/assets/styles/common.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/article/assets/styles/MovieInfo.css}" type="text/css">
     <script defer th:src="@{/article/assets/scripts/MovieInfo.js}" type="text/javascript"></script>
+    <script th:src="@{/assets/scripts/common.js}" type="text/javascript"></script>
 </head>
 <body>
 
@@ -103,19 +104,28 @@
             <div class="reviews">
 <!--                아이템 반복-->
                 <div class="review-item" th:each="article : ${articles}"
-                th:attr="data-timestamp=${article.getReCreatedAtTimestamp()}, data-likes=${article.getReLiked()}">
+                th:attr="data-timestamp=${article.getReCreatedAtTimestamp()}, data-likes=${article.getReLiked()},
+                 data-review-id=${article.getReNum()}">
                     <div class="review-user">
                         <img src="https://via.placeholder.com/50" alt="프로필 이미지" class="profile-img">
                     </div>
                     <div class="review-content">
                         <span class="user-name" th:text="${article.getUsNickName()}">칠구</span>
-                        <button class="menu-btn"></button>
+                        <div class="review-footer">
+                            <button class="menu-btn">⋮</button>
+                            <div class="menu-dropdown hidden">
+                                <ul>
+                                    <li class="edit-review">평점 수정</li>
+                                    <li class="delete-review">평점 삭제</li>
+                                </ul>
+                            </div>
+                        </div>
                         <p class="review-text" th:text="${article.getReContent()}">실화를 바탕으로한 작품이라 교훈적인 내용은 좋네요</p>
                         <div class="spring"></div>
                         <div class="review-footer">
                             <span class="review-date" th:text="${#temporals.format(article.getReCreatedAt(), 'yyyy-MM-dd HH:mm')}">2024.12.13</span>
                             <span>&nbsp; | &nbsp;</span>
-                            <button class="like-btn">
+                            <button id="like-btn">
                                 <img src="http://img.cgv.co.kr/R2014/images/point/ico_point_default.png" alt="like">
                             </button>
                             <span class="like-count" th:text="${article.getReLiked()}"></span>
