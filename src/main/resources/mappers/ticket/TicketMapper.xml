@@ -100,6 +100,7 @@
                `mo_num`        AS `moNum`,
                `ci_num`        AS `ciNum`
         FROM `jgv`.`screen`
+        WHERE `sc_start_date` > NOW();
     </select>
     <select id="selectAllMoviesByMoTitle"
             resultType="dev.jwkim.jgv.vos.theater.MovieVo">

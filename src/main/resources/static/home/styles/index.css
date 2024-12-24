@@ -157,7 +157,6 @@ main > .contents > .video_wrapper::after {
   gap: 1.5rem;
   justify-content: center;
   width: 100%;
-  background-color: #f6f6f6;
   padding: 2rem 0;
 }
 #theater > .-spring {
@@ -188,9 +187,33 @@ main > .contents > .video_wrapper::after {
   width: 100%;
   height: auto;
 }
-#theater > .background > .theater-list > .image-wrapper > a > img {
+#theater > .background > .theater-list > .image-wrapper > .special {
   width: 500px;
   height: 260px;
+  border-radius: 0.5rem;
+}
+#theater > .background > .theater-list > .image-wrapper > .special.hidden {
+  display: none;
+}
+#theater > .background > .theater-list > .image-wrapper > .special.IMAX {
+  background-image: url("https://img.cgv.co.kr/WebApp/contents/specialTheater/list1/16844565213590.png");
+  background-size: cover;
+}
+#theater > .background > .theater-list > .image-wrapper > .special.DX {
+  background-image: url("https://img.cgv.co.kr/WebApp/contents/specialTheater/list2/17066596473020.jpg");
+  background-size: cover;
+}
+#theater > .background > .theater-list > .image-wrapper > .special.SCREENX {
+  background-image: url("https://img.cgv.co.kr/WebApp/contents/specialTheater/list1/16844566032440.png");
+  background-size: cover;
+}
+#theater > .background > .theater-list > .image-wrapper > .special.RECLINER {
+  background-image: url("https://img.cgv.co.kr/resource_pc/images/specialtheater/premium/specialtheater_premium0.jpg");
+  background-size: cover;
+}
+#theater > .background > .theater-list > .image-wrapper > .special.CINE {
+  background-image: url("https://img.cgv.co.kr/WebApp/contents/specialTheater/list1/16844577273360.png");
+  background-size: cover;
 }
 #theater > .background > .theater-list > .item-container {
   align-items: center;
@@ -213,10 +236,14 @@ main > .contents > .video_wrapper::after {
   flex-direction: row;
   gap: 0;
   justify-content: center;
+  border-bottom: 1px solid #f2f2f2;
 }
 #theater > .background > .theater-list > .item-container > .item > .-spring {
   flex-grow: 1;
   flex-shrink: 1;
+}
+#theater > .background > .theater-list > .item-container > .item:nth-child(1) {
+  border-top: 1px solid #f2f2f2;
 }
 #theater > .background > .theater-list > .item-container > .item > .text {
   width: 100%;
@@ -225,10 +252,11 @@ main > .contents > .video_wrapper::after {
   flex-direction: row;
   gap: 1rem;
   justify-content: center;
-  border-bottom: 1px solid #f2f2f2;
+  border: 1.5px solid transparent;
   color: #222222;
   padding: 1rem 2rem;
   white-space: nowrap;
+  cursor: pointer;
 }
 #theater > .background > .theater-list > .item-container > .item > .text > .-spring {
   flex-grow: 1;

@@ -109,11 +109,45 @@ const $screens = $cinemaInformation.querySelector(':scope > .cinema-info > .item
                                                 const $screenContainer = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.cinema-info > .items > .item');
                                                 $screenContainer.forEach((screen) => {
                                                     $screens.append(screen);
+                                                    const $timeTable = Array.from(screen.querySelectorAll(':scope > .screen-container > .time-table-container > .time-table'));
+                                                    $timeTable.forEach((time) => {
+                                                        time.onclick = (e) => {
+                                                            e.preventDefault();
+                                                            const $moTitle = screen.querySelector(':scope > .movie-container > .text');
+                                                            const xhr = new XMLHttpRequest();
+                                                            const url = new URL('http://localhost:8080/ticket/');
+                                                            // 파라미터 값들을 객체로 저장
+                                                            const params = {
+                                                                moTitle: $moTitle.innerText,
+                                                                thName: x.innerText,
+                                                                scStartDate: year + '-' + month.innerText.substring(0, 2) + '-' + day.innerText,
+                                                                time: time.innerText.split('\n')[0]
+                                                            };
+                                                            localStorage.setItem('ticketParams', JSON.stringify(params));
+                                                            xhr.onreadystatechange = () => {
+                                                                if (xhr.readyState !== XMLHttpRequest.DONE) {
+                                                                    return;
+                                                                }
+                                                                if (xhr.status < 200 || xhr.status >= 300) {
+                                                                    alert('오류 발생');
+                                                                    return;
+                                                                }
+                                                                window.location.href = url.toString();
+                                                                Loading.hide();
+                                                            };
+                                                            xhr.open('GET', url.toString());
+                                                            xhr.send();
+                                                            Loading.show(0);
+                                                        }
+                                                    })
                                                 })
                                                 const $theaterInfo = document.querySelector('.theater-info.guide');
                                                 const $main = document.getElementById('main');
                                                 const $buttons = Array.from($buttonContainer.querySelectorAll(':scope > .button'));
                                                 const $informations = Array.from($main.querySelectorAll(':scope > .information'));
+                                                const $finding = document.querySelector('.find');
+                                                $finding.setAttribute('href', `https://map.naver.com/p?title=${x.innerText}&lng=128.5897380095846&lat=35.885288432104254&zoom=15&type=0&c=15.00,0,0,0,dh`)
+                                                // finding 교체하기
 
                                                 $buttons.forEach(($item) => {
                                                     $theaterInfo.onclick = () => {

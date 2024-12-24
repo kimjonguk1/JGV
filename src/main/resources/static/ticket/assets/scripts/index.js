@@ -17,6 +17,7 @@ const $theaterTime = document.getElementById('theater-time');
 const $timeContainer = $mainContent.querySelector(':scope > .time > .time > .time-container');
 const $firstButton = $controlBar.querySelector(':scope > .container > [data-id="main"]')
 const $theaterCinema = document.getElementById('theater-cinema');
+const ticketParams = JSON.parse(localStorage.getItem('ticketParams'));
 
 {
     window.onload = () => {
@@ -26,15 +27,16 @@ const $theaterCinema = document.getElementById('theater-cinema');
                 region.click();
             }
         })
+        if (ticketParams) {
+            $movieItems.forEach((movie) => {
+                const $items = movie.querySelector(':scope > .text > .name');
+                if ($items.innerText === ticketParams.moTitle) {
+                    movie.click();
+                }
+            })
+        }
     }
 }
-
-// 지정한 데이터
-const $data = {
-    movie: null,   // 선택된 영화
-    theater: null, // 선택된 지점
-    date: null,    // 선택된 날짜
-};
 
 // 상영 정보를 찾아오는 함수
 function checkScreen() {
@@ -86,6 +88,13 @@ function checkScreen() {
             const $theaterItem = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.theater > .body > .content > .theater-container > .theater'));
             $theaterItem.forEach((x) => {
                 $theater.append(x);
+                if (ticketParams) {
+                    if (ticketParams.thName.replace('CGV', '') === x.innerText) {
+                        setTimeout(() => {
+                            x.click();
+                        }, 0); // 클릭 이벤트가 등록될 때까지 대기
+                    }
+                }
                 x.onclick = () => {
                     $theaterItem.forEach((item) => {
                         item.classList.remove('select');
@@ -229,6 +238,20 @@ function checkScreen() {
             const $days = Array.from((new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.day > .body > .content > .content-container > .day-container')));
             $days.forEach((x) => {
                 $contentContainer.append(x);
+                if (ticketParams) {
+                    const $title = Array.from(x.querySelectorAll(':scope > .title'));
+                    $title.forEach((title) => {
+                        const $year = title.querySelector(':scope > .year');
+                        const $month = title.querySelector(':scope > .month');
+                        const $day = Array.from(x.querySelectorAll(':scope > .day'));
+                        $day.forEach((day) => {
+                            const $date = day.querySelector(':scope > .day-container > .date');
+                            if ($year.innerText + '-' + $month.innerText + '-' + $date.innerText === ticketParams.scStartDate) {
+                                setTimeout(() => day.click(), 0);
+                            }
+                        })
+                    })
+                }
                 const $day = Array.from(x.querySelectorAll(':scope > .day'));
                 $day.forEach((item) => {
                     item.onclick = () => {
@@ -359,6 +382,12 @@ function checkScreen() {
                 $times.forEach((time) => {
                     const $items = Array.from(time.querySelectorAll(':scope > .item'));
                     $items.forEach((item) => {
+                        if (ticketParams) {
+                            const $time = item.querySelector(':scope > .time > .text');
+                            if ($time.innerText === ticketParams.time) {
+                                setTimeout(() => item.click(), 0);
+                            }
+                        }
                         item.onclick = () => {
                             const $cinema = screen.querySelector(':scope > .title > .cinema');
                             const $type = screen.querySelector(':scope > .title > .cinema-type');
@@ -375,6 +404,7 @@ function checkScreen() {
                             $data.movie = null;
                             $data.theater = null;
                             $data.date = null;
+                            localStorage.removeItem('ticketParams');
                         }
                     })
                 })
@@ -385,6 +415,13 @@ function checkScreen() {
         Loading.show(0);
     }
 }
+
+// 지정한 데이터
+const $data = {
+    movie: null,   // 선택된 영화
+    theater: null, // 선택된 지점
+    date: null,    // 선택된 날짜
+};
 
 // 영화 정보를 불러오는 함수
 function movieItem($movieItems) {
@@ -607,7 +644,6 @@ const $seatTime = document.getElementById("seat-time");
 const $posterImg = document.getElementById("poster-img");
 
 
-
 const adults = document.querySelectorAll('.adults');
 const seats = [];
 
@@ -769,7 +805,7 @@ $rightButtons.forEach((x) => {
 // 결과 출력
                         $seatTime.innerText = `${newHour}:${newMinute}`;
 
-                        $payTime.innerText = `${$theaterTime.innerText}` +` ~ ` + `${$seatTime.innerText}` ;
+                        $payTime.innerText = `${$theaterTime.innerText}` + ` ~ ` + `${$seatTime.innerText}`;
 
 
                         rows.forEach(row => {
@@ -959,6 +995,8 @@ $rightButtons.forEach((x) => {
 
                 }
             })
+        } else {
+            alert("영화를 선택해 주세요.");
         }
     }
 });
