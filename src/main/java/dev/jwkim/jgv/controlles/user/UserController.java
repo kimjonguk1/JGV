@@ -9,6 +9,7 @@ import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.results.Result;
 import dev.jwkim.jgv.services.user.UserService;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 @Controller
@@ -68,28 +70,42 @@ public class UserController {
 // endregion
 
     //     region 로그인
-    @RequestMapping(value = "login", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getLogin(HttpSession session) {
+    @RequestMapping(value = "/login", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getLogin(HttpSession session, @RequestParam(value = "redirect", required = false) String redirect) {
+        // 이미 로그인된 경우
         if (session.getAttribute("user") != null) {
             return new ModelAndView("redirect:/");
+        }
+        if (redirect != null) {
+            session.setAttribute("redirect", redirect);  // redirect 파라미터를 로그인 페이지로 전달
         }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/login");
         return modelAndView;
     }
 
-
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-
-    public String postLogin(UserEntity user, HttpSession session) {
+    public String postLogin(UserEntity user, HttpSession session, @RequestParam(value = "redirect", required = false) String redirect) {
         Result result = this.userService.login(user);
         JSONObject response = new JSONObject();
-        // 로그인 성공 시 세션에 사용자 정보 추가
+
+        // 로그인 성공 시
         if (result == CommonResult.SUCCESS) {
             session.setAttribute("user", user);
+            response.put("userNickname", user.getUsNickName());
+
+
+            if (redirect == null) {
+                redirect = (String) session.getAttribute("redirect");
+                if (redirect == null) {
+                    redirect = "/";  // 기본값 설정
+                }
+            }
+            response.put("redirect", redirect);
+            System.out.println(redirect);
         }
-        // JSON 응답 생성
+
         response.put(Result.NAME, result.nameToLower());
         return response.toString();
     }
@@ -104,16 +120,19 @@ public class UserController {
 
 
     @RequestMapping(value = "/myPage/{fragment}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user, HttpSession session, @PathVariable(value = "fragment") String fragment, HttpServletRequest request) {
+    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user, HttpSession session, @PathVariable(value = "fragment") String fragment, HttpServletRequest request) throws ServletException, IOException {
         String[] validFragments = {"main", "reservation", "receipt", "personal", "withdraw"};
         if (fragment == null || Arrays.stream(validFragments).noneMatch(x -> x.equals(fragment))) {
             response.setStatus(404);
             return null;
         }
 
-        else if (session.getAttribute("user") == null) {
-            String requestedUrl = request.getRequestURI();
-            return new ModelAndView("redirect:/user/login?redirect=" + requestedUrl);
+        if (session.getAttribute("user") == null) {
+            String requestedUrl = request.getRequestURI(); // 현재 요청 URL을 가져옴
+            // 포워드 방식으로 로그인 페이지로 이동
+            request.setAttribute("redirect", requestedUrl);
+            request.getRequestDispatcher("/user/login").forward(request, response); // 내부 요청 포워드
+            return null;  // 포워드 후 반환할 필요는 없으므로 null
         }
 
         ModelAndView modelAndView = new ModelAndView();
