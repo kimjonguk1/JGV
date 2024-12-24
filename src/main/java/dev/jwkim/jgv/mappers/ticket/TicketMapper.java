@@ -75,4 +75,10 @@ public interface TicketMapper {
             @Param("thName") String thName,
             @Param("moTitle") String moTitle,
             @Param("scStartDate") LocalDateTime scStartDate);
+
+    Integer selectScNumByScName(@Param("moTitle") String moTitle,
+                                @Param("ciName") String ciName,
+                                @Param("thName") String thName,
+                                @Param("scStartDate") LocalDateTime scStartDate);
+
 }

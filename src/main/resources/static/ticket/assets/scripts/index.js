@@ -602,7 +602,8 @@ const $payPriceWon4 = document.getElementById("pay-price-won4");
 const $payPriceWon5 = document.getElementById("pay-price-won5");
 const $payPriceWon6 = document.getElementById("pay-price-won6");
 const $payPriceWonInt = document.getElementById("pay-price-won-int");
-const $SeatDate = document.getElementById("seat-date");
+const $seatDate = document.getElementById("seat-date");
+const $seatTime = document.getElementById("seat-time");
 const $posterImg = document.getElementById("poster-img");
 
 
@@ -706,12 +707,14 @@ $rightButtons.forEach((x) => {
                 if (x.getAttribute('data-id') === 'main' &&
                     main.getAttribute('data-id') === 'main-seat') {
                     main.classList.remove('hidden');
-                    $SeatDate.innerText = `${$theaterTime.innerText}`;
+                    $seatDate.innerText = `${$theaterTime.innerText}`;
                     $theaterTheater2 = `${$theaterTheater.innerText.substring(0, $theaterTheater.innerText.length - 1)}`;
+
                     let rawDateStr = $theaterTime.innerText;
                     let formattedDate = rawDateStr
                         .replace(/\([^)]+\)/, "T") // "(금)" 제거
                         .replace(/\./g, "-"); // "." -> "-"
+
                     const xhr = new XMLHttpRequest();
                     const url = new URL("http://localhost:8080/ticket/seat"); //ticket
                     url.searchParams.set('thName', $theaterTheater2);
@@ -735,20 +738,38 @@ $rightButtons.forEach((x) => {
                         $payMovie.innerText = `${$theaterMovie.innerText}`;
                         $payTheater.innerText = `${$theaterTheater2}`;
                         $payCinema.innerText = `${$theaterCinema.innerText}`;
-                        $payTime.innerText = `${$theaterTime.innerText}`;
 
-                        // 얘안됨
                         // 주어진 날짜와 시간
-                        let givenDate = new Date(formattedDate);
+                        let dateTime = $theaterTime.innerText;
+                        let addMinutes = `${result2[0].moTime}`;
+// 시와 분을 추출
+                        let timePart = dateTime.split(')')[1]; // "08:45" 추출
+                        let [hour, minute] = timePart.split(':').map(Number); // hour = 8, minute = 45
 
-                        // 추가 분을 밀리초로 변환
-                        let minutesToAdd = `${result2[0].moTime}`
-                        let millisecondsToAdd = minutesToAdd * 60 * 1000;
-                        // 새로운 시간을 계산
-                        givenDate.setTime(givenDate.getTime() + millisecondsToAdd);
+// 추가 시간 계산
+                        let extraHours = Math.floor(addMinutes / 60); // 124 ÷ 60 = 2
+                        let extraMinutes = addMinutes % 60;          // 124 % 60 = 4
 
-// 새로운 날짜와 시간을 ISO 8601 형식으로 출력
-                        console.log(givenDate.toISOString());  // 2024-12-18T20:16:00.000Z
+// 기존 시간에 추가
+                        let newHour = hour + extraHours;             // 8 + 2 = 10
+                        let newMinute = minute + extraMinutes;       // 45 + 4 = 49
+
+// 분이 60을 넘는 경우 처리 (현재는 필요 없음)
+                        if (newMinute >= 60) {
+                            newHour += Math.floor(newMinute / 60);
+                            newMinute %= 60;
+                        }
+                        console.log(newHour)
+                        console.log(newMinute)
+
+// 시와 분을 두 자리로 맞추기
+                        newHour = newHour.toString().padStart(2, '0'); // 2자리 형식의 시
+                        newMinute = newMinute.toString().padStart(2, '0'); // 2자리 형식의 분
+
+// 결과 출력
+                        $seatTime.innerText = `${newHour}:${newMinute}`;
+
+                        $payTime.innerText = `${$theaterTime.innerText}` +` ~ ` + `${$seatTime.innerText}` ;
 
 
                         rows.forEach(row => {
@@ -1003,7 +1024,7 @@ $realCancel.onclick = () => {
 
 }
 
-
+$method.innerText = "신용카드"
 $paymentCheck.forEach((radio) => {
     radio.addEventListener('change', () => {
             pay = String(`${(radio.value)}`);
@@ -1152,7 +1173,8 @@ $payForm.onsubmit = (e) => {
                 alert("오류가 발생했습니다. 다시 시도해주세요.");
             }
             const response = JSON.parse(xhr.responseText);
-            if (response['result'] === "success" && response['results'] === "success") {
+            const result2 = response['results'];
+            if (response['result'] === "success") {
                 alert("결제가 완료되었습니다.");
                 // 결제 완료 후 sessionStorage에 상태 저장
                 sessionStorage.setItem('paymentComplete', 'true');
@@ -1166,6 +1188,8 @@ $payForm.onsubmit = (e) => {
                 sessionStorage.setItem('human', $seatHuman.innerText);
                 sessionStorage.setItem('seName', $seatNumber.innerText);
                 sessionStorage.setItem('poster', $posterImg.src);
+                sessionStorage.setItem('paymentNumber', `${result2}`);
+                console.log(`${result2}`)
                 window.location.href = ("../../ticket/reservation")
             }
         };

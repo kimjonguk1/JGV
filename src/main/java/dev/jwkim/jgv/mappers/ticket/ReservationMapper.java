@@ -25,5 +25,10 @@ public interface ReservationMapper {
                                    @Param("ciName") String ciName,
                                    @Param("thName") String thName);
 
-    int insertReservation (ReservationEntity reservation);
+    int insertReservation(ReservationEntity reservation);
+
+    Integer isSeatAlreadyReserved(@Param("seName") String seName,
+                                  @Param("ciName") String ciName,
+                                  @Param("thName") String thName,
+                                  @Param("scStartDate") LocalDateTime scStartDate);
 }
