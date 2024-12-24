@@ -36,4 +36,16 @@
           and `ci_name` = #{ciName}
           and `th_name` = #{thName}
     </select>
+    <select id="isSeatAlreadyReserved" resultType="Integer">
+        SELECT COUNT(*)
+        FROM jgv.reservation
+                 LEFT JOIN jgv.screen ON reservation.sc_num = screen.sc_num
+                 LEFT JOIN jgv.seat ON reservation.se_num = seat.se_num
+                 LEFT JOIN jgv.cinema ON screen.ci_num = cinema.ci_num
+                 LEFT JOIN jgv.theater ON cinema.th_num = theater.th_num
+        WHERE reservation.se_num = #{seName}
+          AND cinema.ci_name = #{ciName}
+          AND theater.th_name = #{thName}
+          and `sc_start_date` LIKE CONCAT('%', #{scStartDate}, '%')
+    </select>
 </mapper>

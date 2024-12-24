@@ -44,7 +44,7 @@
                     <div class="table-container">
                         <div class="number-content title">
                             <span class="text">예매번호</span>
-                            <span class="number red" id="number">1</span>
+                            <span class="number red" id="paymentNumber"></span>
                         </div>
                         <div class="movie-content title">
                             <span class="text">영화</span>
@@ -89,9 +89,8 @@
                     </div>
                 </div>
                 <div class="button">
-                    <button type="button" name="print" class="print" id="print">예매정보 출력</button>
                     <button type="button" name="cancel" class="cancel">
-                        <a th:href="@{'../user/myPage/reservation'}">예매확인 취소</a>
+                        <a th:href="@{'../user/myPage/reservation'}">예매확인/취소</a>
                     </button>
                 </div>
             </div>

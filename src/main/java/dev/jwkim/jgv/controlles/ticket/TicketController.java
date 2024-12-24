@@ -202,10 +202,6 @@ public class TicketController {
         JSONObject response = new JSONObject();
         SeatVo[] seatNum = this.ticketService.selectSeatByReservationNum(ciName, thName, moTitle, scStartDate);
         CinemaTypeVo[] citPrice = this.ticketService.selectSeatByCitPrice(ciName, thName, moTitle, scStartDate);
-        System.out.println(ciName);
-        System.out.println(thName);
-        System.out.println(moTitle);
-        System.out.println(scStartDate);
         response.put(Result.NAME, seatNum);
         response.put(Result.NAMES, citPrice);
         return response.toString();
@@ -237,15 +233,15 @@ public class TicketController {
         }
 
         // 결제 정보 저장
-        Result result = this.ticketService.insertPayment(meName, paPrice, usNum);
+        Result result = this.ticketService.insertReservationAndPayment(moTitle, ciName, thName, scStartDate, meName, usNum, seNames, paPrice);
 
-        // 예약 정보 저장
-        Result results = this.ticketService.insertReservation(moTitle, ciName, thName, scStartDate, meName, usNum, seNames, paPrice);
+        int results = this.ticketService.selectPaymentNum(moTitle, ciName, thName, scStartDate, paPrice, usNum);
 
         // 응답 데이터 생성
         JSONObject response = new JSONObject();
         response.put(Result.NAME, result.nameToLower());
-        response.put(Result.NAMES, results.nameToLower());
+        response.put(Result.NAMES, results);
+
 
         return response.toString();
     }

@@ -335,4 +335,17 @@
           and mo_title = #{moTitle}
           and `sc_start_date` LIKE CONCAT('%', #{scStartDate}, '%')
     </select>
+    <select id="selectScNumByScName" resultType="java.lang.Integer">
+        SELECT screen.sc_num
+        FROM jgv.screen
+                 left join jgv.reservation on screen.sc_num = reservation.sc_num
+                 left join jgv.seat on reservation.se_num = seat.se_num
+                 left join jgv.cinema on seat.ci_num = cinema.ci_num
+                 left join jgv.theater on cinema.th_num = theater.th_num
+                 left join jgv.movie on screen.mo_num = movie.mo_num
+        WHERE mo_title = #{moTitle}
+          AND ci_name = #{ciName}
+          AND th_name = #{thName}
+          AND sc_start_date = #{scStartDate}
+    </select>
 </mapper>

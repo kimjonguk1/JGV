@@ -15,6 +15,7 @@ import dev.jwkim.jgv.mappers.ticket.PaymentMapper;
 import dev.jwkim.jgv.mappers.ticket.ReservationMapper;
 import dev.jwkim.jgv.mappers.ticket.TicketMapper;
 import dev.jwkim.jgv.results.CommonResult;
+import dev.jwkim.jgv.results.Result;
 import dev.jwkim.jgv.vos.theater.MovieVo;
 import dev.jwkim.jgv.vos.theater.RegionVo;
 import dev.jwkim.jgv.vos.theater.ScreenVo;
@@ -37,6 +38,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -451,143 +453,117 @@ public class TicketService {
         return citPrice;
     }
 
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public CommonResult insertPayment(String meName, int paPrice, int usNum) {
-        // 결제 방법 번호 조회
-        MethodEntity methodNum = this.methodMapper.selectPaymentMeNum(meName);
+    private List<String> checkSeatsAvailability(String[] seNames, String ciName, String thName, LocalDateTime scStartDate) {
+        // 좌석 중 예약된 것이 없으면 seNames 배열을 반환, 예약된 좌석은 제외
+        List<String> availableSeats = Arrays.stream(seNames)
+                .filter(seName -> this.reservationMapper.isSeatAlreadyReserved(seName, ciName, thName, scStartDate) == 0)  // 예약되지 않은 좌석만 필터링
+                .collect(Collectors.toList());
 
-        if (methodNum == null) {
-            System.out.println("결제 방법이 존재하지 않습니다: " + meName);
-            return CommonResult.FAILURE;
-        }
-
-        // 유효성 검사 - 결제 금액과 사용자 번호 확인
-        if (paPrice <= 0 || paPrice > 250_000) {
-            System.out.println("유효하지 않은 결제 금액: " + paPrice);
-            return CommonResult.FAILURE;
-        }
-        if (usNum <= 0) {
-            System.out.println("유효하지 않은 사용자 번호: " + usNum);
-            return CommonResult.FAILURE;
-        }
-
-        // PaymentEntity 객체 생성 및 값 설정
-        PaymentEntity payment = new PaymentEntity();
-        payment.setPaPrice(paPrice); // 결제 금액
-        payment.setUsNum(usNum); // 사용자 번호
-        payment.setMeNum(methodNum.getMeNum()); // 결제 방법 번호
-        payment.setPaState(false); // 결제 상태 설정
-        payment.setPaCreatedAt(LocalDateTime.now()); // 생성일 설정
-        payment.setPaDeletedAt(null); // 삭제일 초기화
-
-        // 결제 정보 DB 삽입 (한 번만 수행)
-        int result = this.paymentMapper.insertPayment(payment);
-        if (result <= 0) {
-            System.out.println("결제 정보 삽입 실패: " + payment);
-            return CommonResult.FAILURE;
-        }
-
-        System.out.println("결제 정보 삽입 성공: " + payment);
-
-        // 삽입된 결제 정보를 반환
-        return CommonResult.SUCCESS;
+        return availableSeats;
     }
 
-
-
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public CommonResult insertReservation(String moTitle, String ciName, String thName, LocalDateTime scStartDate, String meName, int usNum, String[] seNames, int paPrice) {
-        // 영화 상영 정보 조회
-        ScreenEntity[] screenEntities = this.reservationMapper.selectReservationByScNum(moTitle, ciName, thName, scStartDate);
-
-        // 결제 정보 조회 (결제 정보가 이미 존재하는지 확인)
-        PaymentEntity[] paymentEntities = this.reservationMapper.selectPaymentByPaNum(meName, usNum);
-
-        if (screenEntities == null) {
-            System.out.println("영화 정보가 없습니다: " + moTitle + ", " + ciName + ", " + thName + ", " + scStartDate);
-            return CommonResult.FAILURE;
-        }
-
-        if (paymentEntities == null || paymentEntities.length == 0) {
-            System.out.println("결제 내역이 없습니다: " + meName + ", " + usNum);
-
-            // 결제 정보 삽입
-            CommonResult paymentResult = insertPayment(meName, paPrice, usNum);  // 결제 정보 삽입 후
-            if (paymentResult != CommonResult.SUCCESS) {
-                return CommonResult.FAILURE;
-            }
-
-            // 다시 결제 정보 조회
-            paymentEntities = this.reservationMapper.selectPaymentByPaNum(meName, usNum);
-            if (paymentEntities == null || paymentEntities.length == 0) {
-                System.out.println("결제 내역이 여전히 없습니다.");
-                return CommonResult.FAILURE;
-            }
-        }
-
-        // 결제 정보의 상태를 업데이트할 PaymentEntity 가져오기
-        PaymentEntity payment = paymentEntities[0]; // 첫 번째 결제 정보를 가져옴
-
-        // 좌석 정보가 올바른지 확인
-        if (seNames == null || seNames.length == 0) {
-            System.out.println("좌석 정보가 잘못되었습니다.");
-            // 결제 정보 삭제
-            deletePaymentIfInserted(payment.getPaNum()); // 결제 정보 삭제
-            return CommonResult.FAILURE;
-        }
-
+    public CommonResult insertReservationAndPayment(String moTitle, String ciName, String thName, LocalDateTime scStartDate,
+                                                    String meName, int usNum, String[] seNames, int paPrice) {
         try {
-            // 여러 좌석에 대해 예약 처리
-            for (String seName : seNames) {
-                // 좌석 정보 조회
-                SeatEntity[] seatEntities = this.reservationMapper.selectSeatBySeNum(seName, ciName, thName);
+            // Step 1: 영화 상영 정보 조회
+            ScreenEntity[] screenEntities = this.reservationMapper.selectReservationByScNum(moTitle, ciName, thName, scStartDate);
+            if (screenEntities == null || screenEntities.length == 0) {
+                return CommonResult.FAILURE;  // 영화 상영 정보가 없을 경우
+            }
 
+            // Step 2: 기존 Payment 데이터 조회
+            PaymentEntity[] existingPayments = this.reservationMapper.selectPaymentByPaNum(meName, usNum);
+
+            // Step 3: Payment 삽입
+            PaymentEntity newPayment = new PaymentEntity();
+            newPayment.setPaPrice(paPrice);
+            newPayment.setUsNum(usNum);
+            newPayment.setMeNum(this.methodMapper.selectPaymentMeNum(meName).getMeNum());
+            newPayment.setPaState(false);
+            newPayment.setPaCreatedAt(LocalDateTime.now());
+            newPayment.setPaDeletedAt(null);
+
+            int paymentResult = this.paymentMapper.insertPayment(newPayment);
+            if (paymentResult <= 0) {
+                return CommonResult.FAILURE;  // 결제 정보 삽입 실패
+            }
+
+            // Step 4: Payment 삽입 후 갱신된 Payment 데이터 조회
+            PaymentEntity[] updatedPayments = this.reservationMapper.selectPaymentByPaNum(meName, usNum);
+            PaymentEntity insertedPayment = findNewPayment(existingPayments, updatedPayments);
+            if (insertedPayment == null) {
+                return CommonResult.FAILURE;  // 삽입된 결제 정보를 찾을 수 없을 경우
+            }
+
+            // Step 5: 좌석 유효성 검사 (중복되지 않은 좌석만 필터링)
+            List<String> availableSeats = checkSeatsAvailability(seNames, ciName, thName, scStartDate);
+            if (availableSeats.isEmpty()) {
+                deletePaymentIfInserted(insertedPayment.getPaNum()); // 결제 정보 삭제
+                return CommonResult.FAILURE;  // 모든 좌석이 이미 예약됨
+            }
+
+            // Step 6: Reservation 삽입
+            for (String seName : availableSeats) {
+                SeatEntity[] seatEntities = this.reservationMapper.selectSeatBySeNum(seName, ciName, thName);
                 if (seatEntities == null || seatEntities.length == 0) {
-                    System.out.println("잘못된 좌석 정보: " + seName);
-                    continue;  // 잘못된 좌석은 건너뛰고 계속 진행
+                    continue; // 잘못된 좌석 정보
                 }
 
-                // 예약 생성
                 ReservationEntity reservation = new ReservationEntity();
-                reservation.setScNum(screenEntities[0].getScNum());  // 상영 정보 설정
-                reservation.setSeNum(seatEntities[0].getSeNum());  // 좌석 정보 설정
-                reservation.setPaNum(payment.getPaNum());  // 결제 정보 설정
+                reservation.setScNum(screenEntities[0].getScNum());
+                reservation.setSeNum(seatEntities[0].getSeNum());
+                reservation.setPaNum(insertedPayment.getPaNum());
 
-                // 예약 정보 저장
-                this.reservationMapper.insertReservation(reservation);
-                System.out.println("예약 성공! 좌석: " + seName);
+                int reservationResult = this.reservationMapper.insertReservation(reservation);
+                if (reservationResult <= 0) {
+                    return CommonResult.FAILURE;  // 예약 실패
+                }
             }
 
-            // 모든 예약이 성공했으므로 결제 상태를 업데이트
-            payment.setPaState(true);
-            int updatedRows = this.paymentMapper.updatePaymentState(payment.getPaNum(), payment.isPaState());
-            if (updatedRows <= 0) {
-                System.out.println("결제 상태 업데이트 실패. PaNum: " + payment.getPaNum());
-                // 결제 정보 삭제
-                deletePaymentIfInserted(payment.getPaNum()); // 결제 정보 삭제
-                return CommonResult.FAILURE;
+            // Step 7: 결제 상태 업데이트
+            insertedPayment.setPaState(true);
+            int updateResult = this.paymentMapper.updatePaymentState(insertedPayment.getPaNum(), true);
+            if (updateResult <= 0) {
+                deletePaymentIfInserted(insertedPayment.getPaNum()); // 결제 정보 삭제
+                return CommonResult.FAILURE;  // 결제 상태 업데이트 실패
             }
 
-            return CommonResult.SUCCESS;
+            return CommonResult.SUCCESS;  // 성공
         } catch (Exception e) {
-            System.err.println("예약 처리 중 오류 발생: " + e.getMessage());
-            // 결제 정보 삭제
-            deletePaymentIfInserted(payment.getPaNum()); // 결제 정보 삭제
-            throw new RuntimeException("예약 트랜잭션 실패", e); // 트랜잭션 롤백
+            throw new RuntimeException("예약 및 결제 처리 중 오류", e);  // 예외 발생 시 트랜잭션 롤백
         }
     }
 
+
+    // 기존 Payment와 새 Payment 비교하여 삽입된 Payment 찾기
+    private PaymentEntity findNewPayment(PaymentEntity[] existingPayments, PaymentEntity[] updatedPayments) {
+        Set<Integer> existingPaNums = Arrays.stream(existingPayments)
+                .map(PaymentEntity::getPaNum)
+                .collect(Collectors.toSet());
+
+        for (PaymentEntity payment : updatedPayments) {
+            if (!existingPaNums.contains(payment.getPaNum())) {
+                return payment;
+            }
+        }
+        return null;
+    }
+
+    // 결제 데이터 삭제 (필요한 경우)
     private void deletePaymentIfInserted(int paNum) {
-        try {
-            // 결제 정보 삭제 시 트랜잭션 처리
-            int deletedRows = this.paymentMapper.deletePayment(paNum);
-            if (deletedRows > 0) {
-                System.out.println("삽입된 결제 정보 삭제 성공. PaNum: " + paNum);
-            } else {
-                System.out.println("삽입된 결제 정보 삭제 실패. PaNum: " + paNum);
-            }
-        } catch (Exception e) {
-            System.err.println("결제 정보 삭제 중 오류 발생: " + e.getMessage());
+        int result = this.paymentMapper.deletePayment(paNum);
+        if (result > 0) {
+            System.out.println("결제 정보 삭제 성공. PaNum: " + paNum);
+        } else {
+            System.out.println("결제 정보 삭제 실패. PaNum: " + paNum);
         }
     }
+
+    public int selectPaymentNum(String moTitle, String ciName, String thName, LocalDateTime scStartDate, int paPrice, int usNum) {
+
+        // selectPaymentNum을 호출하여 결제 번호 조회
+        return  this.paymentMapper.selectPaymentNum(moTitle, ciName, thName, scStartDate, paPrice, usNum);
+    }
+
 }
