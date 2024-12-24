@@ -93,7 +93,7 @@ public class UserController {
         // 로그인 성공 시
         if (result == CommonResult.SUCCESS) {
             session.setAttribute("user", user);
-            response.put("userNickname", user.getUsNickName());
+            response.put("MemberNum", user.getUsNum());
 
 
             if (redirect == null) {
@@ -142,7 +142,6 @@ public class UserController {
         modelAndView.setViewName("user/myPage/myPage");
 
         return modelAndView;
-
 
     }
 

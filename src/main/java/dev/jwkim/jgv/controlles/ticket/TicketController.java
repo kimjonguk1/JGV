@@ -11,6 +11,9 @@ import dev.jwkim.jgv.vos.theater.RegionVo;
 import dev.jwkim.jgv.vos.theater.ScreenVo;
 import dev.jwkim.jgv.vos.ticket.CinemaTypeVo;
 import dev.jwkim.jgv.vos.ticket.SeatVo;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -38,7 +42,19 @@ public class TicketController {
                                  @RequestParam(value = "thName", required = false) String thName,
                                  @RequestParam(value = "scStartDate", required = false) String scStartDate,
                                  HttpSession session, UserEntity user) {
+
+       // region forward
+//        if (session.getAttribute("user") == null) {
+//            String requestedUrl = request.getRequestURI();
+//            request.setAttribute("redirect", requestedUrl);
+//            request.getRequestDispatcher("/user/login").forward(request, response);
+//            return null;
+//        }
+
+        // endregion
+
         ModelAndView modelAndView = new ModelAndView();
+
         MovieVo[] movies = this.ticketService.selectAllMoviesByRating();
         RegionVo[] regions = this.ticketService.selectRegionAndTheaterCount();
         TheaterEntity[] theaters = this.theaterService.getTheatersByRegion(region);
@@ -239,6 +255,17 @@ public class TicketController {
 
         // 응답 데이터 생성
         JSONObject response = new JSONObject();
+
+        // forward
+//        if (redirect == null) {
+//            redirect = (String) session.getAttribute("redirect");
+//            if (redirect == null) {
+//                redirect = "ticket/index";
+//            }
+//        }
+//        response.put("redirect", redirect);
+        // end forward
+
         response.put(Result.NAME, result.nameToLower());
         response.put(Result.NAMES, results);
 

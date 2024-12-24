@@ -48,7 +48,7 @@ $loginForm.onsubmit = (e) => {
         const response = JSON.parse(xhr.responseText);
 
         if (response['result'] === 'success') {
-            sessionStorage.setItem('user', response['userNickname']);
+            sessionStorage.setItem('user', response['MemberNum']);
             const redirectUrl = response['redirect'] || '/';  // 서버에서 리디렉션 URL 받기
             location.href = redirectUrl;  // 리디렉션
 

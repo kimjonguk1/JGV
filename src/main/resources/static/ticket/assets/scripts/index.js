@@ -731,11 +731,14 @@ $rightButtons.forEach((x) => {
             if (sessionStorage.getItem('user') === null) {
                 const userCheck = confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")
                 if (userCheck) {
-                    window.location.replace('.././user/login');
+                    const redirectUrl = window.location.pathname;  // 현재 페이지 경로
+                    window.location.replace(`.././user/login?redirect=${encodeURIComponent(redirectUrl)}`);  // URL 파라미터로 redirect 전달
                 } else {
                     window.location.reload();
                 }
             }
+
+
             const $theaterMovie = $containers.querySelector(':scope > .posters > .movie-info > .title');
 
             $mains.forEach((main) => {
