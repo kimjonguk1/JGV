@@ -336,8 +336,43 @@ section.active {
   font-size: 20px;
   color: #aaa;
 }
-.reviews .review-item .review-content .menu-btn::after {
-  content: "⋮";
+.reviews .review-item .review-content .menu-dropdown {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  background-color: #333;
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  z-index: 1000;
+  white-space: nowrap;
+}
+.reviews .review-item .review-content .menu-dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.reviews .review-item .review-content .menu-dropdown ul li {
+  padding: 5px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.reviews .review-item .review-content .menu-dropdown ul li:hover {
+  background-color: #444;
+}
+.reviews .review-item .review-content .menu-dropdown ul li.edit-review::before {
+  content: "✏️";
+  margin-right: 8px;
+}
+.reviews .review-item .review-content .menu-dropdown ul li.delete-review::before {
+  content: "🗑️";
+  margin-right: 8px;
+}
+.reviews .review-item .review-content .hidden {
+  display: none;
 }
 .reviews .review-item .review-content .review-text {
   margin: 8px 0;
@@ -358,7 +393,7 @@ section.active {
 .reviews .review-item .review-content .review-footer .review-date {
   color: #666;
 }
-.reviews .review-item .review-content .review-footer .like-btn {
+.reviews .review-item .review-content .review-footer #like-btn {
   background: none;
   border: none;
   cursor: pointer;
