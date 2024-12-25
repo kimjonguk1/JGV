@@ -21,11 +21,7 @@ body {
   }
 
   > .title-container {
-    align-items: stretch;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-
+    @include flex(row, stretch, flex-start);
     margin-top: 2rem;
     padding: 1rem;
 
@@ -51,11 +47,8 @@ body {
 }
 
 #register-form {
+  @include flex(column, stretch, center);
   width: 100%;
-  align-items: stretch;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 
   > table, tbody, td, tr {
     border-bottom: 1px solid #dddddd;
@@ -71,18 +64,11 @@ body {
       }
 
       > td[rel="row"] {
-        align-items: center;
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-        justify-content: flex-start;
+        @include flex(row, center, flex-start, 1rem);
 
         > .gender-container {
-          align-items: center;
-          display: flex;
-          flex-direction: row;
-          gap: 2rem;
-          justify-content: center;
+          @include flex(row, center, center, 2rem);
+
         }
 
         > .duplicate-button {
@@ -102,11 +88,7 @@ body {
       }
 
       > td[rel="col"] {
-        align-items: flex-start;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        justify-content: center;
+        @include flex(column, flex-start, center, 1rem);
 
         > .email-container {
           border: 2px solid #dddddd;
@@ -122,45 +104,15 @@ body {
           }
 
           > .value-button {
+            @include flex(row, stretch, center);
             width: 7rem;
             color: #666666;
             cursor: pointer;
             padding: 0.2rem;
             position: relative;
 
-            align-items: stretch;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-
             > .-spring {
               flex-grow: 1;
-            }
-          }
-        }
-
-        > .label-container {
-          align-items: flex-start;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          gap: 1rem;
-
-          > .--obj-label {
-            > .addr-button {
-              height: 2.125rem;
-              width: 4.875rem;
-              background-color: #333333;
-              border: 0.0625rem solid #333333;
-              border-radius: 0.1875rem;
-              color: #ffffff;
-              cursor: pointer;
-              font-size: 0.875rem;
-              font-weight: 500;
-              vertical-align: center;
-              padding: 0 15px;
-              white-space: nowrap;
-
             }
           }
         }
@@ -170,18 +122,13 @@ body {
         }
 
         > div {
-          align-items: center;
-          display: flex;
-          flex-direction: row;
-          gap: 0.5rem;
-          justify-content: flex-start;
+          @include flex(row, center, flex-start, 0.5rem);
 
           > span {
             color: #666666;
           }
         }
       }
-
 
       > td:nth-child(odd) {
         background-color: #f8f8f8;
@@ -191,26 +138,17 @@ body {
   }
 
   > .--obj-check-label {
-
+    @include flex(row, center, center, 0.3rem);
     cursor: pointer;
     user-select: none;
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    gap: 0.3rem;
-    justify-content: center;
     margin-top: 1rem;
 
   }
 
 
   > .button-container {
+    @include flex(row, center, center, 0.8rem);
     height: 5rem;
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    gap: 0.8rem;
-    justify-content: center;
 
     > button {
       border: 0.0625rem solid #333333;
@@ -240,47 +178,5 @@ body {
 
 }
 
-#domainModal {
-  top: 1.775rem;
-  border: 2px solid #cacaca;
-  left: 0.475rem;
-  display: none;
-  cursor: pointer;
-  background-color: #ffffff;
-  position: absolute;
-  padding: 0.4rem;
 
-  > .modal-content {
-    width: 7rem;
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    justify-content: center;
 
-    > .domain-self:hover {
-      text-decoration: none;
-
-      &:active {
-        text-decoration: underline;
-      }
-    }
-
-    > .domain-button:hover {
-      text-decoration: underline;
-
-    }
-  }
-}
-
-#changeNickname,
-#change-password {
-  @include flex(row, center, center);
-  height: 2rem;
-  width: 5rem;
-  background-color: #ffffff;
-  border: 1px solid #cacaca;
-  border-radius: 0.2rem;
-  color: #000000;
-  cursor: pointer;
-}

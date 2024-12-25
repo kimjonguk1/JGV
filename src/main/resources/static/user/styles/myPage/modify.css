@@ -162,9 +162,14 @@ body > .title-container {
   align-items: stretch;
   display: flex;
   flex-direction: row;
+  gap: 0;
   justify-content: flex-start;
   margin-top: 2rem;
   padding: 1rem;
+}
+body > .title-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 body > .title-container > h1 {
   font-weight: 400;
@@ -182,11 +187,16 @@ body > .title-container > span > img {
 }
 
 #register-form {
-  width: 100%;
   align-items: stretch;
   display: flex;
   flex-direction: column;
+  gap: 0;
   justify-content: center;
+  width: 100%;
+}
+#register-form > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 #register-form > table, #register-form tbody, #register-form td, #register-form tr {
   border-bottom: 1px solid #dddddd;
@@ -203,12 +213,20 @@ body > .title-container > span > img {
   gap: 1rem;
   justify-content: flex-start;
 }
+#register-form > table > tr > td[rel=row] > .-spring, #register-form tbody > tr > td[rel=row] > .-spring, #register-form td > tr > td[rel=row] > .-spring, #register-form tr > tr > td[rel=row] > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
 #register-form > table > tr > td[rel=row] > .gender-container, #register-form tbody > tr > td[rel=row] > .gender-container, #register-form td > tr > td[rel=row] > .gender-container, #register-form tr > tr > td[rel=row] > .gender-container {
   align-items: center;
   display: flex;
   flex-direction: row;
   gap: 2rem;
   justify-content: center;
+}
+#register-form > table > tr > td[rel=row] > .gender-container > .-spring, #register-form tbody > tr > td[rel=row] > .gender-container > .-spring, #register-form td > tr > td[rel=row] > .gender-container > .-spring, #register-form tr > tr > td[rel=row] > .gender-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 #register-form > table > tr > td[rel=row] > .duplicate-button, #register-form tbody > tr > td[rel=row] > .duplicate-button, #register-form td > tr > td[rel=row] > .duplicate-button, #register-form tr > tr > td[rel=row] > .duplicate-button {
   height: 2.125rem;
@@ -231,6 +249,10 @@ body > .title-container > span > img {
   gap: 1rem;
   justify-content: center;
 }
+#register-form > table > tr > td[rel=col] > .-spring, #register-form tbody > tr > td[rel=col] > .-spring, #register-form td > tr > td[rel=col] > .-spring, #register-form tr > tr > td[rel=col] > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
 #register-form > table > tr > td[rel=col] > .email-container, #register-form tbody > tr > td[rel=col] > .email-container, #register-form td > tr > td[rel=col] > .email-container, #register-form tr > tr > td[rel=col] > .email-container {
   border: 2px solid #dddddd;
   height: 2rem;
@@ -245,39 +267,23 @@ body > .title-container > span > img {
   color: #666666;
 }
 #register-form > table > tr > td[rel=col] > .email-container > .value-button, #register-form tbody > tr > td[rel=col] > .email-container > .value-button, #register-form td > tr > td[rel=col] > .email-container > .value-button, #register-form tr > tr > td[rel=col] > .email-container > .value-button {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: center;
   width: 7rem;
   color: #666666;
   cursor: pointer;
   padding: 0.2rem;
   position: relative;
-  align-items: stretch;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
 }
 #register-form > table > tr > td[rel=col] > .email-container > .value-button > .-spring, #register-form tbody > tr > td[rel=col] > .email-container > .value-button > .-spring, #register-form td > tr > td[rel=col] > .email-container > .value-button > .-spring, #register-form tr > tr > td[rel=col] > .email-container > .value-button > .-spring {
   flex-grow: 1;
+  flex-shrink: 1;
 }
-#register-form > table > tr > td[rel=col] > .label-container, #register-form tbody > tr > td[rel=col] > .label-container, #register-form td > tr > td[rel=col] > .label-container, #register-form tr > tr > td[rel=col] > .label-container {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
-}
-#register-form > table > tr > td[rel=col] > .label-container > .--obj-label > .addr-button, #register-form tbody > tr > td[rel=col] > .label-container > .--obj-label > .addr-button, #register-form td > tr > td[rel=col] > .label-container > .--obj-label > .addr-button, #register-form tr > tr > td[rel=col] > .label-container > .--obj-label > .addr-button {
-  height: 2.125rem;
-  width: 4.875rem;
-  background-color: #333333;
-  border: 0.0625rem solid #333333;
-  border-radius: 0.1875rem;
-  color: #ffffff;
-  cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 500;
-  vertical-align: center;
-  padding: 0 15px;
-  white-space: nowrap;
+#register-form > table > tr > td[rel=col] > .email-container > .value-button > .-spring, #register-form tbody > tr > td[rel=col] > .email-container > .value-button > .-spring, #register-form td > tr > td[rel=col] > .email-container > .value-button > .-spring, #register-form tr > tr > td[rel=col] > .email-container > .value-button > .-spring {
+  flex-grow: 1;
 }
 #register-form > table > tr > td[rel=col] > span, #register-form tbody > tr > td[rel=col] > span, #register-form td > tr > td[rel=col] > span, #register-form tr > tr > td[rel=col] > span {
   color: #666666;
@@ -289,6 +295,10 @@ body > .title-container > span > img {
   gap: 0.5rem;
   justify-content: flex-start;
 }
+#register-form > table > tr > td[rel=col] > div > .-spring, #register-form tbody > tr > td[rel=col] > div > .-spring, #register-form td > tr > td[rel=col] > div > .-spring, #register-form tr > tr > td[rel=col] > div > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
 #register-form > table > tr > td[rel=col] > div > span, #register-form tbody > tr > td[rel=col] > div > span, #register-form td > tr > td[rel=col] > div > span, #register-form tr > tr > td[rel=col] > div > span {
   color: #666666;
 }
@@ -297,22 +307,30 @@ body > .title-container > span > img {
   font-size: 1rem;
 }
 #register-form > .--obj-check-label {
-  cursor: pointer;
-  user-select: none;
   align-items: center;
   display: flex;
   flex-direction: row;
   gap: 0.3rem;
   justify-content: center;
+  cursor: pointer;
+  user-select: none;
   margin-top: 1rem;
 }
+#register-form > .--obj-check-label > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
 #register-form > .button-container {
-  height: 5rem;
   align-items: center;
   display: flex;
   flex-direction: row;
   gap: 0.8rem;
   justify-content: center;
+  height: 5rem;
+}
+#register-form > .button-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 #register-form > .button-container > button {
   border: 0.0625rem solid #333333;
@@ -334,55 +352,6 @@ body > .title-container > span > img {
 #register-form > .button-container > .submit {
   background-color: #333333;
   color: #ffffff;
-}
-
-#domainModal {
-  top: 1.775rem;
-  border: 2px solid #cacaca;
-  left: 0.475rem;
-  display: none;
-  cursor: pointer;
-  background-color: #ffffff;
-  position: absolute;
-  padding: 0.4rem;
-}
-#domainModal > .modal-content {
-  width: 7rem;
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  justify-content: center;
-}
-#domainModal > .modal-content > .domain-self:hover {
-  text-decoration: none;
-}
-#domainModal > .modal-content > .domain-self:hover:active {
-  text-decoration: underline;
-}
-#domainModal > .modal-content > .domain-button:hover {
-  text-decoration: underline;
-}
-
-#changeNickname,
-#change-password {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  gap: 0;
-  justify-content: center;
-  height: 2rem;
-  width: 5rem;
-  background-color: #ffffff;
-  border: 1px solid #cacaca;
-  border-radius: 0.2rem;
-  color: #000000;
-  cursor: pointer;
-}
-#changeNickname > .-spring,
-#change-password > .-spring {
-  flex-grow: 1;
-  flex-shrink: 1;
 }
 
 /*# sourceMappingURL=modify.css.map */

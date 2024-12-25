@@ -52,6 +52,7 @@ public class UserController {
         Result result = this.userService.register(request, user);
         JSONObject response = new JSONObject();
         response.put(Result.NAME, result.nameToLower());
+
         return response.toString();
 
     }
@@ -81,6 +82,7 @@ public class UserController {
         }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/login");
+
         return modelAndView;
     }
 
@@ -97,13 +99,16 @@ public class UserController {
 
 
             if (redirect == null) {
+                // 사용자 요청에 redirect 파라미터가 없다면
                 redirect = (String) session.getAttribute("redirect");
+                // 세션에서 redirect 값을 가져오고
                 if (redirect == null) {
-                    redirect = "/";  // 기본값 설정
+                    // 세션에도 redirect 값이 없다면
+                    redirect = "/";  // 여기로 보내라
                 }
             }
             response.put("redirect", redirect);
-            System.out.println(redirect);
+            // 최종적으로 결정된 redirect 값을 JSON 방식으로 보냄
         }
 
         response.put(Result.NAME, result.nameToLower());

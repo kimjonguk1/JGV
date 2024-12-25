@@ -1,15 +1,12 @@
 @charset "UTF-8";
+@import "../../fragments/assets/styles/global";
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
 body {
   font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 
   > .title-container {
-    align-items: stretch;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-
+    @include flex(row, stretch, flex-start);
     margin-top: 2rem;
     padding: 1rem;
 
@@ -35,17 +32,13 @@ body {
 }
 
 #register-form {
+  @include flex(column, stretch, center);
   width: 100%;
-  align-items: stretch;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 
   > table, tbody, td, tr {
     border-bottom: 1px solid #dddddd;
     border-collapse: collapse;
     padding: 2rem;
-
 
     > tr {
       > td {
@@ -55,18 +48,10 @@ body {
       }
 
       > td[rel="row"] {
-        align-items: center;
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-        justify-content: flex-start;
+        @include flex(row, center, flex-start, 1rem);
 
         > .gender-container {
-          align-items: center;
-          display: flex;
-          flex-direction: row;
-          gap: 2rem;
-          justify-content: center;
+          @include flex(row, center, center, 2rem);
         }
 
         > .duplicate-button {
@@ -86,11 +71,7 @@ body {
       }
 
       > td[rel="col"] {
-        align-items: flex-start;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        justify-content: center;
+        @include flex(column, flex-start, center, 1rem);
 
         > .email-container {
           border: 2px solid #dddddd;
@@ -106,16 +87,12 @@ body {
           }
 
           > .value-button {
+            @include flex(row, stretch, center);
             width: 7rem;
             color: #666666;
             cursor: pointer;
             padding: 0.2rem;
             position: relative;
-
-            align-items: stretch;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
 
             > .-spring {
               flex-grow: 1;
@@ -124,11 +101,7 @@ body {
         }
 
         > .label-container {
-          align-items: flex-start;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          gap: 1rem;
+          @include flex(column, flex-start, center, 1rem);
 
           > .--obj-label {
             > .addr-button {
@@ -154,11 +127,7 @@ body {
         }
 
         > div {
-          align-items: center;
-          display: flex;
-          flex-direction: row;
-          gap: 0.5rem;
-          justify-content: flex-start;
+          @include flex(row, center, flex-start, 0.5rem);
 
           > span {
             color: #666666;
@@ -175,26 +144,17 @@ body {
   }
 
   > .--obj-check-label {
-
+    @include flex(row, center, center, 0.3rem);
     cursor: pointer;
     user-select: none;
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    gap: 0.3rem;
-    justify-content: center;
     margin-top: 1rem;
 
   }
 
 
   > .button-container {
+    @include flex(row, center, center, 0.8rem);
     height: 5rem;
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    gap: 0.8rem;
-    justify-content: center;
 
     > button {
       border: 0.0625rem solid #333333;
@@ -221,6 +181,7 @@ body {
 }
 
 #domainModal {
+  width: 100%;
   top: 1.775rem;
   border: 2px solid #cacaca;
   left: 0.475rem;
@@ -231,12 +192,14 @@ body {
   padding: 0.4rem;
 
   > .modal-content {
-    width: 7rem;
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    justify-content: center;
+    @include flex(column, flex-start, center, 0.4rem);
+    width: 100%;
+
+    > button {
+      @include flex(column, flex-start, center, 0.5rem);
+      width: 100%;
+      cursor: pointer;
+    }
 
     > .domain-self:hover {
       text-decoration: none;
