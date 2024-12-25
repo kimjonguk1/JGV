@@ -88,7 +88,6 @@ public class ReviewController {
         if (loggedInUser == null) {
             return ReviewResult.NOT_LOGGED_IN;
         }
-
         ReviewEntity existingReview = this.reviewService.getReviewsById(reviewId);
         System.out.println(existingReview);
         System.out.println(existingReview.getUsNum());
