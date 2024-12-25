@@ -134,12 +134,7 @@ $submitReview.addEventListener('click', () => {
         alert('평점 내용을 입력해 주세요');
         return
     }
-    if ($submitReview.dataset.mode === 'edit') {
-        const reviewId = $submitReview.dataset.reviewId; // 수정 시 reviewId 사용
-        handleEditReview(reviewId, $reviewText);
-    } else {
-        handleSubmitReview(movieId, $reviewText);
-    }
+    handleSubmitReview(movieId, $reviewText);
 })
 // 평점 작성
 function handleSubmitReview(movieId, reviewText) {
@@ -179,34 +174,6 @@ function handleSubmitReview(movieId, reviewText) {
     xhr.send(JSON.stringify(reviewData));
 }
 
-// 평점 수정 함수
-function handleEditReview(reviewId, updatedText) {
-    const xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState !== XMLHttpRequest.DONE) {
-            return;
-        }
-        if (xhr.status < 200 || xhr.status >= 300) {
-            alert('리뷰 수정에 실패하였습니다. 다시 시도해 주세요');
-            return;
-        }
-
-        const response = JSON.parse(xhr.responseText);
-        if (response.result === 'SUCCESS') {
-            alert('평점이 성공적으로 수정되었습니다.');
-            document.getElementById('reviewText').value = '';
-            $modal.style.display = 'none';
-            window.location.reload();
-        } else if (response.result === 'NOT_LOGGED_IN') {
-            alert('수정 권한이 없습니다.');
-        } else {
-            alert('평점 수정에 실패하였습니다. 다시 시도해 주세요');
-        }
-    };
-    xhr.open('PUT', `/reviews/${reviewId}`);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify({ reContent: updatedText }));
-}
 
 // 좋아요 버튼 클릭시 이벤트 처리 (동적이므로 이벤트 위임 처리)
 document.addEventListener('click', (e) => {
@@ -247,20 +214,21 @@ function handleLike(reviewId) {
         }
         if(xhr.status < 200 || xhr.status >= 300) {
             alert('좋아요 반영에 실패했습니다. 다시 시도해 주세요')
+            console.log('xhr 스탯')
             return;
         }
-        const response = xhr.responseText;
+        const response = JSON.parse(xhr.responseText);
         if(response === "NOT_LOGGED_IN") {
             alert("로그인 후 좋아요를 눌러주세요");
-        } else if(response === "SUCCESS") {
+        } else if(response.trim() === "SUCCESS") {
             const reviewItem = document.querySelector(`.review-item[data-review-id="${reviewId}"]`);
             const likeCountSpan = reviewItem.querySelector('.like-count');
             const currentCount = parseInt(likeCountSpan.innerText, 10);
             likeCountSpan.innerText = currentCount + 1; // 카운트 증가
-        } else if(response === "ALREADY_LIKED") {
+        } else if(response.trim() === "ALREADY_LIKED") {
             alert("이미 좋아요를 누르셨습니다")
         }
-        else {
+        else if(response === "FAILURE"){
             alert("좋아요 반영에 실패했습니다. 다시 시도해 주세요")
         }
 

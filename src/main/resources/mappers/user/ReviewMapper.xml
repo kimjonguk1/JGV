@@ -49,7 +49,14 @@
     </select>
 
     <select id="getReviewsById" resultType="dev.jwkim.jgv.entities.user.ReviewEntity">
-        SELECT *
+        SELECT re_num AS 'reNum',
+               re_content AS 'reContent',
+               re_created_at AS 'reCreatedAt',
+               re_updated_at AS 'reUpdatedAt',
+               re_deleted_at AS 'reDeletedAt',
+               mo_num AS 'moNum',
+               us_num AS 'usNum',
+               re_liked AS 'reLiked'
         FROM jgv.review
         WHERE re_num = #{reviewId}
     </select>
