@@ -1,8 +1,10 @@
-/**
- *
- * @param {string} dataId
- * @returns {HTMLLabelElement}
- */
-HTMLFormElement.prototype.findLabel = function (dataId) {
-    return this.querySelector(`label.--obj-label[data-id="${dataId}"]`);
+const $logout = document.getElementById('logout');
+
+if ($logout) {
+    $logout.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        sessionStorage.clear();
+        location.href  = $logout.href
+    });
 }

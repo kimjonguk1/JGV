@@ -1,91 +1,136 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 #main {
-  height: 35rem;
   align-items: center;
   display: flex;
   flex-direction: column;
+  gap: 0;
   justify-content: center;
+  height: 35rem;
+}
+#main > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 #main > .title-container {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
+  gap: 0;
   justify-content: center;
   text-align: center;
   width: 100%;
 }
+#main > .title-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
 #main > .title-container > h2 {
   align-items: center;
-  color: #ffffff;
   display: flex;
   flex-direction: column;
+  gap: 0;
   justify-content: center;
+  color: #ffffff;
   width: 8rem;
   height: 3.5rem;
   background-color: #fb4357;
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
 }
+#main > .title-container > h2 > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
 #main > #login-form {
-  height: 19.5rem;
-  width: 100%;
   align-items: center;
   display: flex;
   flex-direction: row;
+  gap: 0;
   justify-content: flex-start;
+  height: 19.5rem;
+  width: 100%;
+}
+#main > #login-form > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 #main > #login-form > .-spring {
   flex-grow: 1;
 }
 #main > #login-form > .form-container {
-  border-top: 2px solid #cacaca;
-  border-bottom: 2px solid #cacaca;
-  height: 100%;
-  width: 40rem;
   align-items: center;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   justify-content: center;
+  border-top: 2px solid #cacaca;
+  border-bottom: 2px solid #cacaca;
+  height: 100%;
+  width: 40rem;
+}
+#main > #login-form > .form-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 #main > #login-form > .form-container > .button-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
   border: 2px solid #fb4357;
   background-color: #ffffff;
   padding: 0.1rem;
   width: 22rem;
+}
+#main > #login-form > .form-container > .button-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > #login-form > .form-container > .button-container > .button {
   align-items: center;
   display: flex;
   flex-direction: column;
+  gap: 0;
   justify-content: center;
-}
-#main > #login-form > .form-container > .button-container > .button {
   height: 2.7rem;
   width: 100%;
   background-color: #fb4357;
   color: #ffffff;
   font-size: 1rem;
   font-weight: 500;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   cursor: pointer;
 }
+#main > #login-form > .form-container > .button-container > .button > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
 #main > #login-form > .form-container > .--obj-label {
-  width: 22rem;
   align-items: stretch;
   display: flex;
   flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  width: 22rem;
+}
+#main > #login-form > .form-container > .--obj-label > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 #main > #login-form > .form-container > .--obj-label > .image-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: center;
   height: 0.2rem;
   position: absolute;
   border-right: 1px solid #cacaca;
   padding: 0.2rem;
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+}
+#main > #login-form > .form-container > .--obj-label > .image-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 #main > #login-form > .form-container > .--obj-label > .image-wrapper > img {
   width: 1.6rem;
@@ -102,12 +147,20 @@
   gap: 3rem;
   justify-content: center;
 }
+#main > #login-form > .form-container > .user-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
 #main > #login-form > .form-container > .user-container > .user-option {
   align-items: center;
   display: flex;
   flex-direction: row;
   gap: 0.4rem;
   justify-content: center;
+}
+#main > #login-form > .form-container > .user-container > .user-option > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 #main > #login-form > .form-container > .user-container > .user-option > a {
   color: #666666;
@@ -129,15 +182,19 @@
 }
 
 .register-link {
-  border: 1px solid #666666;
   align-items: center;
   display: flex;
   flex-direction: row;
   gap: 1rem;
   justify-content: center;
+  border: 1px solid #666666;
   margin-top: 3rem;
   height: 5rem;
   width: 100%;
+}
+.register-link > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 .register-link > span {
   font-size: 1.2rem;
@@ -157,11 +214,16 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  gap: 0;
   justify-content: center;
   border: 3px solid #fb4357;
   width: 11rem;
   height: 2.3rem;
   white-space: nowrap;
+}
+.register-link > .register-button > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 .register-link > .register-button > a {
   width: 100%;

@@ -1,26 +1,19 @@
 @charset "UTF-8";
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import "../../fragments/assets/styles/global";
 
 #main {
+  @include flex(column, center, center);
   height: 35rem;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 
   > .title-container {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    @include flex(column, flex-start, center);
     text-align: center;
     width: 100%;
+
     > h2 {
-      align-items: center;
+      @include flex(column, center, center);
       color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
       width: 8rem;
       height: 3.5rem;
       background-color: #fb4357;
@@ -29,67 +22,49 @@
     }
   }
   > #login-form {
+    @include flex(row, center, flex-start);
     height: 19.5rem;
     width: 100%;
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+
     > .-spring {
       flex-grow: 1;
     }
+
     > .form-container {
+      @include flex(column, center, center, 1.5rem);
       border-top: 2px solid #cacaca;
       border-bottom: 2px solid #cacaca;
       height: 100%;
       width: 40rem;
-      align-items: center;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      justify-content: center;
+
       > .button-container {
+        @include flex(column, center, center);
         border: 2px solid #fb4357;
         background-color: #ffffff;
         padding: 0.1rem;
         width: 22rem;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
 
         > .button {
+          @include flex(column, center, center);
           height: 2.7rem;
           width: 100%;
           background-color: #fb4357;
           color: #ffffff;
           font-size: 1rem;
           font-weight: 500;
-          align-items: center;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
           cursor: pointer;
         }
       }
       > .--obj-label {
+        @include flex(column, stretch, center);
         width: 22rem;
-        align-items: stretch;
-        display: flex;
-        flex-direction: column;
 
         > .image-wrapper {
-
+          @include flex(row, center, center);
           height: 0.2rem;
           position: absolute;
           border-right: 1px solid #cacaca;
           padding: 0.2rem;
-
-          align-items: center;
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-
 
           > img {
             width: 1.6rem;
@@ -103,17 +78,11 @@
         }
       }
       > .user-container {
-        align-items: center;
-        display: flex;
-        flex-direction: row;
-        gap: 3rem;
-        justify-content: center;
+        @include flex(row, center, center, 3rem);
+
         > .user-option {
-          align-items: center;
-          display: flex;
-          flex-direction: row;
-          gap: 0.4rem;
-          justify-content: center;
+          @include flex(row, center, center, 0.4rem);
+
           > a {
             color: #666666;
 
@@ -139,12 +108,8 @@
   }
 }
 .register-link {
+  @include flex(row, center, center, 1rem);
   border: 1px solid #666666;
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  justify-content: center;
   margin-top: 3rem;
   height: 5rem;
   width: 100%;
@@ -168,11 +133,7 @@
 
 
   > .register-button {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
+    @include flex(column, center, center);
     border: 3px solid #fb4357;
     width: 11rem;
     height: 2.3rem;

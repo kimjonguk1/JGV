@@ -6,7 +6,7 @@ body {
 
 }
 #modify-form {
-  @include flex(column, center, center 2rem);
+  @include flex(column, center, center, 2rem);
   width: 100%;
 
  > .title-container {

@@ -184,6 +184,7 @@ public class TicketController {
         modelAndView.addObject("maps", maps);
         modelAndView.addObject("session", session);
         modelAndView.addObject("user", user);
+
         modelAndView.setViewName("ticket/index");
         return modelAndView;
     }

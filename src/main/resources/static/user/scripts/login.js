@@ -51,7 +51,6 @@ $loginForm.onsubmit = (e) => {
             sessionStorage.setItem('user', response['MemberNum']);
             const redirectUrl = response['redirect'] || '/';  // 서버에서 리디렉션 URL 받기
             location.href = redirectUrl;  // 리디렉션
-
         } else if (response['result'] === 'failure_suspended') {
             alert('해당 계정은 이용이 정지된 상태입니다. 관리자에게 문의해 주세요.');
         } else if (response['result'] === 'failure_not_verified') {
