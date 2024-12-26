@@ -6,6 +6,8 @@ body {
   height: 100vh;
   @include flex(column, center, center);
   background-color: #222222;
+
+
 }
 
 .main {
@@ -29,12 +31,18 @@ body {
       }
     }
 
-    > span {
-      color: #FB4357;
-      font-size: 2rem;
-      font-weight: 700;
-      white-space: nowrap;
 
+
+    > .system {
+      @include flex(column, center, center, 1rem);
+
+      > span {
+        color: #2275a4;
+        font-size: 2rem;
+        font-weight: 700;
+        white-space: nowrap;
+
+      }
     }
   }
 }

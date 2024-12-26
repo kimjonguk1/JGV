@@ -1130,6 +1130,7 @@ body > .-spring {
   color: #ffffff;
 }
 #myPage-main > .main > .user-tab > ul > .title {
+  width: 100%;
   font-size: 1.2rem;
   font-weight: 500;
 }
@@ -1142,6 +1143,8 @@ body > .-spring {
   flex-direction: row;
   gap: 0;
   justify-content: stretch;
+  width: 100%;
+  height: 1rem;
   font-size: 0.8rem;
 }
 #myPage-main > .main > .user-tab > ul > .item > .-spring {
