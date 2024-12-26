@@ -21,29 +21,30 @@
     </select>
     <select id="selectAllTheaters"
             resultType="dev.jwkim.jgv.vos.theater.TheaterVo">
-        SELECT `theater`.`th_num`             AS `thNum`,
-               `th_name`                      AS `thName`,
-               `th_addr`                      AS `thAddr`,
-               `th_img`                       AS `thImg`,
-               `th_parking`                   AS `thParking`,
-               `reg_num`                      AS `regNum`,
-               `cit_name`                     AS `citName`,
-               `sc_start_date`                AS `scStartDate`,
-               (SELECT COUNT(0)
-                FROM `jgv`.`cinema`
-                         LEFT JOIN jgv.theater t on t.th_num = cinema.th_num
-                WHERE `th_name` = #{theater}) AS `cinemaCount`,
-               (SELECT COUNT(0)
-                FROM `jgv`.`seat`
-                         LEFT JOIN `jgv`.`cinema` ON `seat`.`ci_num` = cinema.`ci_num`
-                         LEFT JOIN `jgv`.`theater` ON theater.`th_num` = cinema.`th_num`
-                WHERE `th_name` = #{theater}) AS `seatCount`
+        SELECT DISTINCT `theater`.`th_num`             AS `thNum`,
+                        `th_name`                      AS `thName`,
+                        `th_addr`                      AS `thAddr`,
+                        `th_img`                       AS `thImg`,
+                        `th_parking`                   AS `thParking`,
+                        `reg_num`                      AS `regNum`,
+                        `cit_name`                     AS `citName`,
+                        `sc_start_date`                AS `scStartDate`,
+                        (SELECT COUNT(0)
+                         FROM `jgv`.`cinema`
+                                  LEFT JOIN jgv.theater t on t.th_num = cinema.th_num
+                         WHERE `th_name` = #{theater}) AS `cinemaCount`,
+                        (SELECT COUNT(0)
+                         FROM `jgv`.`seat`
+                                  LEFT JOIN `jgv`.`cinema` ON `seat`.`ci_num` = cinema.`ci_num`
+                                  LEFT JOIN `jgv`.`theater` ON theater.`th_num` = cinema.`th_num`
+                         WHERE `th_name` = #{theater}) AS `seatCount`
         FROM `jgv`.`theater`
                  LEFT JOIN `jgv`.`cinema` `c` on `theater`.`th_num` = `c`.`th_num`
                  LEFT JOIN `jgv`.`cinema_type` ON `c`.`cit_num` = `cinema_type`.`cit_num`
                  LEFT JOIN `jgv`.`screen` ON `c`.`ci_num` = `screen`.`ci_num`
         WHERE `th_name` = #{theater}
           AND `sc_start_date` > NOW()
+          AND `is_deleted` = false
     </select>
     <select id="selectAllTheatersByRegion"
             resultType="dev.jwkim.jgv.vos.theater.TheaterVo">
@@ -72,6 +73,7 @@
         WHERE `reg_name` = #{region}
           AND `mo_title` = #{movie}
           AND `sc_start_date` > NOW()
+          AND `is_deleted` = false
     </select>
     <select id="selectAllScreens"
             resultType="dev.jwkim.jgv.vos.theater.ScreenVo">
@@ -106,6 +108,8 @@
         WHERE `sc_start_date` LIKE CONCAT('%', #{date}, '%')
           AND `sc_start_date` > NOW()
           AND `th_name` = #{theater}
+          AND `is_deleted` = false
+        ORDER BY `ci_name`, `sc_start_date`
     </select>
     <select id="selectAllScreensByRegion"
             resultType="dev.jwkim.jgv.vos.theater.ScreenVo">
@@ -143,5 +147,6 @@
           AND `sc_start_date` > NOW()
           AND `reg_name` = #{region}
           AND `mo_title` = #{movie}
+          AND `is_deleted` = false
     </select>
 </mapper>

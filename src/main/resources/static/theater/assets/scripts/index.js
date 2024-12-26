@@ -8,16 +8,37 @@ const $informations = Array.from($main.querySelectorAll(':scope > .information')
 const $selects = Array.from($buttonContainer.querySelectorAll(':scope > .button > .select'));
 const $cinemaInformation = $main.querySelector(':scope > .information[data-id="cinema"]');
 const $dayContainers = $cinemaInformation.querySelector(':scope > .cinema-info > .cinema-header > .day-containers');
-const $dayContainer = $dayContainers.querySelector(':scope > .day-container')
-const $days = Array.from($dayContainer.querySelectorAll(':scope > .item'))
 const $screens = $cinemaInformation.querySelector(':scope > .cinema-info > .items');
 
+{
+    const $cinemaInfoRating = document.querySelector('.cinema-info-detail > .cinema-detail.rating');
+    const $cinemaInfoPrice = document.querySelector('.cinema-info-detail > .cinema-detail.price');
+    const $modalPrice = document.querySelector('.modal[rel="price"]');
+    const $modalRating = document.querySelector('.modal[rel="rating"]');
+    const $buttonPrice = $modalPrice.querySelector(':scope > .head > .h1 > .button');
+    const $buttonRating = $modalRating.querySelector(':scope > .head > .h1 > .button');
+    $cinemaInfoPrice.onclick = () => {
+        $modalPrice.classList.remove('hidden');
+    }
+    $buttonPrice.onclick = () => {
+        $modalPrice.classList.add('hidden');
+    }
+    $cinemaInfoRating.onclick = () => {
+        $modalRating.classList.remove('hidden');
+    }
+    $buttonRating.onclick = () => {
+        $modalRating.classList.add('hidden');
+    }
+}
+
+// region 첫 화면 대구로 지정
 {
     window.onload = () => {
         const $regions = document.querySelector('[rel="대구"]');
         $regions.click();
     }
 }
+// endregion
 
 {
     $theater.forEach(($item) => {
@@ -123,7 +144,7 @@ const $screens = $cinemaInformation.querySelector(':scope > .cinema-info > .item
                                                                 scStartDate: year + '-' + month.innerText.substring(0, 2) + '-' + day.innerText,
                                                                 time: time.innerText.split('\n')[0]
                                                             };
-                                                            localStorage.setItem('ticketParams', JSON.stringify(params));
+                                                            sessionStorage.setItem('ticketParams', JSON.stringify(params));
                                                             xhr.onreadystatechange = () => {
                                                                 if (xhr.readyState !== XMLHttpRequest.DONE) {
                                                                     return;
@@ -146,9 +167,35 @@ const $screens = $cinemaInformation.querySelector(':scope > .cinema-info > .item
                                                 const $buttons = Array.from($buttonContainer.querySelectorAll(':scope > .button'));
                                                 const $informations = Array.from($main.querySelectorAll(':scope > .information'));
                                                 const $finding = document.querySelector('.find');
-                                                $finding.setAttribute('href', `https://map.naver.com/p?title=${x.innerText}&lng=128.5897380095846&lat=35.885288432104254&zoom=15&type=0&c=15.00,0,0,0,dh`)
-                                                // finding 교체하기
-
+                                                switch (x.innerText) {
+                                                    case ("CGV대구"):
+                                                        $finding.setAttribute('href', "https://map.naver.com/p?title=CGV%EB%8C%80%EA%B5%AC&lng=128.5897380095846&lat=35.885288432104254&zoom=15&type=0&c=15.00,0,0,0,dh");
+                                                        break;
+                                                    case ("CGV대구수성"):
+                                                        $finding.setAttribute('href', "https://map.naver.com/p?title=CGV%EB%8C%80%EA%B5%AC%EC%88%98%EC%84%B1&lng=128.6404587&lat=35.8211314&zoom=15&type=0&c=15.00,0,0,0,dh");
+                                                        break;
+                                                    case ("CGV대구스타디움"):
+                                                        $finding.setAttribute('href', "https://map.naver.com/p?title=CGV%EB%8C%80%EA%B5%AC%EC%8A%A4%ED%83%80%EB%94%94%EC%9B%80&lng=128.69173494246&lat=35.829630597172&zoom=15&type=0&c=15.00,0,0,0,dh");
+                                                        break;
+                                                    case ("CGV대구아카데미"):
+                                                        $finding.setAttribute('href', "https://map.naver.com/p?title=CGV%EB%8C%80%EA%B5%AC%EC%95%84%EC%B9%B4%EB%8D%B0%EB%AF%B8&lng=128.5943053&lat=35.8699880&zoom=15&type=0&c=15.00,0,0,0,dh");
+                                                        break;
+                                                    case ("CGV대구연경"):
+                                                        $finding.setAttribute('href', "https://map.naver.com/p?title=CGV%EB%8C%80%EA%B5%AC%EC%97%B0%EA%B2%BD&lng=128.62276493855003&lat=35.941400738412334&zoom=15&type=0&c=15.00,0,0,0,dh");
+                                                        break;
+                                                    case ("CGV대구월성"):
+                                                        $finding.setAttribute('href', "https://map.naver.com/p?title=CGV%EB%8C%80%EA%B5%AC%EC%9B%94%EC%84%B1&lng=128.52622410000004&lat=35.8244452&zoom=15&type=0&c=15.00,0,0,0,dh");
+                                                        break;
+                                                    case ("CGV대구죽전"):
+                                                        $finding.setAttribute('href', "https://map.naver.com/p?title=CGV%EB%8C%80%EA%B5%AC%EC%A3%BD%EC%A0%84&lng=128.53663879067838&lat=35.85053962373264&zoom=15&type=0&c=15.00,0,0,0,dh");
+                                                        break;
+                                                    case ("CGV대구한일"):
+                                                        $finding.setAttribute('href', "https://map.naver.com/p?title=CGV%EB%8C%80%EA%B5%AC%ED%95%9C%EC%9D%BC&lng=128.5953569&lat=35.8704771&zoom=15&type=0&c=15.00,0,0,0,dh");
+                                                        break;
+                                                    case ("CGV대구현대"):
+                                                        $finding.setAttribute('href', "https://map.naver.com/p?title=CGV%EB%8C%80%EA%B5%AC%ED%98%84%EB%8C%80&lng=128.5905864&lat=35.8667736&zoom=15&type=0&c=15.00,0,0,0,dh");
+                                                        break;
+                                                }
                                                 $buttons.forEach(($item) => {
                                                     $theaterInfo.onclick = () => {
                                                         $selects.forEach((x) => {
@@ -246,14 +293,3 @@ $buttons.forEach(($item) => {
         });
     }
 })
-
-$days.forEach(($item) => {
-    $item.onclick = () => {
-        $days.forEach((y) => {
-            y.classList.remove('select');
-            if ($item === y) {
-                y.classList.add('select');
-            }
-        })
-    }
-});

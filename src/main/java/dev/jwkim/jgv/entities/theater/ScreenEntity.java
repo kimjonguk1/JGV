@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class ScreenEntity {
     private int scNum;
     private LocalDateTime scStartDate;
+    private boolean isDeleted;
     private int moNum;
     private int ciNum;
 }

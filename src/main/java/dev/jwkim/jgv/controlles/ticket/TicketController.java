@@ -42,19 +42,7 @@ public class TicketController {
                                  @RequestParam(value = "thName", required = false) String thName,
                                  @RequestParam(value = "scStartDate", required = false) String scStartDate,
                                  HttpSession session, UserEntity user) {
-
-       // region forward
-//        if (session.getAttribute("user") == null) {
-//            String requestedUrl = request.getRequestURI();
-//            request.setAttribute("redirect", requestedUrl);
-//            request.getRequestDispatcher("/user/login").forward(request, response);
-//            return null;
-//        }
-
-        // endregion
-
         ModelAndView modelAndView = new ModelAndView();
-
         MovieVo[] movies = this.ticketService.selectAllMoviesByRating();
         RegionVo[] regions = this.ticketService.selectRegionAndTheaterCount();
         TheaterEntity[] theaters = this.theaterService.getTheatersByRegion(region);
@@ -203,6 +191,13 @@ public class TicketController {
         ModelAndView modelAndView = new ModelAndView();
         this.ticketService.Crawl(screen);
         modelAndView.setViewName("ticket/crawling");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/showTimes", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getShowTimes() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("ticket/showTimes");
         return modelAndView;
     }
 

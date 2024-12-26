@@ -41,6 +41,33 @@
   height: 28rem;
   background-image: url("https://img.cgv.co.kr/r2014/images/common/bg/bg_showtimes_favorite.gif");
 }
+#main > .img > .button-container {
+  left: 35%;
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  background-color: #fb4357;
+  font-size: 1rem;
+  font-weight: 600;
+  position: absolute;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+}
+#main > .img > .button-container > .button {
+  cursor: pointer;
+}
+#main > .img > .button-container > .button:nth-child(1) {
+  padding-right: 1rem;
+  border-right: 0.1rem solid #ffffff;
+}
+#main > .img > .button-container > .button > .select.hidden {
+  display: none;
+}
+#main > .img > .button-container > .button > .text {
+  color: #ffffff;
+}
 #main > .img > .head {
   margin: 4rem 0 1rem 4.5rem;
   align-items: center;
@@ -253,31 +280,6 @@
 #main > .advertisement-info > .advertisement-move > .advertisement {
   margin-top: 1rem;
   width: 61.4rem;
-}
-#main > .button-container {
-  margin: 2rem 0;
-  padding: 0.5rem 1rem;
-  background-color: #fb4357;
-  font-size: 1rem;
-  font-weight: 600;
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 1rem;
-}
-#main > .button-container > .button {
-  cursor: pointer;
-}
-#main > .button-container > .button:nth-child(1) {
-  padding-right: 1rem;
-  border-right: 0.1rem solid #ffffff;
-}
-#main > .button-container > .button > .select.hidden {
-  display: none;
-}
-#main > .button-container > .button > .text {
-  color: #ffffff;
 }
 #main > .information {
   width: 980px;
@@ -685,4 +687,4 @@
   color: #666;
 }
 
-/*# sourceMappingURL=index.css.map */
+/*# sourceMappingURL=showTimes.css.map */

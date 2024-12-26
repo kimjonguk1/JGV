@@ -2,20 +2,13 @@ package dev.jwkim.jgv.services.theater;
 
 import dev.jwkim.jgv.entities.theater.RegionEntity;
 import dev.jwkim.jgv.entities.theater.TheaterEntity;
-import dev.jwkim.jgv.exceptions.TransactionalException;
 import dev.jwkim.jgv.mappers.theater.TheaterMapper;
 import dev.jwkim.jgv.vos.theater.ScreenDataVo;
 import dev.jwkim.jgv.vos.theater.ScreenVo;
 import dev.jwkim.jgv.vos.theater.TheaterVo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -34,7 +27,7 @@ public class TheaterService {
             return null;
         }
         ScreenVo[] screenVos = this.theaterMapper.selectAllScreens(date, theater);
-        Map<Set<String>, Map<Set<String>, Set<String>>> map = new HashMap<>();
+        Map<Set<String>, Map<Set<String>, Set<String>>> map = new LinkedHashMap<>();
         for (ScreenVo screen : screenVos) {
             Set<String> keys = new LinkedHashSet<>();
             Set<String> values = new LinkedHashSet<>();
@@ -72,7 +65,7 @@ public class TheaterService {
             timeList.add(String.valueOf(screen.getScStartDate()).split("T")[1]);
             ScreenDataVo screenDataVo = new ScreenDataVo(screen.getSeatCount(), screen.getUsedSeatCount());
             timeList.add(String.valueOf(screenDataVo.emptySeatCount));
-            map.computeIfAbsent(keys, k -> new HashMap<>());
+            map.computeIfAbsent(keys, k -> new LinkedHashMap<>());
             map.get(keys).computeIfAbsent(values, k -> new LinkedHashSet<>()).add(timeList.toString());
         }
         return map;
@@ -85,7 +78,7 @@ public class TheaterService {
             return null;
         }
         ScreenVo[] screenVos = this.theaterMapper.selectAllScreensByRegion(date, region, movie);
-        Map<Set<String>, Map<Set<String>, Set<String>>> map = new HashMap<>();
+        Map<Set<String>, Map<Set<String>, Set<String>>> map = new LinkedHashMap<>();
         for (ScreenVo screen : screenVos) {
             Set<String> keys = new LinkedHashSet<>();
             Set<String> values = new LinkedHashSet<>();
@@ -123,7 +116,7 @@ public class TheaterService {
             timeList.add(String.valueOf(screen.getScStartDate()).split("T")[1]);
             ScreenDataVo screenDataVo = new ScreenDataVo(screen.getSeatCount(), screen.getUsedSeatCount());
             timeList.add(String.valueOf(screenDataVo.emptySeatCount));
-            map.computeIfAbsent(keys, k -> new HashMap<>());
+            map.computeIfAbsent(keys, k -> new LinkedHashMap<>());
             map.get(keys).computeIfAbsent(values, k -> new LinkedHashSet<>()).add(timeList.toString());
         }
         return map;
@@ -247,33 +240,5 @@ public class TheaterService {
 
         // 결과 반환
         return map;
-    }
-
-    @Transactional
-    public Map<String, List<String>> Crawl() throws TransactionalException {
-        System.setProperty("webdriver.chrome.driver", "./chromedriver.exe");
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-blink-features=AutomationControlled");
-        options.addArguments("--headless");
-        WebDriver driver = new ChromeDriver(options);
-        Map<String, List<String>> maps = new HashMap<>();
-        try {
-            for (TheaterCode theater : TheaterCode.values()) {
-                String dateUrl = "http://www.cgv.co.kr/theaters/?areacode=11&theaterCode=" + theater.cgvCode;
-                driver.get(dateUrl);
-                WebElement movies = driver.findElement(By.cssSelector("#menu > .last"));
-                movies.click();
-                List<WebElement> info = driver.findElements(By.cssSelector(".info-contents"));
-                for (WebElement infoElement : info) {
-                    maps.computeIfAbsent(theater.cgvName, k -> new ArrayList<>()).add(infoElement.getAttribute("outerHTML"));
-                }
-            }
-            return maps;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            driver.quit();
-        }
-        return null;
     }
 }
