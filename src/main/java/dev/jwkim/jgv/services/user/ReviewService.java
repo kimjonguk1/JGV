@@ -1,5 +1,6 @@
 package dev.jwkim.jgv.services.user;
 
+import dev.jwkim.jgv.DTO.MyReviewDTO;
 import dev.jwkim.jgv.DTO.ReviewDTO;
 import dev.jwkim.jgv.results.user.ReviewResult;
 import org.apache.commons.lang3.tuple.Pair;
@@ -59,6 +60,20 @@ public class ReviewService {
     public boolean updateReview(ReviewEntity updatedReview) {
         int rowsAffected = this.reviewMapper.updateReview(updatedReview);
         return rowsAffected > 0; // 수정 성공 여부 반환
+    }
+
+    public boolean deleteReview(int reviewId) {
+        int rowsAffected = this.reviewMapper.deleteReview(reviewId);
+        return rowsAffected > 0;
+    }
+
+    public Pair<PageVo, List<MyReviewDTO>> getReviewByUser(int page, int userId) {
+        page = Math.max(1, page);
+        int totalCount = this.reviewMapper.selectArticleCountByUserId(userId);
+        PageVo pageVo = new PageVo(page, totalCount);
+
+        List<MyReviewDTO> reviewDTO = this.reviewMapper.selectArticleByUserId(userId, pageVo.countPerPage, pageVo.offsetCount);
+        return Pair.of(pageVo, reviewDTO);
     }
 
 

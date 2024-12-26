@@ -53,5 +53,19 @@ document.addEventListener('DOMContentLoaded', function () {
         xhr.open('GET', searchUrl);
         xhr.send(); // GET 요청에는 본문(formData)이 필요하지 않습니다.
     };
-
 }
+
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('reserve-btn')) {
+        // 클릭된 버튼에서 영화 제목 가져오기
+        const movieTitle = e.target.dataset.moTitle;
+
+        // 세션 스토리지에 영화 제목 저장
+        const ticket = {
+            moTitle: movieTitle
+        };
+
+        sessionStorage.setItem('ticketParams', JSON.stringify(ticket));
+        console.log('Session storage updated:', ticket);
+    }
+});

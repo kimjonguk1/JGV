@@ -1,18 +1,23 @@
 package dev.jwkim.jgv.controlles.user;
 
 
+import dev.jwkim.jgv.DTO.MyReviewDTO;
 import dev.jwkim.jgv.entities.ticket.PaymentEntity;
 import dev.jwkim.jgv.entities.user.EmailTokenEntity;
+import dev.jwkim.jgv.entities.user.ReviewEntity;
 import dev.jwkim.jgv.entities.user.UserEntity;
 import dev.jwkim.jgv.exceptions.MessageRemovedException;
 import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.results.Result;
+import dev.jwkim.jgv.services.user.ReviewService;
 import dev.jwkim.jgv.services.user.UserService;
+import dev.jwkim.jgv.vos.PageVo;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,15 +28,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
+    private final ReviewService reviewService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ReviewService reviewService) {
         this.userService = userService;
+        this.reviewService = reviewService;
     }
 
     // region 회원가입
@@ -125,7 +133,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/myPage/{fragment}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user, HttpSession session, @PathVariable(value = "fragment") String fragment, HttpServletRequest request) throws ServletException, IOException {
+    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user, HttpSession session, @PathVariable(value = "fragment") String fragment, HttpServletRequest request, @RequestParam(value = "page", required = false, defaultValue = "1")int page) throws ServletException, IOException {
         String[] validFragments = {"main", "reservation", "receipt", "personal", "withdraw"};
         if (fragment == null || Arrays.stream(validFragments).noneMatch(x -> x.equals(fragment))) {
             response.setStatus(404);
@@ -140,7 +148,13 @@ public class UserController {
             return null;  // 포워드 후 반환할 필요는 없으므로 null
         }
 
+        UserEntity loggedInUser = (UserEntity) session.getAttribute("user");
+
+        Pair<PageVo, List<MyReviewDTO>> pair = reviewService.getReviewByUser(page, loggedInUser.getUsNum());
+
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("pageVo", pair.getLeft());
+        modelAndView.addObject("Reviews", pair.getRight());
         modelAndView.addObject("user", user);
         modelAndView.addObject("session", session);
         modelAndView.addObject("fragment", fragment);

@@ -273,15 +273,23 @@ body > .frame {
   height: auto;
 }
 #main .movie-container .movie-card > .reserve-btn {
-  text-decoration: none;
-  padding: 10px 20px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
+  display: block;
   background-color: #e74c3c;
+  border: none;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
   color: white;
-  margin-top: 1rem;
+  text-align: center;
+  text-decoration: none;
+  margin: 15px auto;
+  width: 80px;
+}
+#main .movie-container .movie-card > .reserve-btn:hover {
+  background-color: #c0392b;
 }
 #main .movie-container .movie-card .movie-info {
   padding: 15px;
@@ -300,20 +308,6 @@ body > .frame {
 #main .movie-container .movie-card .movie-info .movie-detail span:first-child {
   font-weight: bold;
   color: #444;
-}
-#main .movie-container .movie-card .movie-info .reserve-btn {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin-top: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease;
-}
-#main .movie-container .movie-card .movie-info .reserve-btn:hover {
-  background-color: #c0392b;
 }
 
 #footer {

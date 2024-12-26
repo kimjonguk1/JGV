@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -57,7 +58,10 @@ public class MoiveListController {
             try {
                 LocalDate releaseDate = LocalDate.parse(movie.getMoDate(), formatter);
                 if (!releaseDate.isAfter(today)) {
-                    nowPlaying.add(movie);
+                    //현재 날짜 기준 개봉일이 15일 이내의 경우만 추가
+                    if(ChronoUnit.DAYS.between(releaseDate, today) <= 15) {
+                        nowPlaying.add(movie);
+                    }
                 } else {
                     upcomingMovies.add(movie);
                 }

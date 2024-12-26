@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .main-container {
   align-items: flex-start;
   display: flex;
@@ -132,6 +133,225 @@
 .main-container > .my-reservation > .reservation-container > .payment > .pay {
   font-weight: 700;
   color: #2275a4;
+}
+
+.review-title-container {
+  margin-bottom: 16px;
+  margin-top: 30px;
+}
+
+.my-review .review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0;
+  width: 760px;
+  border: 1px solid #666666;
+}
+.my-review .review-item {
+  display: flex;
+  position: relative; /* X 버튼을 상대적으로 배치할 수 있도록 설정 */
+  padding: 20px;
+  border-bottom: 1px solid #e8e8e8;
+}
+.my-review .review-item:not(:last-child) { /* 마지막 아이템 제외 */
+  border-bottom: 1px solid #e8e8e8;
+}
+.my-review .review-item:last-child {
+  border-bottom: none; /* 마지막 아이템의 border-bottom 제거 */
+}
+.my-review .review-item .review-thumbnail {
+  width: 100px;
+  height: 150px;
+  margin-right: 20px;
+}
+.my-review .review-item .review-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.my-review .review-item .review-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.my-review .review-item .review-content .review-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.my-review .review-item .review-content .review-info {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.my-review .review-item .review-content .review-info .review-date {
+  font-style: italic;
+}
+.my-review .review-item .review-content .review-description {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+.my-review .review-item .review-content .review-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  margin-top: 27px;
+  padding-top: 16px;
+}
+.my-review .review-item .review-content .review-actions button {
+  border: none;
+  cursor: pointer;
+}
+.my-review .review-item .delete-review {
+  position: absolute; /* 부모를 기준으로 위치 설정 */
+  top: 10px; /* 상단에서 10px */
+  right: 10px; /* 오른쪽에서 10px */
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.my-review .paging {
+  display: flex;
+  justify-content: center;
+}
+.my-review .paging a {
+  padding: 5px 5px;
+  margin: 0 2px;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+.my-review .paging a.active {
+  color: #ff5a5a;
+}
+
+.reserve-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.reserve-modal .modal-content {
+  background-color: #F6F6F4;
+  border-radius: 8px;
+  width: 700px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: left;
+  position: relative;
+  padding: 0; /* 전체 여백 제거 */
+}
+.reserve-modal .modal-content h2 {
+  margin: 0;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #333333; /* 다크 그레이 배경 */
+  color: #f2f0e5; /* 밝은 텍스트 */
+  border-radius: 8px 8px 0 0; /* 상단 모서리 둥글게 */
+  display: flex; /* Flexbox 사용 */
+  justify-content: space-between; /* 요소를 양쪽 끝으로 배치 */
+  align-items: center; /* 수직 정렬 */
+}
+.reserve-modal .modal-content .modal-header {
+  display: flex; /* Flexbox 사용 */
+  justify-content: space-between; /* 양쪽 끝 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+  padding: 10px 20px; /* 적절한 여백 */
+  background-color: #333333; /* 다크 그레이 배경 */
+  color: #f2f0e5; /* 밝은 텍스트 */
+  border-radius: 8px 8px 0 0; /* 상단 모서리 둥글게 */
+}
+.reserve-modal .modal-content .close-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  color: #f2f0e5; /* 텍스트 색상 */
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+.reserve-modal .modal-content .close-button:hover {
+  color: #ff3b30; /* Hover 시 색상 */
+}
+.reserve-modal .modal-content .movie-title {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  color: #555;
+  margin: 20px 0;
+}
+.reserve-modal .modal-content .review-userInfo {
+  margin-top: 10px;
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  flex-direction: column; /* 이미지와 이름을 세로로 배치 */
+}
+.reserve-modal .modal-content .review-userInfo .profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 5px; /* 이미지와 이름 간격 추가 */
+}
+.reserve-modal .modal-content .review-userInfo .user-name {
+  font-size: 14px; /* 이름 글꼴 크기 */
+  font-weight: bold;
+  color: #333;
+  text-align: center; /* 텍스트 중앙 정렬 */
+}
+.reserve-modal .modal-content .label {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* 세로 중앙 정렬 */
+  flex-direction: column; /* 자식 요소를 세로로 배치 */
+  height: 100%; /* 부모 요소 높이를 100%로 설정 */
+  margin-top: 10px;
+  width: 100%;
+}
+.reserve-modal .modal-content .label textarea#reviewText {
+  width: 600px;
+  height: 90px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+  resize: none;
+  outline: none;
+  margin: 0 auto;
+  display: block;
+}
+.reserve-modal .modal-content .modal-action {
+  margin: 10px 40px 35px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.reserve-modal .modal-content .modal-action button#submitReview {
+  background-color: #FB4357;
+  color: #fff;
+  padding: 6px 15px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+.reserve-modal .modal-content .modal-action #charCount {
+  font-size: 15px;
+  text-align: right;
+  margin-right: 10px;
 }
 
 #passwordCheck {

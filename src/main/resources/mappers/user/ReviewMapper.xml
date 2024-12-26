@@ -68,4 +68,37 @@
         WHERE re_num = #{reNum}
     </update>
 
+    <update id="deleteReview">
+        UPDATE jgv.review
+        SET re_deleted_at = NOW()
+        WHERE re_num = #{reviewId}
+    </update>
+
+    <select id="selectArticleCountByUserId" resultType="_int">
+        SELECT COUNT(*)
+        FROM jgv.review
+          WHERE us_num = #{userId}
+          AND re_deleted_at IS NULL
+    </select>
+
+    <select id="selectArticleByUserId" resultType="dev.jwkim.jgv.DTO.MyReviewDTO">
+        SELECT r.re_num AS reNum,
+               r.re_content AS reContent,
+               r.re_liked AS reLiked,
+               r.us_num AS usNum,
+               r.mo_num AS moNum,
+               r.re_created_at AS reCreatedAt,
+               u.us_nickname AS usNickName,
+               m.mo_title AS moTitle,
+               mi.m_img_num AS mImgNum,
+               mi.m_img_url AS mImgUrl
+        FROM jgv.review r
+                 LEFT JOIN jgv.user u on u.us_num = r.us_num
+                 LEFT JOIN jgv.movie m on m.mo_num = r.mo_num
+                 LEFT JOIN jgv.movie_image mi on m.mo_num = mi.mo_num
+        WHERE r.us_num = #{userId}
+          AND re_deleted_at IS NULL
+        LIMIT #{limitCount} OFFSET #{offsetCount}
+    </select>
+
 </mapper>

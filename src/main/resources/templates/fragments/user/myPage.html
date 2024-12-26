@@ -43,6 +43,61 @@
             </div>
         </div>
     </div>
+    <div class="review-title-container">
+        <h2>내가 쓴 평점</h2>
+    </div>
+    <div class="reserve-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>평점 작성</h2>
+                <button class="close-button" id="closeModal">x</button>
+            </div>
+            <p class="movie-title" id="modalMovieTitle"></p>
+            <hr>
+            <div class="review-userInfo">
+                <img class="profile-img" src="http://img.cgv.co.kr/R2014/images/common/default_profile.gif" alt="profile">
+                <span class="user-name" id="modalUserName">사용자 이름</span>
+            </div>
+            <label class="label">
+                <textarea id="reviewText" placeholder="운영원칙에 어긋나는 게시물로 판단되는 글은 제재 조치를 받을 수 있습니다." maxlength="280"></textarea>
+            </label>
+            <div class="modal-action">
+                <span id="charCount">0 / 280 (byte)</span>
+                <button id="submitReview">작성완료!</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="my-review">
+        <div class="review-list">
+            <div class="review-item" th:each="review : ${Reviews}"
+                 th:attr="data-review-id=${review.reNum}">
+                <div class="review-thumbnail">
+                    <img th:src="${review.mImgUrl}" alt="Poster">
+                </div>
+                <div class="review-content">
+                    <h3 class="review-title" th:text="${review.moTitle}">청설</h3>
+                    <div class="review-info">
+                        <span class="nickname" th:text="${review.usNickName}">지니율스</span><span> | </span>
+                        <span class="review-date" th:text="${#temporals.format(review.reCreatedAt, 'yyyy-MM-dd')}">2024.12.26</span>
+                    </div>
+                    <p class="review-description" th:text="${review.reContent}">1보다는 별로지만 암튼 재밌었어염</p>
+                    <div class="review-actions">
+                        <button class="edit-review">수정하기</button>
+                        <img class="likes" src="http://img.cgv.co.kr/R2014/images/point/ico_point_default.png" alt="likes">
+                        <span th:text="${review.reLiked}">0</span>
+                    </div>
+                    <button class="delete-review">X</button>
+                </div>
+            </div>
+            <div class="paging">
+                <a class="page" th:each="page : ${#numbers.sequence(pageVo.displayMinPage, pageVo.displayMaxPage)}"
+                   th:text="${page}"
+                   th:href="@{/user/myPage/main(page=${page})}"
+                   th:classappend="${page == pageVo.requestPage} ? 'active'"></a>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="content reservation" th:fragment="reservation">
     <div class="my-reservation">
