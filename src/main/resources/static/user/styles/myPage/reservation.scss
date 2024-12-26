@@ -54,11 +54,14 @@
 
   > .reservation-num {
     @include flex(row, center, center);
-    width: 15rem;
+    width: 13rem;
     padding-top: 2rem;
+    font-size: 1.4rem;
+    font-weight: 700;
     > .res-num {
-      font-size: 0.8rem;
+      font-size: 1.4rem;
       color: #666666;
+      font-weight: 700;
     }
 
     > .black {
@@ -77,6 +80,12 @@
     width: 100%;
     height: 10rem;
     background-color: #ffffff;
+    padding: 0 0 2rem 0;
+
+    > .image-wrapper > img {
+      width: 126px;
+      height: 180px;
+    }
 
     > .movie-info {
       @include flex(column, flex-start, flex-start, 1rem);
@@ -84,7 +93,7 @@
 
       > .detail {
         @include flex(row, flex-start, center, 0.7rem);
-        width: 70%;
+        width: 80%;
 
         > .black {
           color: #222222;
@@ -237,8 +246,8 @@
       > tbody {
         height: 10rem;
         color: #666666;
-        }
       }
-
     }
+
   }
+}

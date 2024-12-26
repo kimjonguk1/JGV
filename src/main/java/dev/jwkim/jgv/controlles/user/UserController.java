@@ -29,6 +29,8 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/user")
@@ -150,6 +152,12 @@ public class UserController {
 
         UserEntity loggedInUser = (UserEntity) session.getAttribute("user");
 
+        // 예약 정보 가져오기
+        UserEntity users = (UserEntity) session.getAttribute("user");
+        Map<Set<String>, List<String>> reservations = this.userService.reservationInformation(users.getUsNum()); // 예약 정보
+        List<List<String>> cancelReservations = this.userService.selectCancelPaymentByUsNum(users.getUsNum()); // 취소 정보
+
+
         Pair<PageVo, List<MyReviewDTO>> pair = reviewService.getReviewByUser(page, loggedInUser.getUsNum());
 
         ModelAndView modelAndView = new ModelAndView();
@@ -158,6 +166,8 @@ public class UserController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("session", session);
         modelAndView.addObject("fragment", fragment);
+        modelAndView.addObject("reservations", reservations);
+        modelAndView.addObject("cancelReservations", cancelReservations);
         modelAndView.setViewName("user/myPage/myPage");
 
         return modelAndView;

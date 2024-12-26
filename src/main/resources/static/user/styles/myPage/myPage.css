@@ -691,16 +691,19 @@
   flex-direction: row;
   gap: 0;
   justify-content: center;
-  width: 15rem;
+  width: 13rem;
   padding-top: 2rem;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 .reservation-main > .reservation-num > .-spring {
   flex-grow: 1;
   flex-shrink: 1;
 }
 .reservation-main > .reservation-num > .res-num {
-  font-size: 0.8rem;
+  font-size: 1.4rem;
   color: #666666;
+  font-weight: 700;
 }
 .reservation-main > .reservation-num > .black {
   color: #222222;
@@ -719,10 +722,15 @@
   width: 100%;
   height: 10rem;
   background-color: #ffffff;
+  padding: 0 0 2rem 0;
 }
 .reservation-main > .reservation-info > .-spring {
   flex-grow: 1;
   flex-shrink: 1;
+}
+.reservation-main > .reservation-info > .image-wrapper > img {
+  width: 126px;
+  height: 180px;
 }
 .reservation-main > .reservation-info > .movie-info {
   align-items: flex-start;
@@ -742,7 +750,7 @@
   flex-direction: row;
   gap: 0.7rem;
   justify-content: center;
-  width: 70%;
+  width: 80%;
 }
 .reservation-main > .reservation-info > .movie-info > .detail > .-spring {
   flex-grow: 1;
