@@ -118,69 +118,85 @@
     <div class="sub-tooltip">
         <span>티켓판매기에서 예매번호를 입력하면 티켓을 발급받을 수 있습니다.</span>
     </div>
-    <div class="reservation-main">
-        <div class="reservation-num">
-            <span class="res-num">예매번호</span>
-            <div class="-spring"></div>
-            <span class="black">0345-</span>
-            <span class="red">1204-3633-129</span>
+    <div th:each="reservation : ${reservations}">
+        <div class="reservation-main">
+            <div class="reservation-num">
+                <span class="res-num">예매번호</span>
+                <div class="-spring"></div>
+                <span class="red" th:text="${reservation.key[0]}">예매번호</span>
+            </div>
+            <div class="reservation-info">
+                <div class="image-wrapper">
+                    <!-- 영화 이미지 출력 -->
+                    <img th:src="${reservation.key[5]}" alt="영화 이미지">
+                </div>
+                <div class="movie-info">
+                    <div class="title-container">
+                        <!-- 영화 제목 -->
+                        <span class="movie" th:text="${reservation.key[3]}"></span>
+                        <div class="-spring"></div>
+                        <!-- 결제 금액 -->
+                        <span class="pay" th:text="${reservation.key[1]}"></span>
+                    </div>
+                    <div class="detail">
+                        <span>관람극장</span>
+                        <!-- 영화관 이름 -->
+                        <span class="black" th:text="${reservation.key[3]}"></span>
+                        <div class="-spring"></div>
+                        <span>관람인원</span>
+                        <!-- 관람 인원: 좌석 수만큼 반복 -->
+                        <span class="black">
+                    <span th:text="${reservation.value.size()}"></span> <!-- 좌석 수를 기반으로 관람인원 출력 -->
+                </span>
+                    </div>
+                    <div class="detail">
+                        <span>관람일시</span>
+                        <!-- 상영 시작 시간 -->
+                        <span class="red" th:text="${reservation.key[4]}"></span>
+                        <div class="-spring"></div>
+                        <span>관람좌석</span>
+                        <!-- 좌석 이름: 각 좌석을 반복 출력 -->
+                        <span class="black">
+                    <span th:text="${#strings.trim(reservation.value.toString()).substring(1, reservation.value.toString().length() - 1)}"></span>
+
+                </span>
+                    </div>
+                    <div class="detail">
+                        <span>상영관</span>
+                        <!-- 상영관 이름 -->
+                        <span class="black" th:text="${reservation.key[3]}"></span>
+                        <div class="-spring"></div>
+                        <span>매수</span>
+                        <!-- 매수: 좌석 수를 계산하여 출력 -->
+                        <span class="black" th:text="${reservation.value.size()} + '매'"></span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="reservation-info">
-            <div class="image-wrapper">
-                <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg"
-                     alt="영화 이미지">
-            </div>
-            <div class="movie-info"><!--col-->
-                <div class="title-container">
-                    <span class="movie">미세스 그린 애플 - 더 화이트 라운지 인 시네마</span>
-                    <div class="-spring"></div>
-                    <span class="pay">22,000원</span>
+
+
+        <div class="movie-receipt">
+            <div class="receipt">
+                <div class="result-title">
+                    <h3>결제 내역</h3>
                 </div>
-                <div class="detail">
-                    <span>관람극장</span>
-                    <span class="black">CGV 대구</span>
-                    <div class="-spring"></div>
-                    <span>관람인원</span>
-                    <span class="black">일반 1</span>
+                <div class="result">
+                    <div class="result-pay underline">
+                        <span class="result-text">총 결제금액</span>
+                        <div class="-spring"></div>
+                        <span class="result-payment" th:text="${reservation.key[1]}"></span>
+                    </div>
+                    <div class="result-pay">
+                        <span class="payment-method" th:text="'└  ' + ${reservation.key[7]}"></span>
+                        <div class="-spring"></div>
+                        <span class="method-payment" th:text="${reservation.key[1]}"></span>
+                    </div>
                 </div>
-                <div class="detail">
-                    <span>관람일시</span>
-                    <span class="red">2024.12.12(목) 19:00</span>
-                    <div class="-spring"></div>
-                    <span>관람좌석</span>
-                    <span class="black">H 03</span>
+                <div class="reservation-cancel">
+                    <button class="reservation-cancel-button" type="button">
+                        예매취소
+                    </button>
                 </div>
-                <div class="detail">
-                    <span>상영관</span>
-                    <span class="black">5관(Laser)</span>
-                    <div class="-spring"></div>
-                    <span>매수</span>
-                    <span class="black">1매</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="movie-receipt">
-        <div class="receipt">
-            <div class="result-title">
-                <h3>결제 내역</h3>
-            </div>
-            <div class="result">
-                <div class="result-pay underline">
-                    <span class="result-text">총 결제금액</span>
-                    <div class="-spring"></div>
-                    <span class="result-payment">22,000원</span>
-                </div>
-                <div class="result-pay">
-                    <span class="payment-method">└&nbsp;&nbsp;휴대폰결제</span>
-                    <div class="-spring"></div>
-                    <span class="method-payment">22,000원</span>
-                </div>
-            </div>
-            <div class="reservation-cancel">
-                <button class="reservation-cancel-button" type="button">
-                    예매취소
-                </button>
             </div>
         </div>
     </div>
@@ -193,6 +209,7 @@
             <table>
                 <thead>
                 <tr class="first-row">
+                    <th>광람 영화</th>
                     <th>관람 JGV</th>
                     <th>관람 일시</th>
                     <th>취소일</th>
@@ -200,13 +217,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>대구 아카데미</td>
-                    <td>2024-12-09</td>
-                    <td>2024-12-12</td>
-                    <td>22,000원</td>
+                <tr  th:each="cancelReservation : ${cancelReservations}">
+                    <td th:text="${cancelReservation.key[0]}"></td>
+                    <td th:text="${cancelReservation.key[0]}"></td>
+                    <td th:text="${cancelReservation.key[1]}"></td>
+                    <td th:text="${cancelReservation.key[2]}"></td>
+                    <td th:text="${cancelReservation.key[3]}"></td>
                 </tr>
-                <tr>
+                <tr th:if="${cancelReservations == null || cancelReservations.size() == 0}">
                     <td colspan="5">고객님의 최근 취소내역이 존재하지 않습니다.</td>
                 </tr>
                 </tbody>

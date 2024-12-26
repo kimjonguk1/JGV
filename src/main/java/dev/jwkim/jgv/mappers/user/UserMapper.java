@@ -1,6 +1,7 @@
 package dev.jwkim.jgv.mappers.user;
 
 import dev.jwkim.jgv.entities.user.UserEntity;
+import dev.jwkim.jgv.vos.user.ReservationVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -35,5 +36,8 @@ public interface UserMapper {
     List<UserEntity> selectUnverifiedUsersWithExpiredToken(@Param("now") LocalDateTime now);
 
     int deleteUserById(@Param("usId") String id);
+
+    ReservationVo[] selectPaymentByUsNum(@Param("usNum") int usNum);
+    ReservationVo[] selectCancelPaymentByUsNum(@Param("usNum") int usNum);
 
 }

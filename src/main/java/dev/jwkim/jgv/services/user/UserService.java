@@ -11,6 +11,7 @@ import dev.jwkim.jgv.results.Result;
 import dev.jwkim.jgv.results.reservation.ReservationResult;
 import dev.jwkim.jgv.results.user.*;
 import dev.jwkim.jgv.utils.CryptoUtils;
+import dev.jwkim.jgv.vos.user.ReservationVo;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,8 +27,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -494,6 +498,64 @@ public class UserService {
         }
         return CommonResult.SUCCESS;
     }
+    // endregion
+
+    // region 예매 내역
+
+    public Map<Set<String>, List<String>> reservationInformation(int usNum) {
+        Map<Set<String>, List<String>> map = new LinkedHashMap<>();
+        ReservationVo[] reservationVo = this.userMapper.selectPaymentByUsNum(usNum);
+        for (ReservationVo reservationVos : reservationVo) {
+            Set<String> strings = new LinkedHashSet<>();
+            List<String> strings1 = new ArrayList<>();
+            strings.add(String.valueOf(reservationVos.getPaNum()));
+            strings.add(String.format("%,d", reservationVos.getPaPrice()) + "원");
+            strings.add(String.valueOf(reservationVos.getCiName()));
+            strings.add(String.valueOf(reservationVos.getThName()));
+            LocalDate localDate = LocalDate.parse(reservationVos.getScStartDate().toString().split("T")[0], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            strings.add(reservationVos.getScStartDate().toString().split("T")[0] + "(" + localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN).split("요일")[0] + ") " + reservationVos.getScStartDate().toString().split("T")[1]);
+            strings.add(String.valueOf(reservationVos.getMImgUrl()));
+            strings.add(String.valueOf(reservationVos.getMoTitle()));
+            strings.add(String.valueOf(reservationVos.getMeName()));
+
+            strings1.add(String.valueOf(reservationVos.getSeName()));
+
+            map.computeIfAbsent(strings, k -> new ArrayList<>()).addAll(strings1);
+        }
+        return map;
+    }
+    public List<List<String>> selectCancelPaymentByUsNum(int usNum) {
+        List<List<String>> map = new ArrayList<>();
+        ReservationVo[] reservationVo = this.userMapper.selectCancelPaymentByUsNum(usNum);
+
+        for (ReservationVo reservationVos : reservationVo) {
+            List<String> strings = new ArrayList<>();
+
+            // 1. 극장 이름
+            strings.add(reservationVos.getThName());
+
+            // 2. 상영 시작 날짜와 요일
+            String[] startDateTimeParts = reservationVos.getScStartDate().toString().split("T");
+            LocalDate localDate = LocalDate.parse(startDateTimeParts[0], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String formattedStartDate = startDateTimeParts[0] + "(" +
+                    localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN).split("요일")[0] +
+                    ") " +
+                    startDateTimeParts[1];
+            strings.add(formattedStartDate);
+
+            // 3. 삭제된 날짜
+            strings.add(reservationVos.getPaDeletedAt().toString().replace("T", " "));
+
+            // 4. 가격
+            strings.add(String.format("%,d", reservationVos.getPaPrice()) + "원");
+
+            // 리스트에 추가
+            map.add(strings);
+        }
+
+        return map;
+    }
+
     // endregion
 
     // region 예매 취소
