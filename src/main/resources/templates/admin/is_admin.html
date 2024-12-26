@@ -8,11 +8,14 @@
     <title>관리자의 놀이터</title>
     <link rel="stylesheet" th:href="@{'./assets/styles/index.css'}" type="text/css">
     <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
-    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}" type="text/css">
-    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}"
+          type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}"
+          type="text/css">
     <link rel="stylesheet" href="/admin/styles/is_admin.css" type="text/css">
     <script defer th:src="@{'./assets/scripts/index.js'}" type="text/javascript"></script>
-    <script defer src="/fragments/assets/scripts/common.js" type="text/javascript"></script>
+    <script defer src="/fragments/assets/scripts/common.js"
+            type="text/javascript"></script>
     <script th:if="${!session.user.isUsIsAdmin()}">
         alert('올바르지 않은 접근입니다.');
         if (history.length > 1) {
@@ -55,11 +58,14 @@
                 <th>영화 이름</th>
                 <th>개봉일</th>
                 <th>관람등급</th>
+                <th>수정</th>
+                <th>삭제</th>
             </tr>
             <tr>
                 <td>9999</td>
                 <td>
-                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화이미지">
+                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg"
+                         alt="영화이미지">
                 </td>
                 <td>
                     <span>미세스 그린애플</span>
@@ -67,42 +73,12 @@
                 </td>
                 <td>2024-12-26</td>
                 <td>15세</td>
-            </tr>
-            <tr>
-                <td>9999</td>
                 <td>
-                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화이미지">
+                    <button class="movie-modify">수정</button>
                 </td>
                 <td>
-                    <span>미세스 그린애플</span>
-                    <span>화이트 라운지</span>
+                    <button class="movie-delete">삭제</button>
                 </td>
-                <td>2024-12-26</td>
-                <td>15세</td>
-            </tr>
-            <tr>
-                <td>9999</td>
-                <td>
-                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화이미지">
-                </td>
-                <td>
-                    <span>미세스 그린애플</span>
-                    <span>화이트 라운지</span>
-                </td>
-                <td>2024-12-26</td>
-                <td>15세</td>
-            </tr>
-            <tr>
-                <td>9999</td>
-                <td>
-                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화이미지">
-                </td>
-                <td>
-                    <span>미세스 그린애플</span>
-                    <span>화이트 라운지</span>
-                </td>
-                <td>2024-12-26</td>
-                <td>15세</td>
             </tr>
             </tbody>
         </table>
@@ -110,7 +86,7 @@
 </main>
 
 <main id="theater-admin-page" class="frame">
-    <div class="admin-movie-list">
+    <div class="admin-theater-list">
         <!--        번호 / 영화 이름 / 개봉일 / 관람등급-->
         <table>
             <tbody>
@@ -123,60 +99,28 @@
             <tr>
                 <td>9999</td>
                 <td>
-                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화이미지">
+                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg"
+                         alt="영화이미지">
                 </td>
                 <td>
                     <span>미세스 그린애플</span>
                     <span>화이트 라운지</span>
                 </td>
-                <td style="display: flex;flex-direction: column;align-items: flex-start;justify-content: center; gap: 0.2rem; height: 100%">
-                    <span>2024-12-26</span>
-                    <span>2024-12-26</span>
-                    <span>2024-12-26</span>
-                    <span>2024-12-26</span>
-                    <span>2024-12-26</span>
-                    <span>2024-12-26</span>
+                <td style="display: flex; flex-direction: column; align-items: center;
+                justify-content: center; gap: 0.3rem">
+                    <div style="display: flex; flex-direction: row;
+                    align-items: center; justify-content: center; gap: 0.5rem;">
+                        <span>2024-12-26</span>
+                        <button class="theater-modify">수정</button>
+                        <button class="theater-delete">삭제</button>
+                    </div>
                 </td>
             </tr>
-            <tr>
-                <td>9999</td>
-                <td>
-                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화이미지">
-                </td>
-                <td>
-                    <span>미세스 그린애플</span>
-                    <span>화이트 라운지</span>
-                </td>
-                <td>2024-12-26</td>
-            </tr>
-            <tr>
-                <td>9999</td>
-                <td>
-                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화이미지">
-                </td>
-                <td>
-                    <span>미세스 그린애플</span>
-                    <span>화이트 라운지</span>
-                </td>
-                <td>2024-12-26</td>
-            </tr>
-            <tr>
-                <td>9999</td>
-                <td>
-                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화이미지">
-                </td>
-                <td>
-                    <span>미세스 그린애플</span>
-                    <span>화이트 라운지</span>
-                </td>
-                <td>2024-12-26</td>
-            </tr>
+
             </tbody>
         </table>
     </div>
 </main>
-
-
 
 
 <th:block th:replace="~{fragments/common.html :: footer}"></th:block>

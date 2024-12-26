@@ -76,6 +76,7 @@ body {
         }
 
         > .title {
+          width: 100%;
           font-size: 1.2rem;
           font-weight: 500;
 
@@ -86,6 +87,8 @@ body {
         }
         > .item {
           @include flex(row, flex-start, stretch);
+          width: 100%;
+          height: 1rem;
           font-size: 0.8rem;
 
           &:hover > img {

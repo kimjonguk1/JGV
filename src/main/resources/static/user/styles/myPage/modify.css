@@ -354,4 +354,13 @@ body > .title-container > span > img {
   color: #ffffff;
 }
 
+#change-password,
+#changeNickname {
+  width: 5rem;
+  height: 1.8rem;
+  border: 1px solid #222222;
+  border-radius: 0.3rem;
+  font-weight: 400;
+}
+
 /*# sourceMappingURL=modify.css.map */

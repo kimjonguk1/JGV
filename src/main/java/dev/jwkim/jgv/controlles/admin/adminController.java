@@ -1,9 +1,7 @@
 package dev.jwkim.jgv.controlles.admin;
 
 import dev.jwkim.jgv.entities.user.UserEntity;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,17 +23,31 @@ public class adminController {
 
     //region  press x express joy
 
-    @RequestMapping(value = "/crawl", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getCrawl(@SessionAttribute UserEntity user, HttpServletResponse response) {
+    @RequestMapping(value = "/movie-crawl", method = RequestMethod.GET, produces =
+            MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getMovieCrawl(@SessionAttribute dev.jwkim.jgv.entities.user.UserEntity user,
+                                  HttpServletResponse response) {
 
         if (!user.isUsIsAdmin()) {
             response.setStatus(404);
-            System.out.println("헬로");
 
         }
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("admin/crawl");
-        System.out.println(user.isUsIsAdmin());
+        modelAndView.setViewName("admin/movie-crawl");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/theater-crawl", method = RequestMethod.GET, produces =
+            MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getTheaterCrawl(@SessionAttribute UserEntity user,
+                                  HttpServletResponse response) {
+
+        if (!user.isUsIsAdmin()) {
+            response.setStatus(404);
+
+        }
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/theater-crawl");
         return modelAndView;
     }
     // endregion
