@@ -47,6 +47,41 @@
     height: 28rem;
     background-image: url("https://img.cgv.co.kr/r2014/images/common/bg/bg_showtimes_favorite.gif");
 
+    > .button-container {
+      left: 35%;
+      margin: 1rem 0;
+      padding: 0.5rem 1rem;
+      background-color: #fb4357;
+      font-size: 1rem;
+      font-weight: 600;
+      position: absolute;
+
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 1rem;
+
+      > .button {
+        cursor: pointer;
+
+        &:nth-child(1) {
+          padding-right: 1rem;
+          border-right: 0.1rem solid #ffffff;
+        }
+
+        > .select {
+          &.hidden {
+            display: none;
+          }
+        }
+
+        > .text {
+          color: #ffffff;
+        }
+      }
+    }
+
     > .head {
       margin: 4rem 0 1rem 4.5rem;
 
@@ -312,39 +347,6 @@
       > .advertisement {
         margin-top: 1rem;
         width: 61.4rem;
-      }
-    }
-  }
-
-  > .button-container {
-    margin: 2rem 0;
-    padding: 0.5rem 1rem;
-    background-color: #fb4357;
-    font-size: 1rem;
-    font-weight: 600;
-
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 1rem;
-
-    > .button {
-      cursor: pointer;
-
-      &:nth-child(1) {
-        padding-right: 1rem;
-        border-right: 0.1rem solid #ffffff;
-      }
-
-      > .select {
-        &.hidden {
-          display: none;
-        }
-      }
-
-      > .text {
-        color: #ffffff;
       }
     }
   }
