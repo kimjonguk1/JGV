@@ -81,6 +81,8 @@ public class ReviewController {
         }
     }
 
+
+    //수정
     @RequestMapping(value = "/{reviewId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ReviewResult updateReview(@PathVariable("reviewId") int reviewId, @RequestBody ReviewEntity updatedReview, HttpSession session) {
@@ -88,19 +90,35 @@ public class ReviewController {
         if (loggedInUser == null) {
             return ReviewResult.NOT_LOGGED_IN;
         }
-        ReviewEntity existingReview = this.reviewService.getReviewsById(reviewId);
-        System.out.println(existingReview);
-        System.out.println(existingReview.getUsNum());
-        System.out.println(loggedInUser.getUsNum());
-        if (existingReview == null || existingReview.getUsNum() != loggedInUser.getUsNum()) {
-            return ReviewResult.UNAUTHORIZED;
+        //어드민이 아닐 경우
+        if(!loggedInUser.isUsIsAdmin()) {
+            ReviewEntity existingReview = this.reviewService.getReviewsById(reviewId);
+            if (existingReview == null || existingReview.getUsNum() != loggedInUser.getUsNum()) {
+                return ReviewResult.UNAUTHORIZED;
+            }
         }
-
         updatedReview.setReNum(reviewId);
         boolean success = this.reviewService.updateReview(updatedReview);
         return success ? ReviewResult.SUCCESS : ReviewResult.FAILURE;
     }
 
+    //삭제
+    @RequestMapping(value = "/{reviewId}", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ReviewResult deleteReview(@PathVariable("reviewId") int reviewId, HttpSession session) {
+        UserEntity loggedInUser = (UserEntity) session.getAttribute("user");
+        if (loggedInUser == null) {
+            return ReviewResult.NOT_LOGGED_IN;
+        }
+        if(!loggedInUser.isUsIsAdmin()) {
+            ReviewEntity existingReview = this.reviewService.getReviewsById(reviewId);
+            if (existingReview == null || existingReview.getUsNum() != loggedInUser.getUsNum()) {
+                return ReviewResult.UNAUTHORIZED;
+            }
+        }
+        boolean success = this.reviewService.deleteReview(reviewId);
+        return success ? ReviewResult.SUCCESS : ReviewResult.FAILURE;
+    }
 
 
 }

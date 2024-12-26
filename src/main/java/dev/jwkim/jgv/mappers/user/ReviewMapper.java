@@ -1,5 +1,6 @@
 package dev.jwkim.jgv.mappers.user;
 
+import dev.jwkim.jgv.DTO.MyReviewDTO;
 import dev.jwkim.jgv.DTO.ReviewDTO;
 import dev.jwkim.jgv.entities.user.ReviewEntity;
 import org.apache.ibatis.annotations.Mapper;
@@ -23,4 +24,11 @@ public interface ReviewMapper {
     ReviewEntity getReviewsById(@Param("reviewId") int reviewId);
 
     int updateReview(ReviewEntity review);
+
+    int deleteReview(@Param("reviewId") int reviewId);
+
+    int selectArticleCountByUserId(@Param("userId") int userId);
+
+    List<MyReviewDTO> selectArticleByUserId(@Param("userId") int userId, @Param("limitCount") int limitCount, // 선택 개수(제한 개수)
+                                            @Param("offsetCount") int offsetCount);
 }

@@ -58,7 +58,7 @@
                     <p>개봉: <span class="release-date" th:text="${movieInfo.getMoDate()}">2024.12.04</span></p>
                 </div>
                 <div class="buttons">
-                    <button class="btn reserve">예매하기</button>
+                    <a class="reserve-btn" th:data-mo-title="${movieInfo.getMoTitle()}" th:href="@{/ticket/?moTitle={moTitle}(moTitle=${movieInfo.getMoTitle()})}">예매하기</a>
                 </div>
             </div>
         </div>
@@ -91,7 +91,7 @@
                 <p class="notBold"><strong>7,282</strong>명의 실관람객이 평가해주셨습니다.</p>
                 </div>
                 <div class="buttons">
-                    <button class="write-review-btn">평점작성</button>
+                    <button class="write-review-btn" data-mode="create">평점작성</button>
                     <button class="my-review-btn">내 평점</button>
                 </div>
             </div>

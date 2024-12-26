@@ -246,15 +246,24 @@ body {
       }
 
       > .reserve-btn {
-        text-decoration: none;
-        padding: 10px 20px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-weight: bold;
-        cursor: pointer;
+        display: block;
         background-color: #e74c3c;
+        border: none;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: background-color 0.2s ease;
         color: white;
-        margin-top: 1rem;
+        text-align: center;
+        text-decoration: none;
+        margin: 15px auto;
+        width: 80px;
+
+        &:hover {
+          background-color: #c0392b;
+        }
       }
 
       .movie-info {
@@ -278,21 +287,9 @@ body {
           }
         }
 
-        .reserve-btn {
-          background-color: #e74c3c;
-          color: white;
-          border: none;
-          padding: 10px 20px;
-          margin-top: 10px;
-          border-radius: 4px;
-          cursor: pointer;
-          font-size: 0.9rem;
-          transition: background-color 0.2s ease;
 
-          &:hover {
-            background-color: #c0392b;
-          }
-        }
+
+
       }
     }
   }

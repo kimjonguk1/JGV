@@ -680,6 +680,26 @@ section.active {
   }
 }
 
+.reserve-btn {
+  display: block;
+  background-color: #e74c3c;
+  border: none;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  width: 80px;
+
+  &:hover {
+    background-color: #c0392b;
+  }
+}
+
 #schedule {
   .IMAX {
     width: 5rem;
