@@ -59,11 +59,11 @@
                 <span class="text">MY JGV</span>
             </a>
         </li>
-        <li class="item">
-            <a href="">
-                <img src="https://img.cgv.co.kr/R2014/images/common/ico/loginCustomer.png"
-                     alt="고객센터">
-                <span class="text">고객센터</span>
+        <li class="item" th:if="${session?.user?.isUsIsAdmin()}">
+            <a th:href="@{'/admin/is_admin'}">
+                <img src="/fragments/assets/images/user_admin.png"
+                     alt="관리자">
+                <span style="color: #FB4357; font-weight: 700" class="text">관리자</span>
             </a>
         </li>
     </ul>
@@ -73,38 +73,22 @@
         <ul class="nav-menu">
             <li class="item">
                 <h2>
-                    <a href="/movies/movieList">영화</a>
+                    <a th:href="@{'/movies/movieList'}">영화</a>
                 </h2>
             </li>
             <li class="item">
                 <h2>
-                    <a href="/theater/">극장</a>
+                    <a th:href="@{'/theater/'}">극장</a>
                 </h2>
             </li>
             <li class="item">
                 <h2>
-                    <a href="/ticket/" style="color: #FB4357;">예매</a>
-                </h2>
-            </li>
-            <li class="item">
-                <h2>
-                    <a href="#">스토어</a>
-                </h2>
-            </li>
-            <li class="item">
-                <h2>
-                    <a href="#">이벤트</a>
-                </h2>
-            </li>
-            <li class="item">
-                <h2>
-                    <a href="#">혜택</a>
+                    <a th:href="@{'/ticket/'}" style="color: #FB4357;">예매</a>
                 </h2>
             </li>
         </ul>
         <div class="-spring"></div>
         <div class="search-wrapper">
-            <form class="search-form">
             <label class="search">
                 <input type="text" class="keyword" name="keyword" placeholder="영화를 검색해 주세요">
                 <button>
@@ -112,7 +96,6 @@
                          alt="external-search-logistic-delivery-kiranshastry-solid-kiranshastry">
                 </button>
             </label>
-            </form>
         </div>
     </div>
 </nav>
