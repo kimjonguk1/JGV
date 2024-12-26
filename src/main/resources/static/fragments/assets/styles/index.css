@@ -83,6 +83,22 @@ body > .frame {
   width: 36px;
   cursor: pointer;
 }
+#header > .info-wrapper > .item > a {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  text-decoration: none;
+}
+#header > .info-wrapper > .item > a > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#header > .info-wrapper > .item > a > img {
+  width: 36px;
+  cursor: pointer;
+}
 #header > .info-wrapper > .item > a > .text {
   color: rgb(102, 102, 102);
   font-size: 13px;
@@ -152,13 +168,13 @@ body > .frame {
   flex-grow: 1;
   flex-shrink: 1;
 }
-#nav > .nav-wrapper > .search-wrapper > .search-form > .search {
+#nav > .nav-wrapper > .search-wrapper > .search {
   align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
 }
-#nav > .nav-wrapper > .search-wrapper > .search-form > .search > .keyword {
+#nav > .nav-wrapper > .search-wrapper > .search > .keyword {
   height: 24px;
   width: 200px;
   border: none;
@@ -167,17 +183,17 @@ body > .frame {
   font-weight: 500;
   outline: none;
 }
-#nav > .nav-wrapper > .search-wrapper > .search-form > .search > .keyword::placeholder {
+#nav > .nav-wrapper > .search-wrapper > .search > .keyword::placeholder {
   color: #000000;
   font-weight: 600;
 }
-#nav > .nav-wrapper > .search-wrapper > .search-form > .search > button {
+#nav > .nav-wrapper > .search-wrapper > .search > button {
   background-color: transparent;
   border: 0.0625rem solid transparent;
   padding: 0.2rem;
   position: absolute;
 }
-#nav > .nav-wrapper > .search-wrapper > .search-form > .search > button > img {
+#nav > .nav-wrapper > .search-wrapper > .search > button > img {
   width: 1.8rem;
 }
 #nav > .nav-wrapper > .nav-menu {

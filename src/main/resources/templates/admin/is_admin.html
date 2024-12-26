@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>관리자의 놀이터</title>
+    <link rel="stylesheet" th:href="@{'./assets/styles/index.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}" type="text/css">
+    <link rel="stylesheet" href="/admin/styles/is_admin.css" type="text/css">
+    <script defer th:src="@{'./assets/scripts/index.js'}" type="text/javascript"></script>
+    <script defer src="/fragments/assets/scripts/common.js" type="text/javascript"></script>
+    <script th:if="${!session.user.isUsIsAdmin()}">
+        alert('올바르지 않은 접근입니다.');
+        if (history.length > 1) {
+            history.back();
+        } else {
+            window.close();
+        }
+    </script>
+</head>
+<body th:if="${session.user.isUsIsAdmin()}">
+<th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
+<th:block th:replace="~{fragments/common.html :: header}"></th:block>
+<th:block th:replace="~{fragments/common.html :: nav}"></th:block>
+<div id="admin-title-container">
+    <button class="movie-information">
+        <span>영화 정보</span>
+    </button>
+    <img src="/home/images/verticalLine.png" alt="구분선">
+    <button class="theater-information">
+        <span>상영 정보</span>
+    </button>
+    <div class="-spring"></div>
+    <div class="admin-button-wrapper">
+        <button id="movie-crawl-button">
+            <span>영화정보 받아오기</span>
+        </button>
+        <button id="theater-crawl-button">
+            <span>상영관정보 받아오기</span>
+        </button>
+    </div>
+</div>
+<main id="movie-admin-page" class="frame">
+    <div class="admin-movie-list">
+        <!--        번호 / 영화 이름 / 개봉일 / 관람등급-->
+        <table>
+            <tbody>
+            <tr>
+                <th>번호</th>
+                <th>영화 이미지</th>
+                <th>영화 이름</th>
+                <th>개봉일</th>
+                <th>관람등급</th>
+            </tr>
+            <tr>
+                <td>9999</td>
+                <td>
+                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화이미지">
+                </td>
+                <td>
+                    <span>미세스 그린애플</span>
+                    <span>화이트 라운지</span>
+                </td>
+                <td>2024-12-26</td>
+                <td>15세</td>
+            </tr>
+            <tr>
+                <td>9999</td>
+                <td>
+                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화이미지">
+                </td>
+                <td>
+                    <span>미세스 그린애플</span>
+                    <span>화이트 라운지</span>
+                </td>
+                <td>2024-12-26</td>
+                <td>15세</td>
+            </tr>
+            <tr>
+                <td>9999</td>
+                <td>
+                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화이미지">
+                </td>
+                <td>
+                    <span>미세스 그린애플</span>
+                    <span>화이트 라운지</span>
+                </td>
+                <td>2024-12-26</td>
+                <td>15세</td>
+            </tr>
+            <tr>
+                <td>9999</td>
+                <td>
+                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화이미지">
+                </td>
+                <td>
+                    <span>미세스 그린애플</span>
+                    <span>화이트 라운지</span>
+                </td>
+                <td>2024-12-26</td>
+                <td>15세</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<main id="theater-admin-page" class="frame">
+    <div class="admin-movie-list">
+        <!--        번호 / 영화 이름 / 개봉일 / 관람등급-->
+        <table>
+            <tbody>
+            <tr>
+                <th>상영 번호</th>
+                <th>상영 이미지</th>
+                <th>영화 이름</th>
+                <th>상영일</th>
+            </tr>
+            <tr>
+                <td>9999</td>
+                <td>
+                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화이미지">
+                </td>
+                <td>
+                    <span>미세스 그린애플</span>
+                    <span>화이트 라운지</span>
+                </td>
+                <td style="display: flex;flex-direction: column;align-items: flex-start;justify-content: center; gap: 0.2rem; height: 100%">
+                    <span>2024-12-26</span>
+                    <span>2024-12-26</span>
+                    <span>2024-12-26</span>
+                    <span>2024-12-26</span>
+                    <span>2024-12-26</span>
+                    <span>2024-12-26</span>
+                </td>
+            </tr>
+            <tr>
+                <td>9999</td>
+                <td>
+                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화이미지">
+                </td>
+                <td>
+                    <span>미세스 그린애플</span>
+                    <span>화이트 라운지</span>
+                </td>
+                <td>2024-12-26</td>
+            </tr>
+            <tr>
+                <td>9999</td>
+                <td>
+                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화이미지">
+                </td>
+                <td>
+                    <span>미세스 그린애플</span>
+                    <span>화이트 라운지</span>
+                </td>
+                <td>2024-12-26</td>
+            </tr>
+            <tr>
+                <td>9999</td>
+                <td>
+                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg" alt="영화이미지">
+                </td>
+                <td>
+                    <span>미세스 그린애플</span>
+                    <span>화이트 라운지</span>
+                </td>
+                <td>2024-12-26</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+
+
+
+<th:block th:replace="~{fragments/common.html :: footer}"></th:block>
+</body>
+</html>
