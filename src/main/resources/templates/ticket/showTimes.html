@@ -9,6 +9,8 @@
     <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}" type="text/css">
     <link rel="stylesheet" th:href="@{'/ticket/assets/styles/showTimes.css'}" type="text/css">
     <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
+    <script defer th:src="@{'./assets/scripts/showTimes.js'}"></script>
+    <script defer th:src="@{'../../assets/scripts/common.js'}"></script>
     <title>상영시간표</title>
 </head>
 <body>
@@ -16,16 +18,16 @@
 <th:block th:replace="~{fragments/common.html :: header}"></th:block>
 <th:block th:replace="~{fragments/common.html :: nav}"></th:block>
 <main id="main">
-    <div class="img">
+    <div class="img image" data-id="theater">
         <div class="button-container">
-            <div class="button" data-id="cinema">
+            <div class="button" data-id="theater">
                 <img class="select" src="https://img.cgv.co.kr/R2014/images/common/ico/ico_finger.png" alt=""
-                     data-id="cinema">
+                     data-id="theater">
                 <span class="text">극장별 상영시간표</span>
             </div>
-            <div class="button" data-id="information">
+            <div class="button" data-id="movie">
                 <img class="select hidden" src="https://img.cgv.co.kr/R2014/images/common/ico/ico_finger.png" alt=""
-                     data-id="information">
+                     data-id="movie">
                 <span class="text">영화별 상영시간표</span>
             </div>
         </div>
@@ -83,7 +85,63 @@
             </ul>
         </div>
     </div>
-    <div class="information" data-id="cinema">
+    <div class="img-movie image hidden" data-id="movie">
+        <div class="button-container">
+            <div class="button" data-id="theater">
+                <img class="select hidden" src="https://img.cgv.co.kr/R2014/images/common/ico/ico_finger.png" alt=""
+                     data-id="theater">
+                <span class="text">극장별 상영시간표</span>
+            </div>
+            <div class="button" data-id="movie">
+                <img class="select" src="https://img.cgv.co.kr/R2014/images/common/ico/ico_finger.png" alt=""
+                     data-id="movie">
+                <span class="text">영화별 상영시간표</span>
+            </div>
+        </div>
+        <div class="head" data-id="movie">
+            <ul class="items">
+                <li class="reservation item select">예매율순</li>
+                <li class="line">
+                    <img src="https://img.cgv.co.kr/R2014/images/common/bg/bg_writeinfo.gif" alt="선">
+                </li>
+                <li class="review item">평점순</li>
+                <li class="line">
+                    <img src="https://img.cgv.co.kr/R2014/images/common/bg/bg_writeinfo.gif" alt="선">
+                </li>
+                <li class="human item">관람객순</li>
+            </ul>
+        </div>
+        <div class="movie-container">
+            <div class="movie">
+                <a href="#" class="poster">
+                    <img class="poster" src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000088/88797/88797_320.jpg" alt="하얼빈">
+                </a>
+                <div class="movie-info">
+                    <div class="text">/ 114분</div>
+                    <div class="text">2024.12.24개봉</div>
+                </div>
+            </div>
+            <div class="movie-title">
+                <ul class="movie">
+                    <li class="item-container"
+                        th:each="movie : ${movies}">
+                        <div class="text">
+                            <div th:class="${movie.getRaGrade() + ' rating'}"></div>
+                            <span th:text="${movie.getMoTitle()}" class="name"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="cinema-type">
+                <ul class="items">
+                    <li class="item">2D</li>
+                    <li class="item">4D</li>
+                    <li class="item">5D</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="information" data-id="theater">
         <div class="cinema-info">
             <div class="cinema-header">
                 <div class="day-containers"
@@ -257,40 +315,70 @@
             </a>
         </div>
     </div>
-    <div class="advertisement-info">
-        <a href="#" target="_self" class="advertisement-move">
-            <img src="https://adimg.cgv.co.kr/images/202411/Firefighters/1121_980x90.jpg" alt="배너"
-                 class="advertisement">
-        </a>
-    </div>
-    <div class="information hidden" data-id="information">
-        <div class="car-info" id="menu">
-            <div class="header">
-                <span class="bus"></span>
-                <span class="text">교통안내</span>
-                <span class="stretch"></span>
-                <a href="#" target="_blank" class="find">실시간 빠른 길 찾기</a>
-            </div>
-            <div class="bus detail"
-                 th:if="${theaterVos != null}"
-                 th:each="map : ${theaterVos}"
-                 th:utext="${map[0][6].split('&&')[0]}">
-            </div>
-            <div class="bus detail"
-                 th:if="${theaterVos == null}">
-            </div>
-            <div class="header">
-                <span class="car"></span>
-                <span class="text">주차안내</span>
-                <span class="stretch"></span>
-            </div>
-            <div class="car detail"
-                 th:if="${theaterVos != null}"
-                 th:each="map : ${theaterVos}"
-                 th:utext="${map[0][6].split('&&')[1]}">
-            </div>
-            <div class="car detail"
-                 th:if="${theaterVos == null}">
+    <div class="information hidden" data-id="movie">
+        <div id="schedule">
+            <ul class="main">
+                <li class="item"
+                    th:each="region : ${regions}"
+                    th:text="${region.getRegName()}"
+                    th:rel="${region.getRegName()}">
+                </li>
+            </ul>
+            <div class="cinema-info">
+                <div class="notice">* 시간을 클릭하시면 빠른 예매를 할 수 있습니다.</div>
+                <div class="day-containers">
+                    <button class="before button"></button>
+                    <ul class="day-container"
+                        th:if="${theaterVos != null}"
+                        th:each="vos : ${theaterVos}">
+                        <th:block th:each="vo : ${vos[2]}">
+                            <li class="item" th:each="date, iterStat : ${vo.value.split(',')}">
+                                <div class="small-container">
+                                    <div th:text="${vo.key.split('-')[1]} + '월'" class="day"></div>
+                                    <div th:text="${date.split('-')[1]}" class="day"></div>
+                                </div>
+                                <div th:text="${date.split('-')[0].trim()}" class="day"></div>
+                            </li>
+                        </th:block>
+                    </ul>
+                    <button class="after button"></button>
+                </div>
+                <ul class="items">
+                    <li class="item"
+                        th:if="${screenVos != null}"
+                        th:each="screen : ${screenVos}">
+                        <a href="#" th:utext="${screen.key[7].substring(0, 3)} + '<br>' + ${screen.key[7].substring(3)}"
+                           class="theater"></a>
+                        <div class="screens">
+                            <div class="screen-container"
+                                 th:each="scVal : ${screen.value}">
+                                <div class="theater-info">
+                                    <img class="arrow"
+                                         src="https://img.cgv.co.kr/r2014/images/common/ico/ico_arrow03.png"
+                                         alt="화살표">
+                                    <span th:if="${!scVal.key[1].equals('DX')}" th:text="${scVal.key[1]}"
+                                          class="text"></span>
+                                    <span th:if="${scVal.key[1].equals('DX')}" th:text="4 + ${scVal.key[1]}"
+                                          class="text"></span>
+                                    <img src="https://img.cgv.co.kr/r2014/images/common/bg/bg_li_vline.gif" alt="작대기">
+                                    <span th:if="${scVal.key[0].replace('&&', '').trim().equals(scVal.key[1])}"
+                                          th:classappend="${scVal.key[0].replace('&&', '').trim()}" class="text"></span>
+                                    <span th:if="${!scVal.key[0].replace('&&', '').trim().equals(scVal.key[1])}"
+                                          th:text="${scVal.key[0]}" class="text"></span>
+                                    <img src="https://img.cgv.co.kr/r2014/images/common/bg/bg_li_vline.gif" alt="작대기">
+                                    <span th:text="'총 ' + ${screen.key[4]} + '석'" class="text"></span>
+                                </div>
+                                <div class="time-table-container">
+                                    <a href="#" class="time-table" th:each="sc : ${scVal.value}">
+                                        <div th:text="${sc.split(',')[0].replace('[', '')}" class="time"></div>
+                                        <div th:text="${sc.split(',')[1].replace(']', '')} + '석'" class="seat"></div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="notice-footer">* 입장 지연에 따른 관람 불편을 최소화하기 위해 영화는 10분 후 상영이 시작됩니다.</div>
             </div>
         </div>
         <div class="advertisement-container">
@@ -303,6 +391,12 @@
                      class="advertisement">
             </a>
         </div>
+    </div>
+    <div class="advertisement-info">
+        <a href="#" target="_self" class="advertisement-move">
+            <img src="https://adimg.cgv.co.kr/images/202411/Firefighters/1121_980x90.jpg" alt="배너"
+                 class="advertisement">
+        </a>
     </div>
 </main>
 <th:block th:replace="~{fragments/common.html :: footer}"></th:block>
