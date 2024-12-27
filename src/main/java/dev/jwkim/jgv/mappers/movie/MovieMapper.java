@@ -59,4 +59,8 @@ public interface MovieMapper {
     //페이징을 위한 영화 카운트
     int getMovieCountByKeyword(String keyword);
 
+    // 메인 화면 캐러셀을 위한 영화 select
+    List<Movie_ImageDTO> selectCaraouselCurrentMovies();
+    List<Movie_ImageDTO> selectCarouselUpcomingMovies();
+
 }

@@ -15,9 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -139,7 +140,10 @@ public class MovieService {
             String rawData = movieDoc.select("div.spec > dl > dt:contains(기본 정보) + dd").text();
             String movieDate = movieDoc.select("div.spec > dl > dt:contains(개봉) + dd").text();
             // 개봉 연도만 추출
-            String releaseYear = movieDate.split("\\.")[0];
+            SimpleDateFormat yearFormatter = new SimpleDateFormat("yyyy");
+            Date parsedDate = yearFormatter.parse(movieDate); // "2025.01", "2025.01.10" 모두 처리
+            String releaseYear = yearFormatter.format(parsedDate); // "2025"
+
             String movieTitle = movieDoc.select("div.box-contents > div.title > strong").text();
             // 관람 등급
             String raiting = rawData.split("[,.]")[0].trim();
@@ -334,6 +338,14 @@ public class MovieService {
 
     public List<Movie_ImageDTO> selectAllMovieList() {
         return this.movieMapper.selectAllMovies();
+    }
+
+    public List<Movie_ImageDTO> selectCaraouselCurrnetMovieList() {
+        return this.movieMapper.selectCaraouselCurrentMovies();
+    }
+
+    public List<Movie_ImageDTO> selectCarouselUpcomingMovieList() {
+        return this.movieMapper.selectCarouselUpcomingMovies();
     }
 
     public Movie_InfoDTO selectMovieInfoById(Integer movieId) {

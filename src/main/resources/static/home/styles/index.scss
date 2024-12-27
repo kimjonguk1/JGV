@@ -106,63 +106,169 @@ main {
   }
 }
 
-#movie-container {
-  width: 980px;
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-  justify-content: center;
-  margin-top: 3rem;
-  padding: 1rem 2rem;
+.movie-container {
+  max-width: 1200px;
+  margin: 0 auto;
 
-  > .title-container {
-    @include flex(row, center, flex-start);
-    text-align: center;
-    font-size: 1.25rem;
-    letter-spacing: 0.05rem;
-    font-weight: 700;
+  .movie-header {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 40px;
 
-    > h2 > a {
-      color: #000000;
+    .tab-button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 32px;
+      color: #666;
+
+      &.active {
+        color: black;
+        font-weight: bold;
+      }
+
+    }
+    .spring {
+      flex-grow: 1;
+    }
+
+    .show-all {
+      margin-top: 18px;
+      padding: 10px 32px 4px 15px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #222;
+      line-height: 1.429em;
+      background: transparent url(https://img.cgv.co.kr/R2014/images/common/ico/arrowR_8x13.png) calc(100% - 7px) center / 8px 13px scroll no-repeat;
+      border: 1px solid #e2e2e2;
+      border-radius: 15px;
+      box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.05);
     }
   }
 
-  > .movie-chart {
-    width: 980px;
-    align-items: flex-start;
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    justify-content: flex-start;
+  .carousel-container {
+    display: none;
+    position: relative;
+    overflow: hidden;
 
+    &.active {
+      display: block;
+    }
 
-    > .movie-wrapper {
-      width: 11rem;
-      height: 16rem;
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
 
-      align-items: center;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      justify-content: center;
+      .movies-wrapper {
+        display: flex;
+        transition: transform 0.3s ease-in-out;
+        width: auto;
 
-      > a {
-        > img {
-          border: 1px solid transparent;
-          border-radius: 0.7rem;
-          width: 10.5rem;
-          height: 14.625rem;
+        .movie-card {
+          position: relative;
+          width: 20%;
+          margin: 0 10px;
+          text-align: center;
+          flex: 0 0 calc(20% - 20px);
+          filter: brightness(1);
+
+          &:hover {
+            .movie-poster {
+              filter: brightness(0.5);
+            }
+          }
+
+          .movie-poster {
+            width: 220px;
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+          }
+
+          .hover-actions {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+
+            .detail-button {
+              background-color: white;
+              color: #6e6c6d;
+              border: none;
+              cursor: pointer;
+              border-radius: 5px;
+              padding: 10px 20px;
+              font-weight: bold;
+              width: 160px;
+            }
+
+            .reserve-button {
+              background-color: #FB4357;
+              color: #fff;
+              border: none;
+              cursor: pointer;
+              border-radius: 5px;
+              padding: 10px 20px;
+              font-weight: bold;
+            }
+          }
+
+          &:hover .hover-actions {
+            display: flex;
+          }
+
+          h3 {
+            margin-top: 10px;
+            font-size: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 220px;
+            display: block;
+          }
+
+          p {
+            font-size: 14px;
+            color: black;
+          }
         }
       }
 
-      > .movie-title {
-        font-size: 1.25rem;
-        font-weight: 600;
+      .carousel-button {
+        position: absolute;
+        top: 40%;
+
+        cursor: pointer;
+        border-radius: 50%;
+        z-index: 100;
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+
+
+        &.prev {
+          background: rgba(255, 255, 255, 0.8) url(	https://img.cgv.co.kr/R2014/images/common/ico/arrowL.png) center / 9px 13px scroll no-repeat;
+          left: -1px !important;
+        }
+
+        &.next {
+          background: rgba(255, 255, 255, 0.8) url(	https://img.cgv.co.kr/R2014/images/common/ico/arrowL.png) center / 9px 13px scroll no-repeat;
+          transform: rotate(-180deg);
+          right: -1px !important;
+        }
       }
     }
   }
 }
+
+
 
 #theater {
   @include flex(column, center, center, 1.5rem);

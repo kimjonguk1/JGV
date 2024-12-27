@@ -199,4 +199,39 @@
         FROM jgv.movie
         WHERE mo_title LIKE CONCAT('%', #{keyword}, '%')
     </select>
+
+    <select id="selectCaraouselCurrentMovies" resultType="dev.jwkim.jgv.DTO.Movie_ImageDTO">
+        SELECT
+            m.mo_num AS 'moNum',
+            m.mo_title AS 'moTitle',
+            m.mo_date AS 'moDate',
+            m.mo_time AS 'moTime',
+            m.mo_plot AS 'moPlot',
+            m.mo_booking_rate AS 'moBookingRate',
+            i.m_img_url AS 'm_img_url'
+        FROM
+            jgv.movie m
+                LEFT JOIN
+            jgv.movie_image i ON m.mo_num = i.mo_num
+        WHERE CURRENT_DATE() > STR_TO_DATE(mo_date, '%Y.%m.%d')
+        ORDER BY mo_booking_rate DESC
+        LIMIT 20
+    </select>
+
+    <select id="selectCarouselUpcomingMovies" resultType="dev.jwkim.jgv.DTO.Movie_ImageDTO">
+        SELECT
+            m.mo_num AS 'moNum',
+            m.mo_title AS 'moTitle',
+            m.mo_date AS 'moDate',
+            m.mo_time AS 'moTime',
+            m.mo_plot AS 'moPlot',
+            m.mo_booking_rate AS 'moBookingRate',
+            i.m_img_url AS 'm_img_url'
+        FROM
+            jgv.movie m
+                LEFT JOIN
+            jgv.movie_image i ON m.mo_num = i.mo_num
+        WHERE STR_TO_DATE(mo_date, '%Y.%m.%d') > CURRENT_DATE()
+        LIMIT 20
+    </select>
 </mapper>
