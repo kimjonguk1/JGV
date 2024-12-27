@@ -1,5 +1,28 @@
 const $reservationCancel = document.querySelector('.cancel');
 
+document.getElementById('paNum').innerText = sessionStorage.getItem('paNum');
+document.getElementById('moTitle').innerText = sessionStorage.getItem('moTitle');
+document.getElementById('paPrice').innerText = sessionStorage.getItem('paPrice');
+document.getElementById('paPrice2').innerText = sessionStorage.getItem('paPrice');
+document.getElementById('thName').innerText = sessionStorage.getItem('thName');
+document.getElementById('seHuman').innerText = sessionStorage.getItem('seHuman');
+document.getElementById('scStartDate').innerText = sessionStorage.getItem('scStartDate');
+document.getElementById('meName').innerText = sessionStorage.getItem('meName');
+document.getElementById('paCreatedAt').innerText = sessionStorage.getItem('paCreatedAt');
+
+
+
+function clearSessionStorage(keys) {
+    keys.forEach(key => sessionStorage.removeItem(key));
+}
+
+clearSessionStorage([
+    'paNum', 'moTitle', 'paPrice', 'thName',
+    'seHuman', 'scStartDate', 'meName', 'paCreatedAt'
+]);
+
+
+
 $reservationCancel.onclick = () => {
 
     const xhr = new XMLHttpRequest();

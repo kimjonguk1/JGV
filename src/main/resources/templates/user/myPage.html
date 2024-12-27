@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>마이페이지</title>
+    <link rel="stylesheet" th:href="@{'./assets/styles/index.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}" type="text/css">
+    <link rel="stylesheet" href="/user/styles/myPage/myPage.css" type="text/css">
+    <script defer th:src="@{'./assets/scripts/index.js'}" type="text/javascript"></script>
+    <script defer src="/user/scripts/myPage/myPage.js" type="text/javascript"></script>
+</head>
+<body>
+<th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
+<th:block th:replace="~{fragments/common.html :: header}"></th:block>
+<th:block th:replace="~{fragments/common.html :: nav}"></th:block>
+<div id="myPage-main">
+    <div class="profile-container">
+        <div class="image-wrapper">
+            <img src="http://img.cgv.co.kr/R2014/images/common/default_profile.gif" alt="기본 이미지">
+        </div>
+        <div class="user-info">
+            <span th:text="${session.user.getUsName() + '님'}" class="name"></span>
+            <span th:text="${session.user.getUsId()}" class="id">rlawhddbf123</span>
+            <span th:text="${session.user.getUsNickName()}" class="nickname">조선망나니 김종율</span>
+        </div>
+    </div>
+    <div class="main">
+        <div class="user-tab">
+            <ul>
+                <li class="title" id="myJgv">
+                    <a th:href="@{/user/myPage/main}">MY JGV HOME</a>
+                </li>
+
+                <li class="title" id="myReservation">
+                    <a th:href="@{/user/myPage/reservation}">나의 예매내역</a>
+                </li>
+                <li class="item">
+                    <img src="data:image/png;base64,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" alt="circled-right">
+                    <div class="-spring" id="myReceipt"></div>
+                    <a th:href="@{/user/myPage/receipt}">신용카드 영수증 출력</a>
+                </li>
+
+                <li class="title" id="myProfile">
+                    <a th:href="@{/user/myPage/personal}">회원정보</a>
+                </li>
+                <li class="item">
+                    <img src="data:image/png;base64,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" alt="circled-right">
+                    <div class="-spring"></div>
+                    <a th:href="@{/user/myPage/personal}">개인정보 설정</a>
+                </li>
+                <li class="item">
+                    <img src="data:image/png;base64,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" alt="circled-right">
+                    <div class="-spring"></div>
+                    <a th:href="@{/user/myPage/personal}">회원탈퇴</a>
+                </li>
+            </ul>
+        </div>
+<!--        <div class="content">-->
+<!--            dd-->
+<!--        </div>-->
+        <th:block th:replace="~{/fragments/user/myPage.html :: ${fragment}}"></th:block>
+<!--                                                            "receipt" -->
+
+    </div>
+</div>
+
+
+<th:block th:replace="~{fragments/common.html :: footer}"></th:block>
+</body>
+</html>
