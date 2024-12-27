@@ -1,44 +1,43 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <div class="content main" th:fragment="main">
-    <div class="main-container">
+    <div class="main-container" >
         <div class="title-container">
             <h2>MY 예매내역</h2>
-            <span>1건</span>
+            <span th:text="${reservations.size()} + '건'"></span>
         </div>
-        <div class="my-reservation">
+        <div class="my-reservation"  th:each="reservation, stat : ${reservations}">
             <div class="reservation-info">
                 <span class="reservation-num">예매번호</span>
-                <span class="num-black">0345-</span>
-                <span class="num-red">1204-3633-1</span>
-                <span class="num-red">29</span>
-                <span class="reservation-num">(2024.12.04)</span>
+                <span class="num-red" th:text="${reservation.key[0]}"></span>
+                <span class="reservation-num" th:text="${reservation.key[8]}"></span>
             </div>
             <div class="reservation-container">
                 <div class="reservation-movie">
-                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg"
+                    <img th:src="${reservation.key[1]}"
                          alt="예매사진">
                     <div class="movie-info">
                         <div class="movie-title">
-                            <span>미세스 그린 애플 - 더 화이트 라운지 인 시네마</span>
+                            <span th:text="${reservation.key[2]}"></span>
                         </div>
                         <div class="cinema">
                             <span>관람 극장</span>
-                            <span class="content">JGV 대구</span>
+                            <span class="content" th:text="${reservation.key[4]}"></span>
+                            <span class="content" th:text="${reservation.key[6]}"></span>
                         </div>
                         <div class="date">
-                            <span>관람 일시</span>
-                            <span class="content">2024.12.12(목) 19:00</span>
+                            <span >관람 일시</span>
+                            <span th:text="${reservation.key[5]}" class="content"></span>
                         </div>
                         <div class="seat">
                             <span>관람 좌석</span>
-                            <span class="content">H 03</span>
+                            <span th:text="${#strings.trim(reservation.value.toString()).substring(1, reservation.value.toString().length() - 1)}" class="content"></span>
                         </div>
                     </div>
                 </div>
                 <div class="payment">
                     <span class="text">총 결제 금액</span>
-                    <span class="pay">22,000원</span>
+                    <span class="pay" th:text="${reservation.key[3]}"></span>
                 </div>
             </div>
         </div>
@@ -118,61 +117,64 @@
     <div class="sub-tooltip">
         <span>티켓판매기에서 예매번호를 입력하면 티켓을 발급받을 수 있습니다.</span>
     </div>
-    <div th:each="reservation : ${reservations}">
+    <div th:each="reservation, stat : ${reservations}">
         <div class="reservation-main">
             <div class="reservation-num">
                 <span class="res-num">예매번호</span>
                 <div class="-spring"></div>
-                <span class="red" th:text="${reservation.key[0]}">예매번호</span>
+                <span class="red" th:id="'paNum-' + ${stat.index}" th:text="${reservation.key[0]}">예매번호</span>
             </div>
             <div class="reservation-info">
                 <div class="image-wrapper">
                     <!-- 영화 이미지 출력 -->
-                    <img th:src="${reservation.key[5]}" alt="영화 이미지">
+                    <img th:src="${reservation.key[1]}" alt="영화 이미지">
                 </div>
                 <div class="movie-info">
                     <div class="title-container">
                         <!-- 영화 제목 -->
-                        <span class="movie" th:text="${reservation.key[3]}"></span>
+                        <span class="movie" th:id="'moTitle-' + ${stat.index}" th:text="${reservation.key[2]}"></span>
+                        <span class="movie" th:text="${reservation.key[6]}"></span>
                         <div class="-spring"></div>
                         <!-- 결제 금액 -->
-                        <span class="pay" th:text="${reservation.key[1]}"></span>
+                        <span class="pay" th:id="'paPrice-' + ${stat.index}" th:text="${reservation.key[3]}"></span>
                     </div>
                     <div class="detail">
                         <span>관람극장</span>
                         <!-- 영화관 이름 -->
-                        <span class="black" th:text="${reservation.key[3]}"></span>
+                        <span class="black" th:id="'thName-' + ${stat.index}" th:text="${reservation.key[4]}"></span>
                         <div class="-spring"></div>
                         <span>관람인원</span>
                         <!-- 관람 인원: 좌석 수만큼 반복 -->
                         <span class="black">
-                    <span th:text="${reservation.value.size()}"></span> <!-- 좌석 수를 기반으로 관람인원 출력 -->
+                        <span class="black" th:id="'seHuman-' + ${stat.index}" th:text="'일반' + ${reservation.value.size()}"></span>
                 </span>
                     </div>
                     <div class="detail">
                         <span>관람일시</span>
                         <!-- 상영 시작 시간 -->
-                        <span class="red" th:text="${reservation.key[4]}"></span>
+                        <span class="red" th:id="'scStartDate-' + ${stat.index}" th:text="${reservation.key[5]}"></span>
                         <div class="-spring"></div>
                         <span>관람좌석</span>
                         <!-- 좌석 이름: 각 좌석을 반복 출력 -->
                         <span class="black">
-                    <span th:text="${#strings.trim(reservation.value.toString()).substring(1, reservation.value.toString().length() - 1)}"></span>
+                    <span id="seName"
+                          th:text="${#strings.trim(reservation.value.toString()).substring(1, reservation.value.toString().length() - 1)}"></span>
 
                 </span>
                     </div>
                     <div class="detail">
+                        <span>매수</span>
                         <span>상영관</span>
                         <!-- 상영관 이름 -->
-                        <span class="black" th:text="${reservation.key[3]}"></span>
+                        <span class="black" th:id="'ciName-' + ${stat.index}" th:text="${reservation.key[6]}"></span>
                         <div class="-spring"></div>
-                        <span>매수</span>
                         <!-- 매수: 좌석 수를 계산하여 출력 -->
                         <span class="black" th:text="${reservation.value.size()} + '매'"></span>
                     </div>
                 </div>
             </div>
         </div>
+        <div style="display: none;" th:id="'paCreatedAt-' + ${stat.index}" th:text="${reservation.key[8]}"></div>
 
 
         <div class="movie-receipt">
@@ -184,18 +186,18 @@
                     <div class="result-pay underline">
                         <span class="result-text">총 결제금액</span>
                         <div class="-spring"></div>
-                        <span class="result-payment" th:text="${reservation.key[1]}"></span>
+                        <span class="result-payment" th:text="${reservation.key[3]}"></span>
                     </div>
                     <div class="result-pay">
-                        <span class="payment-method" th:text="'└  ' + ${reservation.key[7]}"></span>
+                        <span class="payment-method" th:id="'meName-' + ${stat.index}" th:text="'└  ' + ${reservation.key[7]}"></span>
                         <div class="-spring"></div>
-                        <span class="method-payment" th:text="${reservation.key[1]}"></span>
+                        <span class="method-payment" th:text="${reservation.key[3]}"></span>
                     </div>
                 </div>
                 <div class="reservation-cancel">
-                    <button class="reservation-cancel-button" type="button">
-                        예매취소
+                    <button class="reservation-cancel-button" th:onclick="'ticketCancel(' + ${stat.index} + ')'">예매 취소
                     </button>
+
                 </div>
             </div>
         </div>
@@ -217,7 +219,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr  th:each="cancelReservation : ${cancelReservations}">
+                <tr th:each="cancelReservation : ${cancelReservations}">
                     <td th:text="${cancelReservation.key[0]}"></td>
                     <td th:text="${cancelReservation.key[0]}"></td>
                     <td th:text="${cancelReservation.key[1]}"></td>

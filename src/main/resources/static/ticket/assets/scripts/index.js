@@ -1191,7 +1191,6 @@ function TCPPIC() {
 
 $payForm.onsubmit = (e) => {
     e.preventDefault(); // 기본 폼 제출 방지
-    const $theaterMovie = $containers.querySelector(':scope > .posters > .movie-info > .title');
     // 약관 동의를 체크했는지 확인
     if ($checkboxAgreeAll.checked && $checkboxAgreeSolo.checked) {
         // 새로운 XMLHttpRequest 객체 생성
@@ -1215,7 +1214,7 @@ $payForm.onsubmit = (e) => {
         // 폼 데이터 추가 (span의 텍스트는 innerText로 가져오기)
         formData.append("paPrice", document.getElementById('pay-price-won-int').innerText.trim()); // span 요소의 텍스트
         formData.append("meName", document.getElementById('method').innerText.trim());  // span 요소에서 결제 방법 번호 가져오기
-        formData.append("moTitle", $theaterMovie.innerText);
+        formData.append("moTitle", $payMovie.innerText);
         formData.append("ciName", $theaterCinema.innerText);
         formData.append("thName", $theaterTheater2);
         formData.append("scStartDate", formattedDate);
@@ -1228,6 +1227,8 @@ $payForm.onsubmit = (e) => {
             if (xhr.readyState !== XMLHttpRequest.DONE) {
                 return;
             }
+            Loading.hide();
+
             if (xhr.status >= 200 && xhr.status < 300) {
 
             } else {
@@ -1241,7 +1242,7 @@ $payForm.onsubmit = (e) => {
                 sessionStorage.setItem('paymentComplete', 'true');
                 // 예매 정보도 sessionStorage에 저장
                 sessionStorage.setItem('meName', document.getElementById('method').innerText);
-                sessionStorage.setItem('moTitle', $theaterMovie.innerText);
+                sessionStorage.setItem('moTitle', $payMovie.innerText);
                 sessionStorage.setItem('ciName', $theaterCinema.innerText);
                 sessionStorage.setItem('thName', $theaterTheater2);
                 sessionStorage.setItem('scStartDate', $theaterTime.innerText);
@@ -1259,6 +1260,8 @@ $payForm.onsubmit = (e) => {
         // 요청 설정 및 전송
         xhr.open('POST', location.href);
         xhr.send(formData);
+        Loading.show();
+
     } else {
         alert("약관을 모두 동의해주세요");
     }
