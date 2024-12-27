@@ -4,8 +4,8 @@
 #movie-admin-page {
   @include flex(column, flex-start, flex-start, 1rem);
   @include minmaxWidth(980px);
-  height: 50rem;
-  padding-top: 2rem;
+  height: auto;
+  padding: 2rem 0;
 
   > .admin-movie-list {
     width: 100%;
@@ -40,7 +40,6 @@
               width: 4rem;
               height: 1.8rem;
               border-radius: 0.4rem;
-              cursor: pointer;
               font-size: 1rem;
               font-weight: 500;
               text-align: center;
@@ -69,8 +68,8 @@
 #theater-admin-page {
   @include flex(column, flex-start, flex-start, 1rem);
   @include minmaxWidth(980px);
-  height: 50rem;
-  padding-top: 2rem;
+  height: auto;
+  padding: 2rem 0;
 
   > .admin-movie-list {
     width: 100%;
@@ -117,6 +116,7 @@
   @include flex(row, center, stretch);
   @include minmaxWidth(980px);
   padding-top: 2rem;
+  border-bottom: 1px solid #e0e0e0;
 
   > .theater-information {
     color: #666666;
@@ -231,3 +231,127 @@
     }
   }
 }
+
+#movie-search-form {
+  @include flex(row, center, flex-start, 1rem);
+  padding: 1.375rem 0;
+  border-bottom: 1px solid #e0e0e0;
+
+  > .movie-keyword-wrapper {
+    @include flex(row, center, flex-start, 1rem);
+    @include minmaxWidth(100%);
+
+    > label > .movie-keyword {
+      color: #9e9e9e;
+      font-size: 1rem;
+      font-weight: 600;
+      padding-right: 0.75rem;
+    }
+
+    > label > input {
+      border-left: 1px solid #e0e0e0;
+      border-right: 1px solid #e0e0e0;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    > .movie-search {
+      width: 4rem;
+      height: 1.8rem;
+
+      background-color: #FB4357;
+      border-radius: 0.4rem;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+  }
+}
+
+#theater-search-form {
+  @include flex(row, center, flex-start, 1rem);
+  padding: 1.375rem 0;
+  border-bottom: 1px solid #e0e0e0;
+  display: none;
+
+  > .theater-keyword-wrapper {
+    @include flex(row, center, flex-start, 1rem);
+    @include minmaxWidth(100%);
+
+
+    > label > .theater-keyword {
+      color: #9e9e9e;
+      font-size: 1rem;
+      font-weight: 600;
+      padding-right: 0.75rem;
+    }
+
+    > label > input {
+      border-left: 1px solid #e0e0e0;
+      border-right: 1px solid #e0e0e0;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    > .theater-search {
+      width: 4rem;
+      height: 1.8rem;
+
+      background-color: #2275a4;
+      border-radius: 0.4rem;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+  }
+}
+
+#movie-page-container {
+  @include flex(row, center, center, 2rem);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1rem;
+  padding: 1.8rem 0;
+
+  > .movie-page-wrapper {
+    @include minmaxWidth(100%);
+    @include flex(row, center, center);
+
+    > table > tbody > tr > td > a {
+
+      @include flex(row, center, center, 1rem);
+      @include minmaxWidth(100%);
+      color: #666666;
+
+      &:hover {
+        color: #222222;
+      }
+    }
+  }
+}
+
+#theater-page-container {
+  @include flex(row, center, center, 2rem);
+  display: none;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1rem;
+  padding: 1.8rem 0;
+
+  > .theater-page-wrapper {
+    @include minmaxWidth(100%);
+    @include flex(row, center, center);
+
+    > table > tbody > tr > td > a {
+
+      @include flex(row, center, center, 1rem);
+      @include minmaxWidth(100%);
+      color: #666666;
+
+      &:hover {
+        color: #222222;
+      }
+    }
+  }
+}
+

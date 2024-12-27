@@ -2,8 +2,8 @@
 @import "../../fragments/assets/styles/global";
 
 body {
-  width: 100%;
-  height: 100vh;
+  width: 600px;
+  height: 800px;
   @include flex(column, center, center);
   background-color: #222222;
 
