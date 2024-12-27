@@ -104,11 +104,13 @@ function checkScreen() {
             const $theaterItem = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.theater > .body > .content > .theater-container > .theater'));
             $theaterItem.forEach((x) => {
                 $theater.append(x);
-                if (ticketParams.thName !== null && ticketParams.thName !== undefined) {
-                    if (ticketParams.thName.replace('CGV', '') === x.innerText) {
-                        setTimeout(() => {
-                            x.click();
-                        }, 0); // 클릭 이벤트가 등록될 때까지 대기
+                if (ticketParams) {
+                    if (ticketParams.thName !== null && ticketParams.thName !== undefined) {
+                        if (ticketParams.thName.replace('CGV', '') === x.innerText) {
+                            setTimeout(() => {
+                                x.click();
+                            }, 0); // 클릭 이벤트가 등록될 때까지 대기
+                        }
                     }
                 }
                 x.onclick = () => {

@@ -357,7 +357,7 @@ public class TicketService {
                     // CGV 극장 URL 열기
                     driver.get(url);
 
-//                    // iframe 요소 찾기 및 전환
+                    // iframe 요소 찾기 및 전환
                     WebElement iframes = driver.findElement(By.id("ifrm_movie_time_table"));
                     driver.switchTo().frame(iframes);
 
@@ -467,6 +467,7 @@ public class TicketService {
             driver.quit();
         }
     }
+
     // endregion
 
 //    ---------------------------------------
