@@ -27,13 +27,13 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "/movies")
-public class MoiveListController {
+public class MovieListController {
     private final MovieService movieService;
     private final SearchService searchService;
     private final ReviewService reviewService;
     private final TheaterService theaterService;
 
-    public MoiveListController(MovieService movieService, SearchService searchService, ReviewService reviewService, TheaterService theaterService) {
+    public MovieListController(MovieService movieService, SearchService searchService, ReviewService reviewService, TheaterService theaterService) {
         this.movieService = movieService;
         this.searchService = searchService;
         this.reviewService = reviewService;
