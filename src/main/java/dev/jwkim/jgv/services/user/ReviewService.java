@@ -41,7 +41,10 @@ public class ReviewService {
         int totalCount = this.reviewMapper.selectArticleCountByMovieId(id);
         PageVo pageVo = new PageVo(page, totalCount);
 
-        ReviewDTO[] reviewDTO = this.reviewMapper.selectArticleByMovieId(id, pageVo.countPerPage, pageVo.offsetCount);
+        ReviewDTO[] reviewDTO = this.reviewMapper.selectArticleByMovieId(
+                id,
+                pageVo.countPerPage,
+                pageVo.offsetCount);
         return Pair.of(pageVo, reviewDTO);
     }
 
