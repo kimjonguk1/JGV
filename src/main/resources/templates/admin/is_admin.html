@@ -47,6 +47,37 @@
         </button>
     </div>
 </div>
+<form id="movie-search-form" class="frame">
+    <div class="movie-keyword-wrapper">
+        <label class="--obj-label">
+            <select class="movie-keyword">
+                <option>영화이름</option>
+                <option>년도별검색</option>
+                <option>월별검색</option>
+            </select>
+        </label>
+        <label class="--obj-label">
+            <input class="--obj-filed" required placeholder="영화정보 검색" type="text">
+        </label>
+        <button class="movie-search" type="submit">검색</button>
+    </div>
+</form>
+
+<form id="theater-search-form" class="frame">
+    <div class="theater-keyword-wrapper">
+        <label class="--obj-label">
+            <select class="theater-keyword">
+                <option>상영관이름</option>
+                <option>년도별검색</option>
+                <option>월별검색</option>
+            </select>
+        </label>
+        <label class="--obj-label">
+            <input class="--obj-filed" required placeholder="상영관정보 검색" type="text">
+        </label>
+        <button class="theater-search" type="submit">검색</button>
+    </div>
+</form>
 <main id="movie-admin-page" class="frame">
     <div class="admin-movie-list">
         <!--        번호 / 영화 이름 / 개봉일 / 관람등급-->
@@ -84,6 +115,32 @@
         </table>
     </div>
 </main>
+<div id="movie-page-container" class="frame">
+    <div class="movie-page-wrapper">
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <a href="#">1</a>
+                </td>
+                <td>
+                    <a href="#">2</a>
+                </td>
+                <td>
+                    <a href="#">3</a>
+                </td>
+                <td>
+                    <a href="#">4</a>
+                </td>
+                <td>
+                    <a href="#">5</a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <main id="theater-admin-page" class="frame">
     <div class="admin-theater-list">
@@ -121,6 +178,32 @@
         </table>
     </div>
 </main>
+<div id="theater-page-container" class="frame">
+    <div class="theater-page-wrapper">
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <a href="#">1</a>
+                </td>
+                <td>
+                    <a href="#">2</a>
+                </td>
+                <td>
+                    <a href="#">3</a>
+                </td>
+                <td>
+                    <a href="#">4</a>
+                </td>
+                <td>
+                    <a href="#">5</a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
 <th:block th:replace="~{fragments/common.html :: footer}"></th:block>

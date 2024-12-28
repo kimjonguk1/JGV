@@ -509,14 +509,16 @@ public class UserService {
             Set<String> strings = new LinkedHashSet<>();
             List<String> strings1 = new ArrayList<>();
             strings.add(String.valueOf(reservationVos.getPaNum()));
+            strings.add(String.valueOf(reservationVos.getMImgUrl()));
+            strings.add(String.valueOf(reservationVos.getMoTitle()));
             strings.add(String.format("%,d", reservationVos.getPaPrice()) + "원");
-            strings.add(String.valueOf(reservationVos.getCiName()));
             strings.add(String.valueOf(reservationVos.getThName()));
             LocalDate localDate = LocalDate.parse(reservationVos.getScStartDate().toString().split("T")[0], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             strings.add(reservationVos.getScStartDate().toString().split("T")[0] + "(" + localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN).split("요일")[0] + ") " + reservationVos.getScStartDate().toString().split("T")[1]);
-            strings.add(String.valueOf(reservationVos.getMImgUrl()));
-            strings.add(String.valueOf(reservationVos.getMoTitle()));
+            strings.add(String.valueOf(reservationVos.getCiName()));
             strings.add(String.valueOf(reservationVos.getMeName()));
+            strings.add(reservationVos.getPaCreatedAt().toString().split("T")[0]);
+
 
             strings1.add(String.valueOf(reservationVos.getSeName()));
 
@@ -524,6 +526,7 @@ public class UserService {
         }
         return map;
     }
+
     public List<List<String>> selectCancelPaymentByUsNum(int usNum) {
         List<List<String>> map = new ArrayList<>();
         ReservationVo[] reservationVo = this.userMapper.selectCancelPaymentByUsNum(usNum);

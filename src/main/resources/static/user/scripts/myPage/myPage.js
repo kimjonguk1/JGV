@@ -1,12 +1,34 @@
-const $reservationCancel = document.querySelector('.reservation-cancel-button');
+function ticketCancel(index) {
+    // 선택된 항목의 데이터를 가져옵니다.
+    const paNum = document.getElementById(`paNum-${index}`).innerText;
+    const moTitle = document.getElementById(`moTitle-${index}`).innerText;
+    const paPrice = document.getElementById(`paPrice-${index}`).innerText;
+    const thName = document.getElementById(`thName-${index}`).innerText;
+    const seHuman = document.getElementById(`seHuman-${index}`).innerText;
+    const scStartDate = document.getElementById(`scStartDate-${index}`).innerText;
+    const meName = document.getElementById(`meName-${index}`).innerText.slice(2);
+    const paCreatedAt = document.getElementById(`paCreatedAt-${index}`).innerText;
 
-// $reservationCancel.onclick = () => {
-//     window.open(
-//         "http://localhost:8080/user/myPage/reservationCancel",
-//         "예매취소",
-//         "width=600,height=800,left=200,top=200"
-//     );
-// };
+    console.log('meName:', meName); // 로그로 확인
+    console.log('paCreatedAt:', paCreatedAt); // 로그로 확인
+
+    // 세션 스토리지에 저장
+    sessionStorage.setItem('paNum', paNum);
+    sessionStorage.setItem('moTitle', moTitle);
+    sessionStorage.setItem('paPrice', paPrice);
+    sessionStorage.setItem('thName', thName);
+    sessionStorage.setItem('seHuman', seHuman);
+    sessionStorage.setItem('scStartDate', scStartDate);
+    sessionStorage.setItem('meName', meName);
+    sessionStorage.setItem('paCreatedAt', paCreatedAt);
+
+    // 팝업 창 열기
+    window.open(
+        "http://localhost:8080/user/myPage/reservationCancel",
+        "예매취소",
+        "width=600,height=800,left=200,top=200"
+    );
+}
 
 const $modal = document.querySelector('.reserve-modal');
 const $textarea = document.getElementById('reviewText');

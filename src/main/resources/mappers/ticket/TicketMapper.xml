@@ -33,15 +33,15 @@
     </select>
     <select id="selectCinemaNumByCinemaType"
             resultType="dev.jwkim.jgv.entities.theater.CinemaEntity">
-        SELECT `ci_num`,
-               `ci_name`,
-               `cinema`.`th_num`,
-               `cinema`.`cit_num`
+        SELECT `ci_num`           AS `ciNum`,
+               `ci_name`          AS `ciName`,
+               `cinema`.`th_num`  AS `thNum`,
+               `cinema`.`cit_num` AS `citNum`
         FROM `jgv`.`cinema`
                  LEFT JOIN `jgv`.`theater` t ON `cinema`.`th_num` = t.th_num
-                 LEFT JOIN `jgv`.`cinema_type` ct on ct.cit_num = cinema.cit_num
-        WHERE `th_name` = #{thName}
-          AND `cit_name` = #{citName}
+                 LEFT JOIN `jgv`.`cinema_type` ct on cinema.cit_num = ct.cit_num
+        WHERE `cit_name` = #{citName}
+          AND `th_name` = #{thName}
     </select>
     <select id="selectDuplicateScreen"
             resultType="dev.jwkim.jgv.entities.theater.ScreenEntity">
