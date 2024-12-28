@@ -39,7 +39,7 @@ class Loading {
 }
 
 //검색 기능 추가
-{
+document.addEventListener('DOMContentLoaded', () => {
     const $form = document.querySelector('.nav > .nav-wrapper > .search-wrapper > .search-form')
     const $searchKeyword = $form.querySelector('.search > .keyword');
 
@@ -72,5 +72,5 @@ class Loading {
 
         xhr.open('GET', searchUrl);
         xhr.send(); // GET 요청에는 본문(formData)이 필요하지 않습니다.
-    };
-}
+    }
+})
