@@ -148,5 +148,6 @@
           AND `reg_name` = #{region}
           AND `mo_title` = #{movie}
           AND `is_deleted` = false
+        ORDER BY `ci_name`, `sc_start_date`
     </select>
 </mapper>

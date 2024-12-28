@@ -1,3 +1,4 @@
+@charset "UTF-8";
 #main {
   align-items: center;
   display: flex;
@@ -36,13 +37,306 @@
   background-position: -99px -348px;
   display: flex;
 }
+#main > .h1 {
+  width: 100%;
+  padding: 1.5rem 0;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 500;
+}
+#main > .img-movie {
+  width: 61.4rem;
+  height: 28rem;
+  background-image: url("https://img.cgv.co.kr/r2014/images/common/bg/bg_showtimes_favorite.gif");
+  position: relative;
+}
+#main > .img-movie.hidden {
+  display: none;
+}
+#main > .img-movie > .button-container {
+  left: 0;
+  transform: translate(100%, 0);
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  background-color: #fb4357;
+  font-size: 1rem;
+  font-weight: 600;
+  position: absolute;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+}
+#main > .img-movie > .button-container > .button {
+  cursor: pointer;
+}
+#main > .img-movie > .button-container > .button:nth-child(1) {
+  padding-right: 1rem;
+  border-right: 0.1rem solid #ffffff;
+}
+#main > .img-movie > .button-container > .button > .select.hidden {
+  display: none;
+}
+#main > .img-movie > .button-container > .button > .text {
+  color: #ffffff;
+}
+#main > .img-movie > .head {
+  width: 53.5rem;
+  margin: 4rem 0 1rem 4rem;
+}
+#main > .img-movie > .head > .items {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+#main > .img-movie > .head > .items > .item {
+  padding: 0 20px;
+  color: #666666;
+  cursor: pointer;
+}
+#main > .img-movie > .head > .items > .item.reservation {
+  padding-left: 23px;
+  background: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_icon.png") no-repeat -300px -100px;
+}
+#main > .img-movie > .head > .items > .item.reservation.select {
+  background-position: -300px -160px;
+  color: #fb4357;
+}
+#main > .img-movie > .head > .items > .item.review {
+  padding-left: 20px;
+  background: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_icon.png") no-repeat -296px -120px;
+}
+#main > .img-movie > .head > .items > .item.review.select {
+  background-position: -296px -180px;
+  color: #fb4357;
+}
+#main > .img-movie > .head > .items > .item.human {
+  padding-left: 30px;
+  background: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_icon.png") no-repeat -300px -140px;
+}
+#main > .img-movie > .head > .items > .item.human.select {
+  background-position: -300px -200px;
+  color: #fb4357;
+}
+#main > .img-movie > .head > .items > .line {
+  padding-right: 1rem;
+}
+#main > .img-movie > .movie-container {
+  height: 287px;
+  padding: 0 3.5rem;
+  display: flex;
+  flex-direction: row;
+}
+#main > .img-movie > .movie-container > .movie {
+  display: flex;
+  flex-direction: column;
+}
+#main > .img-movie > .movie-container > .movie > .poster > .poster {
+  width: 185px;
+  height: 260px;
+}
+#main > .img-movie > .movie-container > .movie > .movie-info {
+  padding: 0.5rem 0;
+  color: #999999;
+}
+#main > .img-movie > .movie-container > .movie > .movie-info > .text {
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+#main > .img-movie > .movie-container > .movie-title {
+  width: 300px;
+  padding-left: 1rem;
+}
+#main > .img-movie > .movie-container > .movie-title > .movie {
+  width: 280px;
+  height: 100%;
+  overflow-y: auto;
+}
+#main > .img-movie > .movie-container > .movie-title > .movie::-webkit-scrollbar {
+  width: 10px; /* 스크롤바 너비 */
+}
+#main > .img-movie > .movie-container > .movie-title > .movie::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5); /* 스크롤바의 색상 */
+  border-radius: 5px; /* 둥근 모서리 */
+  height: 10%;
+}
+#main > .img-movie > .movie-container > .movie-title > .movie > .item-container {
+  width: 100%;
+  font-weight: 600;
+  cursor: pointer;
+}
+#main > .img-movie > .movie-container > .movie-title > .movie > .item-container.select {
+  border-radius: 0.25rem;
+  background: url("https://img.cgv.co.kr/r2014/images/sprite/sprite_bar_on.png") no-repeat 0 0;
+}
+#main > .img-movie > .movie-container > .movie-title > .movie > .item-container:hover {
+  border-radius: 0.25rem;
+  background: url("https://img.cgv.co.kr/r2014/images/sprite/sprite_bar_on.png") no-repeat 0 0;
+}
+#main > .img-movie > .movie-container > .movie-title > .movie > .item-container > .text {
+  padding: 0.5rem 0.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.1rem;
+  justify-content: flex-start;
+}
+#main > .img-movie > .movie-container > .movie-title > .movie > .item-container > .text > .rating {
+  width: 20px;
+  height: 20px;
+}
+#main > .img-movie > .movie-container > .movie-title > .movie > .item-container > .text > .rating.nineteen {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' fill='none'%3e%3cg clip-path='url(%23age19)'%3e%3cpath fill='%23D92B35' d='M44.363 50H5.637a5.603 5.603 0 0 1-3.981-1.646A5.651 5.651 0 0 1 0 44.362V5.638a5.671 5.671 0 0 1 1.656-3.992A5.623 5.623 0 0 1 5.637 0h38.726a5.603 5.603 0 0 1 3.981 1.646A5.65 5.65 0 0 1 50 5.638v38.724a5.67 5.67 0 0 1-1.656 3.992A5.623 5.623 0 0 1 44.363 50z'/%3e%3cpath fill='%23fff' d='M10.593 42.225V17.377H7.84l3.565-9.607h6.9v34.456h-7.712zM40.921 7.77H21.759a.766.766 0 0 0-.714.476.777.777 0 0 0-.059.297v17.35a1.545 1.545 0 0 0 .95 1.424c.186.077.386.116.588.116h11.68v8.282h-5.457v-4.493h-7.49v10.235a.774.774 0 0 0 .77.768H40.92a.767.767 0 0 0 .769-.768V8.543a.774.774 0 0 0-.769-.773zm-12.31 7.107a.773.773 0 0 1 .773-.769h3.96a.767.767 0 0 1 .769.769v6.034a.774.774 0 0 1-.77.772h-3.959a.766.766 0 0 1-.714-.476.775.775 0 0 1-.059-.296v-6.034z'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='age19'%3e%3cpath fill='%23fff' d='M0 0h50v50H0z'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-attachment: scroll;
+}
+#main > .img-movie > .movie-container > .movie-title > .movie > .item-container > .text > .rating.fifteen {
+  background-image: url("data:image/svg+xml;charset=UTF-8, %3csvg width='20' height='20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23age15)'%3e%3cpath d='M17.745 20H2.255A2.256 2.256 0 0 1 0 17.745V2.255A2.255 2.255 0 0 1 2.255 0h15.49A2.253 2.253 0 0 1 20 2.255v15.49A2.254 2.254 0 0 1 17.745 20Z' fill='%23DD742F'/%3e%3cpath d='M4.318 16.891v-9.94H3.217L4.643 3.11h2.761V16.89H4.318ZM16.313 7.815h-4.834v-2.02h5.052V3.107H8.45v7.342h5.177v3.85h-2.183v-1.812H8.45v4.095a.306.306 0 0 0 .307.308h7.556a.306.306 0 0 0 .308-.308V8.125a.307.307 0 0 0-.308-.31Z' fill='%23fff'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='age15'%3e%3cpath fill='%23fff' d='M0 0h20v20H0z'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-attachment: scroll;
+}
+#main > .img-movie > .movie-container > .movie-title > .movie > .item-container > .text > .rating.twelve {
+  background-image: url("data:image/svg+xml;charset=UTF-8, %3csvg width='20' height='20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23age12)'%3e%3cpath d='M17.745 20H2.255A2.256 2.256 0 0 1 0 17.745V2.255A2.255 2.255 0 0 1 2.255 0h15.49A2.255 2.255 0 0 1 20 2.255v15.49A2.256 2.256 0 0 1 17.745 20Z' fill='%23E9B62F'/%3e%3cpath d='M4.328 16.891v-9.94H3.227L4.65 3.108h2.761V16.89H4.328ZM16.303 3.109H8.765a.308.308 0 0 0-.307.307v4.165h3.013V5.706h2.13v1.659l-5.258 7.488v2.022h8.228v-2.69h-4.396l3.842-5.394c.12-.17.216-.32.29-.443.068-.12.128-.243.18-.37.05-.127.083-.26.098-.397.02-.173.029-.348.027-.522V3.416a.307.307 0 0 0-.309-.307Z' fill='%23fff'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='age12'%3e%3cpath fill='%23fff' d='M0 0h20v20H0z'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-attachment: scroll;
+}
+#main > .img-movie > .movie-container > .movie-title > .movie > .item-container > .text > .rating.all {
+  background-image: url("data:image/svg+xml;charset=UTF-8, %3csvg width='20' height='20' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23ageAll)'%3e%3cpath d='M17.745 20H2.256A2.256 2.256 0 0 1 0 17.745V2.255A2.255 2.255 0 0 1 2.256 0h15.49A2.253 2.253 0 0 1 20 2.255v15.49A2.254 2.254 0 0 1 17.745 20Z' fill='%23269C56'/%3e%3cpath d='M5.74 15.076 5.5 13.56H3.748l-.24 1.516H1.24v-.027L3.383 4.898h2.47l2.144 10.145v.027l-2.256.006ZM4.627 8.18l-.56 3.462h1.116L4.626 8.18ZM8.402 15.078V4.904h2.264v8.136h2.663v2.038H8.402ZM13.808 15.076V4.904h2.263v8.136h2.664v2.038l-4.927-.002Z' fill='%23fff'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='ageAll'%3e%3cpath fill='%23fff' d='M0 0h20v20H0z'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-attachment: scroll;
+}
+#main > .img-movie > .movie-container > .movie-title > .movie > .item-container > .text > .rating.none {
+  background-image: url("data:image/svg+xml;charset=UTF-8, %3csvg width='20' height='21' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M17.745 20.002H2.255A2.254 2.254 0 0 1 0 17.747V2.255A2.253 2.253 0 0 1 2.255 0h15.49A2.253 2.253 0 0 1 20 2.255v15.492a2.254 2.254 0 0 1-2.255 2.255Z' fill='%23666'/%3e%3cpath d='M9.018 14.79V5.88h-1.17v8.91h1.17Zm-3.91-3.2h-1.88V7.63h1.88v3.96Zm1.18-4.89h-4.23v5.82h4.23V6.7Zm11.442 6.31c0-1.11-1.15-1.79-3.12-1.79-1.97 0-3.12.68-3.12 1.79 0 1.08 1.15 1.76 3.12 1.76 1.97 0 3.12-.68 3.12-1.76Zm-7.12-5.54h1.77c-.07 1.27-.89 2.21-2.14 2.66.24.3.46.6.7.91.86-.3 1.8-1.14 2.07-2 .38.81 1.25 1.48 1.93 1.74.21-.31.43-.61.63-.92-.97-.32-1.87-1.15-1.96-2.39h1.69v-.96h-4.69v.96Zm4.55 1.48h1.34v2.23h1.17v-5.3H16.5v2.13h-1.34v.94Zm-.55 3.21c1.23 0 1.93.31 1.93.85 0 .52-.7.83-1.93.83-1.21 0-1.92-.31-1.92-.83 0-.54.71-.85 1.92-.85Z' fill='%23fff'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-attachment: scroll;
+}
+#main > .img-movie > .movie-container > .movie-title > .movie > .item-container > .text > .name {
+  font-size: 0.8rem;
+  width: 12rem;
+  color: #ffffff;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#main > .img-movie > .movie-container > .movie-title > .movie > .item-container.none {
+  opacity: 0.25;
+}
+#main > .img-movie > .movie-container > .cinema-type {
+  width: 100%;
+  margin-left: 1rem;
+  padding: 10px 0 30px 34px;
+  background: url("https://img.cgv.co.kr/r2014/images/common/bg/bg_box_movie.png") no-repeat 0 0;
+}
+#main > .img-movie > .movie-container > .cinema-type > .items {
+  display: flex;
+  flex-direction: row;
+  gap: 0.1rem;
+  flex-wrap: wrap;
+}
+#main > .img-movie > .movie-container > .cinema-type > .items > .item {
+  width: 135px;
+  height: 35px;
+  padding-left: 0.5rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#main > .img-movie > .movie-container > .cinema-type > .items > .item.select {
+  background: url("https://img.cgv.co.kr/r2014/images/sprite/sprite_bar_on.png") no-repeat 0 -40px;
+  color: #fff;
+}
+#main > .img-movie > .movie-container > .cinema-type > .items > .item:hover {
+  background: url("https://img.cgv.co.kr/r2014/images/sprite/sprite_bar_on.png") no-repeat 0 -40px;
+  color: #fff;
+}
+#main > .img-movie > .main {
+  width: 53.5rem;
+  height: 2rem;
+  margin-left: 4rem;
+  border-top: 0.15rem solid #727171;
+  border-bottom: 0.15rem solid #727171;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 3.5rem;
+  justify-content: flex-start;
+}
+#main > .img-movie > .main > .item {
+  color: #dbdbdb;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+#main > .img-movie > .main > .item.select {
+  padding: 0.5rem 0;
+  color: #ffffff;
+  background-image: url("https://img.cgv.co.kr/r2014/images/common/ico/ico_arrow02.png");
+  background-repeat: no-repeat;
+  background-position-x: 50%;
+  background-position-y: 97%;
+}
+#main > .img-movie > .main > .item:nth-child(1) {
+  margin-left: 2rem;
+}
+#main > .img-movie > .main > .item:hover {
+  color: #ffffff;
+}
+#main > .img-movie > .theater-container > .item-container {
+  width: 52.5rem;
+  flex-wrap: wrap;
+  margin: 1rem 0 0 5rem;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+#main > .img-movie > .theater-container > .item-container > .item {
+  padding-right: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-right: 0.1rem solid #6e6c6d;
+  color: #dbdbdb;
+  cursor: pointer;
+}
+#main > .img-movie > .theater-container > .item-container > .item.select {
+  color: #ffffff;
+}
+#main > .img-movie > .theater-container > .item-container > .item:hover {
+  color: #ffffff;
+}
+#main > .img-movie > .theater-container > .item-container > .item:nth-last-child(1) {
+  border: none;
+}
 #main > .img {
   width: 61.4rem;
   height: 28rem;
   background-image: url("https://img.cgv.co.kr/r2014/images/common/bg/bg_showtimes_favorite.gif");
+  position: relative;
+}
+#main > .img.hidden {
+  display: none;
 }
 #main > .img > .button-container {
-  left: 35%;
+  left: 0;
+  transform: translate(100%, 0);
   margin: 1rem 0;
   padding: 0.5rem 1rem;
   background-color: #fb4357;
@@ -278,12 +572,11 @@
   background-repeat: no-repeat;
 }
 #main > .advertisement-info > .advertisement-move > .advertisement {
-  margin-top: 1rem;
+  margin: 1rem 0;
   width: 61.4rem;
 }
 #main > .information {
   width: 980px;
-  margin-bottom: 3rem;
   display: flex;
   flex-direction: row;
 }
@@ -685,6 +978,211 @@
   border-top: 0.15rem solid #474746;
   padding-top: 0.5rem;
   color: #666;
+}
+
+#schedule {
+  padding-right: 1rem;
+}
+#schedule .IMAX {
+  width: 5rem;
+  height: 1rem;
+  background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
+  background-repeat: no-repeat;
+  background-position: -99px -18px;
+  display: flex;
+}
+#schedule .DX {
+  width: 5rem;
+  height: 1rem;
+  background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
+  background-repeat: no-repeat;
+  background-position: -99px -36px;
+  display: flex;
+}
+#schedule .SCREENX {
+  width: 5rem;
+  height: 1rem;
+  background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
+  background-repeat: no-repeat;
+  background-position: -99px -162px;
+  display: flex;
+}
+#schedule .CINE\&FORET {
+  width: 5rem;
+  height: 1rem;
+  background-image: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_screentype02.png");
+  background-repeat: no-repeat;
+  background-position: -99px -348px;
+  display: flex;
+}
+#schedule > .main {
+  width: 804px;
+  height: 2rem;
+  margin-top: 1rem;
+  padding: 0.3rem 0;
+  border-top: 0.3rem solid #241D1E;
+  border-bottom: 0.3rem solid #241D1E;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 3.2rem;
+  justify-content: flex-start;
+}
+#schedule > .main > .item {
+  color: #666;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+#schedule > .main > .item.select {
+  padding: 0.85rem 0;
+  color: #333;
+  background-image: url("https://img.cgv.co.kr/r2014/images/common/ico/ico_arrow02.png");
+  background-repeat: no-repeat;
+  background-position-x: 50%;
+  background-position-y: 97%;
+}
+#schedule > .main > .item:nth-child(1) {
+  margin-left: 2rem;
+}
+#schedule > .main > .item:hover {
+  color: #333;
+}
+#schedule > .cinema-info > .day-containers {
+  height: 100%;
+  padding: 0.5rem 0 3rem 0;
+  border-top: #241d1e solid 0.2rem;
+  position: relative;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+#schedule > .cinema-info > .day-containers > .before {
+  cursor: pointer;
+  margin-right: 1rem;
+  background-color: #ffffff;
+  width: 3.5rem;
+  height: 1.5rem;
+  background-image: url("https://img.cgv.co.kr/r2014/images/sprite/sprite_btn.png");
+  background-repeat: no-repeat;
+  background-position: -117px -174px;
+  border: none;
+}
+#schedule > .cinema-info > .day-containers > .after {
+  right: 0;
+  cursor: pointer;
+  position: absolute;
+  background-color: #ffffff;
+  width: 3.5rem;
+  height: 1.15rem;
+  background-image: url("https://img.cgv.co.kr/r2014/images/sprite/sprite_btn.png");
+  background-repeat: no-repeat;
+  background-position: -117px -155px;
+  border: none;
+}
+#schedule > .cinema-info > .day-containers > .day-container {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+#schedule > .cinema-info > .day-containers > .day-container > .item {
+  width: 100%;
+  height: 100%;
+  padding: 0.3rem 0.5rem;
+  color: #717171;
+  border: transparent solid 0.15rem;
+  cursor: pointer;
+  box-sizing: border-box;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.15rem;
+  justify-content: center;
+}
+#schedule > .cinema-info > .day-containers > .day-container > .item.select {
+  color: #000000;
+  border-color: #000000;
+  border-radius: 0.25rem;
+}
+#schedule > .cinema-info > .day-containers > .day-container > .item.hidden {
+  display: none;
+}
+#schedule > .cinema-info > .day-containers > .day-container > .item > .small-container {
+  width: 1.4rem;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+#schedule > .cinema-info > .day-containers > .day-container > .item > .small-container .day {
+  font-size: 0.7rem;
+}
+#schedule > .cinema-info > .day-containers > .day-container > .item > .day {
+  font-size: 1.9rem;
+  font-weight: 600;
+}
+#schedule > .cinema-info > .notice {
+  padding: 0.5rem 0;
+  font-weight: 400;
+  color: #794624;
+}
+#schedule > .cinema-info > .notice-footer {
+  border-top: 0.15rem solid #474746;
+  padding-top: 0.5rem;
+  color: #666;
+}
+#schedule > .cinema-info > .items > .item {
+  border-top: 0.1rem solid #474746;
+  padding: 1.5rem 0.5rem;
+  display: flex;
+  flex-direction: row;
+}
+#schedule > .cinema-info > .items > .item > .theater {
+  width: 8rem;
+  color: #000;
+  padding: 1rem 0.5rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+#schedule > .cinema-info > .items > .item > .screens {
+  display: flex;
+  flex-direction: column;
+}
+#schedule > .cinema-info > .items > .item > .screens > .screen-container {
+  padding: 1rem 2rem;
+}
+#schedule > .cinema-info > .items > .item > .screens > .screen-container > .theater-info {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+#schedule > .cinema-info > .items > .item > .screens > .screen-container > .theater-info .text {
+  margin: 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+#schedule > .cinema-info > .items > .item > .screens > .screen-container > .time-table-container {
+  display: flex;
+  flex-direction: row;
+}
+#schedule > .cinema-info > .items > .item > .screens > .screen-container > .time-table-container > .time-table {
+  margin-top: 0.5rem;
+  width: 2.3rem;
+  padding: 0.3rem 1rem;
+  border: 0.1rem solid #cbcabe;
+  cursor: pointer;
+  color: #333;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+#schedule > .cinema-info > .items > .item > .screens > .screen-container > .time-table-container > .time-table > .time {
+  font-weight: 600;
+}
+#schedule > .cinema-info > .items > .item > .screens > .screen-container > .time-table-container > .time-table > .seat {
+  color: #2275a4;
+  font-weight: 600;
+  font-size: 0.75rem;
 }
 
 /*# sourceMappingURL=showTimes.css.map */
