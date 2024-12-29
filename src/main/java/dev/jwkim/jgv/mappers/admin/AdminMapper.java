@@ -14,11 +14,19 @@ public interface AdminMapper {
 
     int selectArticleCountByMovieName();
 
+    int searchArticleCountByMovieName(@Param("filter") String filter, @Param("keyword") String keyword);
+
     AdminMovieDTO[] selectAllDTO();
 
     AdminMovieDTO[] selectArticleByMovieName(
                                         @Param("limitCount") int limitCount,
                                         @Param("offsetCount") int offsetCount);
+
+    AdminMovieDTO[] searchArticleByMovieName(
+                                        @Param("limitCount") int limitCount,
+                                        @Param("offsetCount") int offsetCount,
+                                        @Param("filter") String filter,
+                                        @Param("keyword") String keyword);
 
 
     // 상영관

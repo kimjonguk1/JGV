@@ -27,6 +27,19 @@ public class AdminService {
         return Pair.of(pageVo, adminMovieDTO);
     }
 
+
+    public Pair<PageVo, AdminMovieDTO[]> searchMoviePage(int page, String filter, String keyword) {
+        page = Math.max(1, page);
+        int totalCount = this.adminMapper.searchArticleCountByMovieName(filter, keyword);
+        PageVo pageVo = new PageVo(page, totalCount);
+
+        AdminMovieDTO[] adminMovieDTO = this.adminMapper.searchArticleByMovieName(
+                pageVo.countPerPage,
+                pageVo.offsetCount, filter, keyword);
+        return Pair.of(pageVo, adminMovieDTO);
+    }
+
+
     public Pair<PageVo, AdminTheaterDTO[]> selectTheaterPage(int page) {
         page = Math.max(1, page);
         int totalCount = this.adminMapper.selectArticleCountByMovieName();

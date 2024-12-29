@@ -64,6 +64,29 @@ $theaterCrawl.onclick = () => {
     }
 }
 
+// {
+//     const $movieSearch = document.getElementById('movie-search-form');
+//     $movieSearch.onsubmit = (e) => {
+//         e.preventDefault();
+//         const xhr = new XMLHttpRequest();
+//         const formData = new FormData();
+//         formData.append('filter', $movieSearch['filter'].value);
+//         formData.append('keyword', $movieSearch['keyword'].value);
+//         xhr.onreadystatechange = () => {
+//             if (xhr.readyState !== XMLHttpRequest.DONE) {
+//                 return;
+//             }
+//             if (xhr.status < 200 || xhr.status >= 300) {
+//                 alert('오류 발생');
+//                 return;
+//             }
+//             console.log(xhr.responseText);
+//         }
+//         xhr.open('POST', location.href);
+//         xhr.send(formData);
+//     }
+// }
+
 document.addEventListener("DOMContentLoaded", function () {
     const $deleteButton = document.querySelectorAll('.movie-delete')
     $deleteButton.forEach(button => {

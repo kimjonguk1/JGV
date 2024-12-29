@@ -12,6 +12,7 @@ import dev.jwkim.jgv.vos.PageVo;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.tuple.Pair;
+import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,13 +32,22 @@ public class AdminController {
 
     @RequestMapping(value = "/is_admin", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getIsAdmin(Model model,
-                                   @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+                                   @RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "filter", required = false) String filter,
+                                   @RequestParam(value = "keyword", required = false) String keyword) {
         ModelAndView modelAndView = new ModelAndView();
 
         // 영화 페이징
-        Pair<PageVo, AdminMovieDTO[]> pair = this.adminService.selectMoviePage(page);
-        modelAndView.addObject("pageVo", pair.getLeft());
-        modelAndView.addObject("adminDTO", pair.getRight());
+        if (filter == null && keyword == null) {
+            Pair<PageVo, AdminMovieDTO[]> pair = this.adminService.selectMoviePage(page);
+            modelAndView.addObject("pageVo", pair.getLeft());
+            modelAndView.addObject("adminDTO", pair.getRight());
+        } else {
+            Pair<PageVo, AdminMovieDTO[]> pair = this.adminService.searchMoviePage(page, filter, keyword);
+            modelAndView.addObject("pageVo", pair.getLeft());
+            modelAndView.addObject("adminDTO", pair.getRight());
+            modelAndView.addObject("filter", filter);
+            modelAndView.addObject("keyword", keyword);
+        }
 
         // 상영정보 페이징
         Pair<PageVo, AdminTheaterDTO[]> thPair = this.adminService.selectTheaterPage(page);
