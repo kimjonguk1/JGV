@@ -51,14 +51,14 @@
 <form id="movie-search-form" class="frame">
     <div class="movie-keyword-wrapper">
         <label class="--obj-label">
-            <select class="movie-keyword">
-                <option>영화이름</option>
-                <option>년도별검색</option>
-                <option>월별검색</option>
+            <select class="movie-keyword" name="filter">
+                <option value="moTitle">영화이름</option>
+                <option value="year">년도별검색</option>
+                <option value="month">월별검색</option>
             </select>
         </label>
         <label class="--obj-label">
-            <input class="--obj-filed" required placeholder="영화정보 검색" type="text">
+            <input name="keyword" class="--obj-filed" required placeholder="영화정보 검색" type="text">
         </label>
         <button class="movie-search" type="submit">검색</button>
     </div>
@@ -122,26 +122,26 @@
     <div class="movie-page-wrapper">
         <div class="prev">
             <a th:if="${pageVo.requestPage > pageVo.movableMinPage}"
-               th:href="@{'./is_admin' (page=${pageVo.movableMinPage})}"
+               th:href="@{'./is_admin' (page=${pageVo.movableMinPage}, filter=${filter}, keyword=${keyword})}"
             >|&lt;</a>
             <a th:if="${pageVo.requestPage > pageVo.movableMinPage}"
-               th:href="@{'./is_admin' (page=${pageVo.requestPage - 1})}"
+               th:href="@{'./is_admin' (page=${pageVo.requestPage - 1}, filter=${filter}, keyword=${keyword})}"
             >&lt;</a>
         </div>
         <div class="page">
             <a
                     th:each="page : ${#numbers.sequence(pageVo.displayMinPage, pageVo.displayMaxPage)}"
                     th:text="${page}"
-                    th:href="@{'./is_admin' (page=${page})}"
+                    th:href="@{'./is_admin' (page=${page}, filter=${filter}, keyword=${keyword})}"
                     th:classappend="${page == pageVo.requestPage} ? 'selected'"></a>
 
         </div>
         <div class="next">
             <a th:if="${pageVo.requestPage < pageVo.movableMaxPage}"
-               th:href="@{'./is_admin' (page=${pageVo.requestPage + 1})}"
+               th:href="@{'./is_admin' (page=${pageVo.requestPage + 1}, filter=${filter}, keyword=${keyword})}"
             >&gt;</a>
             <a th:if="${pageVo.requestPage < pageVo.movableMaxPage}"
-               th:href="@{'./is_admin' (page=${pageVo.movableMaxPage})}"
+               th:href="@{'./is_admin' (page=${pageVo.movableMaxPage}, filter=${filter}, keyword=${keyword})}"
             >&gt;|</a>
         </div>
     </div>

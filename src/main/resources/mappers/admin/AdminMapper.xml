@@ -31,11 +31,50 @@
         LIMIT #{limitCount} OFFSET #{offsetCount}
     </select>
 
+    <select id="searchArticleByMovieName"
+            resultType="dev.jwkim.jgv.DTO.AdminMovieDTO">
+        SELECT m.mo_num AS 'moNum',
+        mi.m_img_url AS 'mImgUrl',
+        m.mo_title AS 'moTitle',
+        m.mo_date AS 'moDate',
+        r.ra_grade AS 'raGrade'
+        FROM `jgv`.`movie` m
+        LEFT JOIN `jgv`.`movie_image` mi ON m.mo_num = mi.mo_num
+        LEFT JOIN `jgv`.`rating` r ON m.ra_num = r.ra_num
+        WHERE `mo_ending` IS NULL
+        <if test="filter.equals('moTitle')">
+            AND `mo_title` = #{keyword}
+        </if>
+        <if test="filter.equals('month')">
+            AND DATE_FORMAT(`mo_date`, '%m') = #{keyword}
+        </if>
+        <if test="filter.equals('year')">
+            AND DATE_FORMAT(`mo_date`, '%Y') = #{keyword}
+        </if>
+        ORDER BY m.mo_num
+        LIMIT #{limitCount} OFFSET #{offsetCount}
+    </select>
+
 
     <select id="selectArticleCountByMovieName" resultType="_int">
         SELECT COUNT(0)
         FROM `jgv`.`movie`
         WHERE mo_ending IS NULL
+    </select>
+
+    <select id="searchArticleCountByMovieName" resultType="_int">
+        SELECT COUNT(0)
+        FROM `jgv`.`movie`
+        WHERE mo_ending IS NULL
+        <if test="filter.equals('moTitle')">
+            AND `mo_title` = #{keyword}
+        </if>
+        <if test="filter.equals('month')">
+            AND DATE_FORMAT(`mo_date`, '%m') = #{keyword}
+        </if>
+        <if test="filter.equals('year')">
+            AND DATE_FORMAT(`mo_date`, '%Y') = #{keyword}
+        </if>
     </select>
 
     <select id="selectAllDTO" resultType="dev.jwkim.jgv.DTO.AdminMovieDTO">
@@ -56,8 +95,8 @@
     <select id="selectAllDTOByTheater" resultType="dev.jwkim.jgv.DTO.AdminTheaterDTO">
         SELECT sc.sc_num        AS 'scNum',
                mi.m_img_url     AS 'mImgUrl',
-               th.th_name          AS `thName`,
-               ci.ci_name          AS `ciName`,
+               th.th_name       AS `thName`,
+               ci.ci_name       AS `ciName`,
                m.mo_title       AS 'moTitle',
                sc.sc_start_date AS 'scStartDate'
         FROM `jgv`.`screen` sc
