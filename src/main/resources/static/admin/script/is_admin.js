@@ -63,3 +63,45 @@ $theaterCrawl.onclick = () => {
         $theaterPage.style.display = 'block';
     }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const $deleteButton = document.querySelectorAll('.movie-delete')
+    $deleteButton.forEach(button => {
+        button.addEventListener("click", function (){
+            const movieNum = this.getAttribute("data-mo-num")
+            const result = confirm("정말 삭제하시겠습니까?")
+            if(result) {
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState !== XMLHttpRequest.DONE) {
+                        return;
+                    }
+                    if(xhr.status < 200 || xhr.status >= 300) {
+                        alert('삭제에 실패하였습니다. 다시 시도해 주세요')
+                        return;
+                    }
+                    const response = JSON.parse(xhr.responseText);
+                    console.log(response);
+                    if(response === 'SUCCESS') {
+                        alert('삭제가 완료되었습니다.');
+                        window.location.reload();
+                    } else if(response === 'NOT_LOGGED_IN') {
+                        alert('삭제에 실패했습니다. 세션이 만료되었거나 로그인이 해제되었을 수 있습니다. 로그인 상태를 확인한 후 다시 시도해 주세요.');
+                    } else if(response === 'FAILURE'){
+                        alert('삭제에 실패하였습니다. 다시 시도해 주세요')
+                    } else {
+                        alert('알 수 없는 응답입니다. 관리자에게 문의하세요')
+                    }
+                };
+                xhr.open('POST', "/admin/delete");
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                const Data = {
+                    moNum: movieNum
+                };
+                xhr.send(JSON.stringify(Data));
+            } else {
+                return
+            }
+        })
+    })
+})

@@ -105,10 +105,10 @@
                 <td th:text="${movie.getMoDate()}">2024-12-26</td>
                 <td th:text="${movie.getRaGrade()}">15세</td>
                 <td>
-                    <button class="movie-modify">수정</button>
+                    <button class="movie-modify" th:attr="data-mo-num=${movie.getMoNum()}">수정</button>
                 </td>
                 <td>
-                    <button class="movie-delete">삭제</button>
+                    <button class="movie-delete" th:attr="data-mo-num=${movie.getMoNum()}">삭제</button>
                 </td>
             </tr>
             <tr th:if="${adminDTO == null || adminDTO.length == 0}">

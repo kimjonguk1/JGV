@@ -63,4 +63,7 @@ public interface MovieMapper {
     List<Movie_ImageDTO> selectCaraouselCurrentMovies();
     List<Movie_ImageDTO> selectCarouselUpcomingMovies();
 
+    //영화 삭제(종영일 설정)
+    boolean updateMoEnding(@Param("movieId") int movieId);
+
 }
