@@ -2,27 +2,31 @@ package dev.jwkim.jgv.controlles.admin;
 
 import dev.jwkim.jgv.DTO.AdminMovieDTO;
 import dev.jwkim.jgv.DTO.AdminTheaterDTO;
+import dev.jwkim.jgv.DTO.MovieDeleteModifyDTO;
 import dev.jwkim.jgv.entities.user.UserEntity;
+import dev.jwkim.jgv.results.user.MovieDeleteModifyResult;
+import dev.jwkim.jgv.results.user.ReviewResult;
 import dev.jwkim.jgv.services.admin.AdminService;
+import dev.jwkim.jgv.services.movie.MovieService;
 import dev.jwkim.jgv.vos.PageVo;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
     private final AdminService adminService;
+    private final MovieService movieService;
 
-    public AdminController(AdminService adminService) {
+    public AdminController(AdminService adminService, MovieService movieService) {
         this.adminService = adminService;
+        this.movieService = movieService;
     }
 
     @RequestMapping(value = "/is_admin", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
@@ -75,4 +79,18 @@ public class AdminController {
         return modelAndView;
     }
     // endregion
+
+    //영화 삭제(종영일 설정)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public MovieDeleteModifyResult deleteMovie(HttpSession session, @RequestBody MovieDeleteModifyDTO request) {
+        UserEntity loggedInUser = (UserEntity) session.getAttribute("user");
+        if (loggedInUser == null) {
+            return MovieDeleteModifyResult.NOT_LOGGED_IN;
+        }
+        int movieId = request.getMoNum();
+        boolean result = this.movieService.updateMoEndingToNow(movieId);
+
+        return result ? MovieDeleteModifyResult.SUCCESS : MovieDeleteModifyResult.FAILURE;
+    }
 }

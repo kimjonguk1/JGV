@@ -39,6 +39,7 @@
             jgv.movie m
                 LEFT JOIN
             jgv.movie_image i ON m.mo_num = i.mo_num
+        WHERE m.mo_ending IS NULL
     </select>
     <select id="selectMovieByUniqueFields" resultType="java.lang.Integer">
         SELECT *
@@ -234,4 +235,10 @@
         WHERE STR_TO_DATE(mo_date, '%Y.%m.%d') > CURRENT_DATE()
         LIMIT 20
     </select>
+    
+    <update id="updateMoEnding">
+        UPDATE jgv.movie
+        SET mo_ending = NOW()
+        WHERE mo_num = #{movieId} AND mo_ending IS NULL
+    </update>
 </mapper>

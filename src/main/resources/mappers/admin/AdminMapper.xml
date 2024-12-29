@@ -26,6 +26,7 @@
         FROM `jgv`.`movie` m
                  LEFT JOIN `jgv`.`movie_image` mi ON m.mo_num = mi.mo_num
                  LEFT JOIN `jgv`.`rating` r ON m.ra_num = r.ra_num
+        WHERE mo_ending IS NULL
         ORDER BY m.mo_num
         LIMIT #{limitCount} OFFSET #{offsetCount}
     </select>
@@ -34,6 +35,7 @@
     <select id="selectArticleCountByMovieName" resultType="_int">
         SELECT COUNT(0)
         FROM `jgv`.`movie`
+        WHERE mo_ending IS NULL
     </select>
 
     <select id="selectAllDTO" resultType="dev.jwkim.jgv.DTO.AdminMovieDTO">
