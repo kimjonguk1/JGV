@@ -149,44 +149,48 @@
 
 <main id="theater-admin-page" class="frame">
     <div class="admin-theater-list">
-        <table>
-
-            <tbody>
+        <table class="frame">
+            <thead>
             <tr>
-                <th>상영 번호</th>
-                <th>상영 이미지</th>
-                <th>영화관</th>
-                <th>상영관</th>
-                <th>영화 이름</th>
-                <th>상영일</th>
+                <th colspan="7">상영정보</th>
             </tr>
-            <tr th:each="theater : ${adminThDTO}">
-                <td th:text="${theater.getScNum()}">9999</td>
-                <td>
-                    <img th:src="${theater.getMImgUrl()}"
-                         src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000089/89288/89288_126.jpg"
-                         alt="영화이미지">
+            </thead>
+            <tbody>
+            <tr th:each="entry : ${groupedScreens}">
+                <!-- 영화 이미지 출력 (영화 제목과 영화관보다 위쪽에 배치) -->
+                <td rowspan="2">
+                    <img th:src="${entry.value.values().iterator().next().get(0).mImgUrl}" alt="영화 이미지" width="100">
                 </td>
-                <td>
-                    <span th:text="${theater.getThName()}">어디어디 영화관</span>
-                </td>
-                <td>
-                    <span th:text="${theater.getCiName()}">어디어디 상영관</span>
-                </td>
-                <td>
-                    <span th:text="${theater.getMoTitle()}">미세스 그린애플</span>
-                </td>
-                <td>
-                    <div style="display: flex; flex-direction: row;
-                    align-items: center; justify-content: center; gap: 0.5rem;">
-                        <span
-                                th:text="${#dates.format(theater.getScStartDate(), 'yyyy-MM-dd')}">2024-12-26</span>
-                        <button class="theater-modify">수정</button>
-                        <button class="theater-delete">삭제</button>
-                    </div>
-                </td>
-            </tr>
 
+                <!-- 영화 이름과 영화관 출력 -->
+                <td colspan="3" style="font-size: 1.5rem; font-weight: 700;">
+                    <strong th:text="${entry.key.split(' - ')[0]}"></strong> <!-- 영화 이름 -->
+                    <span th:text="${entry.key.split(' - ')[1]}"></span> <!-- 영화관 -->
+                </td>
+
+                <!-- 상영 정보 출력 -->
+                <td>
+                    <ul>
+                        <!-- 각 상영관별로 상영 번호와 상영일시 출력 -->
+                        <li th:each="ciEntry : ${entry.value}">
+                            <div>
+                                <strong th:text="${ciEntry.key}"></strong>
+                                <!-- 상영관 이름
+                                 -->
+                            </div>
+                            <ul>
+                                <li th:each="screen : ${ciEntry.value}">
+                                    상영 번호: <span th:text="${screen.scNum}"></span>,
+                                    상영일: <span th:text="${#dates.format(screen.scStartDate, 'yyyy-MM-dd')}"></span>
+                                    <div class="-spring"></div>
+                                    <button class="theater-modify">수정</button>
+                                    <button class="theater-delete">삭제</button>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
@@ -194,27 +198,25 @@
 <div id="theater-page-container" class="frame">
     <div class="theater-page-wrapper">
         <div class="prev">
-            <a th:if="${pageVo.requestPage > pageVo.movableMinPage}"
-               th:href="@{'./is_admin' (page=${pageVo.movableMinPage})}"
-            >|&lt;</a>
-            <a th:if="${pageVo.requestPage > pageVo.movableMinPage}"
-               th:href="@{'./is_admin' (page=${pageVo.requestPage - 1})}"
-            >&lt;</a>
+            <!-- 이전 페이지 -->
+            <a th:if="${screenPageVo.requestPage > screenPageVo.movableMinPage}"
+               th:href="@{'./is_admin' (page=${screenPageVo.movableMinPage})}">&lt;|</a>
+            <a th:if="${screenPageVo.requestPage > screenPageVo.movableMinPage}"
+               th:href="@{'./is_admin' (page=${screenPageVo.requestPage - 1})}">&lt;</a>
         </div>
         <div class="page">
-            <a
-                    th:each="page : ${#numbers.sequence(pageVo.displayMinPage, pageVo.displayMaxPage)}"
-                    th:text="${page}"
-                    th:href="@{'./is_admin' (page=${page})}"
-                    th:classappend="${page == pageVo.requestPage} ? 'selected'"></a>
+            <!-- 페이지 번호들 -->
+            <a th:each="page : ${#numbers.sequence(screenPageVo.displayMinPage, screenPageVo.displayMaxPage)}"
+               th:text="${page}"
+               th:href="@{'./is_admin' (page=${page})}"
+               th:classappend="${page == screenPageVo.requestPage} ? 'selected'"></a>
         </div>
         <div class="next">
-            <a th:if="${pageVo.requestPage < pageVo.movableMaxPage}"
-               th:href="@{'./is_admin' (page=${pageVo.requestPage + 1})}"
-            >&gt;</a>
-            <a th:if="${pageVo.requestPage < pageVo.movableMaxPage}"
-               th:href="@{'./is_admin' (page=${pageVo.movableMaxPage})}"
-            >&gt;|</a>
+            <!-- 다음 페이지 -->
+            <a th:if="${screenPageVo.requestPage < screenPageVo.movableMaxPage}"
+               th:href="@{'./is_admin' (page=${screenPageVo.requestPage + 1})}">&gt;</a>
+            <a th:if="${screenPageVo.requestPage < screenPageVo.movableMaxPage}"
+               th:href="@{'./is_admin' (page=${screenPageVo.movableMaxPage})}">|&gt;</a>
         </div>
     </div>
 </div>

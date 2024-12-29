@@ -92,11 +92,11 @@
         FROM `jgv`.`screen`
     </select>
 
-    <select id="selectAllDTOByTheater" resultType="dev.jwkim.jgv.DTO.AdminTheaterDTO">
+    <select id="selectAllDTOByTheaters" resultType="dev.jwkim.jgv.DTO.AdminTheaterDTO">
         SELECT sc.sc_num        AS 'scNum',
                mi.m_img_url     AS 'mImgUrl',
-               th.th_name       AS `thName`,
-               ci.ci_name       AS `ciName`,
+               th.th_name          AS `thName`,
+               ci.ci_name          AS `ciName`,
                m.mo_title       AS 'moTitle',
                sc.sc_start_date AS 'scStartDate'
         FROM `jgv`.`screen` sc

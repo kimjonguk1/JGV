@@ -3,6 +3,7 @@ package dev.jwkim.jgv.controlles.admin;
 import dev.jwkim.jgv.DTO.AdminMovieDTO;
 import dev.jwkim.jgv.DTO.AdminTheaterDTO;
 import dev.jwkim.jgv.DTO.MovieDeleteModifyDTO;
+import dev.jwkim.jgv.DTO.ScreenInfoDTO;
 import dev.jwkim.jgv.entities.user.UserEntity;
 import dev.jwkim.jgv.results.user.MovieDeleteModifyResult;
 import dev.jwkim.jgv.results.user.ReviewResult;
@@ -18,6 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -49,10 +53,13 @@ public class AdminController {
             modelAndView.addObject("keyword", keyword);
         }
 
-        // 상영정보 페이징
-        Pair<PageVo, AdminTheaterDTO[]> thPair = this.adminService.selectTheaterPage(page);
-        modelAndView.addObject("pageVos", thPair.getLeft());
-        modelAndView.addObject("adminThDTO", thPair.getRight());
+        // 상영정보 그룹화
+        Pair<PageVo, Map<String, Map<String, List<ScreenInfoDTO>>>> groupedScreens =
+                this.adminService.getGroupedScreens(page);
+        modelAndView.addObject("groupedScreens", groupedScreens.getRight());  // groupedScreens의 데이터를 가져오기
+
+        // 페이지네이션 정보
+        modelAndView.addObject("screenPageVo", groupedScreens.getLeft());
 
         modelAndView.setViewName("admin/is_admin");
 
