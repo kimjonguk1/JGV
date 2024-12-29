@@ -43,7 +43,7 @@
         LEFT JOIN `jgv`.`rating` r ON m.ra_num = r.ra_num
         WHERE `mo_ending` IS NULL
         <if test="filter.equals('moTitle')">
-            AND `mo_title` = #{keyword}
+            AND `mo_title` LIKE CONCAT('%', #{keyword}, '%')
         </if>
         <if test="filter.equals('month')">
             AND DATE_FORMAT(`mo_date`, '%m') = #{keyword}
