@@ -16,7 +16,7 @@
 }
 #movie-admin-page > .admin-movie-list {
   width: 100%;
-  height: 12rem;
+  height: auto;
 }
 #movie-admin-page > .admin-movie-list > table {
   width: 100%;
@@ -71,6 +71,7 @@
   min-width: 980px;
   height: auto;
   padding: 2rem 0;
+  display: none;
 }
 #theater-admin-page > .-spring {
   flex-grow: 1;
@@ -78,11 +79,11 @@
 }
 #theater-admin-page > .admin-movie-list {
   width: 100%;
-  height: 12rem;
+  height: auto;
 }
 #theater-admin-page > .admin-movie-list > table {
   width: 100%;
-  height: 12rem;
+  height: auto;
   border-collapse: collapse;
   text-align: center;
 }
@@ -179,10 +180,11 @@
 
 #theater-admin-page {
   display: none;
+  height: auto;
 }
 #theater-admin-page > .admin-theater-list {
   width: 100%;
-  height: 12rem;
+  height: auto;
 }
 #theater-admin-page > .admin-theater-list > table {
   width: 100%;
@@ -331,11 +333,10 @@
   align-items: center;
   display: flex;
   flex-direction: row;
-  gap: 2rem;
+  gap: 0;
   justify-content: center;
   font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 1rem;
   padding: 1.8rem 0;
 }
 #movie-page-container > .-spring {
@@ -349,29 +350,40 @@
   align-items: center;
   display: flex;
   flex-direction: row;
-  gap: 0;
+  gap: 1rem;
   justify-content: center;
 }
 #movie-page-container > .movie-page-wrapper > .-spring {
   flex-grow: 1;
   flex-shrink: 1;
 }
-#movie-page-container > .movie-page-wrapper > table > tbody > tr > td > a {
+#movie-page-container > .movie-page-wrapper > .prev > a {
+  color: #666666;
+}
+#movie-page-container > .movie-page-wrapper > .prev > a:hover {
+  color: #222222;
+}
+#movie-page-container > .movie-page-wrapper > .next > a {
+  color: #666666;
+}
+#movie-page-container > .movie-page-wrapper > .next > a:hover {
+  color: #222222;
+}
+#movie-page-container > .movie-page-wrapper > .page {
   align-items: center;
   display: flex;
   flex-direction: row;
   gap: 1rem;
   justify-content: center;
-  width: 100%;
-  max-width: 100%;
-  min-width: 100%;
-  color: #666666;
 }
-#movie-page-container > .movie-page-wrapper > table > tbody > tr > td > a > .-spring {
+#movie-page-container > .movie-page-wrapper > .page > .-spring {
   flex-grow: 1;
   flex-shrink: 1;
 }
-#movie-page-container > .movie-page-wrapper > table > tbody > tr > td > a:hover {
+#movie-page-container > .movie-page-wrapper > .page > a {
+  color: #666666;
+}
+#movie-page-container > .movie-page-wrapper > .page > a:hover {
   color: #222222;
 }
 
@@ -384,7 +396,6 @@
   display: none;
   font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 1rem;
   padding: 1.8rem 0;
 }
 #theater-page-container > .-spring {
@@ -392,35 +403,43 @@
   flex-shrink: 1;
 }
 #theater-page-container > .theater-page-wrapper {
-  width: 100%;
-  max-width: 100%;
-  min-width: 100%;
   align-items: center;
   display: flex;
   flex-direction: row;
-  gap: 0;
+  gap: 1rem;
   justify-content: center;
 }
 #theater-page-container > .theater-page-wrapper > .-spring {
   flex-grow: 1;
   flex-shrink: 1;
 }
-#theater-page-container > .theater-page-wrapper > table > tbody > tr > td > a {
+#theater-page-container > .theater-page-wrapper > .prev > a {
+  color: #666666;
+}
+#theater-page-container > .theater-page-wrapper > .prev > a:hover {
+  color: #222222;
+}
+#theater-page-container > .theater-page-wrapper > .next > a {
+  color: #666666;
+}
+#theater-page-container > .theater-page-wrapper > .next > a:hover {
+  color: #222222;
+}
+#theater-page-container > .theater-page-wrapper > .page {
   align-items: center;
   display: flex;
   flex-direction: row;
   gap: 1rem;
   justify-content: center;
-  width: 100%;
-  max-width: 100%;
-  min-width: 100%;
-  color: #666666;
 }
-#theater-page-container > .theater-page-wrapper > table > tbody > tr > td > a > .-spring {
+#theater-page-container > .theater-page-wrapper > .page > .-spring {
   flex-grow: 1;
   flex-shrink: 1;
 }
-#theater-page-container > .theater-page-wrapper > table > tbody > tr > td > a:hover {
+#theater-page-container > .theater-page-wrapper > .page > a {
+  color: #666666;
+}
+#theater-page-container > .theater-page-wrapper > .page > a:hover {
   color: #222222;
 }
 
