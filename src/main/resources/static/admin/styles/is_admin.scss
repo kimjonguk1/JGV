@@ -125,6 +125,111 @@ button {
   @include minmaxWidth(980px);
   padding-top: 2rem;
   border-bottom: 1px solid #e0e0e0;
+  text-align: center;
+
+  > .theater-information {
+    color: #666666;
+  }
+
+  > button {
+    width: 6rem;
+    height: 3rem;
+    background-color: transparent;
+    cursor: pointer;
+
+    > span {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+  }
+
+
+  > .admin-button-wrapper {
+    @include flex(row, center, center);
+    width: 10.3rem;
+    height: 2rem;
+    border: 2px solid #FB4357;
+    white-space: nowrap;
+
+    > button {
+      width: 10rem;
+      height: 1.7rem;
+      border: 1px solid #FB4357;
+      background-color: #FB4357;
+      color: #ffffff;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: center;
+    }
+  }
+}
+
+#movie-crawl-button {
+  display: block;
+}
+
+#theater-crawl-button {
+  display: none;
+}
+
+#movie-admin-page {
+  display: block;
+}
+
+#theater-admin-page {
+  @include flex(column, flex-start, flex-start, 1rem);
+  @include minmaxWidth(980px);
+  height: auto;
+  padding: 2rem 0;
+  display: none;
+
+  > .admin-movie-list {
+    width: 100%;
+    height: auto;
+
+    > table {
+      width: 100%;
+      height: auto;
+      border-collapse: collapse;
+      text-align: center;
+
+      > tbody {
+
+        width: 100%;
+        height: 10rem;
+
+        > tr {
+          border-bottom: 1px solid #666666;
+
+          > th {
+            height: 2rem;
+            background-color: #FB4357;
+            color: #ffffff;
+          }
+
+          > td {
+            box-sizing: border-box;
+            height: 10rem;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 1rem 0;
+
+            > img {
+              width: 5rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+#admin-title-container {
+  @include flex(row, center, stretch);
+  @include minmaxWidth(980px);
+  padding-top: 2rem;
+  border-bottom: 1px solid #e0e0e0;
 
   > .theater-information {
     color: #666666;
@@ -186,44 +291,72 @@ button {
 
     > table {
       width: 100%;
-      height: 12rem;
+      height: auto;
       border-collapse: collapse;
       text-align: center;
 
-      > tbody {
-        width: 100%;
-        height: 12rem;
-
+      > thead {
         > tr {
           width: 100%;
           border-bottom: 1px solid #666666;
 
           > th {
-            height: 2rem;
+            background-color: #2275a4;
+            color: #ffffff;
+          }
+        }
+      }
+
+      > tbody {
+        width: 100%;
+        height: auto;
+
+        > tr {
+          @include flex(column, flex-start, center);
+
+          width: 100%;
+          border-bottom: 1px solid #666666;
+
+          > th {
+            @include flex(column, stretch, center);
             background-color: #2275a4;
             color: #ffffff;
           }
 
           > td {
-            height: 10rem;
+            @include flex(column, stretch, center);
+            width: 100%;
             font-size: 1rem;
             font-weight: 500;
             padding: 1rem 0;
-            text-align: center;
+            text-align: left;
 
             > img {
               width: 5rem;
             }
 
-            > div {
+            > ul > li {
+              padding-bottom: 1rem;
+              > div {
+                padding-bottom: 1rem;
 
-              button {
-                width: 2rem;
+                > strong {
+                  color: #FB4357;
+                }
+              }
+            }
+
+            > ul > li > ul > li {
+              @include flex(row, center, stretch, 0.5rem);
+
+              > button {
+                width: 5rem;
                 height: 1rem;
                 border-radius: 0.2rem;
                 color: #ffffff;
                 cursor: pointer;
                 font-size: 0.7rem;
+                text-align: center;
               }
 
               > .theater-delete {
@@ -234,8 +367,10 @@ button {
                 background-color: #2275a4;
               }
             }
+
           }
         }
+
       }
     }
   }
@@ -267,14 +402,13 @@ button {
     > .movie-search {
       width: 4rem;
       height: 1.8rem;
+      text-align: center;
 
       background-color: #FB4357;
       border-radius: 0.4rem;
       color: #ffffff;
       font-size: 1rem;
       font-weight: 600;
-      cursor: pointer;
-      text-align: center;
     }
   }
 }
@@ -307,6 +441,7 @@ button {
     > .theater-search {
       width: 4rem;
       height: 1.8rem;
+      text-align: center;
 
       background-color: #2275a4;
       border-radius: 0.4rem;
@@ -400,4 +535,3 @@ button {
     }
   }
 }
-

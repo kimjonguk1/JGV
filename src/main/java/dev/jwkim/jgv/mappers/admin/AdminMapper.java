@@ -32,7 +32,7 @@ public interface AdminMapper {
     // 상영관
     int selectArticleCountByTheater();
 
-    AdminTheaterDTO[] selectAllDTOByTheater(
+    AdminTheaterDTO[] selectAllDTOByTheaters(
             @Param("limitCount") int limitCount,
             @Param("offsetCount") int offsetCount
     );
