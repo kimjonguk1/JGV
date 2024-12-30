@@ -127,6 +127,125 @@ button {
   min-width: 980px;
   padding-top: 2rem;
   border-bottom: 1px solid #e0e0e0;
+  text-align: center;
+}
+#admin-title-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#admin-title-container > .theater-information {
+  color: #666666;
+}
+#admin-title-container > button {
+  width: 6rem;
+  height: 3rem;
+  background-color: transparent;
+  cursor: pointer;
+}
+#admin-title-container > button > span {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+#admin-title-container > .admin-button-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: center;
+  width: 10.3rem;
+  height: 2rem;
+  border: 2px solid #FB4357;
+  white-space: nowrap;
+}
+#admin-title-container > .admin-button-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#admin-title-container > .admin-button-wrapper > button {
+  width: 10rem;
+  height: 1.7rem;
+  border: 1px solid #FB4357;
+  background-color: #FB4357;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+#movie-crawl-button {
+  display: block;
+}
+
+#theater-crawl-button {
+  display: none;
+}
+
+#movie-admin-page {
+  display: block;
+}
+
+#theater-admin-page {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: flex-start;
+  width: 980px;
+  max-width: 980px;
+  min-width: 980px;
+  height: auto;
+  padding: 2rem 0;
+  display: none;
+}
+#theater-admin-page > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#theater-admin-page > .admin-movie-list {
+  width: 100%;
+  height: auto;
+}
+#theater-admin-page > .admin-movie-list > table {
+  width: 100%;
+  height: auto;
+  border-collapse: collapse;
+  text-align: center;
+}
+#theater-admin-page > .admin-movie-list > table > tbody {
+  width: 100%;
+  height: 10rem;
+}
+#theater-admin-page > .admin-movie-list > table > tbody > tr {
+  border-bottom: 1px solid #666666;
+}
+#theater-admin-page > .admin-movie-list > table > tbody > tr > th {
+  height: 2rem;
+  background-color: #FB4357;
+  color: #ffffff;
+}
+#theater-admin-page > .admin-movie-list > table > tbody > tr > td {
+  box-sizing: border-box;
+  height: 10rem;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 1rem 0;
+}
+#theater-admin-page > .admin-movie-list > table > tbody > tr > td > img {
+  width: 5rem;
+}
+
+#admin-title-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: stretch;
+  width: 980px;
+  max-width: 980px;
+  min-width: 980px;
+  padding-top: 2rem;
+  border-bottom: 1px solid #e0e0e0;
 }
 #admin-title-container > .-spring {
   flex-grow: 1;
@@ -194,45 +313,100 @@ button {
 }
 #theater-admin-page > .admin-theater-list > table {
   width: 100%;
-  height: 12rem;
+  height: auto;
   border-collapse: collapse;
   text-align: center;
 }
-#theater-admin-page > .admin-theater-list > table > tbody {
-  width: 100%;
-  height: 12rem;
-}
-#theater-admin-page > .admin-theater-list > table > tbody > tr {
+#theater-admin-page > .admin-theater-list > table > thead > tr {
   width: 100%;
   border-bottom: 1px solid #666666;
 }
-#theater-admin-page > .admin-theater-list > table > tbody > tr > th {
-  height: 2rem;
+#theater-admin-page > .admin-theater-list > table > thead > tr > th {
   background-color: #2275a4;
   color: #ffffff;
 }
+#theater-admin-page > .admin-theater-list > table > tbody {
+  width: 100%;
+  height: auto;
+}
+#theater-admin-page > .admin-theater-list > table > tbody > tr {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  width: 100%;
+  border-bottom: 1px solid #666666;
+}
+#theater-admin-page > .admin-theater-list > table > tbody > tr > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#theater-admin-page > .admin-theater-list > table > tbody > tr > th {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  background-color: #2275a4;
+  color: #ffffff;
+}
+#theater-admin-page > .admin-theater-list > table > tbody > tr > th > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
 #theater-admin-page > .admin-theater-list > table > tbody > tr > td {
-  height: 10rem;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  width: 100%;
   font-size: 1rem;
   font-weight: 500;
   padding: 1rem 0;
-  text-align: center;
+  text-align: left;
+}
+#theater-admin-page > .admin-theater-list > table > tbody > tr > td > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 #theater-admin-page > .admin-theater-list > table > tbody > tr > td > img {
   width: 5rem;
 }
-#theater-admin-page > .admin-theater-list > table > tbody > tr > td > div button {
-  width: 2rem;
+#theater-admin-page > .admin-theater-list > table > tbody > tr > td > ul > li {
+  padding-bottom: 1rem;
+}
+#theater-admin-page > .admin-theater-list > table > tbody > tr > td > ul > li > div {
+  padding-bottom: 1rem;
+}
+#theater-admin-page > .admin-theater-list > table > tbody > tr > td > ul > li > div > strong {
+  color: #FB4357;
+}
+#theater-admin-page > .admin-theater-list > table > tbody > tr > td > ul > li > ul > li {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: stretch;
+}
+#theater-admin-page > .admin-theater-list > table > tbody > tr > td > ul > li > ul > li > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#theater-admin-page > .admin-theater-list > table > tbody > tr > td > ul > li > ul > li > button {
+  width: 5rem;
   height: 1rem;
   border-radius: 0.2rem;
   color: #ffffff;
   cursor: pointer;
   font-size: 0.7rem;
+  text-align: center;
 }
-#theater-admin-page > .admin-theater-list > table > tbody > tr > td > div > .theater-delete {
+#theater-admin-page > .admin-theater-list > table > tbody > tr > td > ul > li > ul > li > .theater-delete {
   background-color: #FB4357;
 }
-#theater-admin-page > .admin-theater-list > table > tbody > tr > td > div > .theater-modify {
+#theater-admin-page > .admin-theater-list > table > tbody > tr > td > ul > li > ul > li > .theater-modify {
   background-color: #2275a4;
 }
 
@@ -278,6 +452,7 @@ button {
 #movie-search-form > .movie-keyword-wrapper > .movie-search {
   width: 4rem;
   height: 1.8rem;
+  text-align: center;
   background-color: #FB4357;
   border-radius: 0.4rem;
   color: #ffffff;
@@ -330,6 +505,7 @@ button {
 #theater-search-form > .theater-keyword-wrapper > .theater-search {
   width: 4rem;
   height: 1.8rem;
+  text-align: center;
   background-color: #2275a4;
   border-radius: 0.4rem;
   color: #ffffff;
