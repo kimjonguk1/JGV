@@ -64,54 +64,63 @@ $theaterCrawl.onclick = () => {
     }
 }
 
-// {
-//     const $movieSearch = document.getElementById('movie-search-form');
-//     $movieSearch.onsubmit = (e) => {
-//         e.preventDefault();
-//         const xhr = new XMLHttpRequest();
-//         const formData = new FormData();
-//         formData.append('filter', $movieSearch['filter'].value);
-//         formData.append('keyword', $movieSearch['keyword'].value);
-//         xhr.onreadystatechange = () => {
-//             if (xhr.readyState !== XMLHttpRequest.DONE) {
-//                 return;
-//             }
-//             if (xhr.status < 200 || xhr.status >= 300) {
-//                 alert('오류 발생');
-//                 return;
-//             }
-//             console.log(xhr.responseText);
-//         }
-//         xhr.open('POST', location.href);
-//         xhr.send(formData);
-//     }
-// }
+{
+    const $screenItem = Array.from(document.querySelectorAll('.screen-item'));
+    $screenItem.forEach((screen) => {
+        const $theaterDelete = Array.from(screen.querySelectorAll(':scope > .theater-delete'));
+        $theaterDelete.forEach((del) => {
+            del.onclick = () => {
+                $theaterDelete.forEach((item) => {
+                    if (item === del) {
+                        const scNum = screen.querySelector(':scope > .scNum');
+                        const xhr = new XMLHttpRequest();
+                        const formData = new FormData();
+                        formData.append('scNum', scNum.innerText);
+                        xhr.onreadystatechange = () => {
+                            if (xhr.readyState !== XMLHttpRequest.DONE) {
+                                return;
+                            }
+                            if (xhr.status < 200 || xhr.status >= 300) {
+                                alert('오류 발생');
+                                return;
+                            }
+                            const response = JSON.parse(xhr.responseText);
+                            console.log(response);
+                        };
+                        xhr.open('DELETE', './is_admin');
+                        xhr.send(formData);
+                    }
+                })
+            }
+        })
+    })
+}
 
 document.addEventListener("DOMContentLoaded", function () {
     const $deleteButton = document.querySelectorAll('.movie-delete')
     const $modifyButton = document.querySelectorAll('.movie-modify')
     $deleteButton.forEach(button => {
-        button.addEventListener("click", function (){
+        button.addEventListener("click", function () {
             const movieNum = this.getAttribute("data-mo-num")
             const result = confirm("정말 삭제하시겠습니까?")
-            if(result) {
+            if (result) {
                 const xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = () => {
-                    if(xhr.readyState !== XMLHttpRequest.DONE) {
+                    if (xhr.readyState !== XMLHttpRequest.DONE) {
                         return;
                     }
-                    if(xhr.status < 200 || xhr.status >= 300) {
+                    if (xhr.status < 200 || xhr.status >= 300) {
                         alert('삭제에 실패하였습니다. 다시 시도해 주세요')
                         return;
                     }
                     const response = JSON.parse(xhr.responseText);
                     console.log(response);
-                    if(response === 'SUCCESS') {
+                    if (response === 'SUCCESS') {
                         alert('삭제가 완료되었습니다.');
                         window.location.reload();
-                    } else if(response === 'NOT_LOGGED_IN') {
+                    } else if (response === 'NOT_LOGGED_IN') {
                         alert('삭제에 실패했습니다. 세션이 만료되었거나 로그인이 해제되었을 수 있습니다. 로그인 상태를 확인한 후 다시 시도해 주세요.');
-                    } else if(response === 'FAILURE'){
+                    } else if (response === 'FAILURE') {
                         alert('삭제에 실패하였습니다. 다시 시도해 주세요')
                     } else {
                         alert('알 수 없는 응답입니다. 관리자에게 문의하세요')

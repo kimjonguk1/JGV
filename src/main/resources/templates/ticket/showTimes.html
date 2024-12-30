@@ -112,13 +112,15 @@
             </ul>
         </div>
         <div class="movie-container">
-            <div class="movie">
+            <div class="movie"
+                 th:if="${map != null}"
+                 th:each="ma : ${map}">
                 <a href="#" class="poster">
-                    <img class="poster" src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000088/88797/88797_320.jpg" alt="하얼빈">
+                    <img class="poster" th:src="${ma.key[3]}" alt="하얼빈">
                 </a>
                 <div class="movie-info">
-                    <div class="text">/ 114분</div>
-                    <div class="text">2024.12.24개봉</div>
+                    <div th:text="${#strings.arrayJoin(ma.value[0], ', ')} + '/ ' + ${ma.key[2]} + '분'" class="text"></div>
+                    <div th:text="${ma.key[1]} + ' 개봉'" class="text"></div>
                 </div>
             </div>
             <div class="movie-title">
@@ -133,10 +135,10 @@
                 </ul>
             </div>
             <div class="cinema-type">
-                <ul class="items">
-                    <li class="item">2D</li>
-                    <li class="item">4D</li>
-                    <li class="item">5D</li>
+                <ul class="items" th:each="ma : ${map}">
+                    <li class="item"
+                        th:each="val : ${ma.value[1]}"
+                        th:text="${val}"></li>
                 </ul>
             </div>
         </div>

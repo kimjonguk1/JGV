@@ -312,6 +312,19 @@ let text = null;
                                     alert('오류 발생');
                                     return;
                                 }
+                                const $newMovie = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelector('.img-movie > .movie-container > .movie');
+                                const $cinemaType = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelector(' .img-movie > .movie-container > .cinema-type');
+                                const $movieContainer = document.querySelector(' .img-movie > .movie-container');
+                                const $realCinema = $movieContainer.querySelector(':scope > .cinema-type');
+                                const $movie = document.querySelector('.img-movie > .movie-container > .movie')
+                                if ($movie) {
+                                    $movie.replaceWith($newMovie);
+                                } else {
+                                    $movieContainer.prepend($newMovie);
+                                }
+                                $realCinema.replaceWith($cinemaType);
+                                const $cinemaItems = document.querySelector('.cinema-type > .items');
+                                const $cinemaItem = Array.from($cinemaItems.querySelectorAll(':scope > .item'));
                                 const $dayContainer = $schedule.querySelector('.day-containers');
                                 $dayContainer.innerHTML = '';
                                 const $dayContainers = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelector('#schedule > .cinema-info > .day-containers');
@@ -355,6 +368,37 @@ let text = null;
                                                     const $screenContainer = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('#schedule > .cinema-info > .items > .item');
                                                     $screenContainer.forEach((screen) => {
                                                         $screens.append(screen);
+                                                    })
+                                                    $cinemaItem.forEach((item) => {
+                                                        if ($cinemaItems.firstElementChild) {
+                                                            $cinemaItems.firstElementChild.click(); // 첫 번째 자식 클릭
+                                                        }
+                                                        item.onclick = () => {
+                                                            $cinemaItem.forEach((cinema) => {
+                                                                cinema.classList.remove('select');
+                                                                if (item === cinema) {
+                                                                    cinema.classList.add('select');
+                                                                    url.searchParams.set('cinema', cinema.innerText);
+                                                                    const xhr = new XMLHttpRequest();
+                                                                    xhr.onreadystatechange = () => {
+                                                                        if (xhr.readyState !== XMLHttpRequest.DONE) {
+                                                                            return;
+                                                                        }
+                                                                        Loading.hide();
+                                                                        if (xhr.status < 200 || xhr.status >= 300) {
+                                                                            alert('오류 발생');
+                                                                            return;
+                                                                        }
+                                                                        const $screenItems = document.querySelector('#schedule > .cinema-info > .items');
+                                                                        const $newScreens = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelector('#schedule > .cinema-info > .items');
+                                                                        $screenItems.replaceWith($newScreens);
+                                                                    }
+                                                                    xhr.open('GET', url.toString());
+                                                                    xhr.send();
+                                                                    Loading.show(0);
+                                                                }
+                                                            })
+                                                        }
                                                     })
                                                 }
                                                 xhr.open('GET', url.toString());
@@ -400,13 +444,5 @@ let text = null;
                 }
             })
         }
-    })
-}
-
-{
-    const $items = document.querySelector('.cinema-type > .items');
-    const $item = Array.from($items.querySelectorAll(':scope > .item'));
-    $item.forEach((item) => {
-        console.log(item);
     })
 }

@@ -21,6 +21,58 @@ import java.util.*;
 public class TheaterService {
     private final TheaterMapper theaterMapper;
 
+    public Map<Set<String>, Map<Set<String>, Set<String>>> selectAllScreensByCinemaType(String date, String region, String movie, String cinema) {
+        if (date == null || date.isEmpty() ||
+                region == null || region.isEmpty() ||
+                movie == null || movie.isEmpty() ||
+                cinema == null || cinema.isEmpty()) {
+            return null;
+        }
+        ScreenVo[] screenVos = this.theaterMapper.selectAllScreensByCinemaType(date, region, movie, cinema);
+        Map<Set<String>, Map<Set<String>, Set<String>>> map = new LinkedHashMap<>();
+        for (ScreenVo screen : screenVos) {
+            Set<String> keys = new LinkedHashSet<>();
+            Set<String> values = new LinkedHashSet<>();
+            Set<String> genreList = new TreeSet<>();
+            Set<String> timeList = new LinkedHashSet<>();
+            genreList.add(screen.getGeName());
+            for (ScreenVo nextScreen : screenVos) {
+                if (!nextScreen.getGeName().equals(screen.getGeName()) && nextScreen.getMoNum() == screen.getMoNum()) {
+                    genreList.add(nextScreen.getGeName());  // 다른 영화 장르를 추가
+                }
+            }
+            switch (screen.getRaGrade()) {
+                case "청소년관람불가" -> screen.setRaGrade("nineteen");
+                case "15세이상관람가" -> screen.setRaGrade("fifteen");
+                case "12세이상관람가" -> screen.setRaGrade("twelve");
+                case "전체관람가" -> screen.setRaGrade("all");
+                case "미정" -> screen.setRaGrade("none");
+            }
+            keys.add(screen.getRaGrade());
+            keys.add(screen.getMoTitle());
+            keys.add(String.valueOf(screen.getMoTime()));
+            keys.add(screen.getMoDate());
+            keys.add(String.valueOf(screen.getSeatCount()));
+            keys.add(String.valueOf(screen.getMoNum()));
+            keys.add(genreList.toString());
+            keys.add(screen.getThName());
+            if (screen.getCitName().equals("4DX")) {
+                screen.setCitName("DX");
+            }
+            if (screen.getCitNum() != 1 && screen.getCitNum() != 5) {
+                screen.setCiName(screen.getCitName() + "&&");
+            }
+            values.add(screen.getCiName());
+            values.add(screen.getCitName());
+            timeList.add(String.valueOf(screen.getScStartDate()).split("T")[1]);
+            ScreenDataVo screenDataVo = new ScreenDataVo(screen.getSeatCount(), screen.getUsedSeatCount());
+            timeList.add(String.valueOf(screenDataVo.emptySeatCount));
+            map.computeIfAbsent(keys, k -> new LinkedHashMap<>());
+            map.get(keys).computeIfAbsent(values, k -> new LinkedHashSet<>()).add(timeList.toString());
+        }
+        return map;
+    }
+
     public Map<Set<String>, Map<Set<String>, Set<String>>> selectAllScreens(String date, String theater) {
         if (date == null || date.isEmpty() ||
                 theater == null || theater.isEmpty()) {

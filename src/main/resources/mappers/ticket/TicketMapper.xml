@@ -372,4 +372,21 @@
           AND th_name = #{thName}
           AND sc_start_date = #{scStartDate}
     </select>
+    <select id="selectShowTimesByMoTitle"
+            resultType="dev.jwkim.jgv.vos.theater.MovieVo">
+        SELECT DISTINCT `mo_title`  AS `moTitle`,
+                        `mo_date`   AS `moDate`,
+                        `mo_time`   AS `moTime`,
+                        `m_img_url` AS `mImgUrl`,
+                        `ge_name`   AS `geName`,
+                        `cit_name`  AS `citName`
+        FROM `jgv`.`movie`
+                 LEFT JOIN `jgv`.`movie_image` ON `movie`.`mo_num` = `movie_image`.`mo_num`
+                 LEFT JOIN `jgv`.`movie_genere` ON `movie`.`mo_num` = `movie_genere`.`mo_num`
+                 LEFT JOIN `jgv`.`genre` ON `movie_genere`.`ge_num` = `genre`.`ge_num`
+                 LEFT JOIN `jgv`.`screen` ON `movie`.`mo_num` = `screen`.`mo_num`
+                 LEFT JOIN `jgv`.`cinema` ON `screen`.`ci_num` = `cinema`.`ci_num`
+                 LEFT JOIN `jgv`.`cinema_type` ON `cinema`.`cit_num` = `cinema_type`.`cit_num`
+        WHERE `mo_title` = #{movie}
+    </select>
 </mapper>
