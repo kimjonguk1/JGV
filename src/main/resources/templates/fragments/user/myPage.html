@@ -69,7 +69,7 @@
 
     <div class="my-review">
         <div class="review-list">
-            <div class="review-item" th:each="review : ${Reviews}"
+            <div class="review-item" th:if="${!#lists.isEmpty(Reviews)}" th:each="review : ${Reviews}"
                  th:attr="data-review-id=${review.reNum}">
                 <div class="review-thumbnail">
                     <img th:src="${review.mImgUrl}" alt="Poster">
@@ -89,7 +89,10 @@
                     <button class="delete-review">X</button>
                 </div>
             </div>
-            <div class="paging">
+            <div class="no-review" th:if="${#lists.isEmpty(Reviews)}">
+                <span class="no-review-text">작성한 리뷰가 없습니다.</span>
+            </div>
+            <div class="paging" th:if="${!#lists.isEmpty(Reviews) && pageVo.displayMaxPage > pageVo.displayMinPage}">
                 <a class="page" th:each="page : ${#numbers.sequence(pageVo.displayMinPage, pageVo.displayMaxPage)}"
                    th:text="${page}"
                    th:href="@{/user/myPage/main(page=${page})}"

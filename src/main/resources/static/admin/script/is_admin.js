@@ -89,6 +89,7 @@ $theaterCrawl.onclick = () => {
 
 document.addEventListener("DOMContentLoaded", function () {
     const $deleteButton = document.querySelectorAll('.movie-delete')
+    const $modifyButton = document.querySelectorAll('.movie-modify')
     $deleteButton.forEach(button => {
         button.addEventListener("click", function (){
             const movieNum = this.getAttribute("data-mo-num")
@@ -125,6 +126,12 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 return
             }
+        })
+    })
+    $modifyButton.forEach(button => {
+        button.addEventListener("click", function (){
+            const movieNum = this.getAttribute("data-mo-num")
+            window.location.href = `/admin/modify/${movieNum}`;
         })
     })
 })

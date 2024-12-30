@@ -1,5 +1,6 @@
 package dev.jwkim.jgv.services.movie;
 
+import dev.jwkim.jgv.DTO.AllMovieInfoDTO;
 import dev.jwkim.jgv.DTO.MovieDeleteModifyDTO;
 import dev.jwkim.jgv.DTO.Movie_ImageDTO;
 import dev.jwkim.jgv.DTO.Movie_InfoDTO;
@@ -403,5 +404,9 @@ public class MovieService {
 
     public boolean updateMoEndingToNow(int movieId) {
         return movieMapper.updateMoEnding(movieId);
+    }
+
+    public AllMovieInfoDTO getMoviesById(int movieNum) {
+        return this.movieMapper.getMovieById(movieNum);
     }
 }

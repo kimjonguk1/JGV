@@ -2,6 +2,7 @@ package dev.jwkim.jgv.controlles.admin;
 
 import dev.jwkim.jgv.DTO.AdminMovieDTO;
 import dev.jwkim.jgv.DTO.AdminTheaterDTO;
+import dev.jwkim.jgv.DTO.AllMovieInfoDTO;
 import dev.jwkim.jgv.DTO.MovieDeleteModifyDTO;
 import dev.jwkim.jgv.DTO.ScreenInfoDTO;
 import dev.jwkim.jgv.entities.user.UserEntity;
@@ -109,5 +110,22 @@ public class AdminController {
         boolean result = this.movieService.updateMoEndingToNow(movieId);
 
         return result ? MovieDeleteModifyResult.SUCCESS : MovieDeleteModifyResult.FAILURE;
+    }
+
+    @RequestMapping(value = "/modify/{movieNum}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView getModifyMoviePage(@PathVariable("movieNum") int movieNum, HttpSession session) {
+        UserEntity loggedInUser = (UserEntity) session.getAttribute("user");
+
+        if (loggedInUser == null) {
+            return null;
+        }
+        AllMovieInfoDTO movie = this.movieService.getMoviesById(movieNum);
+        if(movie == null) {
+            return null;
+        }
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("movie", movie);
+        modelAndView.setViewName("admin/movie-modify");
+        return modelAndView;
     }
 }

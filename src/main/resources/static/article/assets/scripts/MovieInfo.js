@@ -164,6 +164,7 @@ $submitReview.addEventListener('click', () => {
     const $reviewText = document.getElementById('reviewText').value.trim();
     const movieId = window.location.pathname.split('/').pop();
     const mode = $submitReview.dataset.mode;
+    console.log($submitReview.dataset)
     console.log(mode)
     if($reviewText === '') {
         alert('평점 내용을 입력해 주세요');
