@@ -4,4 +4,5 @@ import dev.jwkim.jgv.results.Result;
 
 public enum ReservationResult implements Result {
         FAILURE_CANCEL_COMPLETE,
+        FAILURE_UN_STEADY_LOGIN,
 }

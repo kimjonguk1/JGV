@@ -155,7 +155,10 @@
                     <div class="detail">
                         <span>관람일시</span>
                         <!-- 상영 시작 시간 -->
-                        <span class="red" th:id="'scStartDate-' + ${stat.index}" th:text="${reservation.key[5]}"></span>
+                        <span
+                                th:id="'scStartDate-' + ${stat.index}"
+                                th:classappend="${reservation.key[9] < currentDate} ? 'black' : 'red'"
+                                th:text="${reservation.key[5]}"></span>
                         <div class="-spring"></div>
                         <span>관람좌석</span>
                         <!-- 좌석 이름: 각 좌석을 반복 출력 -->
@@ -198,10 +201,13 @@
                     </div>
                 </div>
                 <div class="reservation-cancel">
-                    <button class="reservation-cancel-button" th:onclick="'ticketCancel(' + ${stat.index} + ')'">예매 취소
+                    <button class="reservation-cancel-button"
+                            th:onclick="'ticketCancel(' + ${stat.index} + ')'"
+                            th:classappend="${reservation.key[9] < currentDate} ? 'hidden' : ''">
+                        예매 취소
                     </button>
-
                 </div>
+
             </div>
         </div>
     </div>
@@ -223,11 +229,11 @@
                 </thead>
                 <tbody>
                 <tr th:each="cancelReservation : ${cancelReservations}">
-                    <td th:text="${cancelReservation.key[0]}"></td>
-                    <td th:text="${cancelReservation.key[0]}"></td>
-                    <td th:text="${cancelReservation.key[1]}"></td>
-                    <td th:text="${cancelReservation.key[2]}"></td>
-                    <td th:text="${cancelReservation.key[3]}"></td>
+                    <td style="text-align: center; width: 20%; overflow: hidden;" th:text="${cancelReservation[0]}"></td>
+                    <td th:text="${cancelReservation[1]}"></td>
+                    <td th:text="${cancelReservation[2]}"></td>
+                    <td th:text="${cancelReservation[3]}"></td>
+                    <td th:text="${cancelReservation[4]}"></td>
                 </tr>
                 <tr th:if="${cancelReservations == null || cancelReservations.size() == 0}">
                     <td colspan="5">고객님의 최근 취소내역이 존재하지 않습니다.</td>

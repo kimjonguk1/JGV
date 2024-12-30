@@ -39,7 +39,6 @@ body {
 #userInfo > .image-wrapper {
   width: 135px;
   height: 135px;
-  background: url("../images/background.png");
 }
 #userInfo > .image-wrapper > img {
   width: 135px;

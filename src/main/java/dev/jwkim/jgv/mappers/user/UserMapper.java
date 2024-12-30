@@ -1,5 +1,6 @@
 package dev.jwkim.jgv.mappers.user;
 
+import dev.jwkim.jgv.entities.ticket.PaymentEntity;
 import dev.jwkim.jgv.entities.user.UserEntity;
 import dev.jwkim.jgv.vos.user.ReservationVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -39,5 +40,14 @@ public interface UserMapper {
 
     ReservationVo[] selectPaymentByUsNum(@Param("usNum") int usNum);
     ReservationVo[] selectCancelPaymentByUsNum(@Param("usNum") int usNum);
+    PaymentEntity[] selectCancelPaNumByPayment(@Param("paNum") int paNum,
+                                               @Param("usNum") int usNum,
+                                               @Param("paPrice") int paPrice,
+                                               @Param("paCreatedAt") String paCreatedAt);
+
+    int updatePaymentState(@Param("usNum") int usNum,
+                           @Param("paNum") int paNum,
+                           @Param("paState") boolean paState,
+                           @Param("paDeletedAt") LocalDateTime paDeletedAt);
 
 }

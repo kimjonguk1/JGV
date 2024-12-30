@@ -21,10 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -42,8 +39,7 @@ public class TicketController {
     public ModelAndView getIndex(@RequestParam(value = "region", required = false) String region,
                                  @RequestParam(value = "moTitle", required = false) String moTitle,
                                  @RequestParam(value = "thName", required = false) String thName,
-                                 @RequestParam(value = "scStartDate", required = false) String scStartDate,
-                                 HttpSession session, UserEntity user) {
+                                 @RequestParam(value = "scStartDate", required = false) String scStartDate) {
         ModelAndView modelAndView = new ModelAndView();
         MovieVo[] movies = this.ticketService.selectAllMoviesByRating();
         RegionVo[] regions = this.ticketService.selectRegionAndTheaterCount();
@@ -172,8 +168,6 @@ public class TicketController {
         modelAndView.addObject("regions", regions);
         modelAndView.addObject("theaters", theaters);
         modelAndView.addObject("maps", maps);
-        modelAndView.addObject("session", session);
-        modelAndView.addObject("user", user);
 
         modelAndView.setViewName("ticket/index");
         return modelAndView;
@@ -292,7 +286,8 @@ public class TicketController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String postIndex(@RequestParam(value = "meName", required = false) String meName,
+    public String postIndex(@SessionAttribute(value = "user") UserEntity user,
+                            @RequestParam(value = "meName", required = false) String meName,
                             @RequestParam(value = "paPrice", required = false) int paPrice,
                             @RequestParam(value = "usNum", required = false) int usNum,
                             @RequestParam(value = "seName", required = false) String[] seNames,  // 여러 좌석 정보 배열로 받기
@@ -301,28 +296,33 @@ public class TicketController {
                             @RequestParam(value = "thName", required = false) String thName,
                             @RequestParam(value = "scStartDate", required = false) LocalDateTime scStartDate) {
 
+        System.out.println("유저 정보 :" + user.getUsName());
+
+//        if  (user.getUsNum() != usNum) {
+//            int result = this.ticketService.selectPaymentNum(moTitle, ciName, thName, scStartDate, paPrice, usNum);
+//            JSONObject response = new JSONObject();
+//            response.put(Result.NAME, result);
+//            return response.toString();
+
+//        }
+
         // seNames 배열이 비어 있는지 체크
         if (seNames == null || seNames.length == 0) {
             throw new IllegalArgumentException("좌석 정보가 전달되지 않았습니다.");
         }
 
         // 결제 정보 저장
-        Result result = this.ticketService.insertReservationAndPayment(moTitle, ciName, thName, scStartDate, meName, usNum, seNames, paPrice);
+        Result result = this.ticketService.insertReservationAndPayment(user, moTitle, ciName, thName, scStartDate, meName, usNum, seNames, paPrice);
 
         int results = this.ticketService.selectPaymentNum(moTitle, ciName, thName, scStartDate, paPrice, usNum);
 
         // 응답 데이터 생성
         JSONObject response = new JSONObject();
 
-        // forward
-//        if (redirect == null) {
-//            redirect = (String) session.getAttribute("redirect");
-//            if (redirect == null) {
-//                redirect = "ticket/index";
-//            }
-//        }
-//        response.put("redirect", redirect);
-        // end forward
+        if (user == null) {
+            response.put(Result.NAME, result.nameToLower());
+        }
+
 
         response.put(Result.NAME, result.nameToLower());
         response.put(Result.NAMES, results);
