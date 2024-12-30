@@ -15,7 +15,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -112,20 +114,26 @@ public class AdminController {
         return result ? MovieDeleteModifyResult.SUCCESS : MovieDeleteModifyResult.FAILURE;
     }
 
+    //영화 수정 페이지
     @RequestMapping(value = "/modify/{movieNum}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getModifyMoviePage(@PathVariable("movieNum") int movieNum, HttpSession session) {
         UserEntity loggedInUser = (UserEntity) session.getAttribute("user");
 
         if (loggedInUser == null) {
-            return null;
+            return new ModelAndView("redirect:/user/login?forward=/user/myPage/main\n");
         }
-        AllMovieInfoDTO movie = this.movieService.getMoviesById(movieNum);
-        if(movie == null) {
-            return null;
-        }
+
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("movie", movie);
         modelAndView.setViewName("admin/movie-modify");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/api/{movieNum}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AllMovieInfoDTO> getMovieInfo(@PathVariable("movieNum") int movieNum) {
+        AllMovieInfoDTO movie = movieService.getMoviesById(movieNum);
+        if (movie == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(movie);
     }
 }
