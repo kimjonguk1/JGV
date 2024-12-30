@@ -9,6 +9,7 @@ import dev.jwkim.jgv.entities.ticket.MethodEntity;
 import dev.jwkim.jgv.entities.ticket.PaymentEntity;
 import dev.jwkim.jgv.entities.ticket.ReservationEntity;
 import dev.jwkim.jgv.entities.ticket.SeatEntity;
+import dev.jwkim.jgv.entities.user.UserEntity;
 import dev.jwkim.jgv.exceptions.TransactionalException;
 import dev.jwkim.jgv.mappers.ticket.MethodMapper;
 import dev.jwkim.jgv.mappers.ticket.PaymentMapper;
@@ -16,6 +17,7 @@ import dev.jwkim.jgv.mappers.ticket.ReservationMapper;
 import dev.jwkim.jgv.mappers.ticket.TicketMapper;
 import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.results.Result;
+import dev.jwkim.jgv.results.reservation.ReservationResult;
 import dev.jwkim.jgv.vos.theater.MovieVo;
 import dev.jwkim.jgv.vos.theater.RegionVo;
 import dev.jwkim.jgv.vos.theater.ScreenVo;
@@ -496,9 +498,14 @@ public class TicketService {
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public CommonResult insertReservationAndPayment(String moTitle, String ciName, String thName, LocalDateTime scStartDate,
-                                                    String meName, int usNum, String[] seNames, int paPrice) {
+    public Result insertReservationAndPayment(UserEntity user, String moTitle, String ciName, String thName, LocalDateTime scStartDate,
+                                              String meName, int usNum, String[] seNames, int paPrice) {
         try {
+
+            if (user == null) {
+                return ReservationResult.FAILURE_UN_STEADY_LOGIN;
+            }
+
             // Step 1: 영화 상영 정보 조회
             ScreenEntity[] screenEntities = this.reservationMapper.selectReservationByScNum(moTitle, ciName, thName, scStartDate);
             if (screenEntities == null || screenEntities.length == 0) {

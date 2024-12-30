@@ -351,10 +351,13 @@
                  left join jgv.theater on cinema.th_num = theater.th_num
                  left join jgv.screen on reservation.sc_num = screen.sc_num
                  left join jgv.movie on screen.mo_num = movie.mo_num
+                 left join jgv.payment on reservation.pa_num = payment.pa_num
         where ci_name = #{ciName}
           and th_name = #{thName}
           and mo_title = #{moTitle}
           and `sc_start_date` LIKE CONCAT('%', #{scStartDate}, '%')
+          and `pa_state` is true
+          and `pa_deleted_at` is null;
     </select>
     <select id="selectScNumByScName" resultType="java.lang.Integer">
         SELECT screen.sc_num

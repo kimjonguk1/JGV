@@ -502,6 +502,8 @@ public class UserService {
 
     // region 예매 내역
 
+    // region 예매 내역
+
     public Map<Set<String>, List<String>> reservationInformation(int usNum) {
         Map<Set<String>, List<String>> map = new LinkedHashMap<>();
         ReservationVo[] reservationVo = this.userMapper.selectPaymentByUsNum(usNum);
@@ -518,6 +520,7 @@ public class UserService {
             strings.add(String.valueOf(reservationVos.getCiName()));
             strings.add(String.valueOf(reservationVos.getMeName()));
             strings.add(reservationVos.getPaCreatedAt().toString().split("T")[0]);
+            strings.add(String.valueOf(reservationVos.getScStartDate()));
 
 
             strings1.add(String.valueOf(reservationVos.getSeName()));
@@ -528,49 +531,67 @@ public class UserService {
     }
 
     public List<List<String>> selectCancelPaymentByUsNum(int usNum) {
-        List<List<String>> map = new ArrayList<>();
-        ReservationVo[] reservationVo = this.userMapper.selectCancelPaymentByUsNum(usNum);
+        List<List<String>> resultList = new ArrayList<>();
+        ReservationVo[] reservationVos = this.userMapper.selectCancelPaymentByUsNum(usNum);
 
-        for (ReservationVo reservationVos : reservationVo) {
-            List<String> strings = new ArrayList<>();
+        for (ReservationVo reservationVo : reservationVos) {
+            List<String> stringList = new ArrayList<>();
 
+            stringList.add(reservationVo.getMoTitle());
             // 1. 극장 이름
-            strings.add(reservationVos.getThName());
+            stringList.add(reservationVo.getThName());
 
             // 2. 상영 시작 날짜와 요일
-            String[] startDateTimeParts = reservationVos.getScStartDate().toString().split("T");
+            String[] startDateTimeParts = reservationVo.getScStartDate().toString().split("T");
             LocalDate localDate = LocalDate.parse(startDateTimeParts[0], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             String formattedStartDate = startDateTimeParts[0] + "(" +
                     localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN).split("요일")[0] +
-                    ") " +
-                    startDateTimeParts[1];
-            strings.add(formattedStartDate);
+                    ") " + startDateTimeParts[1];
+            stringList.add(formattedStartDate);
 
             // 3. 삭제된 날짜
-            strings.add(reservationVos.getPaDeletedAt().toString().replace("T", " "));
+            stringList.add(reservationVo.getPaDeletedAt().toString().replace("T", " "));
 
             // 4. 가격
-            strings.add(String.format("%,d", reservationVos.getPaPrice()) + "원");
+            stringList.add(String.format("%,d", reservationVo.getPaPrice()) + "원");
 
-            // 리스트에 추가
-            map.add(strings);
+            // 중복 체크: resultList에 이미 동일한 stringList가 존재하는지 확인
+            if (!resultList.contains(stringList)) {
+                resultList.add(stringList); // 중복되지 않으면 추가
+            }
         }
 
-        return map;
+        return resultList;
     }
+
+
 
     // endregion
 
     // region 예매 취소
-
-    public Result reservationCancel(UserEntity user) {
-        if (user == null) {
-            return CommonResult.FAILURE;
+    @Transactional
+    public Result reservationCancel(int usNum, int paNum, int paPrice, String paCreatedAt) {
+        // 예매 취소 가능 여부를 확인
+        PaymentEntity[] paymentCancel = this.userMapper.selectCancelPaNumByPayment(usNum, paNum, paPrice, paCreatedAt);
+        if (paymentCancel == null) {
+            System.out.println("실패");
+            return ReservationResult.FAILURE_CANCEL_COMPLETE;
         }
-        // pa.state 가 이미 0일때 return ReservationResult.FAILURE_CANCEL_COMPLETE;
-        // setPaState(false);
+
+        // 결제 상태를 취소로 변경
+        this.updatePaymentState(usNum, paNum, false, LocalDateTime.now());
+        System.out.println("성공");
+
         return CommonResult.SUCCESS;
     }
+
+    public void updatePaymentState(int usNum, int paNum, boolean paState, LocalDateTime paDeletedAt) {
+        int updatedRows = this.userMapper.updatePaymentState(usNum, paNum, paState, paDeletedAt);
+        if (updatedRows == 0) {
+            throw new RuntimeException("결제 상태 업데이트 실패");
+        }
+    }
+
 
     // endregion
 }

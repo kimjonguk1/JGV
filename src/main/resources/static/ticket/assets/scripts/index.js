@@ -790,8 +790,6 @@ $rightButtons.forEach((x) => {
                         const response = JSON.parse(xhr.responseText);
                         const result = response['result'];
                         const result2 = response['results'];
-                        console.log(result);
-                        console.log(result2);
                         $seatColor.innerText = 40 - result.length;
 
                         $payMovie.innerText = `${$theaterMovie.innerText}`;
@@ -818,8 +816,7 @@ $rightButtons.forEach((x) => {
                             newHour += Math.floor(newMinute / 60);
                             newMinute %= 60;
                         }
-                        console.log(newHour)
-                        console.log(newMinute)
+
 
 // 시와 분을 두 자리로 맞추기
                         newHour = newHour.toString().padStart(2, '0'); // 2자리 형식의 시
@@ -1200,11 +1197,19 @@ $payForm.onsubmit = (e) => {
         const formData = new FormData();
 
         // 세션에서 userId 값을 가져옴
-        const sessionUsId = sessionStorage.getItem('user').trim();  // 세션에서 userId를 가져오기
-        if (sessionUsId) {
-            formData.append("usNum", sessionUsId);  // 세션에서 가져온 userId 추가
+        const sessionUsId = sessionStorage.getItem('user');  // 세션에서 user 가져오기
+
+        if (sessionUsId === null || sessionUsId.trim() === "") {
+            const userCheck = confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")
+            if (userCheck) {
+                const redirectUrl = window.location.pathname;
+                window.location.replace(`.././user/login?redirect=${encodeURIComponent(redirectUrl)}`);
+            } else {
+                return;
+            }
         } else {
-            return alert('로그인해주세요.');
+            const trimmedUsId = sessionUsId.trim();  // null 체크 후 trim 호출
+            formData.append("usNum", trimmedUsId);  // 세션에서 가져온 userId 추가
         }
         let rawDateStr = $theaterTime.innerText;
         let formattedDate = rawDateStr
@@ -1219,7 +1224,6 @@ $payForm.onsubmit = (e) => {
         formData.append("thName", $theaterTheater2);
         formData.append("scStartDate", formattedDate);
         selectedSeats.forEach(seat => {
-            console.log(seat)
             formData.append("seName", seat);
         });
         // 요청 상태 변화 처리
@@ -1232,8 +1236,9 @@ $payForm.onsubmit = (e) => {
             if (xhr.status >= 200 && xhr.status < 300) {
 
             } else {
-                alert("오류가 발생했습니다. 다시 시도해주세요.");
+                // alert("오류가 발생했습니다. 다시 시도해주세요.");
             }
+
             const response = JSON.parse(xhr.responseText);
             const result2 = response['results'];
             if (response['result'] === "success") {
@@ -1251,8 +1256,16 @@ $payForm.onsubmit = (e) => {
                 sessionStorage.setItem('seName', $seatNumber.innerText);
                 sessionStorage.setItem('poster', $posterImg.src);
                 sessionStorage.setItem('paymentNumber', `${result2}`);
-                console.log(`${result2}`)
                 window.location.href = ("../../ticket/reservation")
+            } else if (response['result'] === "failure_un_steady_login") {
+                const userCheck = confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")
+                if (userCheck) {
+                    const redirectUrl = window.location.pathname;
+                    window.location.replace(`.././user/login?redirect=${encodeURIComponent(redirectUrl)}`);
+                } else {
+                    return;
+                }
+
             }
         };
 

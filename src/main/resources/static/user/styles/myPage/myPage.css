@@ -898,6 +898,9 @@
   flex-grow: 1;
   flex-shrink: 1;
 }
+.movie-receipt > .receipt > .reservation-cancel > .hidden {
+  display: none;
+}
 .movie-receipt > .receipt > .reservation-cancel > .reservation-cancel-button {
   width: 6rem;
   height: 1.8rem;
@@ -944,6 +947,7 @@
 }
 .cancel-container > .cancel-history {
   width: 100%;
+  height: auto;
 }
 .cancel-container > .cancel-history > table {
   width: 100%;
@@ -958,8 +962,10 @@
   height: 2rem;
 }
 .cancel-container > .cancel-history > table > tbody {
-  height: 10rem;
   color: #666666;
+}
+.cancel-container > .cancel-history > table > tbody > tr > td {
+  height: 2rem;
 }
 
 .withdraw #user-withdraw {
