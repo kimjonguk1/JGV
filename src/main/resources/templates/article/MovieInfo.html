@@ -35,7 +35,7 @@
             </label>
             <div class="modal-action">
                 <span id="charCount">0 / 280 (byte)</span>
-                <button id="submitReview">작성완료!</button>
+                <button id="submitReview"  data-mode="create">작성완료!</button>
             </div>
         </div>
     </div>
@@ -58,7 +58,7 @@
                     <p>개봉: <span class="release-date" th:text="${movieInfo.getMoDate()}">2024.12.04</span></p>
                 </div>
                 <div class="buttons">
-                    <a class="reserve-btn" th:data-mo-title="${movieInfo.getMoTitle()}" th:href="@{/ticket/?moTitle={moTitle}(moTitle=${movieInfo.getMoTitle()})}">예매하기</a>
+                    <a class="reserve-btn" th:data-mo-title="${movieInfo.getMoTitle()}" th:href="@{/ticket/}">예매하기</a>
                 </div>
             </div>
         </div>
@@ -131,6 +131,9 @@
                             <span class="like-count" th:text="${article.getReLiked()}"></span>
                         </div>
                     </div>
+                </div>
+                <div class="review-no-data" th:if="${#lists.size(articles) == 0}">
+                    <span class="review-no-text">아직 리뷰가 작성되지 않았습니다. 첫 번째 리뷰를 남겨보세요!</span>
                 </div>
 
             </div>

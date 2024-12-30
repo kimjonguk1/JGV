@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영화 수정</title>
+    <link rel="stylesheet" href="/admin/styles/movie-modify.scss">
+    <script defer src="/admin/script/movie-modify.js"></script>
+    <script th:if="${!session.user.isUsIsAdmin()}">
+        alert('올바르지 않은 접근입니다.');
+        if (history.length > 1) {
+            history.back();
+        } else {
+            window.close();
+        }
+    </script>
+</head>
+<body th:if="${session.user.isUsIsAdmin()}">
+<th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
+<th:block th:replace="~{fragments/common.html :: header}"></th:block>
+<th:block th:replace="~{fragments/common.html :: nav}"></th:block>
+<div class="movie-edit-container">
+    <h1>영화 수정</h1>
+    <form id="movie-edit-form">
+        <label>
+            영화 제목:
+            <input type="text" id="movie-title" name="movieTitle" disabled>
+        </label>
+        <label>
+            영화 러닝타임:
+            <input type="number" id="movie-runtime" name="movieRuntime">
+        </label>
+        <label>
+            영화 줄거리:
+            <textarea id="movie-description" name="movieDescription"></textarea>
+        </label>
+        <label>
+            영화 관람등급:
+            <select id="movie-rating" name="movieRating">
+                <option value="ALL">전체관람가</option>
+                <option value="12">12세이상관람가</option>
+                <option value="15">15세이상관람가</option>
+                <option value="18">청소년관람불가</option>
+                <option value="NO">미정</option>
+            </select>
+        </label>
+        <label>
+            영화 장르:
+            <input type="text" id="movie-genre" name="movieGenre">
+        </label>
+        <label>
+            영화 제작국가:
+            <input type="text" id="movie-country" name="movieCountry">
+        </label>
+        <label>
+            영화 이미지:
+            <input type="file" id="movie-image" name="movieImage">
+        </label>
+        <div id="movie-characters">
+            <!-- 인물 수정 폼 추가 -->
+        </div>
+        <button type="button" id="cancel-button">취소</button>
+        <button type="submit" id="save-button">저장</button>
+    </form>
+</div>
+<th:block th:replace="~{fragments/common.html :: footer}"></th:block>
+</body>
+</html>

@@ -283,8 +283,8 @@ button {
   color: #ffffff;
   font-size: 1rem;
   font-weight: 600;
-  text-align: center;
   cursor: pointer;
+  text-align: center;
 }
 
 #theater-search-form {

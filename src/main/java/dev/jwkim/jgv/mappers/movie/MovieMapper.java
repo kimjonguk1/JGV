@@ -1,5 +1,6 @@
 package dev.jwkim.jgv.mappers.movie;
 
+import dev.jwkim.jgv.DTO.AllMovieInfoDTO;
 import dev.jwkim.jgv.DTO.CharacterDTO;
 import dev.jwkim.jgv.DTO.Movie_ImageDTO;
 import dev.jwkim.jgv.DTO.Movie_InfoDTO;
@@ -65,5 +66,8 @@ public interface MovieMapper {
 
     //영화 삭제(종영일 설정)
     boolean updateMoEnding(@Param("movieId") int movieId);
+
+    //영화 수정을 위한 select
+    AllMovieInfoDTO getMovieById(@Param("movieNum") int movieNum);
 
 }

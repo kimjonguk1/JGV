@@ -241,4 +241,89 @@
         SET mo_ending = NOW()
         WHERE mo_num = #{movieId} AND mo_ending IS NULL
     </update>
+
+    <select id="getMovieById" resultMap="movieResultMap">
+        SELECT
+            m.mo_num AS moNum,
+            mo_title AS moTitle,
+            mo_date AS moDate,
+            mo_time AS moTile,
+            mo_plot AS moPlot,
+            mo_booking_rate AS moBookingRate,
+            mo_ending AS moEnding,
+            m.ra_num AS raNum,
+            ra_grade AS raGrade,
+            -- 장르를 묶어서 반환
+            GROUP_CONCAT(DISTINCT g.ge_name ORDER BY g.ge_name SEPARATOR ', ') AS geNames,
+            m_img_num AS mImgNum,
+            m_img_url AS mImgUrl,
+            c.ch_num AS chNum,
+            ch_name AS chName,
+            ch_job AS chJob,
+            ch_birth AS chBirth,
+            ch_nation AS chNation,
+            -- 중복된 캐릭터 이미지 URL 제거
+            GROUP_CONCAT(DISTINCT ciImgUrl.c_img_url ORDER BY ciImgUrl.c_img_url SEPARATOR ', ') AS ciImgUrls,
+            c2.co_num AS coNum,
+            co_name AS coName
+        FROM jgv.movie m
+                 LEFT JOIN jgv.rating r ON r.ra_num = m.ra_num
+                 LEFT JOIN jgv.movie_genere mg ON m.mo_num = mg.mo_num
+                 LEFT JOIN jgv.genre g ON g.ge_num = mg.ge_num
+                 LEFT JOIN jgv.movie_image mi ON m.mo_num = mi.mo_num
+                 LEFT JOIN jgv.movie_charactor mc ON m.mo_num = mc.mo_num
+                 LEFT JOIN jgv.charactor c ON c.ch_num = mc.ch_num
+                 LEFT JOIN jgv.charactor_image ciImgUrl ON c.ch_num = ciImgUrl.ch_num
+                 LEFT JOIN jgv.movie_country mc2 ON m.mo_num = mc2.mo_num
+                 LEFT JOIN jgv.country c2 ON c2.co_num = mc2.co_num
+        WHERE m.mo_num = #{movieNum}
+        GROUP BY
+            m.mo_num, mo_title, mo_date, mo_time, mo_plot, mo_booking_rate, mo_ending,
+            m.ra_num, ra_grade, m_img_num, m_img_url, c.ch_num, ch_name, ch_job,
+            ch_birth, ch_nation, c2.co_num, co_name;
+    </select>
+
+
+
+    <resultMap id="movieResultMap" type="dev.jwkim.jgv.DTO.AllMovieInfoDTO">
+        <!-- 기본 필드 매핑 -->
+        <result property="moNum" column="moNum"/>
+        <result property="moTitle" column="moTitle"/>
+        <result property="moDate" column="moDate"/>
+        <result property="moTile" column="moTile"/>
+        <result property="moPlot" column="moPlot"/>
+        <result property="moBookingRate" column="moBookingRate"/>
+        <result property="moEnding" column="moEnding"/>
+        <result property="raNum" column="raNum"/>
+        <result property="raGrade" column="raGrade"/>
+        <result property="geNum" column="geNum"/>
+        <result property="genames" column="geName"/>
+        <result property="mImgNum" column="mImgNum"/>
+        <result property="mImgUrl" column="mImgUrl"/>
+        <result property="chNum" column="chNum"/>
+        <result property="chName" column="chName"/>
+        <result property="chJob" column="chJob"/>
+        <result property="chBirth" column="chBirth"/>
+        <result property="chNation" column="chNation"/>
+        <result property="cImgNum" column="cImgNum"/>
+        <result property="cImgUrl" column="cImgUrl"/>
+        <result property="coNum" column="coNum"/>
+        <result property="coName" column="coName"/>
+
+        <!-- 컬렉션 필드 매핑 (List) -->
+        <collection property="genres" ofType="java.lang.String">
+            <result column="geName" />
+        </collection>
+
+        <collection property="actors" ofType="java.lang.String">
+            <result column="chName" />
+        </collection>
+
+        <collection property="countries" ofType="java.lang.String">
+            <result column="coName" />
+        </collection>
+    </resultMap>
+
+
+
 </mapper>
