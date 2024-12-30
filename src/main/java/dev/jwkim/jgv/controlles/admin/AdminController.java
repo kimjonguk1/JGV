@@ -11,6 +11,7 @@ import dev.jwkim.jgv.results.user.ReviewResult;
 import dev.jwkim.jgv.services.admin.AdminService;
 import dev.jwkim.jgv.services.movie.MovieService;
 import dev.jwkim.jgv.vos.PageVo;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.tuple.Pair;
@@ -21,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -36,9 +38,10 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/is_admin", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getIsAdmin(Model model,
+    public ModelAndView getIsAdmin(Model model, @SessionAttribute(value = "user") UserEntity user,
+                                   HttpServletRequest request,HttpServletResponse response,
                                    @RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "filter", required = false) String filter,
-                                   @RequestParam(value = "keyword", required = false) String keyword) {
+                                   @RequestParam(value = "keyword", required = false) String keyword) throws IOException {
         ModelAndView modelAndView = new ModelAndView();
 
         // 영화 페이징
@@ -62,6 +65,10 @@ public class AdminController {
         // 페이지네이션 정보
         modelAndView.addObject("screenPageVo", groupedScreens.getLeft());
 
+        if (user == null || !user.isUsIsAdmin()) {
+            response.setStatus(403);
+            response.sendRedirect(request.getContextPath() + "/error/403");
+        }
         modelAndView.setViewName("admin/is_admin");
 
         return modelAndView;
@@ -72,11 +79,11 @@ public class AdminController {
     @RequestMapping(value = "/movie-crawl", method = RequestMethod.GET, produces =
             MediaType.TEXT_HTML_VALUE)
     public ModelAndView getMovieCrawl(@SessionAttribute UserEntity user,
-                                      HttpServletResponse response) {
+                                      HttpServletResponse response,HttpServletRequest request) throws IOException {
 
-        if (!user.isUsIsAdmin()) {
-            response.setStatus(404);
-
+        if (user == null || !user.isUsIsAdmin()) {
+            response.setStatus(403);
+            response.sendRedirect(request.getContextPath() + "/error/403");
         }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/movie-crawl");
@@ -86,11 +93,11 @@ public class AdminController {
     @RequestMapping(value = "/theater-crawl", method = RequestMethod.GET, produces =
             MediaType.TEXT_HTML_VALUE)
     public ModelAndView getTheaterCrawl(@SessionAttribute UserEntity user,
-                                        HttpServletResponse response) {
+                                        HttpServletResponse response,HttpServletRequest request) throws IOException {
 
-        if (!user.isUsIsAdmin()) {
-            response.setStatus(404);
-
+        if (user == null || !user.isUsIsAdmin()) {
+            response.setStatus(403);
+            response.sendRedirect(request.getContextPath() + "/error/403");
         }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/theater-crawl");
@@ -120,7 +127,7 @@ public class AdminController {
             return null;
         }
         AllMovieInfoDTO movie = this.movieService.getMoviesById(movieNum);
-        if(movie == null) {
+        if (movie == null) {
             return null;
         }
         ModelAndView modelAndView = new ModelAndView();
