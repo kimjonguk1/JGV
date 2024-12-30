@@ -135,20 +135,28 @@ public class UserController {
 
 
     @RequestMapping(value = "/myPage/{fragment}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user, HttpSession session, @PathVariable(value = "fragment") String fragment, HttpServletRequest request, @RequestParam(value = "page", required = false, defaultValue = "1")int page) throws ServletException, IOException {
+    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user,HttpSession session,@PathVariable(value = "fragment") String fragment, HttpServletRequest request, @RequestParam(value = "page", required = false, defaultValue = "1")int page) throws ServletException, IOException {
         String[] validFragments = {"main", "reservation", "receipt", "personal", "withdraw"};
         if (fragment == null || Arrays.stream(validFragments).noneMatch(x -> x.equals(fragment))) {
             response.setStatus(404);
             return null;
         }
 
-        if (session.getAttribute("user") == null) {
-            String requestedUrl = request.getRequestURI(); // 현재 요청 URL을 가져옴
-            // 포워드 방식으로 로그인 페이지로 이동
-            request.setAttribute("redirect", requestedUrl);
-            request.getRequestDispatcher("/user/login").forward(request, response); // 내부 요청 포워드
-            return null;  // 포워드 후 반환할 필요는 없으므로 null
+        if (session == null) {
+            // 현재 URI를 가져오고 쿼리 파라미터를 붙여서 forward URL로 전달
+            String currentUrl = request.getRequestURI();  // 현재 URI만 추출
+            String queryString = request.getQueryString();  // 쿼리 스트링 (있는 경우만)
+
+            // 쿼리 스트링이 있으면 포함시켜서 forward 파라미터로 전달
+            String redirectUrl = request.getContextPath() + "/user/login?forward=" + currentUrl;
+            if (queryString != null) {
+                redirectUrl += "?" + queryString;
+            }
+
+            response.sendRedirect(redirectUrl);  // 로그인 페이지로 리디렉션
+            return null;
         }
+
 
         UserEntity loggedInUser = (UserEntity) session.getAttribute("user");
 
