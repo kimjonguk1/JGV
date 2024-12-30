@@ -27,6 +27,8 @@ public interface TicketMapper {
                                                          @Param("theater") int thNum,
                                                          @Param("date") String scStartDate);
 
+    MovieVo[] selectShowTimesByMoTitle(@Param("movie") String movie);
+
     ScreenEntity[] selectAllScreenDates();
 
     RegionVo[] selectRegionAndTheaterCount();
@@ -35,7 +37,7 @@ public interface TicketMapper {
 
     MovieVo[] selectAllMoviesByThName(@Param(value = "thName") String thName);
 
-    MovieVo[] selectAllMoviesByscStartDate(@Param(value = "scStartDate") String scStartDate);
+    MovieVo[] selectAllMoviesByScStartDate(@Param(value = "scStartDate") String scStartDate);
 
     MovieVo[] selectAllMoviesByMoTitleAndThName(@Param(value = "moTitle") String moTitle,
                                                 @Param(value = "thName") String thName);

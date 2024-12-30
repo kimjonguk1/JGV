@@ -3,6 +3,7 @@ package dev.jwkim.jgv.DTO;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -10,6 +11,6 @@ import java.util.Date;
 public class ScreenInfoDTO {
     private int scNum;
     private String ciName;
-    private Date scStartDate;
+    private LocalDateTime scStartDate;
     private String mImgUrl;
 }

@@ -807,7 +807,8 @@
                 <div th:if="${movieVos != null}"
                      th:each="vos : ${movieVos}"
                      class="movie-info">
-                    <a href="#" th:text="${vos[0][0]}" class="title"></a>
+                    <a th:href="@{../movies/movieList/movieInfo/${vos[0][5]}}"
+                       th:text="${vos[0][0]}" class="title"></a>
                     <div class="stretch"></div>
                     <div class="unique-cinema-type"></div>
                     <div th:text="${vos[0][2]}" class="unique-rating hidden"></div>
@@ -815,7 +816,8 @@
                 <div th:if="${Vos != null}"
                      th:each="vos : ${Vos}"
                      class="movie-info">
-                    <a href="#" th:text="${vos[0][0]}" class="title"></a>
+                    <a th:href="@{../movies/movieList/movieInfo/${vos[0][5]}}"
+                       th:text="${vos[0][0]}" class="title"></a>
                     <div class="stretch"></div>
                     <div class="unique-cinema-type"></div>
                     <div th:text="${vos[0][2]}" class="unique-rating hidden"></div>

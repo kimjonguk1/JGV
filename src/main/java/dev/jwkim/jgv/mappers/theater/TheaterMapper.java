@@ -24,4 +24,9 @@ public interface TheaterMapper {
     ScreenVo[] selectAllScreensByRegion(@Param(value = "date") String date,
                                         @Param(value = "region") String region,
                                         @Param(value = "movie") String movie);
+
+    ScreenVo[] selectAllScreensByCinemaType(@Param(value = "date") String date,
+                                            @Param(value = "region") String region,
+                                            @Param(value = "movie") String movie,
+                                            @Param(value = "cinema") String cinema);
 }

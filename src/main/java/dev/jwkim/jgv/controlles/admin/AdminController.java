@@ -5,7 +5,9 @@ import dev.jwkim.jgv.DTO.AdminTheaterDTO;
 import dev.jwkim.jgv.DTO.AllMovieInfoDTO;
 import dev.jwkim.jgv.DTO.MovieDeleteModifyDTO;
 import dev.jwkim.jgv.DTO.ScreenInfoDTO;
+import dev.jwkim.jgv.entities.theater.ScreenEntity;
 import dev.jwkim.jgv.entities.user.UserEntity;
+import dev.jwkim.jgv.results.Result;
 import dev.jwkim.jgv.results.user.MovieDeleteModifyResult;
 import dev.jwkim.jgv.results.user.ReviewResult;
 import dev.jwkim.jgv.services.admin.AdminService;
@@ -40,8 +42,13 @@ public class AdminController {
     @RequestMapping(value = "/is_admin", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getIsAdmin(Model model, @SessionAttribute(value = "user") UserEntity user,
                                    HttpServletRequest request,HttpServletResponse response,
-                                   @RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "filter", required = false) String filter,
-                                   @RequestParam(value = "keyword", required = false) String keyword) throws IOException {
+                                   @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                   @RequestParam(value = "filter", required = false) String filter,
+                                   @RequestParam(value = "keyword", required = false) String keyword,
+                                   @RequestParam(value = "screen-filter", required = false) String screenFilter,
+                                   @RequestParam(value = "screen-keyword", required = false) String screenKeyword)
+
+                                    throws IOException {
         ModelAndView modelAndView = new ModelAndView();
 
         // 영화 페이징
@@ -58,12 +65,21 @@ public class AdminController {
         }
 
         // 상영정보 그룹화
-        Pair<PageVo, Map<String, Map<String, List<ScreenInfoDTO>>>> groupedScreens =
-                this.adminService.getGroupedScreens(page);
-        modelAndView.addObject("groupedScreens", groupedScreens.getRight());  // groupedScreens의 데이터를 가져오기
+        if (screenFilter == null && screenKeyword == null) {
+            Pair<PageVo, Map<String, Map<String, List<ScreenInfoDTO>>>> groupedScreens =
+                    this.adminService.getGroupedScreens(page);
+            modelAndView.addObject("groupedScreens", groupedScreens.getRight());  // groupedScreens의 데이터를 가져오기
 
-        // 페이지네이션 정보
-        modelAndView.addObject("screenPageVo", groupedScreens.getLeft());
+            // 페이지네이션 정보
+            modelAndView.addObject("screenPageVo", groupedScreens.getLeft());
+        } else {
+            Pair<PageVo, Map<String, Map<String, List<ScreenInfoDTO>>>> groupedScreens =
+                    this.adminService.searchGroupedScreens(page, screenFilter, screenKeyword);
+            modelAndView.addObject("groupedScreens", groupedScreens.getRight());  // groupedScreens의 데이터를 가져오기
+
+            // 페이지네이션 정보
+            modelAndView.addObject("screenPageVo", groupedScreens.getLeft());
+        }
 
         if (user == null || !user.isUsIsAdmin()) {
             response.setStatus(403);
@@ -134,5 +150,14 @@ public class AdminController {
         modelAndView.addObject("movie", movie);
         modelAndView.setViewName("admin/movie-modify");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/is_admin", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String deleteIsAdmin(@RequestParam(value = "scNum", required = false, defaultValue = "0") int scNum) {
+        Result result = this.adminService.deleteScreen(scNum);
+        JSONObject response = new JSONObject();
+        response.put(Result.NAME, result.nameToLower());
+        return response.toString();
     }
 }
