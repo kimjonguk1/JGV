@@ -190,6 +190,10 @@
       width: 80%;
       padding-bottom: 2rem;
 
+      > .hidden {
+        display: none;
+      }
+
       > .reservation-cancel-button {
         width: 6rem;
         height: 1.8rem;
@@ -227,6 +231,7 @@
 
   > .cancel-history {
     width: 100%;
+    height: auto;
 
     > table {
       width: 100%;
@@ -244,8 +249,11 @@
       }
 
       > tbody {
-        height: 10rem;
         color: #666666;
+        > tr > td{
+          height: 2rem;
+
+        }
       }
     }
 

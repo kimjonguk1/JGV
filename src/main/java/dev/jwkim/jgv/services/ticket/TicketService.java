@@ -9,6 +9,7 @@ import dev.jwkim.jgv.entities.ticket.MethodEntity;
 import dev.jwkim.jgv.entities.ticket.PaymentEntity;
 import dev.jwkim.jgv.entities.ticket.ReservationEntity;
 import dev.jwkim.jgv.entities.ticket.SeatEntity;
+import dev.jwkim.jgv.entities.user.UserEntity;
 import dev.jwkim.jgv.exceptions.TransactionalException;
 import dev.jwkim.jgv.mappers.ticket.MethodMapper;
 import dev.jwkim.jgv.mappers.ticket.PaymentMapper;
@@ -16,6 +17,7 @@ import dev.jwkim.jgv.mappers.ticket.ReservationMapper;
 import dev.jwkim.jgv.mappers.ticket.TicketMapper;
 import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.results.Result;
+import dev.jwkim.jgv.results.reservation.ReservationResult;
 import dev.jwkim.jgv.vos.theater.MovieVo;
 import dev.jwkim.jgv.vos.theater.RegionVo;
 import dev.jwkim.jgv.vos.theater.ScreenVo;
@@ -48,6 +50,27 @@ public class TicketService {
     private final PaymentMapper paymentMapper;
     private final ReservationMapper reservationMapper;
 
+    public Map<Set<String>, Set<Set<String>>> selectShowTimesByMoTitle(String movie) {
+        MovieVo[] movies = this.ticketMapper.selectShowTimesByMoTitle(movie);
+        Map<Set<String>, Set<Set<String>>> map = new LinkedHashMap<>();
+        Set<String> keys = new LinkedHashSet<>();
+        Set<Set<String>> values = new LinkedHashSet<>();
+        Set<String> genres = new LinkedHashSet<>();
+        Set<String> citNames = new LinkedHashSet<>();
+        for (MovieVo movieVo : movies) {
+            keys.add(movieVo.getMoTitle());
+            keys.add(movieVo.getMoDate());
+            keys.add(String.valueOf(movieVo.getMoTime()));
+            keys.add(movieVo.getMImgUrl());
+            genres.add(movieVo.getGeName());
+            citNames.add(movieVo.getCitName());
+        }
+        values.add(genres);
+        values.add(citNames);
+        map.computeIfAbsent(keys, k -> new LinkedHashSet<>()).addAll(values);
+        return map;
+    }
+
     public ScreenVo[] selectScreenDatesByMovieAndTheaterAndDate(String moTitle, String thName, String scStartDate) {
         if (moTitle == null || moTitle.isEmpty() || moTitle.length() > 100 ||
                 thName == null || thName.isEmpty() || thName.length() > 30 ||
@@ -77,7 +100,7 @@ public class TicketService {
         if (scStartDate == null || scStartDate.isEmpty()) {
             return null;
         }
-        return this.ticketMapper.selectAllMoviesByscStartDate(scStartDate);
+        return this.ticketMapper.selectAllMoviesByScStartDate(scStartDate);
     }
 
     public MovieVo[] selectAllMoviesByMoTitleAndScStartDate(String moTitle, String scStartDate) {
@@ -496,9 +519,14 @@ public class TicketService {
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public CommonResult insertReservationAndPayment(String moTitle, String ciName, String thName, LocalDateTime scStartDate,
-                                                    String meName, int usNum, String[] seNames, int paPrice) {
+    public Result insertReservationAndPayment(UserEntity user, String moTitle, String ciName, String thName, LocalDateTime scStartDate,
+                                              String meName, int usNum, String[] seNames, int paPrice) {
         try {
+
+            if (user == null) {
+                return ReservationResult.FAILURE_UN_STEADY_LOGIN;
+            }
+
             // Step 1: 영화 상영 정보 조회
             ScreenEntity[] screenEntities = this.reservationMapper.selectReservationByScNum(moTitle, ciName, thName, scStartDate);
             if (screenEntities == null || screenEntities.length == 0) {

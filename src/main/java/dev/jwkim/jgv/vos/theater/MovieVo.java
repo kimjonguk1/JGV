@@ -15,4 +15,6 @@ public class MovieVo extends MovieEntity {
     private String thName;
     private int theaterCount;
     private String regName;
+    private String geName;
+    private String citName;
 }

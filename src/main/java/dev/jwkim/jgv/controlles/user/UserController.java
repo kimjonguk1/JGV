@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -135,23 +136,34 @@ public class UserController {
 
 
     @RequestMapping(value = "/myPage/{fragment}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user, HttpSession session, @PathVariable(value = "fragment") String fragment, HttpServletRequest request, @RequestParam(value = "page", required = false, defaultValue = "1")int page) throws ServletException, IOException {
+    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user,HttpSession session,@PathVariable(value = "fragment") String fragment, HttpServletRequest request, @RequestParam(value = "page", required = false, defaultValue = "1")int page) throws ServletException, IOException {
         String[] validFragments = {"main", "reservation", "receipt", "personal", "withdraw"};
         if (fragment == null || Arrays.stream(validFragments).noneMatch(x -> x.equals(fragment))) {
             response.setStatus(404);
             return null;
         }
 
-        if (session.getAttribute("user") == null) {
-            String requestedUrl = request.getRequestURI(); // 현재 요청 URL을 가져옴
-            // 포워드 방식으로 로그인 페이지로 이동
-            request.setAttribute("redirect", requestedUrl);
-            request.getRequestDispatcher("/user/login").forward(request, response); // 내부 요청 포워드
-            return null;  // 포워드 후 반환할 필요는 없으므로 null
+        if (session == null) {
+            // 현재 URI를 가져오고 쿼리 파라미터를 붙여서 forward URL로 전달
+            String currentUrl = request.getRequestURI();  // 현재 URI만 추출
+            String queryString = request.getQueryString();  // 쿼리 스트링 (있는 경우만)
+
+            // 쿼리 스트링이 있으면 포함시켜서 forward 파라미터로 전달
+            String redirectUrl = request.getContextPath() + "/user/login?forward=" + currentUrl;
+            if (queryString != null) {
+                redirectUrl += "?" + queryString;
+            }
+
+            response.sendRedirect(redirectUrl);  // 로그인 페이지로 리디렉션
+            return null;
         }
+
 
         UserEntity loggedInUser = (UserEntity) session.getAttribute("user");
 
+        // 현재 날짜를 model에 추가
+        LocalDate currentDate = LocalDate.now();
+        String formattedCurrentDate = currentDate.toString();
         // 예약 정보 가져오기
         UserEntity users = (UserEntity) session.getAttribute("user");
         Map<Set<String>, List<String>> reservations = this.userService.reservationInformation(users.getUsNum()); // 예약 정보
@@ -166,6 +178,7 @@ public class UserController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("session", session);
         modelAndView.addObject("fragment", fragment);
+        modelAndView.addObject("currentDate", formattedCurrentDate); // 현재 날짜 전달
         modelAndView.addObject("reservations", reservations);
         modelAndView.addObject("cancelReservations", cancelReservations);
         modelAndView.setViewName("user/myPage/myPage");
@@ -365,6 +378,8 @@ public class UserController {
         return response.toString();
     }
 
+    // 예매 취소
+
     @RequestMapping(value = "/myPage/reservationCancel", method = RequestMethod.GET,
             produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getReservationCancel(HttpSession session, UserEntity user) {
@@ -375,15 +390,20 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/myPage/reservationCancel", method = RequestMethod.PATCH,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/myPage/reservationCancel", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String patchReservationCancel(HttpSession session, UserEntity user) {
-        UserEntity users = (UserEntity) session.getAttribute("user");
-        Result result = this.userService.reservationCancel(users);
+    public String patchReservationCancel(HttpSession session,
+                                         @RequestParam(value = "usNum", required = false) int usNum,
+                                         @RequestParam(value = "paNum", required = false) int paNum,
+                                         @RequestParam(value = "paPrice", required = false) int paPrice,
+                                         @RequestParam(value = "paCreatedAt", required = false) String paCreatedAt) {
+
+//        UserEntity users = (UserEntity) session.getAttribute("user");
+
+        // 예매 취소 서비스 호출
+        Result result = this.userService.reservationCancel(usNum, paNum, paPrice, paCreatedAt);
         JSONObject response = new JSONObject();
         response.put(Result.NAME, result.nameToLower());
-
         return response.toString();
     }
 

@@ -111,7 +111,7 @@ const $screens = $cinemaInformation.querySelector(':scope > .cinema-info > .item
                                             let year = currentDate.getFullYear();
                                             const currentMonth = currentDate.getMonth() + 1;
                                             const month = item.querySelector(':scope > .small-container > .day:nth-child(1)');
-                                            if (month < currentMonth || (month === currentMonth)) {
+                                            if (month.innerText.replace('월', '') < currentMonth || (month.innerText.replace('월', '') === currentMonth)) {
                                                 year += 1;
                                             }
                                             const day = item.querySelector(':scope > .day');

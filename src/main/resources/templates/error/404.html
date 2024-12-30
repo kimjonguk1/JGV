@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>404.html</title>
+</head>
+<body style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100vw; height: 100vh;">
+<div class="container" style=" display: flex; flex-direction: column; align-items: center; justify-content: center; max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>페이지를 찾을 수 없습니다.</h2>
+    </div>
+    <div>
+        <p> 요청하신 페이지는 존재하지 않거나, 삭제되었을 수 있습니다.</p>
+        <p style="white-space: nowrap">이전에 방문한 페이지로 돌아가시거나, 아래 버튼을 눌러 다른 페이지를 찾아보세요.</p>
+        <div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
+        <button style="background-color: #FB4357; width: 10rem; height: 2.2rem; border: 1px solid #FB4357; border-radius: 0.2rem">
+            <a style="text-decoration: none; color: #ffffff; font-size: 0.875rem; font-weight: 700; white-space: nowrap" th:href="@{'/'}">JGV 홈 으로 돌아가기</a>
+        </button>
+        </div>
+    </div>
+    <hr class="my-4">
+</div>
+</body>
+</html>

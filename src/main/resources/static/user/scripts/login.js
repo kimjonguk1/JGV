@@ -49,8 +49,17 @@ $loginForm.onsubmit = (e) => {
 
         if (response['result'] === 'success') {
             sessionStorage.setItem('user', response['MemberNum']);
-            const redirectUrl = response['redirect'] || '/';  // 서버에서 리디렉션 URL 받기
-            location.href = redirectUrl;  // 리디렉션
+            // URLSearchParams를 통해 현재 URL의 파라미터를 확인
+            const urlParams = new URLSearchParams(window.location.search);
+            const forwardUrl = urlParams.get('forward');
+
+            // forward 파라미터가 있으면 해당 URL로 리디렉션, 없으면 기본 '/'로 리디렉션
+            if (forwardUrl) {
+                window.location.href = forwardUrl;
+            } else {
+                window.location.href = '/';
+            }
+
         } else if (response['result'] === 'failure_suspended') {
             alert('해당 계정은 이용이 정지된 상태입니다. 관리자에게 문의해 주세요.');
         } else if (response['result'] === 'failure_not_verified') {

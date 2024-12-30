@@ -3,6 +3,8 @@ package dev.jwkim.jgv.mappers.admin;
 import dev.jwkim.jgv.DTO.AdminMovieDTO;
 import dev.jwkim.jgv.DTO.AdminTheaterDTO;
 import dev.jwkim.jgv.entities.movie.MovieEntity;
+import dev.jwkim.jgv.entities.theater.ScreenEntity;
+import dev.jwkim.jgv.entities.theater.TheaterEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,26 +16,37 @@ public interface AdminMapper {
 
     int selectArticleCountByMovieName();
 
-    int searchArticleCountByMovieName(@Param("filter") String filter, @Param("keyword") String keyword);
+    int searchArticleCountByMovieName(@Param("filter") String filter,
+                                      @Param("keyword") String keyword);
 
     AdminMovieDTO[] selectAllDTO();
 
     AdminMovieDTO[] selectArticleByMovieName(
-                                        @Param("limitCount") int limitCount,
-                                        @Param("offsetCount") int offsetCount);
+            @Param("limitCount") int limitCount,
+            @Param("offsetCount") int offsetCount);
 
     AdminMovieDTO[] searchArticleByMovieName(
-                                        @Param("limitCount") int limitCount,
-                                        @Param("offsetCount") int offsetCount,
-                                        @Param("filter") String filter,
-                                        @Param("keyword") String keyword);
+            @Param("limitCount") int limitCount,
+            @Param("offsetCount") int offsetCount,
+            @Param("filter") String filter,
+            @Param("keyword") String keyword);
 
 
     // 상영관
+    int updateTheater(ScreenEntity screen);
+
     int selectArticleCountByTheater();
 
-    AdminTheaterDTO[] selectAllDTOByTheaters(
-            @Param("limitCount") int limitCount,
-            @Param("offsetCount") int offsetCount
-    );
+    int searchArticleCountByTheater(@Param("screenFilter") String screenFilter,
+                                    @Param("screenKeyword") String screenKeyword);
+
+    AdminTheaterDTO[] selectAllDTOByTheaters(@Param("limitCount") int limitCount,
+                                             @Param("offsetCount") int offsetCount);
+
+    AdminTheaterDTO[] searchAllDTOByTheaters(@Param("limitCount") int limitCount,
+                                             @Param("offsetCount") int offsetCount,
+                                             @Param("screenFilter") String screenFilter,
+                                             @Param("screenKeyword") String screenKeyword);
+
+    ScreenEntity selectScreenByScNum(@Param("scNum") int scNum);
 }
