@@ -804,7 +804,6 @@ section.active {
       > .before {
         cursor: pointer;
         margin-right: 3rem;
-        background-color: #ffffff;
         width: 3.5rem;
         height: 1.5rem;
         background-image: url("https://img.cgv.co.kr/r2014/images/sprite/sprite_btn.png");
@@ -817,7 +816,6 @@ section.active {
         right: 0;
         cursor: pointer;
         position: absolute;
-        background-color: #ffffff;
         width: 3.5rem;
         height: 1.15rem;
         background-image: url("https://img.cgv.co.kr/r2014/images/sprite/sprite_btn.png");
@@ -893,7 +891,7 @@ section.active {
     > .items {
       > .item {
         border-top: 0.1rem solid #474746;
-        padding: 1.5rem 0.5rem;
+        padding: 1.5rem 0;
 
         display: flex;
         flex-direction: row;
@@ -911,7 +909,8 @@ section.active {
           flex-direction: column;
 
           > .screen-container {
-            padding: 1rem 2rem;
+            width: 765px;
+            padding: 1rem 1rem;
 
             > .theater-info {
               align-items: center;
@@ -929,6 +928,7 @@ section.active {
 
               display: flex;
               flex-direction: row;
+              flex-wrap: wrap;
 
               > .time-table {
                 margin-top: 0.5rem;

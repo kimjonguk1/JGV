@@ -96,60 +96,9 @@
       }
     }
 
-    > .head {
-      width: 53.5rem;
-      margin: 4rem 0 1rem 4rem;
-
-      > .items {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-
-        > .item {
-          padding: 0 20px;
-          color: #666666;
-          cursor: pointer;
-
-          &.reservation {
-            padding-left: 23px;
-            background: url('https://img.cgv.co.kr/R2014/images/sprite/sprite_icon.png') no-repeat -300px -100px;
-
-            &.select {
-              background-position: -300px -160px;
-              color: #fb4357;
-            }
-          }
-
-          &.review {
-            padding-left: 20px;
-            background: url('https://img.cgv.co.kr/R2014/images/sprite/sprite_icon.png') no-repeat -296px -120px;
-
-            &.select {
-              background-position: -296px -180px;
-              color: #fb4357;
-            }
-          }
-
-          &.human {
-            padding-left: 30px;
-            background: url('https://img.cgv.co.kr/R2014/images/sprite/sprite_icon.png') no-repeat  -300px -140px;
-
-            &.select {
-              background-position: -300px -200px;
-              color: #fb4357;
-            }
-          }
-        }
-
-        > .line {
-          padding-right: 1rem;
-        }
-      }
-    }
-
     > .movie-container {
       height: 287px;
-      padding: 0 3.5rem;
+      padding: 5rem 3.5rem 0 4.5rem;
 
       display: flex;
       flex-direction: row;
@@ -441,67 +390,10 @@
       }
     }
 
-    > .head {
-      margin: 4rem 0 1rem 4.5rem;
-
-      align-items: center;
-      display: flex;
-      flex-direction: row;
-      gap: 0.3rem;
-      justify-content: flex-start;
-
-      #favorite-theaters {
-        margin-left: 1rem;
-
-        align-items: center;
-        display: flex;
-        flex-direction: row;
-        gap: 0.2rem;
-        justify-content: center;
-
-        > .container {
-          width: 7.5rem;
-          height: 2.5rem;
-          border: 0.15rem solid #6e6c6d;
-
-          align-items: center;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-
-          > .text-container {
-            width: 95%;
-            height: 90%;
-            border: 0.1rem solid #6e6c6d;
-            text-decoration: none;
-
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
-
-            > .text {
-              color: #ffffff;
-            }
-          }
-        }
-      }
-
-      > .button {
-        background-color: #636162;
-        border: 0.2rem solid #6e6c6d;
-
-        > .image {
-          width: 2.5rem;
-          height: 2rem;
-          cursor: pointer;
-        }
-      }
-    }
-
     > .main {
+      margin: 4rem 0 0 4rem;
       width: 53.5rem;
       height: 2rem;
-      margin-left: 4rem;
       border-top: 0.15rem solid #727171;
       border-bottom: 0.15rem solid #727171;
 
@@ -1153,6 +1045,7 @@
           }
 
           > .screen-container {
+            width: 44rem;
             padding: 1rem 2rem;
 
             > .theater-info {
@@ -1171,6 +1064,7 @@
 
               display: flex;
               flex-direction: row;
+              flex-wrap: wrap;
 
               > .time-table {
                 margin-top: 0.5rem;
@@ -1248,7 +1142,7 @@
   }
 
   > .main {
-    width: 804px;
+    width: 820px;
     height: 2rem;
     margin-top: 1rem;
     padding: 0.3rem 0;
@@ -1389,7 +1283,7 @@
     > .items {
       > .item {
         border-top: 0.1rem solid #474746;
-        padding: 1.5rem 0.5rem;
+        padding: 1.5rem 0;
 
         display: flex;
         flex-direction: row;
@@ -1403,10 +1297,12 @@
         }
 
         > .screens {
+          width: calc(804px - 8rem);
           display: flex;
           flex-direction: column;
 
           > .screen-container {
+            width: 44rem;
             padding: 1rem 2rem;
 
             > .theater-info {
@@ -1425,6 +1321,7 @@
 
               display: flex;
               flex-direction: row;
+              flex-wrap: wrap;
 
               > .time-table {
                 margin-top: 0.5rem;

@@ -47,67 +47,10 @@
     height: 28rem;
     background-image: url("https://img.cgv.co.kr/r2014/images/common/bg/bg_showtimes_favorite.gif");
 
-    > .head {
-      margin: 4rem 0 1rem 4.5rem;
-
-      align-items: center;
-      display: flex;
-      flex-direction: row;
-      gap: 0.3rem;
-      justify-content: flex-start;
-
-      #favorite-theaters {
-        margin-left: 1rem;
-
-        align-items: center;
-        display: flex;
-        flex-direction: row;
-        gap: 0.2rem;
-        justify-content: center;
-
-        > .container {
-          width: 7.5rem;
-          height: 2.5rem;
-          border: 0.15rem solid #6e6c6d;
-
-          align-items: center;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-
-          > .text-container {
-            width: 95%;
-            height: 90%;
-            border: 0.1rem solid #6e6c6d;
-            text-decoration: none;
-
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
-
-            > .text {
-              color: #ffffff;
-            }
-          }
-        }
-      }
-
-      > .button {
-        background-color: #636162;
-        border: 0.2rem solid #6e6c6d;
-
-        > .image {
-          width: 2.5rem;
-          height: 2rem;
-          cursor: pointer;
-        }
-      }
-    }
-
     > .main {
+      margin: 4rem 0 0 4rem;
       width: 53.5rem;
       height: 2rem;
-      margin-left: 4rem;
       border-top: 0.15rem solid #727171;
       border-bottom: 0.15rem solid #727171;
 
@@ -210,16 +153,6 @@
         font-size: 2rem;
         font-weight: 500;
       }
-
-      > .button {
-        font-size: 0.75rem;
-        font-weight: 600;
-        padding: 0.1rem 0.5rem;
-        cursor: pointer;
-        background-color: #fb4357;
-        border: #fb4357 solid 0.25rem;
-        color: #ffffff;
-      }
     }
 
     > .img {
@@ -259,6 +192,7 @@
         }
 
         > .small-container {
+          width: 100%;
           margin: 2rem 0 0 1rem;
 
           display: flex;
@@ -266,7 +200,7 @@
           gap: 2rem;
 
           > .header {
-            width: 40rem;
+            width: 100%;
             height: 2rem;
 
             display: flex;
@@ -667,6 +601,26 @@
                               background-position: center;
                               background-size: contain;
                               background-attachment: scroll;
+                            }
+                          }
+
+                          > .text {
+                            width: 80px;
+                            height: 16px;
+                            color: #ffffff;
+                            font-size: 0.75rem;
+                            user-select: none;
+
+                            align-items: center;
+                            display: flex;
+                            justify-content: center;
+
+                            &.D {
+                              background-color: #666666;
+                            }
+
+                            &.recliner {
+                              background-color: #fb4357;
                             }
                           }
                         }

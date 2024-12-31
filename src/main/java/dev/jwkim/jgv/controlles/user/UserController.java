@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
+import org.openqa.selenium.remote.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,7 +28,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -48,8 +51,13 @@ public class UserController {
     // region 회원가입
     @RequestMapping(value = "/register", method = RequestMethod.GET, produces =
             MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getRegister() {
+    public ModelAndView getRegister(@SessionAttribute(value = "user") UserEntity user, HttpServletResponse response, HttpServletRequest request) throws IOException {
         ModelAndView modelAndView = new ModelAndView();
+        if (user != null) {
+            response.setStatus(403);
+            response.sendRedirect(request.getContextPath() + "/error/403");
+            return null;
+        }
         modelAndView.setViewName("user/register");
         return modelAndView;
     }
@@ -162,7 +170,7 @@ public class UserController {
         UserEntity loggedInUser = (UserEntity) session.getAttribute("user");
 
         // 현재 날짜를 model에 추가
-        LocalDate currentDate = LocalDate.now();
+        LocalDateTime currentDate = LocalDateTime.now();
         String formattedCurrentDate = currentDate.toString();
         // 예약 정보 가져오기
         UserEntity users = (UserEntity) session.getAttribute("user");

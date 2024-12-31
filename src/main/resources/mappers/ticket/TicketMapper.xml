@@ -200,7 +200,7 @@
           AND `sc_start_date` > NOW()
           AND `is_deleted` = false
     </select>
-    <select id="selectAllMoviesByscStartDate"
+    <select id="selectAllMoviesByScStartDate"
             resultType="dev.jwkim.jgv.vos.theater.MovieVo">
         SELECT movie.`mo_num`    AS `moNum`,
                `mo_title`        AS `moTitle`,

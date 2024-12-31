@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
             if(xhr.status < 200 || xhr.status >= 300) {
-            
+
                 return;
             }
         };

@@ -45,6 +45,10 @@ $theaterCrawl.onclick = () => {
         $buttonWrapper.style.border = '2px solid #fb4357';
         $moviePage.style.display = 'block';
         $theaterPage.style.display = 'none';
+
+        const url = new URL(location.href);
+        url.searchParams.set('mode', 'movie');
+        history.pushState(undefined, undefined, url.toString());
     }
 
     $theaterInfo.onclick = () => {
@@ -61,8 +65,21 @@ $theaterCrawl.onclick = () => {
         $buttonWrapper.style.border = '2px solid #2275a4'
         $moviePage.style.display = 'none';
         $theaterPage.style.display = 'block';
+
+        const url = new URL(location.href);
+        url.searchParams.set('mode', 'theater');
+        history.pushState(undefined, undefined, url.toString());
+    }
+
+    const url = new URL(location.href);
+    if ((url.searchParams.get('mode') ?? 'movie') === 'movie') {
+        $movieInfo.dispatchEvent(new Event('click'));
+    } else {
+        $theaterInfo.dispatchEvent(new Event('click'));
     }
 }
+
+
 
 {
     const $screenItem = Array.from(document.querySelectorAll('.screen-item'));

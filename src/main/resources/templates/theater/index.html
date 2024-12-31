@@ -5,13 +5,15 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>영화관</title>
+    <title>JGV - 극장</title>
     <link rel="stylesheet" th:href="@{'./assets/styles/index.css'}" type="text/css">
     <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
     <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}" type="text/css">
     <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}" type="text/css">
     <script defer th:src="@{'./assets/scripts/index.js'}"></script>
     <script defer th:src="@{'../../assets/scripts/common.js'}"></script>
+    <script defer th:src="@{'../../fragments/assets/scripts/common.js'}"></script>
+    <link rel="shortcut icon" href="https://img.cgv.co.kr/theater_img/favicon.ico" type="image/x-icon">
 </head>
 <body>
 <th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
@@ -19,39 +21,6 @@
 <th:block th:replace="~{fragments/common.html :: nav}"></th:block>
 <main id="main">
     <div class="img">
-        <div class="head">
-            <img src="https://img.cgv.co.kr/R2014/images/title/h4_favorite_cgv.png" alt="" class="image">
-            <ul id="favorite-theaters">
-                <li class="container">
-                    <a href="#" class="text-container">
-                        <span class="text">1</span>
-                    </a>
-                </li>
-                <li class="container">
-                    <a href="#" class="text-container">
-                        <span class="text">2</span>
-                    </a>
-                </li>
-                <li class="container">
-                    <a href="#" class="text-container">
-                        <span class="text">3</span>
-                    </a>
-                </li>
-                <li class="container">
-                    <a href="#" class="text-container">
-                        <span class="text">4</span>
-                    </a>
-                </li>
-                <li class="container">
-                    <a href="#" class="text-container">
-                        <span class="text">5</span>
-                    </a>
-                </li>
-            </ul>
-            <button class="button" type="button">
-                <img src="https://img.cgv.co.kr/r2014/images/common/btn/btn_plus.gif" alt="" class="image">
-            </button>
-        </div>
         <ul class="main">
             <li class="item"
                 th:each="region : ${regions}"
@@ -82,7 +51,6 @@
         <div class="header">
             <span class="text">CGV대구</span>
             <span class="stretch"></span>
-            <span class="button">단체/대관 문의</span>
         </div>
         <div class="img">
             <img src="https://img.cgv.co.kr/Theater/Theater/2022/1223/16717573376930.png" alt="" class="image">
@@ -102,10 +70,6 @@
                     <div class="theater-info">8관/320석</div>
                 </div>
                 <div class="stretch"></div>
-                <div class="notice-container">
-                    <div class="theater-info">공지사항</div>
-                    <a href="#" class="button"></a>
-                </div>
             </div>
         </div>
     </div>
@@ -115,7 +79,6 @@
         <div class="header">
             <span th:text="${vos[0][0]}" class="text"></span>
             <span class="stretch"></span>
-            <span class="button">단체/대관 문의</span>
         </div>
         <div class="img">
             <img th:src="${vos[0][3]}" alt="" class="image">
@@ -142,10 +105,6 @@
                     </div>
                 </div>
                 <div class="stretch"></div>
-                <div class="notice-container">
-                    <div class="theater-info">공지사항</div>
-                    <a href="#" class="button"></a>
-                </div>
             </div>
         </div>
     </div>
@@ -218,7 +177,7 @@
                                     <tr>
                                         <th>
                                             <div class="container">
-                                                <div>2D</div>
+                                                <div class="D text">2D</div>
                                             </div>
                                         </th>
                                         <td>
@@ -258,7 +217,7 @@
                                     <tr>
                                         <th>
                                             <div class="container">
-                                                <div>리클라이너</div>
+                                                <div class="recliner text">리클라이너</div>
                                             </div>
                                         </th>
                                         <td>
