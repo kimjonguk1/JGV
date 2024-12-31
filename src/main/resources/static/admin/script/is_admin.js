@@ -102,7 +102,14 @@ $theaterCrawl.onclick = () => {
                                 return;
                             }
                             const response = JSON.parse(xhr.responseText);
-                            console.log(response);
+                            if (response['result'] === 'success') {
+                                alert('상영정보를 성공적으로 삭제했습니다.');
+                                screen.remove();
+                            } else if(response['result'] === 'is_deleted') {
+                                alert('이미 삭제된 상영정보입니다.');
+                            } else {
+                                alert('삭제 처리 중 문제가 발생했습니다.');
+                            }
                         };
                         xhr.open('DELETE', './is_admin');
                         xhr.send(formData);

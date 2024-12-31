@@ -109,7 +109,7 @@
           AND `sc_start_date` > NOW()
           AND `th_name` = #{theater}
           AND `is_deleted` = false
-        ORDER BY `ci_name`, `sc_start_date`
+        ORDER BY CAST(`ci_name` AS UNSIGNED), `sc_start_date`
     </select>
     <select id="selectAllScreensByRegion"
             resultType="dev.jwkim.jgv.vos.theater.ScreenVo">
@@ -148,7 +148,7 @@
           AND `reg_name` = #{region}
           AND `mo_title` = #{movie}
           AND `is_deleted` = false
-        ORDER BY `ci_name`, `sc_start_date`
+        ORDER BY CAST(`ci_name` AS UNSIGNED), `sc_start_date`
     </select>
     <select id="selectAllScreensByCinemaType"
             resultType="dev.jwkim.jgv.vos.theater.ScreenVo">

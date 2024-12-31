@@ -297,6 +297,12 @@ main {
           width: 500px;
           height: 260px;
           border-radius: 0.5rem;
+          color: #ffffff;
+
+          align-items: flex-start;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
 
           &.hidden {
             display: none;
@@ -325,6 +331,23 @@ main {
           &.CINE {
             background-image: url("https://img.cgv.co.kr/WebApp/contents/specialTheater/list1/16844577273360.png");
             background-size: cover;
+          }
+
+          > .name {
+            font-size: 2rem;
+            font-weight: 600;
+          }
+
+          > .tag {
+            font-size: 1.2rem;
+          }
+
+          > .text {
+            padding: 0 0 0.5rem 1.5rem;
+
+            &.tag {
+              padding-bottom: 1rem;
+            }
           }
         }
       }

@@ -621,6 +621,7 @@
 #main > .information > .cinema-info > .items > .item > .screen-container > .time-table-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 #main > .information > .cinema-info > .items > .item > .screen-container > .time-table-container > .time-table {
   margin-top: 0.5rem;

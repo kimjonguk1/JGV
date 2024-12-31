@@ -9,6 +9,7 @@ const $selects = Array.from($buttonContainer.querySelectorAll(':scope > .button 
 const $cinemaInformation = $main.querySelector(':scope > .information[data-id="cinema"]');
 const $dayContainers = $cinemaInformation.querySelector(':scope > .cinema-info > .cinema-header > .day-containers');
 const $screens = $cinemaInformation.querySelector(':scope > .cinema-info > .items');
+const theaterParams = JSON.parse(sessionStorage.getItem('theater'));
 
 {
     const $cinemaInfoRating = document.querySelector('.cinema-info-detail > .cinema-detail.rating');
@@ -265,8 +266,17 @@ const $screens = $cinemaInformation.querySelector(':scope > .cinema-info > .item
                         xhr.send();
                         Loading.show(0);
                     }
-                    if (x.innerText === 'CGV대구') {
-                        x.click();  // 클릭 이벤트 트리거
+                    if (theaterParams) {
+                        if (x.innerText === theaterParams['thName']) {
+                            setTimeout(() => {
+                                x.click();
+                            }, 0);
+                            sessionStorage.removeItem('theater');
+                        }
+                    } else {
+                        if (x.innerText === 'CGV대구') {
+                            x.click();  // 클릭 이벤트 트리거
+                        }
                     }
                 })
             }
