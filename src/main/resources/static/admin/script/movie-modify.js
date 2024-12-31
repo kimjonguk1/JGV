@@ -76,23 +76,33 @@ document.addEventListener("DOMContentLoaded", function () {
     // 영화 캐릭터 정보를 렌더링하는 함수
     function renderCharacters(characters, actorImages) {
         const container = document.getElementById("movie-characters");
+        const addButton = document.getElementById("add-character-button");
 
-        // 기존 "인물 추가" 버튼을 유지한 채로 나머지 내용 초기화
-        const existingAddButton = document.getElementById("add-character-button");
-        container.innerHTML = ""; // 기존 내용 제거
+        // 버튼을 제외한 기존 캐릭터 폼 초기화
+        Array.from(container.children).forEach((child) => {
+            if (child !== addButton) child.remove();
+        });
 
+        // 캐릭터 추가
         characters.forEach((character, index) => {
             addCharacterEntry(character, actorImages[index] || "");
         });
-
-        const addButton = document.getElementById("add-character-button");
-        addButton.onclick = () => addCharacterEntry();
     }
 
+    const addButton = document.getElementById("add-character-button");
+    if (addButton) {
+        addButton.addEventListener("click", () => addCharacterEntry());
+    } else {
+        console.error("Add-character button not found in the DOM.");
+    }
 
     function addCharacterEntry(characterName = "", imageUrl = "") {
         const container = document.getElementById("movie-characters");
         const addButton = document.getElementById("add-character-button");
+        if (!container || !addButton) {
+            console.error("Container or add-character button not found.");
+            return;
+        }
 
         const charDiv = document.createElement("div");
         charDiv.classList.add("character-entry");
@@ -110,10 +120,10 @@ document.addEventListener("DOMContentLoaded", function () {
         <button type="button" class="delete-character-button">삭제</button>
     `;
 
-        // "인물 추가" 버튼 앞에 새로운 캐릭터 입력 폼 추가
+        // "인물 추가" 버튼 앞에 새 항목 삽입
         container.insertBefore(charDiv, addButton);
 
-        // 이미지 파일 변경 시 미리보기 업데이트
+        // 이미지 미리보기 업데이트
         const input = charDiv.querySelector(".character-image-input");
         input.addEventListener("change", (e) => {
             const file = e.target.files[0];
@@ -126,10 +136,11 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // "삭제" 버튼 동작 추가
+        // 삭제 버튼 동작 추가
         const deleteButton = charDiv.querySelector(".delete-character-button");
         deleteButton.addEventListener("click", () => charDiv.remove());
     }
+
 
 
     // 폼 제출을 처리하는 함수
@@ -174,9 +185,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
             if(xhr.status < 200 || xhr.status >= 300) {
-            
+                alert('영화 정보 수정에 실패하였습니다. 다시 시도해 주세요')
                 return;
             }
+            
         };
         xhr.open('PUT', `/admin/api/${movieNum}`);
         xhr.send(formData);
