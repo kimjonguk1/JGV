@@ -774,6 +774,12 @@
   color: #FB4357;
   font-weight: 500;
 }
+.reservation-main > .reservation-info > .movie-info > .detail > .title {
+  width: 3.5rem;
+}
+.reservation-main > .reservation-info > .movie-info > .detail > .content {
+  width: 12.6rem;
+}
 .reservation-main > .reservation-info > .movie-info > .title-container {
   align-items: flex-start;
   display: flex;

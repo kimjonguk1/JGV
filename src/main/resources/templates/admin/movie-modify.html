@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>영화 - 수정</title>
-<!--    <link rel="stylesheet" href="/admin/styles/movie-modify.scss">-->
+    <title>JGV - 영화 수정</title>
+    <!--    <link rel="stylesheet" href="/admin/styles/movie-modify.scss">-->
     <link rel="stylesheet" th:href="@{'./assets/styles/index.css'}" type="text/css">
     <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
     <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}"
           type="text/css">
     <script defer src="/admin/script/movie-modify.js"></script>
+    <script defer th:src="@{'../../fragments/assets/scripts/common.js'}"></script>
+    <link rel="shortcut icon" href="https://img.cgv.co.kr/theater_img/favicon.ico" type="image/x-icon">
     <script th:if="${!session.user.isUsIsAdmin()}">
         alert('올바르지 않은 접근입니다.');
         if (history.length > 1) {

@@ -12,21 +12,30 @@ public class PageVo
     public final int offsetCount;
 
     public PageVo(int requestPage, int totalCount) {
-        this.requestPage = requestPage;
-
         this.totalCount = totalCount;
+
+        // 최대 페이지 계산
         this.movableMaxPage = totalCount / this.countPerPage + (totalCount % this.countPerPage == 0 ? 0 : 1);
 
+        // 유효하지 않은 요청 페이지 조정
+        if (requestPage < movableMinPage) {
+            requestPage = movableMinPage;
+        } else if (requestPage > movableMaxPage) {
+            requestPage = movableMaxPage;
+        }
+        this.requestPage = requestPage;
+
+        // 화면에 표시될 페이지 범위 계산
         if (totalCount == 0) {
             this.displayMinPage = 1;
             this.displayMaxPage = 1;
-        }
-        else {
-            this.displayMinPage = ((
-                    requestPage - 1) / 10) * 10 + 1;
+        } else {
+            this.displayMinPage = ((requestPage - 1) / 10) * 10 + 1;
             this.displayMaxPage = Math.min(this.displayMinPage + 9, this.movableMaxPage);
         }
-        this.offsetCount = (requestPage - 1) * this.countPerPage;
+
+        // DB 조회에 사용할 오프셋 계산
+        this.offsetCount = (this.requestPage - 1) * this.countPerPage;
 
     }
 }

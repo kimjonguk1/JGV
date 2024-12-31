@@ -27,6 +27,16 @@ const params = {
 };
 
 {
+    const $infoWrapper = document.querySelector('.info-wrapper')
+    const $first = $infoWrapper.querySelector(':scope > .item:nth-child(1) > a');
+    const redirectUrl = window.location.pathname;
+    if ($first.getAttribute('href') === '/user/login') {
+        console.log('hi');
+        $first.setAttribute('href', `.././user/login?forward=${encodeURIComponent(redirectUrl)}`);
+    }
+}
+
+{
     window.onload = () => {
         const $regions = Array.from(document.querySelectorAll('[data-id="region"]'));
         $regions.forEach((region) => {
@@ -687,6 +697,7 @@ const $payButton = document.getElementById('pay-button');
 const $realCancel = $payButton.querySelector(':scope > .real-cancel');
 const $seatColor = document.getElementById('seat-color');
 const $method = document.getElementById('method');
+const $payKind = document.getElementById('pay-kind');
 
 
 let selectedHuman = [];
@@ -750,7 +761,7 @@ $rightButtons.forEach((x) => {
                 const userCheck = confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")
                 if (userCheck) {
                     const redirectUrl = window.location.pathname;
-                    window.location.replace(`.././user/login?redirect=${encodeURIComponent(redirectUrl)}`);
+                    window.location.replace(`.././user/login?forward=${encodeURIComponent(redirectUrl)}`);
                 } else {
                     return;
                 }
@@ -1093,12 +1104,18 @@ $paymentCheck.forEach((radio) => {
 
             if (pay === "card") {
                 $method.innerText = "신용카드"
+                $payKind.innerText = $method.innerText;
+
                 $cardContainer.style.display = 'block';
             } else if (pay === "cellPhone") {
                 $method.innerText = "휴대폰 결제"
+                $payKind.innerText = $method.innerText;
+
                 $cellphoneContainer.style.display = 'block';
             } else if (pay === "simple-pay") {
                 $method.innerText = "간편결제"
+                $payKind.innerText = $method.innerText;
+
                 $simplePayContainer.style.display = 'block';
                 $simplePayCheck.forEach((radio) => {
                     radio.addEventListener('change', () => {
@@ -1121,10 +1138,13 @@ $paymentCheck.forEach((radio) => {
                 })
             } else if (pay === "credit") {
                 $method.innerText = "내통장결제"
+                $payKind.innerText = $method.innerText;
+
 
                 $creditContainer.style.display = 'block';
             } else if (pay === "toss") {
                 $method.innerText = "토스"
+                $payKind.innerText = $method.innerText;
                 $tossContainer.style.display = 'block';
             }
         }
@@ -1203,7 +1223,7 @@ $payForm.onsubmit = (e) => {
             const userCheck = confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")
             if (userCheck) {
                 const redirectUrl = window.location.pathname;
-                window.location.replace(`.././user/login?redirect=${encodeURIComponent(redirectUrl)}`);
+                window.location.replace(`.././user/login?forward=${encodeURIComponent(redirectUrl)}`);
             } else {
                 return;
             }
@@ -1250,7 +1270,7 @@ $payForm.onsubmit = (e) => {
                 sessionStorage.setItem('moTitle', $payMovie.innerText);
                 sessionStorage.setItem('ciName', $theaterCinema.innerText);
                 sessionStorage.setItem('thName', $theaterTheater2);
-                sessionStorage.setItem('scStartDate', $theaterTime.innerText);
+                sessionStorage.setItem('scStartDate', $payTime.innerText);
                 sessionStorage.setItem('paPrice', $seatPriceAdd.innerText);
                 sessionStorage.setItem('human', $seatHuman.innerText);
                 sessionStorage.setItem('seName', $seatNumber.innerText);
@@ -1261,7 +1281,7 @@ $payForm.onsubmit = (e) => {
                 const userCheck = confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")
                 if (userCheck) {
                     const redirectUrl = window.location.pathname;
-                    window.location.replace(`.././user/login?redirect=${encodeURIComponent(redirectUrl)}`);
+                    window.location.replace(`.././user/login?forward=${encodeURIComponent(redirectUrl)}`);
                 } else {
                     return;
                 }

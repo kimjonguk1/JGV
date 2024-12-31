@@ -9,8 +9,10 @@
     <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
     <link rel="stylesheet" type="text/css" th:href="@{'../../fragments/assets/styles/index.css'}">
     <link rel="stylesheet" type="text/css" th:href="@{'../../fragments/assets/styles/common.css'}">
+    <link rel="shortcut icon" href="https://img.cgv.co.kr/theater_img/favicon.ico" type="image/x-icon">
     <script defer th:src="@{'/ticket/assets/scripts/index.js'}"></script>
     <script defer th:src="@{'../../assets/scripts/common.js'}"></script>
+    <script defer th:src="@{'../../fragments/assets/scripts/common.js'}"></script>
     <title>JGV - 티켓 예매</title>
 </head>
 <body>
@@ -662,7 +664,7 @@
                     <div class="pay-box">
                         <div class="pay-title">결제 내역</div>
                         <div class="pay-content">
-                            <span class="pay-kind">신용카드</span>
+                            <span class="pay-kind" id="pay-kind">신용카드</span>
                             <span class="pay-price" id="pay-price-won2"></span>
                             <span class="pay-price">원</span>
                         </div>
@@ -717,7 +719,6 @@
                 <span id="pay-theater"></span>
                 <span id="pay-cinema"></span>
                 <span id="pay-time"></span>
-
                 <span class="pay-human"></span>
                 <span class="pay-seat"></span>
             </div>

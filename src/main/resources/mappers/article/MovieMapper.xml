@@ -45,10 +45,10 @@
         SELECT *
         FROM jgv.movie
         WHERE mo_title = #{movieTitle}
-        AND YEAR(mo_date) = #{movieDate}
+          AND YEAR(mo_date) = #{movieDate}
         LIMIT 1
     </select>
-    
+
     <select id="selectMovieIdByTitle" parameterType="String" resultType="Integer">
         SELECT mo_num
         FROM jgv.movie
@@ -112,11 +112,11 @@
                mi.m_img_url AS movieImage,
                m.mo_num AS movieNum
         FROM jgv.movie m
-        INNER JOIN jgv.movie_charactor mc ON m.mo_num = mc.mo_num
-        INNER JOIN jgv.charactor c ON mc.ch_num = c.ch_num
-        LEFT JOIN jgv.movie_image mi on m.mo_num = mi.mo_num
+                 INNER JOIN jgv.movie_charactor mc ON m.mo_num = mc.mo_num
+                 INNER JOIN jgv.charactor c ON mc.ch_num = c.ch_num
+                 LEFT JOIN jgv.movie_image mi on m.mo_num = mi.mo_num
         WHERE c.ch_job = '감독'
-        AND c.ch_name = #{director}
+          AND c.ch_name = #{director}
         ORDER BY m.mo_date DESC
         LIMIT 5
     </select>
@@ -166,20 +166,20 @@
         FROM jgv.movie m
                  INNER JOIN jgv.movie_charactor mc ON m.mo_num = mc.mo_num
                  INNER JOIN jgv.charactor c ON mc.ch_num = c.ch_num
-        INNER JOIN jgv.movie_image i ON m.mo_num = i.mo_num
+                 INNER JOIN jgv.movie_image i ON m.mo_num = i.mo_num
         WHERE c.ch_name LIKE CONCAT('%', #{keyword}, '%')
     </select>
 
     <select id="findMoviesByActorName" resultType="Map">
         SELECT m.mo_num AS moNum,
-            m.mo_title AS movieTitle,
-        mi.m_img_url AS movieImage
+               m.mo_title AS movieTitle,
+               mi.m_img_url AS movieImage
         FROM jgv.movie m
-        INNER JOIN jgv.movie_charactor mc ON m.mo_num = mc.mo_num
-        INNER JOIN jgv.charactor c ON mc.ch_num = c.ch_num
-        LEFT JOIN jgv.movie_image mi ON m.mo_num = mi.mo_num
+                 INNER JOIN jgv.movie_charactor mc ON m.mo_num = mc.mo_num
+                 INNER JOIN jgv.charactor c ON mc.ch_num = c.ch_num
+                 LEFT JOIN jgv.movie_image mi ON m.mo_num = mi.mo_num
         WHERE c.ch_name = #{actorName}
-        AND c.ch_job IN ('감독', '배우')
+          AND c.ch_job IN ('감독', '배우')
         ORDER BY m.mo_date DESC
         LIMIT 5
     </select>
@@ -194,7 +194,7 @@
         WHERE mc.ch_num = #{charId}
         ORDER BY m.mo_date DESC
     </select>
-    
+
     <select id="getMovieCountByKeyword" resultType="int">
         SELECT COUNT(*)
         FROM jgv.movie
@@ -235,7 +235,7 @@
         WHERE STR_TO_DATE(mo_date, '%Y.%m.%d') > CURRENT_DATE()
         LIMIT 20
     </select>
-    
+
     <update id="updateMoEnding">
         UPDATE jgv.movie
         SET mo_ending = NOW()

@@ -49,13 +49,13 @@ $bottomBtn.onclick = () => {
 }
 
 $writeReviewButton.addEventListener('click', () => {
-    console.log(sessionUser)
     if(sessionUser !== 'null') {
         $modal.style.display = 'flex';
     }else {
         const result = confirm('로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?');
         if(result) {
-            window.location.href = '/user/login'
+            const redirectUrl = window.location.pathname;
+            window.location.replace(`../../../user/login?forward=${encodeURIComponent(redirectUrl)}`);
         } else {
             return;
         }
@@ -63,10 +63,16 @@ $writeReviewButton.addEventListener('click', () => {
 })
 
 $myReviewButton.addEventListener('click', () => {
-    if(sessionUser) {
-        window.location.href = '/user/myPage/main'
+    if(sessionUser === 'null') {
+        const result = confirm('로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?');
+        if(result) {
+            const redirectUrl = window.location.pathname;
+            window.location.replace(`../../../user/login?forward=${encodeURIComponent(redirectUrl)}`);
+        } else {
+            return
+        }
     } else {
-        window.location.href = '/user/login'
+        window.location.href = '/user/myPage/main'
     }
 })
 
@@ -427,7 +433,7 @@ document.addEventListener('click', (e) => {
                                 let year = currentDate.getFullYear();
                                 const currentMonth = currentDate.getMonth() + 1;
                                 const month = item.querySelector(':scope > .small-container > .day:nth-child(1)');
-                                if (month.innerText.substring(0, 2) < currentMonth) {
+                                if (month.innerText.replace('월', '') < currentMonth || (month.innerText.replace('월', '') === currentMonth)) {
                                     year += 1;
                                 }
                                 const day = item.querySelector(':scope > .day');
@@ -446,6 +452,38 @@ document.addEventListener('click', (e) => {
                                     const $screenContainer = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.items > .item');
                                     $screenContainer.forEach((screen) => {
                                         $screens.append(screen);
+                                        const $timeTable = Array.from(screen.querySelectorAll(':scope > .screens > .screen-container > .time-table-container > .time-table'));
+                                        $timeTable.forEach((time) => {
+                                            time.onclick = (e) => {
+                                                e.preventDefault();
+                                                const $moTitle = document.querySelector('.movie-info > .title');
+                                                const $thName = screen.querySelector(':scope > .theater')
+                                                const xhr = new XMLHttpRequest();
+                                                const url = new URL('http://localhost:8080/ticket/');
+                                                // 파라미터 값들을 객체로 저장
+                                                const params = {
+                                                    moTitle: $moTitle.innerText,
+                                                    thName: $thName.innerText.split('\n')[1],
+                                                    scStartDate: year + '-' + month.innerText.substring(0, 2) + '-' + day.innerText,
+                                                    time: time.innerText.split('\n')[0]
+                                                };
+                                                sessionStorage.setItem('ticketParams', JSON.stringify(params));
+                                                xhr.onreadystatechange = () => {
+                                                    if (xhr.readyState !== XMLHttpRequest.DONE) {
+                                                        return;
+                                                    }
+                                                    if (xhr.status < 200 || xhr.status >= 300) {
+                                                        alert('오류 발생');
+                                                        return;
+                                                    }
+                                                    window.location.href = url.toString();
+                                                    Loading.hide();
+                                                };
+                                                xhr.open('GET', url.toString());
+                                                xhr.send();
+                                                Loading.show(0);
+                                            }
+                                        })
                                     })
                                 }
                                 xhr.open('GET', url.toString());

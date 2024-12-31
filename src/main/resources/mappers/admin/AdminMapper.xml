@@ -98,17 +98,23 @@
     </select>
     <select id="selectArticleCountByTheater" resultType="_int">
         SELECT COUNT(0)
-        FROM `jgv`.`screen`
-                 LEFT JOIN `jgv`.`movie` ON `screen`.`mo_num` = `movie`.`mo_num`
-        WHERE `mo_ending` IS NULL
-          AND `is_deleted` IS FALSE
+        FROM (SELECT 1
+              FROM `jgv`.`screen` `sc`
+                       LEFT JOIN `jgv`.`movie` `m` ON `sc`.`mo_num` = `m`.`mo_num`
+                       LEFT JOIN `jgv`.`cinema` `ci` ON `sc`.`ci_num` = `ci`.`ci_num`
+                       LEFT JOIN `jgv`.`theater` `th` ON `ci`.`th_num` = `th`.`th_num`
+              WHERE m.`mo_ending` IS NULL
+                AND `is_deleted` IS FALSE
+              GROUP BY `m`.`mo_num`, th.`th_num`) AS `TI`
     </select>
     <select id="searchArticleCountByTheater" resultType="_int">
         SELECT COUNT(0)
-        FROM `jgv`.`screen`
-        LEFT JOIN `jgv`.`movie` ON `screen`.`mo_num` = `movie`.`mo_num`
-        LEFT JOIN `jgv`.`cinema` ON `screen`.`ci_num` = `cinema`.`ci_num`
-        WHERE `mo_ending` IS NULL
+        FROM (SELECT 1
+        FROM `jgv`.`screen` `sc`
+        LEFT JOIN `jgv`.`movie` `m` ON `sc`.`mo_num` = `m`.`mo_num`
+        LEFT JOIN `jgv`.`cinema` `ci` ON `sc`.`ci_num` = `ci`.`ci_num`
+        LEFT JOIN `jgv`.`theater` `th` ON `ci`.`th_num` = `th`.`th_num`
+        WHERE m.`mo_ending` IS NULL
         AND `is_deleted` IS FALSE
         <if test="screenFilter.equals('ciName')">
             AND `ci_name` LIKE CONCAT('%', #{screenKeyword}, '%')
@@ -116,12 +122,10 @@
         <if test="screenFilter.equals('moTitle')">
             AND `mo_title` LIKE CONCAT('%', #{screenKeyword}, '%')
         </if>
-        <if test="screenFilter.equals('month')">
-            AND DATE_FORMAT(`sc_start_date`, '%m') = #{screenKeyword}
+        <if test="screenFilter.equals('date')">
+            AND DATE_FORMAT(sc_start_date, '%Y-%m-%d') Like CONCAT('%', #{screenKeyword} ,'%')
         </if>
-        <if test="screenFilter.equals('year')">
-            AND DATE_FORMAT(`sc_start_date`, '%Y') = #{screenKeyword}
-        </if>
+        GROUP BY `m`.`mo_num`, th.`th_num`) AS `TI`
     </select>
     <select id="selectAllDTOByTheaters" resultType="dev.jwkim.jgv.DTO.AdminTheaterDTO">
         SELECT `th`.`th_name`        AS `thName`,
@@ -176,11 +180,8 @@
         <if test="screenFilter.equals('moTitle')">
             AND `mo_title` LIKE CONCAT('%', #{screenKeyword}, '%')
         </if>
-        <if test="screenFilter.equals('month')">
-            AND DATE_FORMAT(`sc_start_date`, '%m') = #{screenKeyword}
-        </if>
-        <if test="screenFilter.equals('year')">
-            AND DATE_FORMAT(`sc_start_date`, '%Y') = #{screenKeyword}
+        <if test="screenFilter.equals('date')">
+            AND DATE_FORMAT(sc_start_date, '%Y-%m-%d') Like CONCAT('%', #{screenKeyword} ,'%')
         </if>
         GROUP BY `m`.`mo_num`, th.`th_num`
         ORDER BY `m`.`mo_num`, `th`.`th_num`
@@ -192,11 +193,8 @@
         LEFT JOIN `jgv`.`theater` AS `th` ON `TI`.`_th_num` = `th`.`th_num` AND `ci`.`th_num` = `th`.`th_num`
         WHERE `th_name` IS NOT NULL
         AND `is_deleted` = FALSE
-        <if test="screenFilter.equals('month')">
-            AND DATE_FORMAT(`sc_start_date`, '%m') = #{screenKeyword}
-        </if>
-        <if test="screenFilter.equals('year')">
-            AND DATE_FORMAT(`sc_start_date`, '%Y') = #{screenKeyword}
+        <if test="screenFilter.equals('date')">
+            AND DATE_FORMAT(sc_start_date, '%Y-%m-%d') Like CONCAT('%', #{screenKeyword} ,'%')
         </if>
         ORDER BY `m`.`mo_num`, `ci`.`ci_num`, `th`.`th_num`, `sc_start_date`
     </select>

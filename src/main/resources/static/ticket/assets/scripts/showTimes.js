@@ -117,7 +117,7 @@ let text = null;
                                             let year = currentDate.getFullYear();
                                             const currentMonth = currentDate.getMonth() + 1;
                                             const month = item.querySelector(':scope > .small-container > .day:nth-child(1)');
-                                            if (month < currentMonth || (month === currentMonth)) {
+                                            if (month.innerText.replace('월', '') < currentMonth || (month.innerText.replace('월', '') === currentMonth)) {
                                                 year += 1;
                                             }
                                             const day = item.querySelector(':scope > .day');
@@ -349,7 +349,7 @@ let text = null;
                                                 let year = currentDate.getFullYear();
                                                 const currentMonth = currentDate.getMonth() + 1;
                                                 const month = item.querySelector(':scope > .small-container > .day:nth-child(1)');
-                                                if (month.innerText.substring(0, 2) < currentMonth) {
+                                                if (month.innerText.replace('월', '') < currentMonth || (month.innerText.replace('월', '') === currentMonth)) {
                                                     year += 1;
                                                 }
                                                 const day = item.querySelector(':scope > .day');
@@ -370,8 +370,8 @@ let text = null;
                                                         $screens.append(screen);
                                                     })
                                                     $cinemaItem.forEach((item) => {
-                                                        if ($cinemaItems.firstElementChild) {
-                                                            $cinemaItems.firstElementChild.click(); // 첫 번째 자식 클릭
+                                                        if (item === $cinemaItems.firstElementChild) {
+                                                            setTimeout(() => {$cinemaItems.firstElementChild.click()}, 0); // 첫 번째 자식 클릭
                                                         }
                                                         item.onclick = () => {
                                                             $cinemaItem.forEach((cinema) => {
@@ -392,6 +392,43 @@ let text = null;
                                                                         const $screenItems = document.querySelector('#schedule > .cinema-info > .items');
                                                                         const $newScreens = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelector('#schedule > .cinema-info > .items');
                                                                         $screenItems.replaceWith($newScreens);
+                                                                        const $screenItem = Array.from($newScreens.querySelectorAll(':scope > .item'));
+                                                                        $screenItem.forEach((screen) => {
+                                                                            const $timeTable = Array.from(screen.querySelectorAll(':scope > .screens > .screen-container > .time-table-container > .time-table'));
+                                                                            $timeTable.forEach((time) => {
+                                                                                time.onclick = (e) => {
+                                                                                    console.log(time);
+                                                                                    e.preventDefault();
+                                                                                    const $moTitle = document.querySelector('.movie-title > .movie > .select > .text > .name');
+                                                                                    const $thName = screen.querySelector(':scope > .theater')
+                                                                                    const xhr = new XMLHttpRequest();
+                                                                                    const url = new URL('http://localhost:8080/ticket/');
+                                                                                    // 파라미터 값들을 객체로 저장
+                                                                                    const params = {
+                                                                                        moTitle: $moTitle.innerText,
+                                                                                        thName: $thName.innerText.split('\n')[1],
+                                                                                        scStartDate: year + '-' + month.innerText.substring(0, 2) + '-' + day.innerText,
+                                                                                        time: time.innerText.split('\n')[0]
+                                                                                    };
+                                                                                    sessionStorage.setItem('ticketParams', JSON.stringify(params));
+                                                                                    xhr.onreadystatechange = () => {
+                                                                                        if (xhr.readyState !== XMLHttpRequest.DONE) {
+                                                                                            return;
+                                                                                        }
+                                                                                        if (xhr.status < 200 || xhr.status >= 300) {
+                                                                                            alert('오류 발생');
+                                                                                            return;
+                                                                                        }
+                                                                                        window.location.href = url.toString();
+                                                                                        Loading.hide();
+                                                                                    };
+                                                                                    xhr.open('GET', url.toString());
+                                                                                    xhr.send();
+                                                                                    Loading.show(0);
+                                                                                }
+                                                                            })
+
+                                                                        })
                                                                     }
                                                                     xhr.open('GET', url.toString());
                                                                     xhr.send();

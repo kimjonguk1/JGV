@@ -270,14 +270,14 @@ body > .frame {
   flex-grow: 1;
   flex-shrink: 1;
 }
-#footer > .footer-wrapper > .policy-container > .policy-list > .item > a {
+#footer > .footer-wrapper > .policy-container > .policy-list > .item > span {
   color: #666666;
   white-space: nowrap;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 700;
 }
-#footer > .footer-wrapper > .policy-container > .policy-list > .item > a > b {
+#footer > .footer-wrapper > .policy-container > .policy-list > .item > span > b {
   color: #222222;
   font-weight: 700;
   text-decoration: underline;
