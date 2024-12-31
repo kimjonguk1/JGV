@@ -142,40 +142,37 @@
                         <span class="pay" th:id="'paPrice-' + ${stat.index}" th:text="${reservation.key[3]}"></span>
                     </div>
                     <div class="detail">
-                        <span>관람극장</span>
+                        <span class="title">관람극장</span>
                         <!-- 영화관 이름 -->
-                        <span class="black" th:id="'thName-' + ${stat.index}" th:text="${reservation.key[4]}"></span>
-                        <div class="-spring"></div>
-                        <span>관람인원</span>
+                        <span class="black content" th:id="'thName-' + ${stat.index}" th:text="${reservation.key[4]}"></span>
+                        <span class="title">관람인원</span>
                         <!-- 관람 인원: 좌석 수만큼 반복 -->
-                        <span class="black">
+                        <span class="black content">
                         <span class="black" th:id="'seHuman-' + ${stat.index}" th:text="'일반' + ${reservation.value.size()}"></span>
                 </span>
                     </div>
                     <div class="detail">
-                        <span>관람일시</span>
+                        <span class="title">관람일시</span>
                         <!-- 상영 시작 시간 -->
                         <span
                                 th:id="'scStartDate-' + ${stat.index}"
-                                th:classappend="${reservation.key[9] < currentDate} ? 'black' : 'red'"
+                                th:classappend="${reservation.key[9] < currentDate} ? 'black content' : 'red content'"
                                 th:text="${reservation.key[5]}"></span>
-                        <div class="-spring"></div>
-                        <span>관람좌석</span>
+                        <span class="title">관람좌석</span>
                         <!-- 좌석 이름: 각 좌석을 반복 출력 -->
-                        <span class="black">
+                        <span class="black content">
                     <span id="seName"
                           th:text="${#strings.trim(reservation.value.toString()).substring(1, reservation.value.toString().length() - 1)}"></span>
 
                 </span>
                     </div>
                     <div class="detail">
-                        <span>매수</span>
-                        <span>상영관</span>
+                        <span class="title">상영관</span>
                         <!-- 상영관 이름 -->
-                        <span class="black" th:id="'ciName-' + ${stat.index}" th:text="${reservation.key[6]}"></span>
-                        <div class="-spring"></div>
+                        <span class="black content" th:id="'ciName-' + ${stat.index}" th:text="${reservation.key[6]}"></span>
+                        <span class="title">매수</span>
                         <!-- 매수: 좌석 수를 계산하여 출력 -->
-                        <span class="black" th:text="${reservation.value.size()} + '매'"></span>
+                        <span class="black content" th:text="${reservation.value.size()} + '매'"></span>
                     </div>
                 </div>
             </div>

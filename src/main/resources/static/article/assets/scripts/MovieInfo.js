@@ -49,7 +49,6 @@ $bottomBtn.onclick = () => {
 }
 
 $writeReviewButton.addEventListener('click', () => {
-    console.log(sessionUser)
     if(sessionUser !== 'null') {
         $modal.style.display = 'flex';
     }else {
@@ -63,10 +62,15 @@ $writeReviewButton.addEventListener('click', () => {
 })
 
 $myReviewButton.addEventListener('click', () => {
-    if(sessionUser) {
-        window.location.href = '/user/myPage/main'
+    if(sessionUser === 'null') {
+        const result = confirm('로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?')
+        if(result) {
+            window.location.href = '/user/login'
+        } else {
+            return
+        }
     } else {
-        window.location.href = '/user/login'
+        window.location.href = '/user/myPage/main'
     }
 })
 

@@ -687,6 +687,7 @@ const $payButton = document.getElementById('pay-button');
 const $realCancel = $payButton.querySelector(':scope > .real-cancel');
 const $seatColor = document.getElementById('seat-color');
 const $method = document.getElementById('method');
+const $payKind = document.getElementById('pay-kind');
 
 
 let selectedHuman = [];
@@ -1093,12 +1094,18 @@ $paymentCheck.forEach((radio) => {
 
             if (pay === "card") {
                 $method.innerText = "신용카드"
+                $payKind.innerText = $method.innerText;
+
                 $cardContainer.style.display = 'block';
             } else if (pay === "cellPhone") {
                 $method.innerText = "휴대폰 결제"
+                $payKind.innerText = $method.innerText;
+
                 $cellphoneContainer.style.display = 'block';
             } else if (pay === "simple-pay") {
                 $method.innerText = "간편결제"
+                $payKind.innerText = $method.innerText;
+
                 $simplePayContainer.style.display = 'block';
                 $simplePayCheck.forEach((radio) => {
                     radio.addEventListener('change', () => {
@@ -1121,14 +1128,17 @@ $paymentCheck.forEach((radio) => {
                 })
             } else if (pay === "credit") {
                 $method.innerText = "내통장결제"
+                $payKind.innerText = $method.innerText;
+
 
                 $creditContainer.style.display = 'block';
             } else if (pay === "toss") {
                 $method.innerText = "토스"
+                $payKind.innerText = $method.innerText;
                 $tossContainer.style.display = 'block';
             }
         }
-    )
+)
 })
 $cultureCard.addEventListener('change', () => {
     if ($cultureCard.checked) {
@@ -1250,7 +1260,7 @@ $payForm.onsubmit = (e) => {
                 sessionStorage.setItem('moTitle', $payMovie.innerText);
                 sessionStorage.setItem('ciName', $theaterCinema.innerText);
                 sessionStorage.setItem('thName', $theaterTheater2);
-                sessionStorage.setItem('scStartDate', $theaterTime.innerText);
+                sessionStorage.setItem('scStartDate', $payTime.innerText);
                 sessionStorage.setItem('paPrice', $seatPriceAdd.innerText);
                 sessionStorage.setItem('human', $seatHuman.innerText);
                 sessionStorage.setItem('seName', $seatNumber.innerText);
