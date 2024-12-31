@@ -81,50 +81,9 @@
 #main > .img-movie > .button-container > .button > .text {
   color: #ffffff;
 }
-#main > .img-movie > .head {
-  width: 53.5rem;
-  margin: 4rem 0 1rem 4rem;
-}
-#main > .img-movie > .head > .items {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-#main > .img-movie > .head > .items > .item {
-  padding: 0 20px;
-  color: #666666;
-  cursor: pointer;
-}
-#main > .img-movie > .head > .items > .item.reservation {
-  padding-left: 23px;
-  background: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_icon.png") no-repeat -300px -100px;
-}
-#main > .img-movie > .head > .items > .item.reservation.select {
-  background-position: -300px -160px;
-  color: #fb4357;
-}
-#main > .img-movie > .head > .items > .item.review {
-  padding-left: 20px;
-  background: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_icon.png") no-repeat -296px -120px;
-}
-#main > .img-movie > .head > .items > .item.review.select {
-  background-position: -296px -180px;
-  color: #fb4357;
-}
-#main > .img-movie > .head > .items > .item.human {
-  padding-left: 30px;
-  background: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_icon.png") no-repeat -300px -140px;
-}
-#main > .img-movie > .head > .items > .item.human.select {
-  background-position: -300px -200px;
-  color: #fb4357;
-}
-#main > .img-movie > .head > .items > .line {
-  padding-right: 1rem;
-}
 #main > .img-movie > .movie-container {
   height: 287px;
-  padding: 0 3.5rem;
+  padding: 5rem 3.5rem 0 4.5rem;
   display: flex;
   flex-direction: row;
 }
@@ -363,56 +322,10 @@
 #main > .img > .button-container > .button > .text {
   color: #ffffff;
 }
-#main > .img > .head {
-  margin: 4rem 0 1rem 4.5rem;
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  gap: 0.3rem;
-  justify-content: flex-start;
-}
-#main > .img > .head #favorite-theaters {
-  margin-left: 1rem;
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  gap: 0.2rem;
-  justify-content: center;
-}
-#main > .img > .head #favorite-theaters > .container {
-  width: 7.5rem;
-  height: 2.5rem;
-  border: 0.15rem solid #6e6c6d;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-#main > .img > .head #favorite-theaters > .container > .text-container {
-  width: 95%;
-  height: 90%;
-  border: 0.1rem solid #6e6c6d;
-  text-decoration: none;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-}
-#main > .img > .head #favorite-theaters > .container > .text-container > .text {
-  color: #ffffff;
-}
-#main > .img > .head > .button {
-  background-color: #636162;
-  border: 0.2rem solid #6e6c6d;
-}
-#main > .img > .head > .button > .image {
-  width: 2.5rem;
-  height: 2rem;
-  cursor: pointer;
-}
 #main > .img > .main {
+  margin: 4rem 0 0 4rem;
   width: 53.5rem;
   height: 2rem;
-  margin-left: 4rem;
   border-top: 0.15rem solid #727171;
   border-bottom: 0.15rem solid #727171;
   align-items: center;
@@ -940,6 +853,7 @@
   font-weight: 400;
 }
 #main > .information > .cinema-info > .items > .item > .screen-container {
+  width: 44rem;
   padding: 1rem 2rem;
 }
 #main > .information > .cinema-info > .items > .item > .screen-container > .theater-info {
@@ -955,6 +869,7 @@
 #main > .information > .cinema-info > .items > .item > .screen-container > .time-table-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 #main > .information > .cinema-info > .items > .item > .screen-container > .time-table-container > .time-table {
   margin-top: 0.5rem;
@@ -1017,7 +932,7 @@
   display: flex;
 }
 #schedule > .main {
-  width: 804px;
+  width: 820px;
   height: 2rem;
   margin-top: 1rem;
   padding: 0.3rem 0;
@@ -1134,7 +1049,7 @@
 }
 #schedule > .cinema-info > .items > .item {
   border-top: 0.1rem solid #474746;
-  padding: 1.5rem 0.5rem;
+  padding: 1.5rem 0;
   display: flex;
   flex-direction: row;
 }
@@ -1146,10 +1061,12 @@
   font-size: 1.5rem;
 }
 #schedule > .cinema-info > .items > .item > .screens {
+  width: calc(804px - 8rem);
   display: flex;
   flex-direction: column;
 }
 #schedule > .cinema-info > .items > .item > .screens > .screen-container {
+  width: 44rem;
   padding: 1rem 2rem;
 }
 #schedule > .cinema-info > .items > .item > .screens > .screen-container > .theater-info {
@@ -1165,6 +1082,7 @@
 #schedule > .cinema-info > .items > .item > .screens > .screen-container > .time-table-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 #schedule > .cinema-info > .items > .item > .screens > .screen-container > .time-table-container > .time-table {
   margin-top: 0.5rem;

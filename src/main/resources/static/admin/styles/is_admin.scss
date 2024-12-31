@@ -488,6 +488,10 @@ button {
         &:hover {
           color: #222222;
         }
+
+        &.selected {
+          color: #222222;
+        }
       }
 
     }
@@ -534,4 +538,8 @@ button {
 
     }
   }
+}
+
+.screen-item {
+  padding-bottom: 1rem;
 }

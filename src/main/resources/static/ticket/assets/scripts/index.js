@@ -27,6 +27,16 @@ const params = {
 };
 
 {
+    const $infoWrapper = document.querySelector('.info-wrapper')
+    const $first = $infoWrapper.querySelector(':scope > .item:nth-child(1) > a');
+    const redirectUrl = window.location.pathname;
+    if ($first.getAttribute('href') === '/user/login') {
+        console.log('hi');
+        $first.setAttribute('href', `.././user/login?forward=${encodeURIComponent(redirectUrl)}`);
+    }
+}
+
+{
     window.onload = () => {
         const $regions = Array.from(document.querySelectorAll('[data-id="region"]'));
         $regions.forEach((region) => {
@@ -751,7 +761,7 @@ $rightButtons.forEach((x) => {
                 const userCheck = confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")
                 if (userCheck) {
                     const redirectUrl = window.location.pathname;
-                    window.location.replace(`.././user/login?redirect=${encodeURIComponent(redirectUrl)}`);
+                    window.location.replace(`.././user/login?forward=${encodeURIComponent(redirectUrl)}`);
                 } else {
                     return;
                 }
@@ -1138,7 +1148,7 @@ $paymentCheck.forEach((radio) => {
                 $tossContainer.style.display = 'block';
             }
         }
-)
+    )
 })
 $cultureCard.addEventListener('change', () => {
     if ($cultureCard.checked) {
@@ -1213,7 +1223,7 @@ $payForm.onsubmit = (e) => {
             const userCheck = confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")
             if (userCheck) {
                 const redirectUrl = window.location.pathname;
-                window.location.replace(`.././user/login?redirect=${encodeURIComponent(redirectUrl)}`);
+                window.location.replace(`.././user/login?forward=${encodeURIComponent(redirectUrl)}`);
             } else {
                 return;
             }
@@ -1271,7 +1281,7 @@ $payForm.onsubmit = (e) => {
                 const userCheck = confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")
                 if (userCheck) {
                     const redirectUrl = window.location.pathname;
-                    window.location.replace(`.././user/login?redirect=${encodeURIComponent(redirectUrl)}`);
+                    window.location.replace(`.././user/login?forward=${encodeURIComponent(redirectUrl)}`);
                 } else {
                     return;
                 }
