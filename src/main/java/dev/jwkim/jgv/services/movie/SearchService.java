@@ -21,9 +21,16 @@ public class SearchService {
     }
 
     public Pair<PageVo, List<Movie_ImageDTO>> searchMoviesByKeyword (String keyword, int requestPage) {
+        System.out.println("서비스 쪽 requestPage = " + requestPage);
+
         int totalCount = movieMapper.getMovieCountByKeyword(keyword);
 
         PageVo pageVo = new PageVo(requestPage, totalCount);
+
+        System.out.println("서비스 쪽 totalCount" + totalCount);
+
+        System.out.println(pageVo.offsetCount);
+        System.out.println(pageVo.countPerPage);
 
         List<Movie_ImageDTO> movies = movieMapper.findMovieByKeyword(keyword, pageVo.offsetCount, pageVo.countPerPage);
 
