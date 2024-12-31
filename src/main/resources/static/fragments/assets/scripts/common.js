@@ -5,7 +5,7 @@ if ($logout) {
         e.preventDefault();
 
         sessionStorage.clear();
-        location.href = $logout.href;
+        window.location.assign($logout.href);
     });
 }
 
