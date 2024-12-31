@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>error/default</title>
+    <link rel="stylesheet" th:href="@{'/assets/styles/index.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'/assets/styles/common.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'/fragments/assets/styles/index.css'}"
+          type="text/css">
+    <link rel="stylesheet" th:href="@{'/fragments/assets/styles/common.css'}"
+          type="text/css">
+    <script defer th:src="@{'/fragments/assets/scripts/common.js'}"></script>
+    <link rel="shortcut icon" href="https://img.cgv.co.kr/theater_img/favicon.ico"
+          type="image/x-icon">
+</head>
+<body>
+<th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
+<th:block th:replace="~{fragments/common.html :: header}"></th:block>
+<th:block th:replace="~{fragments/common.html :: nav}"></th:block>
+<div style=" width: 100%; border-bottom: 1px solid #e2e2e2; display: flex;
+flex-direction:
+column;
+align-items: center;
+justify-content: center; gap: 1rem; padding-top: 10rem; padding-bottom: 10rem;">
+    <div>
+        <img src="https://img.cgv.co.kr/R2014/images/common/ico/ico_error_server.png"
+             alt="error" style="height: 101px; width: 113px; padding-bottom: 1rem;">
+    </div>
+    <h2 style="font-weight: 500;">이용에 불편을 드려 죄송합니다.</h2>
+    <span style="font-size: 1rem; font-weight: 400;">
+        요청하신 페이지가 변경 되었거나 일시적으로 사용이 중단되었습니다.
+    </span>
+    <div style="display: flex; flex-direction: row; align-items: center;
+    justify-content: center; gap: 1rem; padding-top: 1rem; padding-bottom: 2rem;">
+        <button style="display: flex; flex-direction: row; align-items: center;
+        justify-content: center; gap: 0.5rem; border: 1px solid #e1e1e1; height: 2rem;
+        width: 120px; border-radius: 999rem; cursor: pointer" onclick="history.back()">
+                <img style="height: 13px; width: 15px;"
+                     src="https://img.cgv.co.kr/R2014/images/common/ico/return.png"
+                     alt="back">
+            <span style="font-size: 15px; font-weight: 400; color: #222222">이전
+            </span>
+        </button>
+        <button style="display: flex; flex-direction: row; align-items: center;
+        justify-content: center; gap: 0.5rem; border: 1px solid #e1e1e1; height: 2rem;
+        width: 120px; border-radius: 999rem; cursor: pointer">
+            <img style="height: 18px; width: 17px;"
+                 src="https://img.cgv.co.kr/R2014/images/common/ico/home.png"
+                 alt="back">
+            <a style="font-size: 15px; font-weight: 400; color: #222222"
+               th:href="${'/'}">홈
+            </a>
+        </button>
+    </div>
+</div>
+
+
+<th:block th:replace="~{fragments/common.html :: footer}"></th:block>
+</body>
+</html>

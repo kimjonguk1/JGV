@@ -2,11 +2,8 @@ package dev.jwkim.jgv.controlles.user;
 
 
 import dev.jwkim.jgv.DTO.MyReviewDTO;
-import dev.jwkim.jgv.entities.ticket.PaymentEntity;
 import dev.jwkim.jgv.entities.user.EmailTokenEntity;
-import dev.jwkim.jgv.entities.user.ReviewEntity;
 import dev.jwkim.jgv.entities.user.UserEntity;
-import dev.jwkim.jgv.exceptions.MessageRemovedException;
 import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.results.Result;
 import dev.jwkim.jgv.services.user.ReviewService;
@@ -19,7 +16,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
-import org.openqa.selenium.remote.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,8 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.net.http.HttpRequest;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -51,12 +45,12 @@ public class UserController {
     // region 회원가입
     @RequestMapping(value = "/register", method = RequestMethod.GET, produces =
             MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getRegister(@SessionAttribute(value = "user") UserEntity user, HttpServletResponse response, HttpServletRequest request) throws IOException {
+    public ModelAndView getRegister(@SessionAttribute(value = "user", required = false) UserEntity user) {
+
         ModelAndView modelAndView = new ModelAndView();
         if (user != null) {
-            response.setStatus(403);
-            response.sendRedirect(request.getContextPath() + "/error/403");
-            return null;
+            modelAndView.setViewName("redirect:/error");
+            return modelAndView;
         }
         modelAndView.setViewName("user/register");
         return modelAndView;
@@ -91,13 +85,10 @@ public class UserController {
 
     //     region 로그인
     @RequestMapping(value = "/login", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getLogin(HttpSession session, @RequestParam(value = "redirect", required = false) String redirect) {
+    public ModelAndView getLogin(HttpSession session) {
         // 이미 로그인된 경우
         if (session.getAttribute("user") != null) {
-            return new ModelAndView("redirect:/");
-        }
-        if (redirect != null) {
-            session.setAttribute("redirect", redirect);  // redirect 파라미터를 로그인 페이지로 전달
+            return new ModelAndView("redirect:/error");
         }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/login");
@@ -107,7 +98,7 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String postLogin(UserEntity user, HttpSession session, @RequestParam(value = "redirect", required = false) String redirect) {
+    public String postLogin(UserEntity user, HttpSession session) {
         Result result = this.userService.login(user);
         JSONObject response = new JSONObject();
 
@@ -115,21 +106,8 @@ public class UserController {
         if (result == CommonResult.SUCCESS) {
             session.setAttribute("user", user);
             response.put("MemberNum", user.getUsNum());
-
-
-            if (redirect == null) {
-                // 사용자 요청에 redirect 파라미터가 없다면
-                redirect = (String) session.getAttribute("redirect");
-                // 세션에서 redirect 값을 가져오고
-                if (redirect == null) {
-                    // 세션에도 redirect 값이 없다면
-                    redirect = "/";  // 여기로 보내라
-                }
-            }
-            response.put("redirect", redirect);
             // 최종적으로 결정된 redirect 값을 JSON 방식으로 보냄
         }
-
         response.put(Result.NAME, result.nameToLower());
         return response.toString();
     }
@@ -147,8 +125,9 @@ public class UserController {
     public ModelAndView getMyPage(HttpServletResponse response, UserEntity user,HttpSession session,@PathVariable(value = "fragment") String fragment, HttpServletRequest request, @RequestParam(value = "page", required = false, defaultValue = "1")int page) throws ServletException, IOException {
         String[] validFragments = {"main", "reservation", "receipt", "personal", "withdraw"};
         if (fragment == null || Arrays.stream(validFragments).noneMatch(x -> x.equals(fragment))) {
-            response.setStatus(404);
-            return null;
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("redirect:/error");
+            return modelAndView;
         }
 
         if (session == null) {
@@ -307,6 +286,10 @@ public class UserController {
                                                    false) String userId
     ) {
         ModelAndView modelAndView = new ModelAndView();
+        if (userId == null || userEmail == null || key == null) {
+            modelAndView.setViewName("redirect:/error");
+            return modelAndView;
+        }
         modelAndView.addObject("userEmail", userEmail);
         modelAndView.addObject("key", key);
         modelAndView.addObject("userId", userId);
@@ -390,9 +373,13 @@ public class UserController {
 
     @RequestMapping(value = "/myPage/reservationCancel", method = RequestMethod.GET,
             produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getReservationCancel(HttpSession session, UserEntity user) {
+    public ModelAndView getReservationCancel(@SessionAttribute(value = "user", required = false) UserEntity user) {
+
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("session", session);
+        if (user == null) {
+            modelAndView.setViewName("redirect:/error");
+            return modelAndView;
+        }
         modelAndView.addObject("user", user);
         modelAndView.setViewName("user/myPage/reservation-cancel");
         return modelAndView;

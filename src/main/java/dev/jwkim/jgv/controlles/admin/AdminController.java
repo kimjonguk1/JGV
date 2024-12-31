@@ -84,11 +84,10 @@ public class AdminController {
         }
 
         if (user == null || !user.isUsIsAdmin()) {
-            response.setStatus(403);
-            response.sendRedirect(request.getContextPath() + "/error/403");
+           modelAndView.setViewName("redirect:/error");
+           return modelAndView;
         }
         modelAndView.setViewName("admin/is_admin");
-
         return modelAndView;
     }
 
@@ -96,13 +95,8 @@ public class AdminController {
 
     @RequestMapping(value = "/movie-crawl", method = RequestMethod.GET, produces =
             MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMovieCrawl(@SessionAttribute UserEntity user,
-                                      HttpServletResponse response,HttpServletRequest request) throws IOException {
+    public ModelAndView getMovieCrawl() {
 
-        if (user == null || !user.isUsIsAdmin()) {
-            response.setStatus(403);
-            response.sendRedirect(request.getContextPath() + "/error/403");
-        }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/movie-crawl");
         return modelAndView;
@@ -110,13 +104,8 @@ public class AdminController {
 
     @RequestMapping(value = "/theater-crawl", method = RequestMethod.GET, produces =
             MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getTheaterCrawl(@SessionAttribute UserEntity user,
-                                        HttpServletResponse response,HttpServletRequest request) throws IOException {
+    public ModelAndView getTheaterCrawl() {
 
-        if (user == null || !user.isUsIsAdmin()) {
-            response.setStatus(403);
-            response.sendRedirect(request.getContextPath() + "/error/403");
-        }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/theater-crawl");
         return modelAndView;
