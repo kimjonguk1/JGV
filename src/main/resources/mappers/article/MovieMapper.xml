@@ -260,7 +260,8 @@
             c.ch_num AS chNum,
             c.ch_name AS chName,
             c2.co_num AS coNum,
-            c2.co_name AS coName
+            c2.co_name AS coName,
+            ci.c_img_url AS cImgUrl
         FROM jgv.movie m
                  LEFT JOIN jgv.rating r ON r.ra_num = m.ra_num
                  LEFT JOIN jgv.movie_genere mg ON m.mo_num = mg.mo_num
@@ -268,6 +269,7 @@
                  LEFT JOIN jgv.movie_image mi ON m.mo_num = mi.mo_num
                  LEFT JOIN jgv.movie_charactor mc ON m.mo_num = mc.mo_num
                  LEFT JOIN jgv.charactor c ON c.ch_num = mc.ch_num
+                 LEFT JOIN jgv.charactor_image ci on c.ch_num = ci.ch_num
                  LEFT JOIN jgv.movie_country mc2 ON m.mo_num = mc2.mo_num
                  LEFT JOIN jgv.country c2 ON c2.co_num = mc2.co_num
         WHERE m.mo_num = #{movieNum};
@@ -300,6 +302,11 @@
         <!-- 국가 리스트 매핑 -->
         <collection property="countries" ofType="java.lang.String">
             <result column="coName"/>
+        </collection>
+
+        <!-- 인물 이미지 매핑 -->
+        <collection property="actorImages" ofType="java.lang.String">
+            <result column="cImgUrl"/>
         </collection>
     </resultMap>
 

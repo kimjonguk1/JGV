@@ -36,4 +36,5 @@ public class AllMovieInfoDTO {
     private List<String> genres;
     private List<String> actors;
     private List<String> countries;
+    private List<String> actorImages;
 }

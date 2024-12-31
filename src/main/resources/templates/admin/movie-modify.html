@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>영화 수정</title>
+    <title>영화 - 수정</title>
 <!--    <link rel="stylesheet" href="/admin/styles/movie-modify.scss">-->
     <link rel="stylesheet" th:href="@{'./assets/styles/index.css'}" type="text/css">
     <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
@@ -27,42 +27,42 @@
     <h1>영화 수정</h1>
     <form id="movie-edit-form">
         <label>
-            영화 제목:
+            <span class="title"> 제목: </span>
             <input type="text" id="movie-title" name="movieTitle" disabled>
         </label>
         <label>
-            영화 러닝타임:
+            <span class="running-time"> 러닝타임 : </span>
             <input type="number" id="movie-runtime" name="movieRuntime">
         </label>
         <label>
-            영화 줄거리:
+            <span class="plot"> 줄거리 : </span>
             <textarea id="movie-description" name="movieDescription"></textarea>
         </label>
         <label>
-            영화 관람등급:
+            <span class="raiting"> 관람등급 : </span>
             <select id="movie-rating" name="movieRating">
-                <option value="ALL">전체관람가</option>
-                <option value="12">12세이상관람가</option>
-                <option value="15">15세이상관람가</option>
-                <option value="18">청소년관람불가</option>
-                <option value="NO">미정</option>
+                <option value="전체관람가">전체관람가</option>
+                <option value="12세이상관람가">12세이상관람가</option>
+                <option value="15세이상관람가">15세이상관람가</option>
+                <option value="청소년관람불가">청소년관람불가</option>
+                <option value="미정">미정</option>
             </select>
         </label>
         <label>
-            영화 장르:
+            <span class="genre"> 장르(쉼표로 구분) : </span>
             <input type="text" id="movie-genre" name="movieGenre">
         </label>
         <label>
-            영화 제작국가:
+            <span class="country"> 제작 국가(쉼표로 구분) : </span>
             <input type="text" id="movie-country" name="movieCountry">
         </label>
-        <label>
-            영화 이미지:
-            <input type="file" id="movie-image" name="movieImage">
-        </label>
+        <div id="movie-image">
+        </div>
         <div id="movie-characters">
             <!-- 인물 수정 폼 추가 -->
+            <button type="button" id="add-character-button">인물 추가</button>
         </div>
+
         <button type="button" id="cancel-button">취소</button>
         <button type="submit" id="save-button">저장</button>
     </form>
