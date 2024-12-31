@@ -43,17 +43,17 @@ $topBtn.onclick = () => {
 }
 $bottomBtn.onclick = () => {
     window.scrollTo({
-        top : document.body.scrollHeight,
+        top: document.body.scrollHeight,
         behavior: "smooth"
     })
 }
 
 $writeReviewButton.addEventListener('click', () => {
-    if(sessionUser !== 'null') {
+    if (sessionUser !== 'null') {
         $modal.style.display = 'flex';
-    }else {
+    } else {
         const result = confirm('로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?');
-        if(result) {
+        if (result) {
             const redirectUrl = window.location.pathname;
             window.location.replace(`../../../user/login?forward=${encodeURIComponent(redirectUrl)}`);
         } else {
@@ -63,9 +63,9 @@ $writeReviewButton.addEventListener('click', () => {
 })
 
 $myReviewButton.addEventListener('click', () => {
-    if(sessionUser === 'null') {
+    if (sessionUser === 'null') {
         const result = confirm('로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?');
-        if(result) {
+        if (result) {
             const redirectUrl = window.location.pathname;
             window.location.replace(`../../../user/login?forward=${encodeURIComponent(redirectUrl)}`);
         } else {
@@ -79,7 +79,6 @@ $myReviewButton.addEventListener('click', () => {
 $closeModal.addEventListener('click', () => {
     $modal.style.display = 'none';
 })
-
 
 
 // UTF-8 바이트 계산 함수
@@ -120,9 +119,9 @@ function sortReviews(sort) {
     const $reviewContainer = document.querySelector('.reviews');
     const $reviews = Array.from($reviewContainer.getElementsByClassName('review-item'));
 
-    if(sort === 'latest') {
+    if (sort === 'latest') {
         $reviews.sort((a, b) => b.dataset.timestamp - a.dataset.timestamp);
-    }else if(sort === 'recommend') {
+    } else if (sort === 'recommend') {
         $reviews.sort((a, b) => b.dataset.likes - a.dataset.likes);
     }
     $reviewContainer.innerHTML = '';
@@ -133,36 +132,36 @@ function sortReviews(sort) {
 }
 
 function handleEditReview(reviewId, updatedText) {
-    if(!updatedText) {
+    if (!updatedText) {
         alert('수정할 내용을 입력해주세요')
         return
     }
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
-        if(xhr.readyState !== XMLHttpRequest.DONE) {
+        if (xhr.readyState !== XMLHttpRequest.DONE) {
             return;
         }
-        if(xhr.status < 200 || xhr.status >= 300) {
+        if (xhr.status < 200 || xhr.status >= 300) {
             alert('평점 수정에 실패하였습니다. 새로고침 후 다시 시도해 주세요')
             return;
         }
         const response = JSON.parse(xhr.responseText);
-        if(response === "SUCCESS") {
+        if (response === "SUCCESS") {
             alert('평점이 성공적으로 수정되었습니다')
             window.location.reload()
-        } else if(response === "UNAUTHORIZED") {
+        } else if (response === "UNAUTHORIZED") {
             alert('수정할 권한이 없습니다')
             $modal.style.display = 'none';
-        } else if(response === "FAILURE") {
+        } else if (response === "FAILURE") {
             alert('평점 수정에 실패하였습니다. 잠시 후 다시 시도해 주세요')
-        } else if(response === "NOT_LOGGED_IN") {
+        } else if (response === "NOT_LOGGED_IN") {
             alert('평점 수정에 실패하였습니다. 로그인 상태를 확인 후 다시 시도해 주세요')
             $modal.style.display = 'none';
         }
     };
     xhr.open('PUT', `/reviews/${reviewId}`);
     xhr.setRequestHeader("content-Type", "application/json");
-    xhr.send(JSON.stringify({ reContent : updatedText}));
+    xhr.send(JSON.stringify({reContent: updatedText}));
 }
 
 // 평점 작성 및 평점 수정
@@ -172,13 +171,13 @@ $submitReview.addEventListener('click', () => {
     const mode = $submitReview.dataset.mode;
     console.log($submitReview.dataset)
     console.log(mode)
-    if($reviewText === '') {
+    if ($reviewText === '') {
         alert('평점 내용을 입력해 주세요');
         return
     }
-    if(mode === 'create') {
+    if (mode === 'create') {
         handleSubmitReview(movieId, $reviewText);
-    } else if(mode === 'edit') {
+    } else if (mode === 'edit') {
         const reviewId = $submitReview.dataset.reviewId;
         handleEditReview(reviewId, $reviewText); // 수정 로직 호출
     }
@@ -188,26 +187,26 @@ $submitReview.addEventListener('click', () => {
 function handleSubmitReview(movieId, reviewText) {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
-        if(xhr.readyState !== XMLHttpRequest.DONE) {
+        if (xhr.readyState !== XMLHttpRequest.DONE) {
             return;
         }
-        if(xhr.status < 200 || xhr.status >= 300) {
+        if (xhr.status < 200 || xhr.status >= 300) {
             alert('리뷰 등록에 실패하였습니다. 다시 시도해 주세요')
             return;
         }
 
         const response = JSON.parse(xhr.responseText);
         console.log(response.result);
-        if(response.result === 'SUCCESS') {
+        if (response.result === 'SUCCESS') {
             alert('관람평이 등록 되었습니다. \n 임직원의 경우 실관람평 작성 포인트는 지급되지 않습니다.');
             document.getElementById('reviewText').value = ''
             $modal.style.display = 'none'
             window.location.reload();
-        } else if(response.result === 'NOT_LOGGED_IN') {
+        } else if (response.result === 'NOT_LOGGED_IN') {
             alert('리뷰 작성에 실패했습니다. 세션이 만료되었거나 로그인이 해제되었을 수 있습니다. 로그인 상태를 확인한 후 다시 시도해 주세요.');
             document.getElementById('reviewText').value = ''
             $modal.style.display = 'none'
-        } else if(response.result === 'ALREADY_WRITTEN') {
+        } else if (response.result === 'ALREADY_WRITTEN') {
             alert('이미 이 영화에 대한 평점을 작성하셨습니다.')
         } else {
             alert('평점 작성에 실패하였습니다. 다시 시도해 주세요')
@@ -225,12 +224,12 @@ function handleSubmitReview(movieId, reviewText) {
 
 // 좋아요 버튼 클릭시 이벤트 처리 (동적이므로 이벤트 위임 처리)
 document.addEventListener('click', (e) => {
-    if(e.target.closest('#like-btn')) {
+    if (e.target.closest('#like-btn')) {
         const $likeButton = e.target.closest('#like-btn');
         const $reviewItem = $likeButton.closest('.review-item');
         const reviewId = $reviewItem.dataset.reviewId;
 
-        if(reviewId) {
+        if (reviewId) {
             handleLike(reviewId);
         }
     }
@@ -257,26 +256,25 @@ document.addEventListener('click', (e) => {
 function handleLike(reviewId) {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
-        if(xhr.readyState !== XMLHttpRequest.DONE) {
+        if (xhr.readyState !== XMLHttpRequest.DONE) {
             return;
         }
-        if(xhr.status < 200 || xhr.status >= 300) {
+        if (xhr.status < 200 || xhr.status >= 300) {
             alert('좋아요 반영에 실패했습니다. 다시 시도해 주세요')
             console.log('xhr 스탯')
             return;
         }
         const response = JSON.parse(xhr.responseText);
-        if(response === "NOT_LOGGED_IN") {
+        if (response === "NOT_LOGGED_IN") {
             alert("로그인 후 좋아요를 눌러주세요");
-        } else if(response.trim() === "SUCCESS") {
+        } else if (response.trim() === "SUCCESS") {
             const reviewItem = document.querySelector(`.review-item[data-review-id="${reviewId}"]`);
             const likeCountSpan = reviewItem.querySelector('.like-count');
             const currentCount = parseInt(likeCountSpan.innerText, 10);
             likeCountSpan.innerText = currentCount + 1; // 카운트 증가
-        } else if(response.trim() === "ALREADY_LIKED") {
+        } else if (response.trim() === "ALREADY_LIKED") {
             alert("이미 좋아요를 누르셨습니다")
-        }
-        else if(response === "FAILURE"){
+        } else if (response === "FAILURE") {
             alert("좋아요 반영에 실패했습니다. 다시 시도해 주세요")
         }
 
@@ -302,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 수정 버튼 및 삭제 버튼 클릭 이벤트 처리
     document.addEventListener('click', (e) => {
-        if(e.target.closest('.edit-review')) {
+        if (e.target.closest('.edit-review')) {
             const $reviewItem = e.target.closest('.review-item');
             const $reviewId = $reviewItem.dataset.reviewId;
             const $reviewText = $reviewItem.querySelector('.review-text').innerText;
@@ -318,11 +316,11 @@ document.addEventListener('DOMContentLoaded', () => {
             $submitReview.dataset.mode = 'edit';
             $submitReview.dataset.reviewId = $reviewId;
         }
-        if(e.target.closest('.delete-review')) {
+        if (e.target.closest('.delete-review')) {
             const $reviewItem = e.target.closest('.review-item');
             const $reviewId = $reviewItem.dataset.reviewId;
             const result = confirm('평점을 삭제하시겠습니까?')
-            if(result) {
+            if (result) {
                 handleDeleteReview($reviewId);
             } else {
                 return
@@ -332,26 +330,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-
     function handleDeleteReview(reviewId) {
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
-            if(xhr.readyState !== XMLHttpRequest.DONE) {
+            if (xhr.readyState !== XMLHttpRequest.DONE) {
                 return;
             }
-            if(xhr.status < 200 || xhr.status >= 300) {
+            if (xhr.status < 200 || xhr.status >= 300) {
                 alert('평점 삭제에 실패하였습니다. 새로고침 후 다시 시도해 주세요')
                 return;
             }
             const response = JSON.parse(xhr.responseText);
-            if(response === "SUCCESS") {
+            if (response === "SUCCESS") {
                 alert('평점이 성공적으로 삭제되었습니다')
                 window.location.reload()
-            } else if(response === "UNAUTHORIZED") {
+            } else if (response === "UNAUTHORIZED") {
                 alert('삭제할 권한이 없습니다')
-            } else if(response === "FAILURE") {
+            } else if (response === "FAILURE") {
                 alert('평점 삭제에 실패하였습니다. 잠시 후 다시 시도해 주세요')
-            } else if(response === "NOT_LOGGED_IN") {
+            } else if (response === "NOT_LOGGED_IN") {
                 alert('평점 삭제에 실패하였습니다. 로그인 상태를 확인 후 다시 시도해 주세요')
             }
         };
@@ -452,14 +449,20 @@ document.addEventListener('click', (e) => {
                                     const $screenContainer = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.items > .item');
                                     $screenContainer.forEach((screen) => {
                                         $screens.append(screen);
+                                        const $theater = screen.querySelector(':scope > .theater');
+                                        $theater.onclick = () => {
+                                            const theater = {
+                                                thName: $theater.innerText.replace('\n', '')
+                                            };
+                                            sessionStorage.setItem('theater', JSON.stringify(theater));
+                                            window.location.pathname = '/theater/';
+                                        }
                                         const $timeTable = Array.from(screen.querySelectorAll(':scope > .screens > .screen-container > .time-table-container > .time-table'));
                                         $timeTable.forEach((time) => {
                                             time.onclick = (e) => {
                                                 e.preventDefault();
                                                 const $moTitle = document.querySelector('.movie-info > .title');
                                                 const $thName = screen.querySelector(':scope > .theater')
-                                                const xhr = new XMLHttpRequest();
-                                                const url = new URL('http://localhost:8080/ticket/');
                                                 // 파라미터 값들을 객체로 저장
                                                 const params = {
                                                     moTitle: $moTitle.innerText,
@@ -468,20 +471,7 @@ document.addEventListener('click', (e) => {
                                                     time: time.innerText.split('\n')[0]
                                                 };
                                                 sessionStorage.setItem('ticketParams', JSON.stringify(params));
-                                                xhr.onreadystatechange = () => {
-                                                    if (xhr.readyState !== XMLHttpRequest.DONE) {
-                                                        return;
-                                                    }
-                                                    if (xhr.status < 200 || xhr.status >= 300) {
-                                                        alert('오류 발생');
-                                                        return;
-                                                    }
-                                                    window.location.href = url.toString();
-                                                    Loading.hide();
-                                                };
-                                                xhr.open('GET', url.toString());
-                                                xhr.send();
-                                                Loading.show(0);
+                                                window.location.pathname = '/ticket/';
                                             }
                                         })
                                     })

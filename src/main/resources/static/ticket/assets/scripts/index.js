@@ -27,11 +27,17 @@ const params = {
 };
 
 {
+    const $contentBarRetry = document.querySelector('.content-bar-retry');
+    $contentBarRetry.onclick = () => {
+        sessionStorage.removeItem('ticketParams');
+    }
+}
+
+{
     const $infoWrapper = document.querySelector('.info-wrapper')
     const $first = $infoWrapper.querySelector(':scope > .item:nth-child(1) > a');
     const redirectUrl = window.location.pathname;
     if ($first.getAttribute('href') === '/user/login') {
-        console.log('hi');
         $first.setAttribute('href', `.././user/login?forward=${encodeURIComponent(redirectUrl)}`);
     }
 }

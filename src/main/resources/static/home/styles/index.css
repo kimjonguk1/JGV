@@ -272,6 +272,11 @@ main > .contents > .video_wrapper::after {
   width: 500px;
   height: 260px;
   border-radius: 0.5rem;
+  color: #ffffff;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 #theater > .background > .theater-list > .image-wrapper > .special.hidden {
   display: none;
@@ -295,6 +300,19 @@ main > .contents > .video_wrapper::after {
 #theater > .background > .theater-list > .image-wrapper > .special.CINE {
   background-image: url("https://img.cgv.co.kr/WebApp/contents/specialTheater/list1/16844577273360.png");
   background-size: cover;
+}
+#theater > .background > .theater-list > .image-wrapper > .special > .name {
+  font-size: 2rem;
+  font-weight: 600;
+}
+#theater > .background > .theater-list > .image-wrapper > .special > .tag {
+  font-size: 1.2rem;
+}
+#theater > .background > .theater-list > .image-wrapper > .special > .text {
+  padding: 0 0 0.5rem 1.5rem;
+}
+#theater > .background > .theater-list > .image-wrapper > .special > .text.tag {
+  padding-bottom: 1rem;
 }
 #theater > .background > .theater-list > .item-container {
   align-items: center;
