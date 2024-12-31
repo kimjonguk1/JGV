@@ -29,13 +29,13 @@ public class PageVo
         if (totalCount == 0) {
             this.displayMinPage = 1;
             this.displayMaxPage = 1;
+            this.offsetCount = 0;
         } else {
-            this.displayMinPage = ((requestPage - 1) / 10) * 10 + 1;
+            this.displayMinPage = ((this.requestPage - 1) / 10) * 10 + 1;
             this.displayMaxPage = Math.min(this.displayMinPage + 9, this.movableMaxPage);
+            this.offsetCount = (this.requestPage - 1) * this.countPerPage;
         }
 
-        // DB 조회에 사용할 오프셋 계산
-        this.offsetCount = (this.requestPage - 1) * this.countPerPage;
-
     }
+
 }
