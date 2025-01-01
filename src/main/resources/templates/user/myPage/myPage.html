@@ -31,7 +31,11 @@
             <span th:text="${session.user.getUsId()}" class="id"></span>
             <span th:text="${session.user.getUsNickName()}" class="nickname"></span>
             <div>
-            <button id="modify-nickname">
+            <button id="modify-nickname" onclick="window.open(
+                'http://localhost:8080/user/myPage/modifyNickname',
+                '회원 닉네임 재설정',
+                'width=600,height=800,left=200,top=200'
+            )">
                 <span>닉네임 변경</span>
                 <img src="/user/images/modify-nickname.png" alt="닉네임 변경">
             </button>
