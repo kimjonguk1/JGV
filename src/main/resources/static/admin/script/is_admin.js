@@ -72,49 +72,94 @@ $theaterCrawl.onclick = () => {
     }
 
     const url = new URL(location.href);
-    if ((url.searchParams.get('mode') ?? 'movie') === 'movie') {
+    const mode = url.searchParams.get('mode') ?? 'movie'
+    if (mode === 'movie') {
         $movieInfo.dispatchEvent(new Event('click'));
     } else {
         $theaterInfo.dispatchEvent(new Event('click'));
     }
 }
 
-
-
 {
     const $screenItem = Array.from(document.querySelectorAll('.screen-item'));
     $screenItem.forEach((screen) => {
+        const $theaterModify = Array.from(screen.querySelectorAll(':scope > .theater-modify'));
+        $theaterModify.forEach((mod) => {
+            mod.onclick = () => {
+                const $modal = screen.querySelector(':scope > .modal');
+                $modal.classList.remove('hidden');
+                const $button = $modal.querySelector(':scope > .head > .h1 > .button');
+                $button.onclick = () => {
+                    $modal.classList.add('hidden');
+                }
+                $modal.onsubmit = (e) => {
+                    e.preventDefault();
+                    const scNum = screen.querySelector(':scope > .scNum');
+                    const xhr = new XMLHttpRequest();
+                    const formData = new FormData();
+                    formData.append('scStartDate', $modal['modify'].value);
+                    formData.append('scNum', scNum.innerText.split(':')[1].trim());
+                    xhr.onreadystatechange = () => {
+                        if (xhr.readyState !== XMLHttpRequest.DONE) {
+                            return;
+                        }
+                        if (xhr.status < 200 || xhr.status >= 300) {
+                            alert('오류 발생');
+                            return;
+                        }
+                        const response = JSON.parse(xhr.responseText);
+                        if (response['result'] === 'success') {
+                            alert('상영정보를 성공적으로 수정했습니다.');
+                            $button.click();
+                            const $date = screen.querySelector(':scope > .date');
+                            $date.innerText = '상영일: ' + $modal['modify'].value;
+                        } else if (response['result'] === 'is_deleted') {
+                            alert('이미 삭제된 상영정보입니다.');
+                        } else {
+                            alert('수정 처리 중 문제가 발생했습니다.');
+                        }
+                    }
+                    xhr.open('PATCH', './is_admin');
+                    xhr.send(formData);
+                }
+            }
+        })
         const $theaterDelete = Array.from(screen.querySelectorAll(':scope > .theater-delete'));
         $theaterDelete.forEach((del) => {
             del.onclick = () => {
-                $theaterDelete.forEach((item) => {
-                    if (item === del) {
-                        const scNum = screen.querySelector(':scope > .scNum');
-                        const xhr = new XMLHttpRequest();
-                        const formData = new FormData();
-                        formData.append('scNum', scNum.innerText);
-                        xhr.onreadystatechange = () => {
-                            if (xhr.readyState !== XMLHttpRequest.DONE) {
-                                return;
-                            }
-                            if (xhr.status < 200 || xhr.status >= 300) {
-                                alert('오류 발생');
-                                return;
-                            }
-                            const response = JSON.parse(xhr.responseText);
-                            if (response['result'] === 'success') {
-                                alert('상영정보를 성공적으로 삭제했습니다.');
-                                screen.remove();
-                            } else if(response['result'] === 'is_deleted') {
-                                alert('이미 삭제된 상영정보입니다.');
-                            } else {
-                                alert('삭제 처리 중 문제가 발생했습니다.');
-                            }
-                        };
-                        xhr.open('DELETE', './is_admin');
-                        xhr.send(formData);
-                    }
-                })
+                const result = confirm("정말 삭제하시겠습니까?")
+                if (result) {
+                    $theaterDelete.forEach((item) => {
+                        if (item === del) {
+                            const scNum = screen.querySelector(':scope > .scNum');
+                            const xhr = new XMLHttpRequest();
+                            const formData = new FormData();
+                            formData.append('scNum', scNum.innerText.split(':')[1].trim());
+                            xhr.onreadystatechange = () => {
+                                if (xhr.readyState !== XMLHttpRequest.DONE) {
+                                    return;
+                                }
+                                if (xhr.status < 200 || xhr.status >= 300) {
+                                    alert('오류 발생');
+                                    return;
+                                }
+                                const response = JSON.parse(xhr.responseText);
+                                if (response['result'] === 'success') {
+                                    alert('상영정보를 성공적으로 삭제했습니다.');
+                                    screen.remove();
+                                } else if (response['result'] === 'is_deleted') {
+                                    alert('이미 삭제된 상영정보입니다.');
+                                } else {
+                                    alert('삭제 처리 중 문제가 발생했습니다.');
+                                }
+                            };
+                            xhr.open('DELETE', './is_admin');
+                            xhr.send(formData);
+                        }
+                    })
+                } else {
+                    return;
+                }
             }
         })
     })
@@ -162,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     })
     $modifyButton.forEach(button => {
-        button.addEventListener("click", function (){
+        button.addEventListener("click", function () {
             const movieNum = this.getAttribute("data-mo-num")
             window.location.href = `/admin/modify/${movieNum}`;
         })

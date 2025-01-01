@@ -95,7 +95,7 @@
                 <div class="body theater">
                     <div class="content">
                         <ul class="region-container"
-                            th:if="${movieVos == null}">
+                            th:if="${movieVos == null && dateVos == null}">
                             <li th:each="region : ${regions}"
                                 th:text="${region.getRegName() + '(' + region.getTheaterCount() + ')'}"
                                 class="region" data-id="region"></li>
@@ -104,16 +104,18 @@
                             th:if="${movieVos != null}"
                             th:each="vos : ${movieVos}">
                             <li th:each="region : ${regions}"
-                                th:if="${region.getRegName().equals(vos[0][4])}"
-                                th:text="${vos[0][4] + '(' + vos[0][3] + ')'}"
+                                th:text="${region.getRegName().equals(vos[0][4]) ? vos[0][4] + '(' + vos[0][3] + ')' : region.getRegName() + '(' + region.getTheaterCount() + ')'}"
                                 class="region" data-id="region"></li>
+                        </ul>
+                        <ul class="region-container"
+                            th:if="${dateVos != null}"
+                            th:each="vos : ${dateVos}">
                             <li th:each="region : ${regions}"
-                                th:if="${!region.getRegName().equals(vos[0][4])}"
-                                th:text="${region.getRegName() + '(' + region.getTheaterCount() + ')'}"
+                                th:text="${region.getRegName().equals(vos[2][0]) ? vos[2][0] + '(' + vos[2][1] + ')' : region.getRegName() + '(' + region.getTheaterCount() + ')'}"
                                 class="region" data-id="region"></li>
                         </ul>
                         <ul class="theater-container"
-                            th:if="${movieVos == null && theaterVos == null && moScVos == null}">
+                            th:if="${movieVos == null && dateVos == null && moScVos == null}">
                             <li class="theater"
                                 th:if="theaters != null"
                                 th:each="theater : ${theaters}">
@@ -808,7 +810,7 @@
                 <div th:if="${movieVos != null}"
                      th:each="vos : ${movieVos}"
                      class="movie-info">
-                    <a th:href="@{../movies/movieList/movieInfo/${vos[0][5]}}"
+                    <a th:href="@{'../movies/movieList/movieInfo/' + ${vos[0][5]}}"
                        th:text="${vos[0][0]}" class="title"></a>
                     <div class="stretch"></div>
                     <div class="unique-cinema-type"></div>
@@ -817,7 +819,7 @@
                 <div th:if="${Vos != null}"
                      th:each="vos : ${Vos}"
                      class="movie-info">
-                    <a th:href="@{../movies/movieList/movieInfo/${vos[0][5]}}"
+                    <a th:href="@{'../movies/movieList/movieInfo/' + ${vos[0][5]}}"
                        th:text="${vos[0][0]}" class="title"></a>
                     <div class="stretch"></div>
                     <div class="unique-cinema-type"></div>

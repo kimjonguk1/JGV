@@ -13,6 +13,8 @@ import dev.jwkim.jgv.vos.PageVo;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -121,6 +123,24 @@ public class AdminService {
 
     private int searchTotalCount(String screenFilter, String screenKeyword) {
         return this.adminMapper.searchArticleCountByTheater(screenFilter, screenKeyword);
+    }
+
+    public Result modifyScreen(int scNum, String scStartDate) {
+        ScreenEntity screen = this.adminMapper.selectScreenByScNum(scNum);
+        if (scNum < 1 || screen == null) {
+            return CommonResult.FAILURE;
+        }
+        if (screen.isDeleted()) {
+            return ScreenResult.IS_DELETED;
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        screen.setScNum(screen.getScNum());
+        screen.setScStartDate(LocalDateTime.parse(scStartDate, formatter));
+        screen.setMoNum(screen.getMoNum());
+        screen.setCiNum(screen.getCiNum());
+        return this.adminMapper.updateTheater(screen) > 0
+                ? CommonResult.SUCCESS
+                : CommonResult.FAILURE;
     }
 
     public Result deleteScreen(int scNum) {

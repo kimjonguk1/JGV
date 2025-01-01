@@ -87,6 +87,7 @@ public class TicketController {
             MovieVo[] movieVos = this.ticketService.selectAllMoviesByScStartDate(scStartDate);
             List<Object[]> vos = new ArrayList<>();
             SortedSet<String> thKeys = new TreeSet<>();
+            Set<String> keys = new LinkedHashSet<>();
             Map<String, Boolean> map = new HashMap<>();
             for (MovieVo vo : movieVos) {
                 switch (vo.getRaGrade()) {
@@ -99,8 +100,10 @@ public class TicketController {
                 String key = vo.getMoTitle() + "&&" + vo.getRaGrade();
                 map.put(key, true);
                 thKeys.add(vo.getThName());
+                keys.add(vo.getRegName());
+                keys.add(String.valueOf(vo.getTheaterCount()));
             }
-            vos.add(new Object[]{map, thKeys});
+            vos.add(new Object[]{map, thKeys, keys});
             modelAndView.addObject("dateVos", vos);
         }
         if (moTitle != null && thName != null && scStartDate == null) {

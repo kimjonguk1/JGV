@@ -630,6 +630,99 @@ button {
 
 .screen-item {
   padding-bottom: 1rem;
+  position: relative;
+}
+.screen-item > .modal {
+  top: 100%;
+  width: 650px;
+  background-color: #333;
+  position: absolute;
+  z-index: 1;
+}
+.screen-item > .modal.hidden {
+  display: none;
+}
+.screen-item > .modal > .head {
+  padding: 0.5rem;
+}
+.screen-item > .modal > .head > .h1 {
+  border: 0.1rem solid #707070;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+.screen-item > .modal > .head > .h1 > .text {
+  margin: 0.5rem 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f2f0e5;
+}
+.screen-item > .modal > .head > .h1 > .button {
+  margin: 1rem;
+  width: 18px;
+  height: 18px;
+  background: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_btn.png") no-repeat -72px -62px;
+  cursor: pointer;
+}
+.screen-item > .modal > .content {
+  margin: 0 0.5rem 0.5rem 0.5rem;
+  background-color: #f6f6f4;
+}
+.screen-item > .modal > .content > .center {
+  padding: 2rem;
+}
+.screen-item > .modal > .content > .center > .rating-content {
+  width: 100%;
+  color: #666;
+  border-collapse: collapse;
+}
+.screen-item > .modal > .content > .center > .rating-content > thead > tr {
+  background-color: #e2e2e0;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+.screen-item > .modal > .content > .center > .rating-content > thead > tr > td {
+  padding: 0.5rem;
+}
+.screen-item > .modal > .content > .center > .rating-content > thead > tr > td:nth-child(1) {
+  width: 10rem;
+}
+.screen-item > .modal > .content > .center > .rating-content > thead > tr > td:nth-last-child(1) {
+  border-left: 0.1rem solid #d6d6cc;
+}
+.screen-item > .modal > .content > .center > .rating-content > tbody > tr {
+  border-bottom: 0.1rem solid #d6d6cc;
+}
+.screen-item > .modal > .content > .center > .rating-content > tbody > tr > th > .container {
+  padding: 0.5rem;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+.screen-item > .modal > .content > .center > .rating-content > tbody > tr > th:nth-last-child(1) {
+  border-left: 0.1rem solid #d6d6cc;
+}
+.screen-item > .modal > .content > .center > .rating-content > tbody > tr > th > label > input {
+  padding: 1rem 0.5rem;
+}
+.screen-item > .modal > .content > .center > .modify {
+  left: 50%;
+  position: relative;
+  margin-top: 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  background-color: #2196f3;
+  color: #ffffff;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  justify-content: center;
 }
 
 /*# sourceMappingURL=is_admin.css.map */
