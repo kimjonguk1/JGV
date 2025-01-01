@@ -21,6 +21,7 @@
       border-top-right-radius: 0.5rem;
     }
   }
+
   > #login-form {
     @include flex(row, center, flex-start);
     height: 19.5rem;
@@ -55,6 +56,7 @@
           cursor: pointer;
         }
       }
+
       > .--obj-label {
         @include flex(column, stretch, center);
         width: 22rem;
@@ -77,6 +79,7 @@
           position: relative;
         }
       }
+
       > .user-container {
         @include flex(row, center, center, 3rem);
 
@@ -91,22 +94,28 @@
             }
           }
         }
+
         > span {
           color: #666666;
           font-weight: 500;
         }
       }
     }
+
     > .ad {
       width: 20rem;
       height: 100%;
-      > img {
-        width: 100%;
-        height: 97%;
+
+      > a {
+        > img {
+          width: 100%;
+          height: 97%;
+        }
       }
     }
   }
 }
+
 .register-link {
   @include flex(row, center, center, 1rem);
   border: 1px solid #666666;

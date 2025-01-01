@@ -176,7 +176,7 @@
   width: 20rem;
   height: 100%;
 }
-#main > #login-form > .ad > img {
+#main > #login-form > .ad > a > img {
   width: 100%;
   height: 97%;
 }

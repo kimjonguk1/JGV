@@ -395,6 +395,7 @@
 #passwordCheck > .button-container > .complete {
   width: 3.5rem;
   height: 27px;
+  cursor: pointer;
   font-size: 0.8rem;
   font-weight: 600;
   background-color: #FB4357;
@@ -404,6 +405,7 @@
   width: 7rem;
   height: 27px;
   border: 2px solid #7b7b7b;
+  cursor: pointer;
   font-size: 0.8rem;
   font-weight: 600;
   background-color: transparent;
@@ -1094,6 +1096,29 @@ body > .-spring {
 #myPage-main > .profile-container > .user-info > .-spring {
   flex-grow: 1;
   flex-shrink: 1;
+}
+#myPage-main > .profile-container > .user-info > div {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: flex-end;
+  height: 2rem;
+}
+#myPage-main > .profile-container > .user-info > div > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#myPage-main > .profile-container > .user-info > div > button {
+  font-size: 0.775rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+#myPage-main > .profile-container > .user-info > div > button:hover {
+  text-decoration: underline;
+}
+#myPage-main > .profile-container > .user-info > div > button > img {
+  width: 1rem;
 }
 #myPage-main > .profile-container > .user-info > .name {
   font-size: 2.5rem;

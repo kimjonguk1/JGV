@@ -76,7 +76,7 @@
                 <label class="--obj-label" style="
 display: flex; flex-direction: row; align-items: center; justify-content: flex-start;">
                     <span th:text="${session.user.getUsNickName()}"></span>
-                    <button id="changeNickname" class="modify" type="button">정보 수정
+                    <button style="cursor: pointer;" id="changeNickname" class="modify" type="button">정보 수정
                         &gt;</button>
                 </label>
             </td>
@@ -127,7 +127,8 @@ display: flex; flex-direction: row; align-items: center; justify-content: flex-s
             </td>
             <td>
                 <label class="--obj-label" >
-                    <button id="change-password" class="modify" type="button">정보 수정
+                    <button style="cursor: pointer;" id="change-password" class="modify"
+                            type="button">정보 수정
                         &gt;</button>
                 </label>
             </td>

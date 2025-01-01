@@ -27,13 +27,15 @@
                     <th>회원번호</th>
                     <td th:text="${session.user.getUsNum()}"></td>
                     <th>생성일</th>
-                    <td th:text="${session.user.getUsCreatedAt()}"></td>
+                    <td
+                            th:text="${#temporals.format(session.user.getUsCreatedAt(), 'yyyy-MM-dd')}"></td>
                 </tr>
                 <tr>
                     <th>회원연락처</th>
                     <td th:text="${session.user.getUsContact()}"></td>
                     <th>성별</th>
-                    <td th:text="${session.user.getUsGender()}"></td>
+                    <td th:if="${session.user.getUsGender() == 'M'}" th:text="남"></td>
+                    <td th:if="${session.user.getUsGender() == 'F'}" th:text="여"></td>
                 </tr>
                 </tbody>
             </table>

@@ -34,7 +34,7 @@ $recoverPassword.onsubmit = (e) => {
 
         if (response['result'] === 'success') {
             alert('새로운 비밀번호가 설정 되었습니다. 확인을 클릭하시면 로그인 페이지로 이동합니다.');
-            return location.href = `/user/login`;
+            return window.close();
 
         }
         else if (response['result'] === 'failure') {
