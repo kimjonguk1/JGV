@@ -6,6 +6,8 @@
 
   > .title-container {
     padding-top: 1rem;
+
+
   }
 
   > .my-reservation {
@@ -52,6 +54,9 @@
           > .movie-title {
             font-size: 0.8rem;
             font-weight: 500;
+            > a{
+              color: #222222;
+            }
           }
 
           > .cinema, .date, .seat {
@@ -65,8 +70,7 @@
           }
 
         }
-
-        > img {
+        > a > img {
           width: 55px;
           height: 70px;
         }
@@ -86,6 +90,41 @@
       }
     }
   }
+  > .paging {
+    @include flex(row, center, center, 0.6rem);
+    width: 760px;
+    border: 1px solid #666666;
+
+    > .no-reservation {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 40px;
+      .no-review-text {
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+    > .paging {
+      display: flex;
+      justify-content: center;
+
+      a {
+        padding: 5px 5px;
+        margin: 0 2px;
+        cursor: pointer;
+        font-size: 14px;
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+
+        &.active {
+          color: #ff5a5a;
+        }
+      }
+    }
+  }
+
 }
 
 .review-title-container {

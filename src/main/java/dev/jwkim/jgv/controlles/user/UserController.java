@@ -177,7 +177,7 @@ public class UserController {
         String formattedCurrentDate = currentDate.toString();
         // 예약 정보 가져오기
         UserEntity users = (UserEntity) session.getAttribute("user");
-        Map<Set<String>, List<String>> reservations = this.userService.reservationInformation(users.getUsNum()); // 예약 정보
+        Pair<PageVo, Map<Set<String>, List<String>>> reservations = this.userService.reservationInformation(users.getUsNum(), page); // 예약 정보
         List<List<String>> cancelReservations = this.userService.selectCancelPaymentByUsNum(users.getUsNum()); // 취소 정보
 
 
@@ -190,7 +190,8 @@ public class UserController {
         modelAndView.addObject("session", session);
         modelAndView.addObject("fragment", fragment);
         modelAndView.addObject("currentDate", formattedCurrentDate); // 현재 날짜 전달
-        modelAndView.addObject("reservations", reservations);
+        modelAndView.addObject("PageReservations", reservations.getLeft());
+        modelAndView.addObject("reservations", reservations.getRight());
         modelAndView.addObject("cancelReservations", cancelReservations);
         modelAndView.setViewName("user/myPage/myPage");
 
