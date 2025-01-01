@@ -308,8 +308,66 @@
         <collection property="actorImages" ofType="java.lang.String">
             <result column="cImgUrl"/>
         </collection>
+
+        <collection property="movieCharacters" ofType="dev.jwkim.jgv.DTO.AllMovieInfoDTO$MovieCharacterDTO">
+            <result column="chNum" property="chNum"/> <!-- chNum 매핑 -->
+            <result column="chName" property="chName"/> <!-- chName 매핑 -->
+        </collection>
     </resultMap>
 
+
+    <!-- 영화 정보 수정 -->
+
+    <update id="modifyMovie" parameterType="dev.jwkim.jgv.DTO.AllMovieInfoDTO">
+        UPDATE jgv.movie
+        SET
+            mo_date = #{moDate},
+            mo_time = #{moTile},
+            mo_plot = #{moPlot},
+            ra_num = (SELECT ra_num FROM jgv.rating WHERE ra_grade = #{raGrade})
+        WHERE mo_num = #{moNum}
+    </update>
+
+    <delete id="deleteGenresByMovieId" parameterType="int">
+        DELETE FROM jgv.movie_genere WHERE mo_num = #{movieNum}
+    </delete>
+
+
+    <insert id="addGenreToMovie" parameterType="map">
+        INSERT INTO jgv.movie_genere (mo_num, ge_num)
+        SELECT #{movieNum}, ge_num FROM jgv.genre WHERE ge_name = #{genre}
+    </insert>
+
+
+    <delete id="deleteActorsByMovieId" parameterType="int">
+        DELETE FROM jgv.movie_charactor WHERE mo_num = #{movieNum}
+    </delete>
+
+
+
+    <delete id="deleteCountriesByMovieId" parameterType="int">
+        DELETE FROM jgv.movie_country WHERE mo_num = #{movieNum}
+    </delete>
+
+
+    <insert id="addCountryToMovie" parameterType="map">
+        INSERT INTO jgv.movie_country (mo_num, co_num)
+        SELECT #{movieNum}, co_num FROM jgv.country WHERE co_name = #{country}
+    </insert>
+
+
+    <update id="updateMovieRating" parameterType="map">
+        UPDATE jgv.movie
+        SET ra_num = (SELECT ra_num FROM jgv.rating WHERE ra_grade = #{rating})
+        WHERE mo_num = #{movieNum}
+    </update>
+
+
+    <!-- 새 영화-인물 관계 추가 -->
+    <insert id="addActorToMovie">
+        INSERT INTO jgv.movie_charactor (mo_num, ch_num)
+        VALUES (#{movieNum}, #{chNum})
+    </insert>
 
 
 

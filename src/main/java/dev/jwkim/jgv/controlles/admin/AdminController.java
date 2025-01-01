@@ -149,6 +149,27 @@ public class AdminController {
         return ResponseEntity.ok(movie);
     }
 
+    // 클라이언트가 보내는 데이터의 형식은 consumes, 서버가 응답을로 반환할 데이터의 형식은 produces
+    @RequestMapping(value = "/api/{movieNum}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public MovieDeleteModifyResult modifyMovie(@PathVariable("movieNum") int movieNum, @RequestBody AllMovieInfoDTO movieDTO, HttpSession session) {
+        UserEntity loggedInUser = (UserEntity) session.getAttribute("user");
+
+        // 로그인 상태 확인
+        if (loggedInUser == null) {
+            return MovieDeleteModifyResult.NOT_LOGGED_IN;
+        }
+        System.out.println("Received movieInfo: " + movieDTO);
+        // 영화 수정 로직
+        boolean isUpdated = movieService.updateMovie(movieNum, movieDTO);
+        if(isUpdated) {
+            return MovieDeleteModifyResult.SUCCESS;
+        } else {
+            return MovieDeleteModifyResult.FAILURE;
+        }
+    }
+
+
   
     @RequestMapping(value = "/is_admin", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody

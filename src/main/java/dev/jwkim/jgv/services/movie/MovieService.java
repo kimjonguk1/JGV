@@ -1,9 +1,6 @@
 package dev.jwkim.jgv.services.movie;
 
-import dev.jwkim.jgv.DTO.AllMovieInfoDTO;
-import dev.jwkim.jgv.DTO.MovieDeleteModifyDTO;
-import dev.jwkim.jgv.DTO.Movie_ImageDTO;
-import dev.jwkim.jgv.DTO.Movie_InfoDTO;
+import dev.jwkim.jgv.DTO.*;
 import dev.jwkim.jgv.entities.movie.*;
 import dev.jwkim.jgv.mappers.movie.*;
 import org.json.JSONArray;
@@ -408,5 +405,42 @@ public class MovieService {
 
     public AllMovieInfoDTO getMoviesById(int movieNum) {
         return this.movieMapper.getMovieById(movieNum);
+    }
+
+    //영화 수정
+    public boolean updateMovie(int movieNum, AllMovieInfoDTO movieInfo) {
+        int updated = movieMapper.modifyMovie(movieInfo);
+        System.out.println(movieNum);
+        System.out.println("movieInfo : " + movieInfo);
+        if (updated == 0) {
+            return false;
+        }
+
+
+        // 영화 장르 수정
+        movieMapper.deleteGenresByMovieId(movieNum);
+        for (String genre : movieInfo.getGenres()) {
+            movieMapper.addGenreToMovie(movieNum, genre);
+        }
+
+        // 영화 인물 수정
+        movieMapper.deleteActorsByMovieId(movieNum); // 기존 관계 삭제
+        for (AllMovieInfoDTO.MovieCharacterDTO character : movieInfo.getMovieCharacters()) {
+            if (!character.isDelete()) {
+                // 삭제 플래그가 false인 경우에만 추가
+                movieMapper.addActorToMovie(movieNum, character.getChNum());
+            }
+        }
+
+        // 영화 국가 수정
+        movieMapper.deleteCountriesByMovieId(movieNum);
+        for (String country : movieInfo.getCountries()) {
+            movieMapper.addCountryToMovie(movieNum, country);
+        }
+
+        // 영화 관람 등급 수정
+        movieMapper.updateMovieRating(movieNum, movieInfo.getRaGrade()); // 관람 등급 수정
+
+        return true;
     }
 }

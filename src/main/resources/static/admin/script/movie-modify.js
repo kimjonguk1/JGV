@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (xhr.status >= 200 && xhr.status < 300) {
                 const data = JSON.parse(xhr.responseText);
-                console.log(data)
                 populateMovieForm(data);
             } else {
                 alert("영화 정보를 불러오는데 실패하였습니다. 다시 시도해 주세요.");
@@ -42,155 +41,115 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("movie-genre").value = data.genres || "";
         document.getElementById("movie-country").value = data.countries || "";
 
-        //영화 이미지
-        renderMovieImage(data.mimgUrl);
-        //영화 케릭터 정보 및 이미지
-        renderCharacters(data.actors || [], data.actorImages || []);
+        console.log(data);
+
+        // 영화 포스터 표시
+        renderMoviePoster(data.mimgUrl);
+
+        // 영화 캐릭터 정보 표시
+        renderCharacters(data.movieCharacters || [], data.actorImages || []);
     }
 
-
-    // 영화 캐릭터 정보를 렌더링하는 함수
-    function renderMovieImage(imageUrl) {
+    // 영화 포스터를 표시하는 함수
+    function renderMoviePoster(imageUrl) {
         const container = document.getElementById("movie-image");
         container.innerHTML = `
-            <img src="${imageUrl}" alt="현재 영화 이미지" style="width: 150px; height: auto; display: block; margin-bottom: 10px;">
-            <label>
-                포스터 수정:
-                <input type="file" id="movie-image-input" name="movieImage">
-            </label>
+            <img src="${imageUrl}" alt="영화 포스터" style="width: 150px; height: auto; display: block; margin-bottom: 10px;">
         `;
-
-        const input = document.getElementById("movie-image-input");
-        input.addEventListener("change", (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    container.querySelector("img").src = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
     }
 
-    // 영화 캐릭터 정보를 렌더링하는 함수
+    // 영화 캐릭터 정보를 표시하는 함수
     function renderCharacters(characters, actorImages) {
         const container = document.getElementById("movie-characters");
-        const addButton = document.getElementById("add-character-button");
 
-        // 버튼을 제외한 기존 캐릭터 폼 초기화
-        Array.from(container.children).forEach((child) => {
-            if (child !== addButton) child.remove();
-        });
+        // 기존 캐릭터 폼 초기화
+        container.innerHTML = "";
 
         // 캐릭터 추가
         characters.forEach((character, index) => {
-            addCharacterEntry(character, actorImages[index] || "");
+            addCharacterEntry(character.chName, character.delete, character.chNum, actorImages[index] || "");
         });
     }
 
-    const addButton = document.getElementById("add-character-button");
-    if (addButton) {
-        addButton.addEventListener("click", () => addCharacterEntry());
-    } else {
-        console.error("Add-character button not found in the DOM.");
-    }
-
-    function addCharacterEntry(characterName = "", imageUrl = "") {
+    function addCharacterEntry(characterName = "", deleteFlag = false, chNum, imageUrl = "") {
         const container = document.getElementById("movie-characters");
-        const addButton = document.getElementById("add-character-button");
-        if (!container || !addButton) {
-            console.error("Container or add-character button not found.");
-            return;
-        }
 
         const charDiv = document.createElement("div");
         charDiv.classList.add("character-entry");
 
         charDiv.innerHTML = `
-        <label>
-            인물 이름 수정:
-            <input type="text" value="${characterName}" name="characterName">
-        </label>
-        <img src="${imageUrl}" alt="현재 인물 이미지" style="width: 100px; height: auto; display: block; margin-bottom: 10px;">
-        <label>
-            인물 이미지 수정:
-            <input type="file" class="character-image-input" name="characterImage">
-        </label>
-        <button type="button" class="delete-character-button">삭제</button>
-    `;
+            <label>
+                인물 이름 수정:
+                <input type="text" value="${characterName}" name="characterName">
+            </label>
+            <img src="${imageUrl}" alt="인물 이미지" style="width: 100px; height: auto; display: block; margin-bottom: 10px;">
+            <label>
+                삭제:
+                <input type="checkbox" name="deleteCharacter">
+            </label>
+            <input type="hidden" name="characterNum" value="${chNum}">
+        `;
 
-        // "인물 추가" 버튼 앞에 새 항목 삽입
-        container.insertBefore(charDiv, addButton);
-
-        // 이미지 미리보기 업데이트
-        const input = charDiv.querySelector(".character-image-input");
-        input.addEventListener("change", (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    charDiv.querySelector("img").src = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // 삭제 버튼 동작 추가
-        const deleteButton = charDiv.querySelector(".delete-character-button");
-        deleteButton.addEventListener("click", () => charDiv.remove());
+        container.appendChild(charDiv);
     }
-
-
 
     // 폼 제출을 처리하는 함수
     function handleFormSubmit(e, movieNum) {
         e.preventDefault();
-        const form = e.target;
-        const formData = new FormData();
 
-        formData.append("movieRuntime", document.getElementById("movie-runtime").value);
-        formData.append("movieDescription", document.getElementById("movie-description").value);
-        formData.append("movieRating", document.getElementById("movie-rating").value);
-
-        // 장르와 제작국가는 쉼표로 구분된 문자열을 배열로 변환하여 추가
-        const genres = document.getElementById("movie-genre").value.split(",").map(item => item.trim());
-        const countries = document.getElementById("movie-country").value.split(",").map(item => item.trim());
-        formData.append("movieGenres", JSON.stringify(genres));
-        formData.append("movieCountries", JSON.stringify(countries));
-
-        // 영화 포스터 추가 (선택된 경우만)
-        const posterInput = document.querySelector("#movie-image input[type='file']");
-        if (posterInput.files.length > 0) {
-            formData.append("moviePoster", posterInput.files[0]);
-        }
+        const formData = {
+            moTile: document.getElementById("movie-runtime").value,
+            moPlot: document.getElementById("movie-description").value,
+            raGrade: document.getElementById("movie-rating").value,
+            genres: document.getElementById("movie-genre").value.split(",").map(item => item.trim()),
+            countries: document.getElementById("movie-country").value.split(",").map(item => item.trim()),
+            actors: []
+        };
 
         // 캐릭터 데이터 추가
         const characterContainers = document.querySelectorAll("#movie-characters .character-entry");
-        characterContainers.forEach((container, index) => {
+        characterContainers.forEach(container => {
             const name = container.querySelector("input[name='characterName']").value;
-            const imageInput = container.querySelector("input[name='characterImage']");
+            const deleteFlag = container.querySelector("input[name='deleteCharacter']").checked;
+            const chNum = parseInt(container.querySelector("input[name='characterNum']").value, 10);
 
-            formData.append(`movieCharacters[${index}][name]`, name);
-
-            if (imageInput.files.length > 0) {
-                formData.append(`movieCharacters[${index}][image]`, imageInput.files[0]);
-            }
+            formData.actors.push({
+                chNum: chNum,
+                chName: name,
+                delete: deleteFlag
+            });
         });
 
         // 데이터 전송
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
-            if(xhr.readyState !== XMLHttpRequest.DONE) {
+            if (xhr.readyState !== XMLHttpRequest.DONE) {
                 return;
             }
-            if(xhr.status < 200 || xhr.status >= 300) {
-                alert('영화 정보 수정에 실패하였습니다. 다시 시도해 주세요')
+            if (xhr.status < 200 || xhr.status >= 300) {
+                alert('영화 정보 수정에 실패하였습니다. 다시 시도해 주세요');
                 return;
             }
-            
+            const response = JSON.parse(xhr.responseText);
+            console.log(response)
+            if(response === 'SUCCESS') {
+                alert('영화 정보가 성공적으로 수정되었습니다.')
+                window.location.href = '/admin/is_admin'
+            } else if(response === 'FAILURE') {
+                alert('영화 정보 수정에 실패하였습니다.')
+                return;
+            } else if(response === 'NOT_LOGGED_IN') {
+                alert('로그인 세션이 만료되었습니다.')
+                window.location.href = '/user/login'
+            } else {
+                alert('서버가 알 수 없는 응답을 반환하였습니다')
+                return;
+            }
         };
+
         xhr.open('PUT', `/admin/api/${movieNum}`);
-        xhr.send(formData);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        console.log(JSON.stringify(formData));
+        xhr.send(JSON.stringify(formData));
     }
 });
