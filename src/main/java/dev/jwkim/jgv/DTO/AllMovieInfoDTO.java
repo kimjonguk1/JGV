@@ -34,7 +34,51 @@ public class AllMovieInfoDTO {
     private String coName;
 
     private List<String> genres;
-    private List<String> actors;
     private List<String> countries;
     private List<String> actorImages;
+
+    // 수정: actors를 MovieCharacterDTO 리스트로 변경
+    private List<MovieCharacterDTO> actors;
+
+    private List<MovieCharacterDTO> movieCharacters;
+
+    @Getter
+    @Setter
+    public static class MovieCharacterDTO {
+        private int chNum;
+        private String chName;
+        private boolean delete;
+    }
+
+    @Override
+    public String toString() {
+        return "AllMovieInfoDTO{" +
+                "moNum=" + moNum +
+                ", raNum=" + raNum +
+                ", geNum=" + geNum +
+                ", mImgNum=" + mImgNum +
+                ", chNum=" + chNum +
+                ", cImgNum=" + cImgNum +
+                ", coNum=" + coNum +
+                ", moTitle='" + moTitle + '\'' +
+                ", moDate=" + moDate +
+                ", moTile=" + moTile +
+                ", moPlot='" + moPlot + '\'' +
+                ", moBookingRate=" + moBookingRate +
+                ", moEnding=" + moEnding +
+                ", raGrade='" + raGrade + '\'' +
+                ", geName='" + geName + '\'' +
+                ", mImgUrl='" + mImgUrl + '\'' +
+                ", chName='" + chName + '\'' +
+                ", chJob='" + chJob + '\'' +
+                ", chBirth=" + chBirth +
+                ", chNation='" + chNation + '\'' +
+                ", cImgUrl='" + cImgUrl + '\'' +
+                ", coName='" + coName + '\'' +
+                ", genres=" + genres +
+                ", actors=" + actors +
+                ", countries=" + countries +
+                ", actorImages=" + actorImages +
+                '}';
+    }
 }

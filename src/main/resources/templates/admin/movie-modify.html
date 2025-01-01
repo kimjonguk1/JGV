@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JGV - 영화 수정</title>
-    <!--    <link rel="stylesheet" href="/admin/styles/movie-modify.scss">-->
     <link rel="stylesheet" th:href="@{'./assets/styles/index.css'}" type="text/css">
     <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
-    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}"
-          type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}" type="text/css">
     <script defer src="/admin/script/movie-modify.js"></script>
     <script defer th:src="@{'../../fragments/assets/scripts/common.js'}"></script>
     <link rel="shortcut icon" href="https://img.cgv.co.kr/theater_img/favicon.ico" type="image/x-icon">
@@ -61,10 +59,19 @@
         <div id="movie-image">
         </div>
         <div id="movie-characters">
-            <!-- 인물 수정 폼 추가 -->
+            <h3>영화 인물</h3>
+            <div class="character-entry">
+                <label>
+                    이름:
+                    <input type="text" name="characterName" value="기존 인물 이름">
+                </label>
+                <label>
+                    삭제:
+                    <input type="checkbox" name="deleteCharacter">
+                </label>
+            </div>
             <button type="button" id="add-character-button">인물 추가</button>
         </div>
-
         <button type="button" id="cancel-button">취소</button>
         <button type="submit" id="save-button">저장</button>
     </form>
