@@ -98,20 +98,44 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String postLogin(UserEntity user, HttpSession session) {
+    public String postLogin(UserEntity user, HttpSession session, HttpServletRequest request) {
+        // 로그인 시도 시 IP 정보
+        String currentIp = request.getRemoteAddr();
+
+        // 로그인 시도 결과를 담을 변수
         Result result = this.userService.login(user);
         JSONObject response = new JSONObject();
 
         // 로그인 성공 시
         if (result == CommonResult.SUCCESS) {
+            // 기존 세션의 사용자 정보와 IP 체크
+            if (session.getAttribute("user") != null) {
+                UserEntity sessionUser = (UserEntity) session.getAttribute("user");
+                String storedIp = (String) session.getAttribute("ip");
+
+                // 만약 기존 세션의 IP와 현재 요청의 IP가 다르면
+                if (!storedIp.equals(currentIp)) {
+                    // 기존 세션을 무효화
+                    session.invalidate();
+
+                    // 강제 로그아웃 메시지 추가
+                    response.put("message", "다른 IP에서 로그인 시도가 감지되었습니다. 로그아웃되었습니다.");
+                    response.put("logout", true);
+                }
+            }
+
+            // 새 세션 생성 및 사용자 정보 저장
+            session = request.getSession(true);  // 새 세션을 생성
             session.setAttribute("user", user);
+            session.setAttribute("ip", currentIp);  // 현재 IP를 세션에 저장
+
+            // 로그인 성공 시 사용자 번호 반환
             response.put("MemberNum", user.getUsNum());
-            // 최종적으로 결정된 redirect 값을 JSON 방식으로 보냄
         }
+
         response.put(Result.NAME, result.nameToLower());
         return response.toString();
     }
-
 
 
 // endregion
