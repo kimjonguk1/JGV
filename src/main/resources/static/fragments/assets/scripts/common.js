@@ -44,3 +44,21 @@ if ($logout) {
         xhr.send();
     };
 }
+
+const $scrollNav = document.getElementById('scroll-nav');
+$scrollNav.style.display = 'none';
+
+window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const triggerPoint = 300;
+
+    if (scrollY >= triggerPoint) {
+        $scrollNav.style.display = 'flex'; // 300px 이상 스크롤 시 표시
+        $scrollNav.style.position = 'fixed'; // 상단에 고정
+        $scrollNav.style.top = '0'; // 화면 상단에 위치
+        $scrollNav.style.zIndex = '999';
+    } else {
+        $scrollNav.style.display = 'none'; // 300px 이하 스크롤 시 숨김
+        $scrollNav.style.position = 'relative'; // 원래 위치로 복귀
+    }
+});

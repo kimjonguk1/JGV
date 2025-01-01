@@ -36,6 +36,25 @@ body {
       height: 5rem;
       border-bottom: 1px solid #e1e1e1;
 
+      > div {
+        @include flex(column, flex-end, flex-end);
+        height: 2rem;
+
+        > button {
+          font-size: 0.775rem;
+          font-weight: 500;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+
+          > img {
+            width: 1rem;
+          }
+        }
+      }
+
       > .name {
         font-size: 2.5rem;
         font-weight: 500;

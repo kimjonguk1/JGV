@@ -30,6 +30,12 @@
             <span th:text="${session.user.getUsName() + '님'}" class="name"></span>
             <span th:text="${session.user.getUsId()}" class="id"></span>
             <span th:text="${session.user.getUsNickName()}" class="nickname"></span>
+            <div>
+            <button id="modify-nickname">
+                <span>닉네임 변경</span>
+                <img src="/user/images/modify-nickname.png" alt="닉네임 변경">
+            </button>
+            </div>
         </div>
     </div>
     <div class="main">

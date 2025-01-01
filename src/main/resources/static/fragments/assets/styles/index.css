@@ -216,6 +216,105 @@ body > .frame {
   text-decoration: none;
 }
 
+#scroll-nav {
+  height: 50px;
+  max-height: 50px;
+  min-height: 50px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  height: 4rem;
+  max-height: 4rem;
+  min-height: 4rem;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: center;
+  background: linear-gradient(to right, #D84457, #E95442, #E96330);
+  position: fixed;
+}
+#scroll-nav > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#scroll-nav > .nav-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+  width: 980px;
+  max-width: 980px;
+  min-width: 980px;
+}
+#scroll-nav > .nav-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#scroll-nav > .nav-wrapper > .search-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: center;
+  border-right: 0.0625rem solid #666666;
+  border-left: 0.0625rem solid #666666;
+  padding: 0 0.6rem;
+}
+#scroll-nav > .nav-wrapper > .search-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#scroll-nav > .nav-wrapper > .search-wrapper > .search-form > .search {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+#scroll-nav > .nav-wrapper > .search-wrapper > .search-form > .search > .keyword {
+  height: 24px;
+  width: 200px;
+  border: none;
+  line-height: 24px;
+  font-size: 16px;
+  font-weight: 500;
+  outline: none;
+}
+#scroll-nav > .nav-wrapper > .search-wrapper > .search-form > .search > .keyword::placeholder {
+  color: #ffffff;
+  font-weight: 600;
+}
+#scroll-nav > .nav-wrapper > .search-wrapper > .search-form > .search > button {
+  background-color: transparent;
+  border: 0.0625rem solid transparent;
+  padding: 0.2rem;
+  position: absolute;
+}
+#scroll-nav > .nav-wrapper > .search-wrapper > .search-form > .search > button > img {
+  width: 1.8rem;
+  color: #ffffff;
+}
+#scroll-nav > .nav-wrapper > .nav-menu {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  justify-content: flex-start;
+}
+#scroll-nav > .nav-wrapper > .nav-menu > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#scroll-nav > .nav-wrapper > .nav-menu > .item > h2 {
+  font-size: 16px;
+  white-space: nowrap;
+}
+#scroll-nav > .nav-wrapper > .nav-menu > .item > h2 > a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
 #footer {
   height: 432px;
   max-height: 432px;

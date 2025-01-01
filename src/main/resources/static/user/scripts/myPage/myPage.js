@@ -148,3 +148,14 @@ function handleDeleteReview(reviewId) {
     xhr.open('PATCH', `/reviews/${reviewId}`);
     xhr.send();
 }
+
+{
+    const $modifyNickname = document.getElementById('modify-nickname');
+    $modifyNickname.onclick = () => {
+        window.open(
+            "http://localhost:8080/user/myPage/modifyNickname",
+            "회원 닉네임 재설정",
+            "width=600,height=800,left=200,top=200"
+        );
+    }
+}
