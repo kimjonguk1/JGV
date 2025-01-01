@@ -337,6 +337,7 @@ button {
 
             > ul > li {
               padding-bottom: 1rem;
+
               > div {
                 padding-bottom: 1rem;
 
@@ -542,4 +543,124 @@ button {
 
 .screen-item {
   padding-bottom: 1rem;
+  position: relative;
+
+  > .modal {
+    top: 100%;
+    width: 650px;
+    background-color: #333;
+    position: absolute;
+    z-index: 1;
+
+    &.hidden {
+      display: none;
+    }
+
+    > .head {
+      padding: 0.5rem;
+
+      > .h1 {
+        border: 0.1rem solid #707070;
+
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+
+        > .text {
+          margin: 0.5rem 1rem;
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #f2f0e5;
+        }
+
+        > .button {
+          margin: 1rem;
+          width: 18px;
+          height: 18px;
+          background: url("https://img.cgv.co.kr/R2014/images/sprite/sprite_btn.png") no-repeat -72px -62px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    > .content {
+      margin: 0 0.5rem 0.5rem 0.5rem;
+      background-color: #f6f6f4;
+
+      > .center {
+        padding: 2rem;
+
+        > .rating-content {
+          width: 100%;
+          color: #666;
+          border-collapse: collapse;
+
+          > thead > tr {
+            background-color: #e2e2e0;
+            font-weight: 600;
+            font-size: 0.8rem;
+
+            > td {
+              padding: 0.5rem;
+
+              &:nth-child(1) {
+                width: 10rem;
+              }
+
+              &:nth-last-child(1) {
+                border-left: 0.1rem solid #d6d6cc;
+              }
+            }
+          }
+
+          > tbody {
+            > tr {
+              border-bottom: 0.1rem solid #d6d6cc;
+
+              > th {
+                > .container {
+                  padding: 0.5rem;
+
+                  align-items: center;
+                  display: flex;
+                  flex-direction: row;
+                  gap: 0.5rem;
+                }
+
+                &:nth-last-child(1) {
+                  border-left: 0.1rem solid #d6d6cc;
+                }
+
+                > label {
+                  > input {
+                    padding: 1rem 0.5rem;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        > .modify {
+          left: 50%;
+          position: relative;
+          margin-top: 1rem;
+          border-radius: 0.25rem;
+          cursor: pointer;
+          padding: 0.5rem 0.75rem;
+          text-align: center;
+          text-decoration: none;
+          user-select: none;
+          background-color: #2196f3;
+          color: #ffffff;
+
+          align-items: center;
+          display: flex;
+          flex-direction: row;
+          gap: 0.25rem;
+          justify-content: center;
+        }
+      }
+    }
+  }
 }

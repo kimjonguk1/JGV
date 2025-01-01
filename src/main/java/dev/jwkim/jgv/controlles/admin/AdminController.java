@@ -171,6 +171,16 @@ public class AdminController {
 
 
   
+    @RequestMapping(value = "/is_admin", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String modifyIsAdmin(@RequestParam(value = "scNum", required = false, defaultValue = "0") int scNum,
+                                @RequestParam(value = "scStartDate", required = false) String scStartDate) {
+        Result result = this.adminService.modifyScreen(scNum, scStartDate);
+        JSONObject response = new JSONObject();
+        response.put(Result.NAME, result.nameToLower());
+        return response.toString();
+    }
+
     @RequestMapping(value = "/is_admin", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String deleteIsAdmin(@RequestParam(value = "scNum", required = false, defaultValue = "0") int scNum) {

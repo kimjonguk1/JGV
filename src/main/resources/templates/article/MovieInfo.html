@@ -211,7 +211,7 @@
                     <li class="item"
                         th:if="${screenVos != null}"
                         th:each="screen : ${screenVos}">
-                        <a href="#" th:utext="${screen.key[7].substring(0, 3)} + '<br>' + ${screen.key[7].substring(3)}" class="theater"></a>
+                        <a th:href="@{../../../theater/}" th:utext="${screen.key[7].substring(0, 3)} + '<br>' + ${screen.key[7].substring(3)}" class="theater"></a>
                         <div class="screens">
                             <div class="screen-container"
                                  th:each="scVal : ${screen.value}">
@@ -232,7 +232,7 @@
                                     <span th:text="'총 ' + ${screen.key[4]} + '석'" class="text"></span>
                                 </div>
                                 <div class="time-table-container">
-                                    <a href="#" class="time-table" th:each="sc : ${scVal.value}">
+                                    <a th:href="@{../../../ticket/}" class="time-table" target="_self" th:each="sc : ${scVal.value}">
                                         <div th:text="${sc.split(',')[0].replace('[', '')}" class="time"></div>
                                         <div th:text="${sc.split(',')[1].replace(']', '')} + '석'" class="seat"></div>
                                     </a>

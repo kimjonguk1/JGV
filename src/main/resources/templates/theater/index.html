@@ -63,8 +63,8 @@
                         <a href="#menu" class="theater-info guide" target="_self">위치 / 주차 안내 ></a>
                         <div class="stretch"></div>
                         <div class="cinema-type">
-                            <a href="#" class="IMAX" target="_blank"></a>
-                            <a href="#" class="DX" target="_blank"></a>
+                            <div class="IMAX"></div>
+                            <div class="DX"></div>
                         </div>
                     </div>
                     <div class="theater-info">8관/320석</div>
@@ -91,11 +91,9 @@
                         <a href="#menu" class="theater-info guide" target="_self">위치 / 주차 안내 ></a>
                         <div class="stretch"></div>
                         <div class="cinema-type">
-                            <a href="#"
-                               th:if="${!vo.equals('2D')}"
-                               th:each="vo : ${vos[1]}"
-                               th:class="${vo}"
-                               target="_blank"></a>
+                            <div th:if="${!vo.equals('2D')}"
+                                 th:each="vo : ${vos[1]}"
+                                 th:class="${vo}"></div>
                         </div>
                     </div>
                     <div class="theater-info">
@@ -335,7 +333,8 @@
                 <li class="item" th:each="screen : ${screenVos}">
                     <div class="movie-container">
                         <div th:classappend="${screen.key[0]}" class="rating"></div>
-                        <a th:text="${screen.key[1]}" href="#" class="text"></a>
+                        <a th:text="${screen.key[1]}" th:href="@{'../movies/movieList/movieInfo/' + ${screen.key[5]}}"
+                           class="text"></a>
                         <div class="date-notice">
                             <span th:if="${screen.key[3] <= #dates.format(#dates.createNow(), 'yyyy.MM.dd')}"
                                   class="able">상영중</span>
@@ -365,7 +364,7 @@
                             <span th:text="'총 ' + ${screen.key[4]} + '석'" class="text"></span>
                         </div>
                         <div class="time-table-container">
-                            <a href="#" class="time-table" th:each="sc : ${scVal.value}">
+                            <a th:href="@{../ticket/}" class="time-table" th:each="sc : ${scVal.value}">
                                 <div th:text="${sc.split(',')[0].replace('[', '')}" class="time"></div>
                                 <div th:text="${sc.split(',')[1].replace(']', '')} + '석'" class="seat"></div>
                             </a>

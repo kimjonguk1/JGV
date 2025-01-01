@@ -455,12 +455,10 @@ document.addEventListener('click', (e) => {
                                                 thName: $theater.innerText.replace('\n', '')
                                             };
                                             sessionStorage.setItem('theater', JSON.stringify(theater));
-                                            window.location.pathname = '/theater/';
                                         }
                                         const $timeTable = Array.from(screen.querySelectorAll(':scope > .screens > .screen-container > .time-table-container > .time-table'));
                                         $timeTable.forEach((time) => {
-                                            time.onclick = (e) => {
-                                                e.preventDefault();
+                                            time.onclick = () => {
                                                 const $moTitle = document.querySelector('.movie-info > .title');
                                                 const $thName = screen.querySelector(':scope > .theater')
                                                 // 파라미터 값들을 객체로 저장
@@ -471,7 +469,6 @@ document.addEventListener('click', (e) => {
                                                     time: time.innerText.split('\n')[0]
                                                 };
                                                 sessionStorage.setItem('ticketParams', JSON.stringify(params));
-                                                window.location.pathname = '/ticket/';
                                             }
                                         })
                                     })

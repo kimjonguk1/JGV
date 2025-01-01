@@ -174,27 +174,6 @@ public class TheaterService {
         return map;
     }
 
-    @Getter
-    public enum TheaterCode {
-        DAEGU("CGV대구", "0345"),
-        SUSEONG("CGV대구수성", "0157"),
-        STADIUM("CGV대구스타디움", "0108"),
-        ACADEMY("CGV대구아카데미", "0185"),
-        YEONGGYEONG("CGV대구연경", "0343"),
-        WOLSEONG("CGV대구월성", "0216"),
-        JUKJEON("CGV대구죽전", "0256"),
-        HANIL("CGV대구한일", "0147"),
-        HYUNDAI("CGV대구현대", "0109");
-
-        private final String cgvName;
-        private final String cgvCode;
-
-        TheaterCode(String cgvName, String cgvCode) {
-            this.cgvName = cgvName;
-            this.cgvCode = cgvCode;
-        }
-    }
-
     public TheaterVo[] selectAllTheaters(String theater) {
         return this.theaterMapper.selectAllTheaters(theater);
     }

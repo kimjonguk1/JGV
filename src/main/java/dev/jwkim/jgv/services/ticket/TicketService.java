@@ -62,6 +62,7 @@ public class TicketService {
             keys.add(movieVo.getMoDate());
             keys.add(String.valueOf(movieVo.getMoTime()));
             keys.add(movieVo.getMImgUrl());
+            keys.add(String.valueOf(movieVo.getMoNum()));
             genres.add(movieVo.getGeName());
             citNames.add(movieVo.getCitName());
         }

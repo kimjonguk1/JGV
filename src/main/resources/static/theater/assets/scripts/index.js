@@ -133,11 +133,8 @@ const theaterParams = JSON.parse(sessionStorage.getItem('theater'));
                                                     $screens.append(screen);
                                                     const $timeTable = Array.from(screen.querySelectorAll(':scope > .screen-container > .time-table-container > .time-table'));
                                                     $timeTable.forEach((time) => {
-                                                        time.onclick = (e) => {
-                                                            e.preventDefault();
+                                                        time.onclick = () => {
                                                             const $moTitle = screen.querySelector(':scope > .movie-container > .text');
-                                                            const xhr = new XMLHttpRequest();
-                                                            const url = new URL('http://localhost:8080/ticket/');
                                                             // 파라미터 값들을 객체로 저장
                                                             const params = {
                                                                 moTitle: $moTitle.innerText,
@@ -146,20 +143,6 @@ const theaterParams = JSON.parse(sessionStorage.getItem('theater'));
                                                                 time: time.innerText.split('\n')[0]
                                                             };
                                                             sessionStorage.setItem('ticketParams', JSON.stringify(params));
-                                                            xhr.onreadystatechange = () => {
-                                                                if (xhr.readyState !== XMLHttpRequest.DONE) {
-                                                                    return;
-                                                                }
-                                                                if (xhr.status < 200 || xhr.status >= 300) {
-                                                                    alert('오류 발생');
-                                                                    return;
-                                                                }
-                                                                window.location.href = url.toString();
-                                                                Loading.hide();
-                                                            };
-                                                            xhr.open('GET', url.toString());
-                                                            xhr.send();
-                                                            Loading.show(0);
                                                         }
                                                     })
                                                 })

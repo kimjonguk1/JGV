@@ -124,7 +124,9 @@
                 FROM `jgv`.`theater`
                          LEFT JOIN `jgv`.`cinema` ON `cinema`.`th_num` = `theater`.`th_num`
                          LEFT JOIN `jgv`.`screen` ON `cinema`.`ci_num` = `screen`.`ci_num`
-                WHERE `screen`.`mo_num` = movie.`mo_num`) AS `theaterCount`,
+                WHERE `screen`.`mo_num` = movie.`mo_num`
+                  AND `sc_start_date` > NOW()
+                  AND `is_deleted` = false) AS `theaterCount`,
                `reg_name` AS `regName`
         FROM `jgv`.`movie`
                  LEFT JOIN `jgv`.`movie_image` mi ON `movie`.`mo_num` = `mi`.`mo_num`
@@ -187,7 +189,9 @@
                 FROM `jgv`.`theater`
                          LEFT JOIN `jgv`.`cinema` ON `cinema`.`th_num` = `theater`.`th_num`
                          LEFT JOIN `jgv`.`screen` ON `cinema`.`ci_num` = `screen`.`ci_num`
-                WHERE `screen`.`mo_num` = movie.`mo_num`) AS `theaterCount`,
+                WHERE `screen`.`mo_num` = movie.`mo_num`
+                  AND `sc_start_date` > NOW()
+                  AND `is_deleted` = false) AS `theaterCount`,
                `reg_name` AS `regName`
         FROM `jgv`.`movie`
                  LEFT JOIN `jgv`.`movie_image` mi ON `movie`.`mo_num` = `mi`.`mo_num`
@@ -217,7 +221,9 @@
                 FROM `jgv`.`theater`
                          LEFT JOIN `jgv`.`cinema` ON `cinema`.`th_num` = `theater`.`th_num`
                          LEFT JOIN `jgv`.`screen` ON `cinema`.`ci_num` = `screen`.`ci_num`
-                WHERE `screen`.`mo_num` = movie.`mo_num`) AS `theaterCount`,
+                WHERE `screen`.`mo_num` = movie.`mo_num`
+                  AND `sc_start_date` > NOW()
+                  AND `is_deleted` = false) AS `theaterCount`,
                `reg_name` AS `regName`
         FROM `jgv`.`movie`
                  LEFT JOIN `jgv`.`movie_image` mi ON `movie`.`mo_num` = `mi`.`mo_num`
@@ -374,12 +380,13 @@
     </select>
     <select id="selectShowTimesByMoTitle"
             resultType="dev.jwkim.jgv.vos.theater.MovieVo">
-        SELECT DISTINCT `mo_title`  AS `moTitle`,
-                        `mo_date`   AS `moDate`,
-                        `mo_time`   AS `moTime`,
-                        `m_img_url` AS `mImgUrl`,
-                        `ge_name`   AS `geName`,
-                        `cit_name`  AS `citName`
+        SELECT DISTINCT movie.`mo_num` AS `moNum`,
+                        `mo_title`     AS `moTitle`,
+                        `mo_date`      AS `moDate`,
+                        `mo_time`      AS `moTime`,
+                        `m_img_url`    AS `mImgUrl`,
+                        `ge_name`      AS `geName`,
+                        `cit_name`     AS `citName`
         FROM `jgv`.`movie`
                  LEFT JOIN `jgv`.`movie_image` ON `movie`.`mo_num` = `movie_image`.`mo_num`
                  LEFT JOIN `jgv`.`movie_genere` ON `movie`.`mo_num` = `movie_genere`.`mo_num`

@@ -71,7 +71,7 @@
             <div class="movie"
                  th:if="${map != null}"
                  th:each="ma : ${map}">
-                <a href="#" class="poster">
+                <a th:href="@{'../movies/movieList/movieInfo/' + ${ma.key[4]}}" class="poster">
                     <img class="poster" th:src="${ma.key[3]}" alt="하얼빈">
                 </a>
                 <div class="movie-info">
@@ -223,7 +223,7 @@
                 <li class="item" th:each="screen : ${screenVos}">
                     <div class="movie-container">
                         <div th:classappend="${screen.key[0]}" class="rating"></div>
-                        <a th:text="${screen.key[1]}" href="#" class="text"></a>
+                        <a th:text="${screen.key[1]}" th:href="@{'../movies/movieList/movieInfo/' + ${screen.key[5]}}" class="text"></a>
                         <div class="date-notice">
                             <span th:if="${screen.key[3] <= #dates.format(#dates.createNow(), 'yyyy.MM.dd')}"
                                   class="able">상영중</span>
@@ -253,7 +253,7 @@
                             <span th:text="'총 ' + ${screen.key[4]} + '석'" class="text"></span>
                         </div>
                         <div class="time-table-container">
-                            <a href="#" class="time-table" th:each="sc : ${scVal.value}">
+                            <a th:href="@{./}" class="time-table" th:each="sc : ${scVal.value}">
                                 <div th:text="${sc.split(',')[0].replace('[', '')}" class="time"></div>
                                 <div th:text="${sc.split(',')[1].replace(']', '')} + '석'" class="seat"></div>
                             </a>
@@ -306,7 +306,7 @@
                     <li class="item"
                         th:if="${screenVos != null}"
                         th:each="screen : ${screenVos}">
-                        <a href="#" th:utext="${screen.key[7].substring(0, 3)} + '<br>' + ${screen.key[7].substring(3)}"
+                        <a th:href="@{../../theater/}" th:utext="${screen.key[7].substring(0, 3)} + '<br>' + ${screen.key[7].substring(3)}"
                            class="theater"></a>
                         <div class="screens">
                             <div class="screen-container"
@@ -328,7 +328,7 @@
                                     <span th:text="'총 ' + ${screen.key[4]} + '석'" class="text"></span>
                                 </div>
                                 <div class="time-table-container">
-                                    <a href="#" class="time-table"
+                                    <a th:href="@{./}" class="time-table"
                                        th:each="sc : ${scVal.value}">
                                         <div th:text="${sc.split(',')[0].replace('[', '')}" class="time"></div>
                                         <div th:text="${sc.split(',')[1].replace(']', '')} + '석'" class="seat"></div>

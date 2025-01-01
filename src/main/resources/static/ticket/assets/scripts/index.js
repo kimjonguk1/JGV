@@ -86,6 +86,15 @@ function checkScreen() {
                 alert('오류 발생');
                 return;
             }
+            const $regionContainer = document.querySelector('.region-container');
+            const $responseRegionContainer = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelector('.region-container');
+            const $region = Array.from($responseRegionContainer.querySelectorAll(':scope > .region'));
+            $region.forEach((region) => {
+                if (region.innerText.includes('대구')) {
+                    region.classList.add('select');
+                }
+            })
+            $regionContainer.replaceWith($responseRegionContainer);
             $contentContainer.innerHTML = '';
             const $days = Array.from((new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.day > .body > .content > .content-container > .day-container')));
             $days.forEach((x) => {
@@ -220,6 +229,16 @@ function checkScreen() {
                 alert('오류 발생');
                 return;
             }
+            console.log(xhr.responseText);
+            const $regionContainer = document.querySelector('.region-container');
+            const $responseRegionContainer = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelector('.region-container');
+            const $region = Array.from($responseRegionContainer.querySelectorAll(':scope > .region'));
+            $region.forEach((region) => {
+                if (region.innerText.includes('대구')) {
+                    region.classList.add('select');
+                }
+            })
+            $regionContainer.replaceWith($responseRegionContainer);
             $theater.innerHTML = "";
             const $theaterItem = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.theater > .body > .content > .theater-container > .theater'));
             $theaterItem.forEach((x) => {
@@ -439,13 +458,6 @@ function checkScreen() {
                             $theaterTime.innerText = $oldText + $text.innerText;
                             $rating.classList.remove('hidden');
                             $firstButton.classList.add('after');
-                            params.moTitle = $data.movie;
-                            params.thName = $data.theater;
-                            params.scStartDate = $data.date;
-                            sessionStorage.setItem('ticketParams', JSON.stringify(params));
-                            $data.movie = null;
-                            $data.theater = null;
-                            $data.date = null;
                         }
                     })
                 })
@@ -766,6 +778,10 @@ $rightButtons.forEach((x) => {
             if (sessionStorage.getItem('user') === null) {
                 const userCheck = confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")
                 if (userCheck) {
+                    params.moTitle = $data.movie;
+                    params.thName = $data.theater;
+                    params.scStartDate = $data.date;
+                    sessionStorage.setItem('ticketParams', JSON.stringify(params));
                     const redirectUrl = window.location.pathname;
                     window.location.replace(`.././user/login?forward=${encodeURIComponent(redirectUrl)}`);
                 } else {
