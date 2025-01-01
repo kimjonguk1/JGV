@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <div class="content main" th:fragment="main">
-    <div class="main-container" >
+    <div class="main-container">
         <div class="title-container">
             <h2>MY 예매내역</h2>
             <span th:text="${reservations.size()} + '건'"></span>
         </div>
-        <div class="my-reservation"  th:each="reservation, stat : ${reservations}">
+        <div class="my-reservation" th:each="reservation, stat : ${reservations}">
             <div class="reservation-info">
                 <span class="reservation-num">예매번호</span>
                 <span class="num-red" th:text="${reservation.key[0]}"></span>
@@ -14,11 +14,12 @@
             </div>
             <div class="reservation-container">
                 <div class="reservation-movie">
-                    <img th:src="${reservation.key[1]}"
-                         alt="예매사진">
+                    <a th:href="@{'http://localhost:8080/movies/movieList/movieInfo/' + ${reservation.key[10]}}">
+                        <img th:src="${reservation.key[1]}" alt="예매사진">
+                    </a>
                     <div class="movie-info">
                         <div class="movie-title">
-                            <span th:text="${reservation.key[2]}"></span>
+                            <a th:href="@{'http://localhost:8080/movies/movieList/movieInfo/' + ${reservation.key[10]}}" th:text="${reservation.key[2]}"></a>
                         </div>
                         <div class="cinema">
                             <span>관람 극장</span>
@@ -26,12 +27,13 @@
                             <span class="content" th:text="${reservation.key[6]}"></span>
                         </div>
                         <div class="date">
-                            <span >관람 일시</span>
+                            <span>관람 일시</span>
                             <span th:text="${reservation.key[5]}" class="content"></span>
                         </div>
                         <div class="seat">
                             <span>관람 좌석</span>
-                            <span th:text="${#strings.trim(reservation.value.toString()).substring(1, reservation.value.toString().length() - 1)}" class="content"></span>
+                            <span th:text="${#strings.trim(reservation.value.toString()).substring(1, reservation.value.toString().length() - 1)}"
+                                  class="content"></span>
                         </div>
                     </div>
                 </div>
@@ -39,6 +41,18 @@
                     <span class="text">총 결제 금액</span>
                     <span class="pay" th:text="${reservation.key[3]}"></span>
                 </div>
+            </div>
+        </div>
+        <div class="paging">
+            <div class="no-reservation" th:if="${#lists.isEmpty(PageReservations)}">
+                <span>예매한 영화가 없습니다.</span>
+            </div>
+            <div class="paging"
+                 th:if="${!#lists.isEmpty(PageReservations) && PageReservations.displayMaxPage > PageReservations.displayMinPage}">
+                <a class="page"
+                   th:each="page : ${#numbers.sequence(PageReservations.displayMinPage, PageReservations.displayMaxPage)}"
+                   th:text="${page}"
+                   th:href="@{/user/myPage/main(page=${page})}"></a>
             </div>
         </div>
     </div>
@@ -54,11 +68,13 @@
             <p class="movie-title" id="modalMovieTitle"></p>
             <hr>
             <div class="review-userInfo">
-                <img class="profile-img" src="http://img.cgv.co.kr/R2014/images/common/default_profile.gif" alt="profile">
+                <img class="profile-img" src="http://img.cgv.co.kr/R2014/images/common/default_profile.gif"
+                     alt="profile">
                 <span class="user-name" id="modalUserName">사용자 이름</span>
             </div>
             <label class="label">
-                <textarea id="reviewText" placeholder="운영원칙에 어긋나는 게시물로 판단되는 글은 제재 조치를 받을 수 있습니다." maxlength="280"></textarea>
+                <textarea id="reviewText" placeholder="운영원칙에 어긋나는 게시물로 판단되는 글은 제재 조치를 받을 수 있습니다."
+                          maxlength="280"></textarea>
             </label>
             <div class="modal-action">
                 <span id="charCount">0 / 280 (byte)</span>
@@ -83,7 +99,8 @@
                     <p class="review-description" th:text="${review.reContent}">1보다는 별로지만 암튼 재밌었어염</p>
                     <div class="review-actions">
                         <button class="edit-review">수정하기</button>
-                        <img class="likes" src="http://img.cgv.co.kr/R2014/images/point/ico_point_default.png" alt="likes">
+                        <img class="likes" src="http://img.cgv.co.kr/R2014/images/point/ico_point_default.png"
+                             alt="likes">
                         <span th:text="${review.reLiked}">0</span>
                     </div>
                     <button class="delete-review">X</button>
@@ -128,14 +145,16 @@
                 <span class="red" th:id="'paNum-' + ${stat.index}" th:text="${reservation.key[0]}">예매번호</span>
             </div>
             <div class="reservation-info">
-                <div class="image-wrapper">
+                <a class="image-wrapper"
+                   th:href="@{'http://localhost:8080/movies/movieList/movieInfo/' + ${reservation.key[10]}}">
                     <!-- 영화 이미지 출력 -->
                     <img th:src="${reservation.key[1]}" alt="영화 이미지">
-                </div>
+                </a>
                 <div class="movie-info">
                     <div class="title-container">
                         <!-- 영화 제목 -->
-                        <span class="movie" th:id="'moTitle-' + ${stat.index}" th:text="${reservation.key[2]}"></span>
+                        <a th:href="@{'http://localhost:8080/movies/movieList/movieInfo/' + ${reservation.key[10]}}"
+                           class="movie" th:id="'moTitle-' + ${stat.index}" th:text="${reservation.key[2]}"></a>
                         <span class="movie" th:text="${reservation.key[6]}"></span>
                         <div class="-spring"></div>
                         <!-- 결제 금액 -->
@@ -144,11 +163,13 @@
                     <div class="detail">
                         <span class="title">관람극장</span>
                         <!-- 영화관 이름 -->
-                        <span class="black content" th:id="'thName-' + ${stat.index}" th:text="${reservation.key[4]}"></span>
+                        <span class="black content" th:id="'thName-' + ${stat.index}"
+                              th:text="${reservation.key[4]}"></span>
                         <span class="title">관람인원</span>
                         <!-- 관람 인원: 좌석 수만큼 반복 -->
                         <span class="black content">
-                        <span class="black" th:id="'seHuman-' + ${stat.index}" th:text="'일반' + ${reservation.value.size()}"></span>
+                        <span class="black" th:id="'seHuman-' + ${stat.index}"
+                              th:text="'일반' + ${reservation.value.size()}"></span>
                 </span>
                     </div>
                     <div class="detail">
@@ -169,7 +190,8 @@
                     <div class="detail">
                         <span class="title">상영관</span>
                         <!-- 상영관 이름 -->
-                        <span class="black content" th:id="'ciName-' + ${stat.index}" th:text="${reservation.key[6]}"></span>
+                        <span class="black content" th:id="'ciName-' + ${stat.index}"
+                              th:text="${reservation.key[6]}"></span>
                         <span class="title">매수</span>
                         <!-- 매수: 좌석 수를 계산하여 출력 -->
                         <span class="black content" th:text="${reservation.value.size()} + '매'"></span>
@@ -192,7 +214,8 @@
                         <span class="result-payment" th:text="${reservation.key[3]}"></span>
                     </div>
                     <div class="result-pay">
-                        <span class="payment-method" th:id="'meName-' + ${stat.index}" th:text="'└  ' + ${reservation.key[7]}"></span>
+                        <span class="payment-method" th:id="'meName-' + ${stat.index}"
+                              th:text="'└  ' + ${reservation.key[7]}"></span>
                         <div class="-spring"></div>
                         <span class="method-payment" th:text="${reservation.key[3]}"></span>
                     </div>
@@ -226,7 +249,8 @@
                 </thead>
                 <tbody>
                 <tr th:each="cancelReservation : ${cancelReservations}">
-                    <td style="text-align: center; width: 20%; overflow: hidden;" th:text="${cancelReservation[0]}"></td>
+                    <td style="text-align: center; width: 20%; overflow: hidden;"
+                        th:text="${cancelReservation[0]}"></td>
                     <td th:text="${cancelReservation[1]}"></td>
                     <td th:text="${cancelReservation[2]}"></td>
                     <td th:text="${cancelReservation[3]}"></td>
@@ -279,7 +303,7 @@
                 </select>
             </label>
             <div class="button-container">
-            <button>조회하기</button>
+                <button>조회하기</button>
             </div>
             <div class="notice">
                 <span>*직접설정 기간조회 시 1개월 단위로</span>

@@ -16,5 +16,6 @@ public class ReservationVo extends PaymentEntity {
     private String mImgUrl;        // 영화 이미지 URL
     private String moTitle;     // 영화 제목
     private String meName;
+    private String moNum;
 
 }

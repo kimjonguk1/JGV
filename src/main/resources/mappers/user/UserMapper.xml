@@ -210,7 +210,8 @@
                movie_image.m_img_url  as `mImgUrl`,
                movie.`mo_title`       as `moTitle`,
                `me_name`              as `meName`,
-               `pa_deleted_at`        as `paDeletedAt`
+               `pa_deleted_at`        as `paDeletedAt`,
+               movie.`mo_num`         as `moNum`
 
         from jgv.payment
                  left join jgv.reservation on payment.pa_num = reservation.pa_num
@@ -224,7 +225,8 @@
 
         where `us_num` = #{usNum}
           and `pa_state` = true
-          and `pa_deleted_at` is null;
+          and `pa_deleted_at` is null
+        LIMIT #{limitCount} OFFSET #{offsetCount}
     </select>
     <select id="selectCancelPaymentByUsNum" resultType="dev.jwkim.jgv.vos.user.ReservationVo">
         select payment.`pa_num`       as `paNum`,
@@ -272,4 +274,12 @@
         where pa_num = #{paNum}
           and us_num = #{usNum};
     </update>
+
+    <select id="selectArticleByUsNumCount" resultType="java.lang.Integer">
+        select count(*)
+        from jgv.payment
+        where `us_num` = #{usNum}
+          and `pa_state` = true
+          and `pa_deleted_at` is null;
+    </select>
 </mapper>

@@ -38,7 +38,7 @@ public interface UserMapper {
 
     int deleteUserById(@Param("usId") String id);
 
-    ReservationVo[] selectPaymentByUsNum(@Param("usNum") int usNum);
+    ReservationVo[] selectPaymentByUsNum(@Param("usNum") int usNum, @Param("limitCount") int limitCount, @Param("offsetCount") int offsetCount);
     ReservationVo[] selectCancelPaymentByUsNum(@Param("usNum") int usNum);
     PaymentEntity[] selectCancelPaNumByPayment(@Param("paNum") int paNum,
                                                @Param("usNum") int usNum,
@@ -49,5 +49,8 @@ public interface UserMapper {
                            @Param("paNum") int paNum,
                            @Param("paState") boolean paState,
                            @Param("paDeletedAt") LocalDateTime paDeletedAt);
+
+    int selectArticleByUsNumCount(@Param("usNum") int usNum);
+
 
 }

@@ -11,10 +11,12 @@ import dev.jwkim.jgv.results.Result;
 import dev.jwkim.jgv.results.reservation.ReservationResult;
 import dev.jwkim.jgv.results.user.*;
 import dev.jwkim.jgv.utils.CryptoUtils;
+import dev.jwkim.jgv.vos.PageVo;
 import dev.jwkim.jgv.vos.user.ReservationVo;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -504,9 +506,13 @@ public class UserService {
 
     // region 예매 내역
 
-    public Map<Set<String>, List<String>> reservationInformation(int usNum) {
+    public Pair<PageVo, Map<Set<String>, List<String>>> reservationInformation(int usNum, int page) {
+        page = Math.max(1, page);
+        int totalCount = this.userMapper.selectArticleByUsNumCount(usNum);
+        PageVo pageVo = new PageVo(page, totalCount);
+
         Map<Set<String>, List<String>> map = new LinkedHashMap<>();
-        ReservationVo[] reservationVo = this.userMapper.selectPaymentByUsNum(usNum);
+        ReservationVo[] reservationVo = this.userMapper.selectPaymentByUsNum(usNum, pageVo.countPerPage, pageVo.offsetCount);
         for (ReservationVo reservationVos : reservationVo) {
             Set<String> strings = new LinkedHashSet<>();
             List<String> strings1 = new ArrayList<>();
@@ -521,13 +527,14 @@ public class UserService {
             strings.add(String.valueOf(reservationVos.getMeName()));
             strings.add(reservationVos.getPaCreatedAt().toString().split("T")[0]);
             strings.add(String.valueOf(reservationVos.getScStartDate()));
+            strings.add(String.valueOf(reservationVos.getMoNum()));
 
 
             strings1.add(String.valueOf(reservationVos.getSeName()));
 
             map.computeIfAbsent(strings, k -> new ArrayList<>()).addAll(strings1);
         }
-        return map;
+        return Pair.of(pageVo, map);
     }
 
     public List<List<String>> selectCancelPaymentByUsNum(int usNum) {
