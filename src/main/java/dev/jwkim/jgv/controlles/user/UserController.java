@@ -98,7 +98,7 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String postLogin(UserEntity user, HttpSession session, HttpServletRequest request) {
+    public String postLogin(UserEntity user, HttpServletRequest request) {
         // 로그인 시도 시 IP 정보
         String currentIp = request.getRemoteAddr();
 
@@ -108,15 +108,18 @@ public class UserController {
 
         // 로그인 성공 시
         if (result == CommonResult.SUCCESS) {
+            System.out.println("로그인 직후 세션 : " + currentIp );
             // 기존 세션의 사용자 정보와 IP 체크
-            if (session.getAttribute("user") != null) {
+            HttpSession session = request.getSession(false);  // 기존 세션을 가져옴 (새로운 세션을 만들지 않음)
+            if (session != null && session.getAttribute("user") != null) {
                 UserEntity sessionUser = (UserEntity) session.getAttribute("user");
                 String storedIp = (String) session.getAttribute("ip");
 
                 // 만약 기존 세션의 IP와 현재 요청의 IP가 다르면
-                if (!storedIp.equals(currentIp)) {
+                if (storedIp != null && !storedIp.equals(currentIp)) {
                     // 기존 세션을 무효화
                     session.invalidate();
+                    System.out.println("강제로그아웃 세션 : " + session.getAttribute("user"));
 
                     // 강제 로그아웃 메시지 추가
                     response.put("message", "다른 IP에서 로그인 시도가 감지되었습니다. 로그아웃되었습니다.");
@@ -125,9 +128,9 @@ public class UserController {
             }
 
             // 새 세션 생성 및 사용자 정보 저장
-            session = request.getSession(true);  // 새 세션을 생성
-            session.setAttribute("user", user);
-            session.setAttribute("ip", currentIp);  // 현재 IP를 세션에 저장
+            HttpSession newSession = request.getSession(true);  // 새 세션을 생성
+            newSession.setAttribute("user", user);
+            newSession.setAttribute("ip", currentIp);  // 현재 IP를 세션에 저장
 
             // 로그인 성공 시 사용자 번호 반환
             response.put("MemberNum", user.getUsNum());
@@ -136,8 +139,6 @@ public class UserController {
         response.put(Result.NAME, result.nameToLower());
         return response.toString();
     }
-
-
 // endregion
 
     // http://localhost:8080/user/myPage/receipt
@@ -245,9 +246,14 @@ public class UserController {
 
     // region 아이디 / 비밀번호 찾기
     @RequestMapping(value = "find-id", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getFindId(UserEntity user) {
+    public ModelAndView getFindId(HttpSession session, UserEntity user) {
         Result result = userService.findUserId(user);
         ModelAndView modelAndView = new ModelAndView();
+
+        if (session.getAttribute("user") != null) {
+            return new ModelAndView("redirect:/error");
+        }
+
         if (result == CommonResult.SUCCESS) {
             modelAndView.addObject("name", user.getUsName());
             modelAndView.addObject("id", user.getUsId());
@@ -272,8 +278,12 @@ public class UserController {
 
 
     @RequestMapping(value = "find-password", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getFindPassword() {
+    public ModelAndView getFindPassword(HttpSession session) {
+
         ModelAndView modelAndView = new ModelAndView();
+        if (session.getAttribute("user") != null) {
+            return new ModelAndView("redirect:/error");
+        }
         modelAndView.setViewName("user/find-password");
         return modelAndView;
     }
