@@ -126,7 +126,7 @@ public class AdminController {
         return result ? MovieDeleteModifyResult.SUCCESS : MovieDeleteModifyResult.FAILURE;
     }
 
-    //영화 수정 페이지
+    //region 영화 수정 페이지
     @RequestMapping(value = "/modify/{movieNum}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getModifyMoviePage(@PathVariable("movieNum") int movieNum, HttpSession session) {
         UserEntity loggedInUser = (UserEntity) session.getAttribute("user");
@@ -168,6 +168,8 @@ public class AdminController {
             return MovieDeleteModifyResult.FAILURE;
         }
     }
+
+    //endregion
 
 
   

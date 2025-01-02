@@ -77,19 +77,19 @@ public interface MovieMapper {
     // 영화의 관람 등급 수정
     void updateMovieRating(@Param("movieNum") int movieNum, @Param("rating") String rating);
 
-    // 영화 장르 삭제
-    void deleteGenresByMovieId(int movieNum);
-
-    // 영화와 장르 관계 추가
-    void addGenreToMovie(@Param("movieNum") int movieNum, @Param("genre") String genre);
-
     void deleteActorsByMovieId(int movieNum); // 기존 영화-인물 관계 삭제
+    void updateActorName(@Param("chNum") int chNum, @Param("chName") String chName);
     void addActorToMovie(@Param("movieNum") int movieNum, @Param("chNum") int chNum); // 새 영화-인물 관계 추가
 
+    // 장르
+    void deleteGenresByMovieId(int movieNum);
+    Integer findGenreByName(String genreName);
+    void insertGenre(String genreName);
+    void insertMovieGenre(@Param("movieNum") int movieNum, @Param("geNum") int geNum);
 
-    // 영화 국가 삭제
+    //국가
     void deleteCountriesByMovieId(int movieNum);
-
-    // 영화와 국가 관계 추가
-    void addCountryToMovie(@Param("movieNum") int movieNum, @Param("country") String country);
+    Integer findCountryByName(String countryName);
+    void insertCountry(String countryName);
+    void insertMovieCountry(@Param("movieNum") int movieNum, @Param("coNum") int coNum);
 }

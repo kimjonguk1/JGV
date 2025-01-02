@@ -66,6 +66,10 @@
         <div class="person-info"></div>
         <!-- 인물별 필모그래피 -->
     </div>
+
+    <div class="no-data-search" th:if="${movies.size() <= 0 || people.size() <= 0}" >
+        <span>검색 결과가 없습니다</span>
+    </div>
 </main>
 <th:block th:replace="~{fragments/common.html :: footer}"></th:block>
 

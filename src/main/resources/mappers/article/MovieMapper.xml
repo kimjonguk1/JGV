@@ -45,7 +45,7 @@
         SELECT *
         FROM jgv.movie
         WHERE mo_title = #{movieTitle}
-          AND YEAR(mo_date) = #{movieDate}
+          AND mo_date LIKE CONCAT('%', #{movieDate}, '%')
         LIMIT 1
     </select>
 
@@ -321,40 +321,16 @@
     <update id="modifyMovie" parameterType="dev.jwkim.jgv.DTO.AllMovieInfoDTO">
         UPDATE jgv.movie
         SET
-            mo_date = #{moDate},
             mo_time = #{moTile},
             mo_plot = #{moPlot},
             ra_num = (SELECT ra_num FROM jgv.rating WHERE ra_grade = #{raGrade})
         WHERE mo_num = #{moNum}
     </update>
 
-    <delete id="deleteGenresByMovieId" parameterType="int">
-        DELETE FROM jgv.movie_genere WHERE mo_num = #{movieNum}
-    </delete>
-
-
-    <insert id="addGenreToMovie" parameterType="map">
-        INSERT INTO jgv.movie_genere (mo_num, ge_num)
-        SELECT #{movieNum}, ge_num FROM jgv.genre WHERE ge_name = #{genre}
-    </insert>
-
 
     <delete id="deleteActorsByMovieId" parameterType="int">
         DELETE FROM jgv.movie_charactor WHERE mo_num = #{movieNum}
     </delete>
-
-
-
-    <delete id="deleteCountriesByMovieId" parameterType="int">
-        DELETE FROM jgv.movie_country WHERE mo_num = #{movieNum}
-    </delete>
-
-
-    <insert id="addCountryToMovie" parameterType="map">
-        INSERT INTO jgv.movie_country (mo_num, co_num)
-        SELECT #{movieNum}, co_num FROM jgv.country WHERE co_name = #{country}
-    </insert>
-
 
     <update id="updateMovieRating" parameterType="map">
         UPDATE jgv.movie
@@ -362,6 +338,11 @@
         WHERE mo_num = #{movieNum}
     </update>
 
+    <update id="updateActorName" parameterType="map">
+        UPDATE jgv.charactor
+        SET ch_name = #{chName}
+        WHERE ch_num = #{chNum};
+    </update>
 
     <!-- 새 영화-인물 관계 추가 -->
     <insert id="addActorToMovie">
@@ -371,5 +352,46 @@
 
 
 
+    
+    <!-- 장르 -->
+    <delete id="deleteGenresByMovieId" parameterType="int">
+        DELETE FROM jgv.movie_genere WHERE mo_num = #{movieNum};
+    </delete>
+
+    <select id="findGenreByName" parameterType="string" resultType="int">
+        SELECT ge_num
+        FROM jgv.genre
+        WHERE ge_name = #{geName};
+    </select>
+
+    <insert id="insertGenre" parameterType="string">
+        INSERT INTO jgv.genre (ge_name) VALUES (#{geName});
+    </insert>
+
+    <insert id="insertMovieGenre" parameterType="map">
+        INSERT INTO jgv.movie_genere (mo_num, ge_num)
+        VALUES (#{movieNum}, #{geNum});
+    </insert>
+
+
+    <!-- 제작국가 -->
+    <delete id="deleteCountriesByMovieId" parameterType="int">
+        DELETE FROM jgv.movie_country WHERE mo_num = #{movieNum};
+    </delete>
+
+    <select id="findCountryByName" parameterType="string" resultType="int">
+        SELECT co_num
+        FROM jgv.country
+        WHERE co_name = #{coName};
+    </select>
+
+    <insert id="insertCountry" parameterType="string">
+        INSERT INTO jgv.country (co_name) VALUES (#{coName});
+    </insert>
+
+    <insert id="insertMovieCountry" parameterType="map">
+        INSERT INTO jgv.movie_country (mo_num, co_num)
+        VALUES (#{movieNum}, #{coNum});
+    </insert>
 
 </mapper>
