@@ -961,7 +961,8 @@ $rightButtons.forEach((x) => {
                         .replace(/\./g, "-"); // "." -> "-"
 
                     const xhr = new XMLHttpRequest();
-                    const url = new URL("http://localhost:8080/ticket/seat"); //ticket
+                    const url = new URL(location.href); //ticket
+                    url.pathname += 'seat'
                     url.searchParams.set('thName', $theaterTheater2);
                     url.searchParams.set('ciName', $theaterCinema.innerText);
                     url.searchParams.set('moTitle', $theaterMovie.innerText);
@@ -1351,7 +1352,7 @@ $checkboxAgrees.forEach(checkbox => {
 
 function ReservationRefundRegulation() {
     window.open(
-        "http://localhost:8080/ticket/ReservationRefundRegulations", // 팝업에서 열릴 URL
+        "./ReservationRefundRegulations", // 팝업에서 열릴 URL
         "ReservationRefundRegulation",         // 팝업창 이름
         "width=600,height=800,left=200,top=200" // 크기와 위치
     );
