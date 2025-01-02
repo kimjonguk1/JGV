@@ -381,6 +381,7 @@ button {
   padding-bottom: 1rem;
 }
 #theater-admin-page > .admin-theater-list > table > tbody > tr > td > ul > li > div > strong {
+  font-size: 2rem;
   color: #FB4357;
 }
 #theater-admin-page > .admin-theater-list > table > tbody > tr > td > ul > li > ul > li {
@@ -396,18 +397,21 @@ button {
 }
 #theater-admin-page > .admin-theater-list > table > tbody > tr > td > ul > li > ul > li > button {
   width: 5rem;
-  height: 1rem;
+  height: 1.775rem;
   border-radius: 0.2rem;
   color: #ffffff;
   cursor: pointer;
-  font-size: 0.7rem;
+  font-size: 1.2rem;
+  font-weight: 700;
   text-align: center;
 }
 #theater-admin-page > .admin-theater-list > table > tbody > tr > td > ul > li > ul > li > .theater-delete {
   background-color: #FB4357;
+  border: 1px solid #FB4357;
 }
 #theater-admin-page > .admin-theater-list > table > tbody > tr > td > ul > li > ul > li > .theater-modify {
   background-color: #2275a4;
+  border: 1px solid #2275a4;
 }
 
 #movie-search-form {

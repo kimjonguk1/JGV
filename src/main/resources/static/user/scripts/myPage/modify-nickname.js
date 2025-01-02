@@ -33,7 +33,6 @@ $modifyNickname.onsubmit = (e) => {
         }
         if (response['result'] === 'success') {
             alert("닉네임 변경에 성공하였습니다.");
-
             window.opener.location.reload();
             window.close();
         }
