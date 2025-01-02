@@ -226,4 +226,13 @@ main .movie-results li p {
   text-decoration: underline;
 }
 
+.no-data-search .no-data-search-text {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin: 100px;
+  font-size: 19px;
+  font-weight: 500;
+}
+
 /*# sourceMappingURL=MovieSearch.css.map */
