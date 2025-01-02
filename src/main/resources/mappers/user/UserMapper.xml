@@ -238,6 +238,7 @@
           AND `pa_deleted_at` IS NULL
         GROUP BY
             payment.`pa_num` -- paNum별로 그룹화
+        ORDER BY payment.pa_num DESC
         LIMIT
             #{limitCount} OFFSET #{offsetCount}; -- 페이지네이션 적용
     </select>
@@ -265,7 +266,9 @@
 
         where `us_num` = #{usNum}
           and `pa_state` = false
-          and `pa_deleted_at` is not null;
+          and `pa_deleted_at` is not null
+        ORDER BY payment.pa_num DESC
+
     </select>
     <select id="selectCancelPaNumByPayment" resultType="dev.jwkim.jgv.entities.ticket.PaymentEntity">
         select `pa_num`        as `paNum`,
