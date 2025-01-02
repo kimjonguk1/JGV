@@ -42,7 +42,7 @@ function ticketCancel(index) {
 
     // 팝업 창 열기
     const popupWindow = window.open(
-        "./user/myPage/reservationCancel",
+        "./reservationCancel",
         "예매취소",
         "width=600,height=800,left=200,top=200"
     );
