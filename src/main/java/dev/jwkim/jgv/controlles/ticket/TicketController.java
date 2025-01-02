@@ -45,7 +45,7 @@ public class TicketController {
         RegionVo[] regions = this.ticketService.selectRegionAndTheaterCount();
         TheaterEntity[] theaters = this.theaterService.getTheatersByRegion(region);
         Map<String, String> maps = this.ticketService.getWeekdays();
-        if (moTitle != null && thName == null && scStartDate == null) {
+        if (moTitle != null && thName == null && scStartDate == null && region == null) {
             MovieVo[] movieVos = this.ticketService.selectAllMovies(moTitle);
             List<Object[]> vos = new ArrayList<>();
             Map<String, String> moMaps = this.ticketService.getWeekdaysByMoTitle(moTitle);
@@ -63,12 +63,29 @@ public class TicketController {
             vos.add(new Object[]{keys, thKeys, moMaps});
             modelAndView.addObject("movieVos", vos);
         }
+        if (moTitle != null && thName == null && scStartDate == null && region != null) {
+            MovieVo[] movieVos = this.ticketService.selectAllMoviesByRegion(moTitle, region);
+            List<Object[]> vos = new ArrayList<>();
+            Map<String, String> moMaps = this.ticketService.getWeekdaysByMoTitleAndRegion(moTitle, region);
+            Set<String> keys = new LinkedHashSet<>();
+            SortedSet<String> thKeys = new TreeSet<>();
+            for (MovieVo vo : movieVos) {
+                keys.add(vo.getMoTitle());
+                keys.add(vo.getMImgUrl());
+                keys.add(vo.getRaGrade());
+                keys.add(String.valueOf(vo.getTheaterCount()));
+                keys.add(vo.getRegName());
+                keys.add(String.valueOf(vo.getMoNum()));
+                thKeys.add(vo.getThName());
+            }
+            vos.add(new Object[]{keys, thKeys, moMaps});
+            modelAndView.addObject("movieRegVos", vos);
+        }
         if (moTitle == null && thName != null && scStartDate == null) {
             MovieVo[] movieVos = this.ticketService.selectAllMoviesByThName(thName);
             List<Object[]> vos = new ArrayList<>();
             Map<String, String> moMaps = this.ticketService.getWeekdaysByThName(thName);
             Map<String, Boolean> map = new HashMap<>();
-
             for (MovieVo vo : movieVos) {
                 switch (vo.getRaGrade()) {
                     case "청소년관람불가" -> vo.setRaGrade("nineteen");
@@ -83,11 +100,11 @@ public class TicketController {
             vos.add(new Object[]{map, moMaps});
             modelAndView.addObject("theaterVos", vos);
         }
-        if (moTitle == null && thName == null && scStartDate != null) {
+        if (moTitle == null && thName == null && scStartDate != null && region == null) {
             MovieVo[] movieVos = this.ticketService.selectAllMoviesByScStartDate(scStartDate);
             List<Object[]> vos = new ArrayList<>();
             SortedSet<String> thKeys = new TreeSet<>();
-            Set<String> keys = new LinkedHashSet<>();
+            Set<String> counts = new LinkedHashSet<>();
             Map<String, Boolean> map = new HashMap<>();
             for (MovieVo vo : movieVos) {
                 switch (vo.getRaGrade()) {
@@ -98,13 +115,36 @@ public class TicketController {
                     case "미정" -> vo.setRaGrade("none");
                 }
                 String key = vo.getMoTitle() + "&&" + vo.getRaGrade();
-                map.put(key, true);
                 thKeys.add(vo.getThName());
-                keys.add(vo.getRegName());
-                keys.add(String.valueOf(vo.getTheaterCount()));
+                map.put(key, true);
+                counts.add(String.valueOf(vo.getTheaterCount()));
+                counts.add(vo.getRegName());
             }
-            vos.add(new Object[]{map, thKeys, keys});
+            vos.add(new Object[]{map, thKeys, counts});
             modelAndView.addObject("dateVos", vos);
+        }
+        if (moTitle == null && thName == null && scStartDate != null && region != null) {
+            MovieVo[] movieVos = this.ticketService.selectAllMoviesByScStartDateAndRegion(scStartDate, region);
+            List<Object[]> vos = new ArrayList<>();
+            SortedSet<String> thKeys = new TreeSet<>();
+            Set<String> counts = new LinkedHashSet<>();
+            Map<String, Boolean> map = new HashMap<>();
+            for (MovieVo vo : movieVos) {
+                switch (vo.getRaGrade()) {
+                    case "청소년관람불가" -> vo.setRaGrade("nineteen");
+                    case "15세이상관람가" -> vo.setRaGrade("fifteen");
+                    case "12세이상관람가" -> vo.setRaGrade("twelve");
+                    case "전체관람가" -> vo.setRaGrade("all");
+                    case "미정" -> vo.setRaGrade("none");
+                }
+                String key = vo.getMoTitle() + "&&" + vo.getRaGrade();
+                thKeys.add(vo.getThName());
+                map.put(key, true);
+                counts.add(String.valueOf(vo.getTheaterCount()));
+                counts.add(vo.getRegName());
+            }
+            vos.add(new Object[]{map, thKeys, counts});
+            modelAndView.addObject("dateRegionVos", vos);
         }
         if (moTitle != null && thName != null && scStartDate == null) {
             List<Object[]> vos = new ArrayList<>();
@@ -112,15 +152,31 @@ public class TicketController {
             vos.add(new Object[]{moMaps});
             modelAndView.addObject("moThVos", vos);
         }
-        if (moTitle != null && thName == null && scStartDate != null) {
+        if (moTitle != null && thName == null && scStartDate != null && region == null) {
             MovieVo[] movieVos = this.ticketService.selectAllMoviesByMoTitleAndScStartDate(moTitle, scStartDate);
             List<Object[]> vos = new ArrayList<>();
             SortedSet<String> thKeys = new TreeSet<>();
+            Set<String> counts = new LinkedHashSet<>();
             for (MovieVo vo : movieVos) {
                 thKeys.add(vo.getThName());
+                counts.add(vo.getRegName());
+                counts.add(String.valueOf(vo.getTheaterCount()));
             }
-            vos.add(new Object[]{thKeys});
+            vos.add(new Object[]{thKeys, counts});
             modelAndView.addObject("moScVos", vos);
+        }
+        if (moTitle != null && thName == null && scStartDate != null && region != null) {
+            MovieVo[] movieVos = this.ticketService.selectAllMoviesByMoTitleAndScStartDateAndRegion(moTitle, scStartDate, region);
+            List<Object[]> vos = new ArrayList<>();
+            SortedSet<String> thKeys = new TreeSet<>();
+            Set<String> counts = new LinkedHashSet<>();
+            for (MovieVo vo : movieVos) {
+                thKeys.add(vo.getThName());
+                counts.add(vo.getRegName());
+                counts.add(String.valueOf(vo.getTheaterCount()));
+            }
+            vos.add(new Object[]{thKeys, counts});
+            modelAndView.addObject("moScRegionVos", vos);
         }
         if (moTitle == null && thName != null && scStartDate != null) {
             MovieVo[] movieVos = this.ticketService.selectAllMoviesByThNameAndScStartDate(thName, scStartDate);

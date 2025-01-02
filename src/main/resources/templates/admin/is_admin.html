@@ -243,23 +243,23 @@
         <div class="prev">
             <!-- 이전 페이지 -->
             <a th:if="${screenPageVo.requestPage > screenPageVo.movableMinPage}"
-               th:href="@{'./is_admin' (page=${screenPageVo.movableMinPage}, filter=${filter}, keyword=${keyword}, mode='theater')}">|&lt;</a>
+               th:href="@{'./is_admin' (page=${screenPageVo.movableMinPage}, screen-filter=${screenFilter}, screen-keyword=${screenKeyword}, mode='theater')}">|&lt;</a>
             <a th:if="${screenPageVo.requestPage > screenPageVo.movableMinPage}"
-               th:href="@{'./is_admin' (page=${screenPageVo.requestPage - 1}, filter=${filter}, keyword=${keyword}, mode='theater')}">&lt;</a>
+               th:href="@{'./is_admin' (page=${screenPageVo.requestPage - 1}, screen-filter=${screenFilter}, screen-keyword=${screenKeyword}, mode='theater')}">&lt;</a>
         </div>
         <div class="page">
             <!-- 페이지 번호들 -->
             <a th:each="page : ${#numbers.sequence(screenPageVo.displayMinPage, screenPageVo.displayMaxPage)}"
                th:text="${page}"
-               th:href="@{'./is_admin' (page=${page}, filter=${filter}, keyword=${keyword}, mode='theater')}"
+               th:href="@{'./is_admin' (page=${page}, screen-filter=${screenFilter}, screen-keyword=${screenKeyword}, mode='theater')}"
                th:classappend="${page == screenPageVo.requestPage} ? 'selected'"></a>
         </div>
         <div class="next">
             <!-- 다음 페이지 -->
             <a th:if="${screenPageVo.requestPage < screenPageVo.movableMaxPage}"
-               th:href="@{'./is_admin' (page=${screenPageVo.requestPage + 1}, filter=${filter}, keyword=${keyword}, mode='theater')}">&gt;</a>
+               th:href="@{'./is_admin' (page=${screenPageVo.requestPage + 1}, screen-filter=${screenFilter}, screen-keyword=${screenKeyword}, mode='theater')}">&gt;</a>
             <a th:if="${screenPageVo.requestPage < screenPageVo.movableMaxPage}"
-               th:href="@{'./is_admin' (page=${screenPageVo.movableMaxPage}, filter=${filter}, keyword=${keyword}, mode='theater')}">&gt;|</a>
+               th:href="@{'./is_admin' (page=${screenPageVo.movableMaxPage}, screen-filter=${screenFilter}, screen-keyword=${screenKeyword}, mode='theater')}">&gt;|</a>
         </div>
     </div>
 </div>

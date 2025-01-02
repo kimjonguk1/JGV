@@ -27,6 +27,15 @@ const params = {
 };
 
 {
+    $theaterTheater.onclick = () => {
+        const theater = {
+            thName: $theaterTheater.innerText.replace('>', '')
+        };
+        sessionStorage.setItem('theater', JSON.stringify(theater));
+    }
+}
+
+{
     const $contentBarRetry = document.querySelector('.content-bar-retry');
     $contentBarRetry.onclick = () => {
         sessionStorage.removeItem('ticketParams');
@@ -92,6 +101,51 @@ function checkScreen() {
             $region.forEach((region) => {
                 if (region.innerText.includes('대구')) {
                     region.classList.add('select');
+                }
+                region.onclick = () => {
+                    $region.forEach((reg) => {
+                        reg.classList.remove('select');
+                        if (region === reg) {
+                            reg.classList.add('select');
+                            const xhr = new XMLHttpRequest();
+                            url.searchParams.set('region', reg.innerText.split('(')[0]);
+                            xhr.onreadystatechange = () => {
+                                if (xhr.readyState !== XMLHttpRequest.DONE) {
+                                    return;
+                                }
+                                Loading.hide();
+                                if (xhr.status < 200 || xhr.status >= 300) {
+                                    alert('오류 발생');
+                                    return;
+                                }
+                                $theater.innerHTML = "";
+                                const $theaterItem = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.theater > .body > .content > .theater-container > .theater'));
+                                $theaterItem.forEach((x) => {
+                                    $theater.append(x);
+                                    x.onclick = () => {
+                                        $theaterItem.forEach((item) => {
+                                            item.classList.remove('select');
+                                            if (x === item) {
+                                                item.classList.add('select');
+                                            }
+                                            $theaterInfo.forEach((theater) => {
+                                                theater.classList.add('hidden');
+                                                if (theater.classList.contains('theater')) {
+                                                    theater.classList.remove('hidden');
+                                                }
+                                                $data.theater = 'CGV' + x.innerText;
+                                                $theaterTheater.innerText = 'CGV' + x.innerText + '>';
+                                            })
+                                        })
+                                        checkScreen();
+                                    }
+                                })
+                            };
+                            xhr.open('GET', url.toString());
+                            xhr.send();
+                            Loading.show(0);
+                        }
+                    })
                 }
             })
             $regionContainer.replaceWith($responseRegionContainer);
@@ -229,13 +283,57 @@ function checkScreen() {
                 alert('오류 발생');
                 return;
             }
-            console.log(xhr.responseText);
             const $regionContainer = document.querySelector('.region-container');
             const $responseRegionContainer = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelector('.region-container');
             const $region = Array.from($responseRegionContainer.querySelectorAll(':scope > .region'));
             $region.forEach((region) => {
                 if (region.innerText.includes('대구')) {
                     region.classList.add('select');
+                }
+                region.onclick = () => {
+                    $region.forEach((reg) => {
+                        reg.classList.remove('select');
+                        if (region === reg) {
+                            reg.classList.add('select');
+                            const xhr = new XMLHttpRequest();
+                            url.searchParams.set('region', reg.innerText.split('(')[0]);
+                            xhr.onreadystatechange = () => {
+                                if (xhr.readyState !== XMLHttpRequest.DONE) {
+                                    return;
+                                }
+                                Loading.hide();
+                                if (xhr.status < 200 || xhr.status >= 300) {
+                                    alert('오류 발생');
+                                    return;
+                                }
+                                $theater.innerHTML = "";
+                                const $theaterItem = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.theater > .body > .content > .theater-container > .theater'));
+                                $theaterItem.forEach((x) => {
+                                    $theater.append(x);
+                                    x.onclick = () => {
+                                        $theaterItem.forEach((item) => {
+                                            item.classList.remove('select');
+                                            if (x === item) {
+                                                item.classList.add('select');
+                                            }
+                                            $theaterInfo.forEach((theater) => {
+                                                theater.classList.add('hidden');
+                                                if (theater.classList.contains('theater')) {
+                                                    theater.classList.remove('hidden');
+                                                }
+                                                $data.theater = 'CGV' + x.innerText;
+                                                $theaterTheater.innerText = 'CGV' + x.innerText + '>';
+                                            })
+                                        })
+                                        checkScreen();
+                                    }
+                                })
+                            };
+                            xhr.open('GET', url.toString());
+                            xhr.send();
+                            Loading.show(0);
+                        }
+                    })
                 }
             })
             $regionContainer.replaceWith($responseRegionContainer);
@@ -346,10 +444,65 @@ function checkScreen() {
             if (xhr.readyState !== XMLHttpRequest.DONE) {
                 return;
             }
+            Loading.hide();
             if (xhr.status < 200 || xhr.status >= 300) {
                 alert('오류 발생');
                 return;
             }
+            const $regionContainer = document.querySelector('.region-container');
+            const $responseRegionContainer = new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelector('.region-container');
+            const $region = Array.from($responseRegionContainer.querySelectorAll(':scope > .region'));
+            $region.forEach((region) => {
+                if (region.innerText.includes('대구')) {
+                    region.classList.add('select');
+                }
+                region.onclick = () => {
+                    $region.forEach((reg) => {
+                        reg.classList.remove('select');
+                        if (region === reg) {
+                            reg.classList.add('select');
+                            const xhr = new XMLHttpRequest();
+                            url.searchParams.set('region', reg.innerText.split('(')[0]);
+                            xhr.onreadystatechange = () => {
+                                if (xhr.readyState !== XMLHttpRequest.DONE) {
+                                    return;
+                                }
+                                Loading.hide();
+                                if (xhr.status < 200 || xhr.status >= 300) {
+                                    alert('오류 발생');
+                                    return;
+                                }
+                                $theater.innerHTML = "";
+                                const $theaterItem = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.theater > .body > .content > .theater-container > .theater'));
+                                $theaterItem.forEach((x) => {
+                                    $theater.append(x);
+                                    x.onclick = () => {
+                                        $theaterItem.forEach((item) => {
+                                            item.classList.remove('select');
+                                            if (x === item) {
+                                                item.classList.add('select');
+                                            }
+                                            $theaterInfo.forEach((theater) => {
+                                                theater.classList.add('hidden');
+                                                if (theater.classList.contains('theater')) {
+                                                    theater.classList.remove('hidden');
+                                                }
+                                                $data.theater = 'CGV' + x.innerText;
+                                                $theaterTheater.innerText = 'CGV' + x.innerText + '>';
+                                            })
+                                        })
+                                        checkScreen();
+                                    }
+                                })
+                            };
+                            xhr.open('GET', url.toString());
+                            xhr.send();
+                            Loading.show(0);
+                        }
+                    })
+                }
+            })
+            $regionContainer.replaceWith($responseRegionContainer);
             $theater.innerHTML = "";
             const $theaterItem = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.theater > .body > .content > .theater-container > .theater'));
             $theaterItem.forEach((x) => {
@@ -375,6 +528,7 @@ function checkScreen() {
         };
         xhr.open('GET', url.toString());
         xhr.send();
+        Loading.show();
     }
     if (!movie && theater && date) {
         const xhr = new XMLHttpRequest();
@@ -485,7 +639,6 @@ function movieItem($movieItems) {
                         if (xhr.readyState !== XMLHttpRequest.DONE) {
                             return;
                         }
-                        Loading.hide();
                         if (xhr.status < 200 || xhr.status >= 300) {
                             alert('오류 발생');
                             return;

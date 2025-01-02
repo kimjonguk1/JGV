@@ -123,7 +123,8 @@
 #main > .main-container > .main > .section .body .content > .movie > .item-container {
   margin-top: 0.1rem;
   width: 100%;
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 0.85rem;
   border: 0.1rem solid transparent;
   box-sizing: border-box;
   cursor: pointer;

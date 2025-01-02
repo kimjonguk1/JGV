@@ -95,7 +95,7 @@
                 <div class="body theater">
                     <div class="content">
                         <ul class="region-container"
-                            th:if="${movieVos == null && dateVos == null}">
+                            th:if="${movieVos == null && dateVos == null && moScVos == null}">
                             <li th:each="region : ${regions}"
                                 th:text="${region.getRegName() + '(' + region.getTheaterCount() + ')'}"
                                 class="region" data-id="region"></li>
@@ -111,11 +111,18 @@
                             th:if="${dateVos != null}"
                             th:each="vos : ${dateVos}">
                             <li th:each="region : ${regions}"
-                                th:text="${region.getRegName().equals(vos[2][0]) ? vos[2][0] + '(' + vos[2][1] + ')' : region.getRegName() + '(' + region.getTheaterCount() + ')'}"
+                                th:text="${region.getRegName().equals(vos[2][1]) ? vos[2][1] + '(' + vos[2][0] + ')' : region.getRegName() + '(' + region.getTheaterCount() + ')'}"
                                 class="region" data-id="region"></li>
                         </ul>
+                        <ul class="region-container"
+                            th:if="${moScVos != null}"
+                            th:each="vos : ${moScVos}">
+                                <li th:each="region : ${regions}"
+                                    th:text="${region.getRegName().equals(vos[1][0]) ? vos[1][0] + '(' + vos[1][1] + ')' : region.getRegName() + '(' + region.getTheaterCount() + ')'}"
+                                    class="region" data-id="region"></li>
+                        </ul>
                         <ul class="theater-container"
-                            th:if="${movieVos == null && dateVos == null && moScVos == null}">
+                            th:if="${movieVos == null && dateVos == null && moScVos == null && movieRegVos == null && dateRegionVos == null && moScRegionVos == null}">
                             <li class="theater"
                                 th:if="theaters != null"
                                 th:each="theater : ${theaters}">
@@ -142,6 +149,30 @@
                         <ul class="theater-container"
                             th:if="${moScVos != null}"
                             th:each="vos : ${moScVos}">
+                            <li class="theater" th:each="vo : ${vos[0]}">
+                                <span th:text="${vo.substring(3, vo.length())}"
+                                      class="text"></span>
+                            </li>
+                        </ul>
+                        <ul class="theater-container"
+                            th:if="${movieRegVos != null}"
+                            th:each="vos : ${movieRegVos}">
+                            <li class="theater" th:each="vo : ${vos[1]}">
+                                <span th:text="${vo.substring(3, vo.length())}"
+                                      class="text"></span>
+                            </li>
+                        </ul>
+                        <ul class="theater-container"
+                            th:if="${dateRegionVos != null}"
+                            th:each="vos : ${dateRegionVos}">
+                            <li class="theater" th:each="vo : ${vos[1]}">
+                                <span th:text="${vo.substring(3, vo.length())}"
+                                      class="text"></span>
+                            </li>
+                        </ul>
+                        <ul class="theater-container"
+                            th:if="${moScRegionVos != null}"
+                            th:each="vos : ${moScRegionVos}">
                             <li class="theater" th:each="vo : ${vos[0]}">
                                 <span th:text="${vo.substring(3, vo.length())}"
                                       class="text"></span>
@@ -304,10 +335,10 @@
                     <div class="time"></div>
                 </div>
                 <div class="body time">
-                    <div class="content hidden">
+                    <div class="content">
                         <div class="notice">영화,극장,날짜를 선택해 주세요.</div>
                     </div>
-                    <div class="time-container">
+                    <div class="time-container hidden">
                         <div class="time-table" th:each="time : ${times}">
                             <div class="title">
                                 <span th:text="${time.key[0]}" class="cinema-type"></span>
@@ -832,7 +863,7 @@
         <div class="theater info hidden" data-id="theaterInfo">
             <div class="text">
                 <span class="head">극장</span>
-                <a href="#" class="data" id="theater-theater"></a>
+                <a th:href="@{../theater/}" class="data" id="theater-theater"></a>
             </div>
             <div class="text">
                 <span class="head">일시</span>
