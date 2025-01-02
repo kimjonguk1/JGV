@@ -11,6 +11,48 @@ const $dayContainers = $cinemaInformation.querySelector(':scope > .cinema-info >
 const $screens = $cinemaInformation.querySelector(':scope > .cinema-info > .items');
 const theaterParams = JSON.parse(sessionStorage.getItem('theater'));
 
+// region 광고
+{
+    const $advertisementArray = ['https://adimg.cgv.co.kr/images/202412/Moana2/1218_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1224_980x80.png', 'https://adimg.cgv.co.kr/images/202411/jjanggu/1209_980x80.png']
+    document.addEventListener("DOMContentLoaded", () => {
+        const $advertisement = document.getElementById('advertisement');
+        const $advertisementRandom = $advertisementArray[Math.floor(Math.random() * $advertisementArray.length)];
+        const $img = $advertisement.querySelector(':scope > a > img');
+        if ($advertisementRandom === $advertisementArray[0]) {
+            $advertisement.style.backgroundColor = '#2B53AB'
+        } else if ($advertisementRandom === $advertisementArray[1]) {
+            $advertisement.style.backgroundColor = '#4184D2'
+        } else if ($advertisementRandom === $advertisementArray[2]) {
+            $advertisement.style.backgroundColor = '#191413'
+        } else {
+            $advertisement.style.backgroundColor = '#2B82DD'
+        }
+        $img.setAttribute('src', $advertisementRandom);
+    });
+
+    const $sideAdvertisementArray = ['https://adimg.cgv.co.kr/images/202411/Firefighters/1121_980x90.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_980x90.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1227_980x90.jpg'];
+    document.addEventListener("DOMContentLoaded", () => {
+        const $advertisement = document.querySelector('.advertisement-info');
+        const $advertisementRandom = $sideAdvertisementArray[Math.floor(Math.random() * $sideAdvertisementArray.length)];
+        const $img = $advertisement.querySelector(':scope > a > img');
+        $img.setAttribute('src', $advertisementRandom);
+    });
+
+    const $advertisementContainerArray = ['https://adimg.cgv.co.kr/images/202412/PORORO/1231_160x300.jpg', 'https://adimg.cgv.co.kr/images/202412/Moana2/1218_160x300.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1227_160x300.png'];
+    const $advertisementContainer = Array.from(document.querySelectorAll('.advertisement-container'));
+    document.addEventListener("DOMContentLoaded", () => {
+        $advertisementContainer.forEach((advertisement) => {
+            const $advertisementMove = Array.from(advertisement.querySelectorAll(':scope > .advertisement-move'));
+            $advertisementMove.forEach((ad) => {
+                const $advertisementRandom = $advertisementContainerArray[Math.floor(Math.random() * $advertisementContainerArray.length)];
+                const $img = ad.querySelector(':scope > img');
+                $img.setAttribute('src', $advertisementRandom);
+            })
+        })
+    });
+}
+// endregion
+
 {
     const $cinemaInfoRating = document.querySelector('.cinema-info-detail > .cinema-detail.rating');
     const $cinemaInfoPrice = document.querySelector('.cinema-info-detail > .cinema-detail.price');

@@ -356,7 +356,6 @@ main > .contents > .video_wrapper::after {
   color: #222222;
   padding: 1rem 2rem;
   white-space: nowrap;
-  cursor: pointer;
 }
 #theater > .background > .theater-list > .item-container > .item > .text > .-spring {
   flex-grow: 1;

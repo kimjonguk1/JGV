@@ -1,3 +1,22 @@
+{
+    const $advertisementArray = ['https://adimg.cgv.co.kr/images/202412/Moana2/1218_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1224_980x80.png', 'https://adimg.cgv.co.kr/images/202411/jjanggu/1209_980x80.png']
+    document.addEventListener("DOMContentLoaded", () => {
+        const $advertisement = document.getElementById('advertisement');
+        const $advertisementRandom = $advertisementArray[Math.floor(Math.random() * $advertisementArray.length)];
+        const $img = $advertisement.querySelector(':scope > a > img');
+        if ($advertisementRandom === $advertisementArray[0]) {
+            $advertisement.style.backgroundColor = '#2B53AB'
+        } else if ($advertisementRandom === $advertisementArray[1]) {
+            $advertisement.style.backgroundColor = '#4184D2'
+        } else if ($advertisementRandom === $advertisementArray[2]) {
+            $advertisement.style.backgroundColor = '#191413'
+        } else {
+            $advertisement.style.backgroundColor = '#2B82DD'
+        }
+        $img.setAttribute('src', $advertisementRandom);
+    });
+}
+
 function ticketCancel(index) {
     // 선택된 항목의 데이터를 가져옵니다.
     const paNum = document.getElementById(`paNum-${index}`).innerText;
@@ -46,7 +65,7 @@ const $closeModal = document.getElementById('closeModal');
 console.log($modal)
 $modal.style.display = 'none';
 document.addEventListener('click', (e) => {
-    if(e.target.closest('.edit-review')) {
+    if (e.target.closest('.edit-review')) {
         const $reviewItem = e.target.closest('.review-item');
         const $reviewId = $reviewItem.dataset.reviewId;
         const $reviewText = $reviewItem.querySelector('.review-description').innerText;
@@ -62,20 +81,21 @@ document.addEventListener('click', (e) => {
             handleEditReview($reviewId, $textarea.value.trim())
         }
     }
-    if(e.target.closest('.delete-review')) {
+    if (e.target.closest('.delete-review')) {
         const $reviewItem = e.target.closest('.review-item');
         const $reviewId = $reviewItem.dataset.reviewId;
         const result = confirm('평점을 삭제하시겠습니까?')
-        if(result) {
+        if (result) {
             handleDeleteReview($reviewId);
         } else {
             return
         }
     }
-    if(e.target === $closeModal) {
+    if (e.target === $closeModal) {
         closeModal();
     }
 });
+
 //모달 닫기
 function closeModal() {
     $modal.style.display = 'none';
@@ -91,57 +111,57 @@ document.addEventListener('keydown', (e) => {
 });
 
 function handleEditReview(reviewId, updatedText) {
-    if(!updatedText) {
+    if (!updatedText) {
         alert('수정할 내용을 입력해주세요')
         return
     }
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
-        if(xhr.readyState !== XMLHttpRequest.DONE) {
+        if (xhr.readyState !== XMLHttpRequest.DONE) {
             return;
         }
-        if(xhr.status < 200 || xhr.status >= 300) {
+        if (xhr.status < 200 || xhr.status >= 300) {
             alert('평점 수정에 실패하였습니다. 새로고침 후 다시 시도해 주세요')
             return;
         }
         const response = JSON.parse(xhr.responseText);
-        if(response === "SUCCESS") {
+        if (response === "SUCCESS") {
             alert('평점이 성공적으로 수정되었습니다')
             window.location.reload()
-        } else if(response === "UNAUTHORIZED") {
+        } else if (response === "UNAUTHORIZED") {
             alert('수정할 권한이 없습니다')
             $modal.style.display = 'none';
-        } else if(response === "FAILURE") {
+        } else if (response === "FAILURE") {
             alert('평점 수정에 실패하였습니다. 잠시 후 다시 시도해 주세요')
-        } else if(response === "NOT_LOGGED_IN") {
+        } else if (response === "NOT_LOGGED_IN") {
             alert('평점 수정에 실패하였습니다. 로그인 상태를 확인 후 다시 시도해 주세요')
             $modal.style.display = 'none';
         }
     };
     xhr.open('PUT', `/reviews/${reviewId}`);
     xhr.setRequestHeader("content-Type", "application/json");
-    xhr.send(JSON.stringify({ reContent : updatedText}));
+    xhr.send(JSON.stringify({reContent: updatedText}));
 }
 
 function handleDeleteReview(reviewId) {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
-        if(xhr.readyState !== XMLHttpRequest.DONE) {
+        if (xhr.readyState !== XMLHttpRequest.DONE) {
             return;
         }
-        if(xhr.status < 200 || xhr.status >= 300) {
+        if (xhr.status < 200 || xhr.status >= 300) {
             alert('평점 삭제에 실패하였습니다. 새로고침 후 다시 시도해 주세요')
             return;
         }
         const response = JSON.parse(xhr.responseText);
-        if(response === "SUCCESS") {
+        if (response === "SUCCESS") {
             alert('평점이 성공적으로 삭제되었습니다')
             window.location.reload()
-        } else if(response === "UNAUTHORIZED") {
+        } else if (response === "UNAUTHORIZED") {
             alert('삭제할 권한이 없습니다')
-        } else if(response === "FAILURE") {
+        } else if (response === "FAILURE") {
             alert('평점 삭제에 실패하였습니다. 잠시 후 다시 시도해 주세요')
-        } else if(response === "NOT_LOGGED_IN") {
+        } else if (response === "NOT_LOGGED_IN") {
             alert('평점 삭제에 실패하였습니다. 로그인 상태를 확인 후 다시 시도해 주세요')
         }
     };

@@ -1,5 +1,33 @@
 const $loginForm = document.getElementById('login-form');
 
+// region nav 광고
+{
+    const $advertisementArray = ['https://adimg.cgv.co.kr/images/202412/Moana2/1218_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1224_980x80.png', 'https://adimg.cgv.co.kr/images/202411/jjanggu/1209_980x80.png']
+    document.addEventListener("DOMContentLoaded", () => {
+        const $advertisement = document.getElementById('advertisement');
+        const $advertisementRandom = $advertisementArray[Math.floor(Math.random() * $advertisementArray.length)];
+        const $img = $advertisement.querySelector(':scope > a > img');
+        if ($advertisementRandom === $advertisementArray[0]) {
+            $advertisement.style.backgroundColor = '#2B53AB'
+        } else if ($advertisementRandom === $advertisementArray[1]) {
+            $advertisement.style.backgroundColor = '#4184D2'
+        } else if ($advertisementRandom === $advertisementArray[2]) {
+            $advertisement.style.backgroundColor = '#191413'
+        } else {
+            $advertisement.style.backgroundColor = '#2B82DD'
+        }
+        $img.setAttribute('src', $advertisementRandom);
+    });
+
+    const $sideAdvertisementArray = ['https://adimg.cgv.co.kr/images/202411/Firefighters/1121_980x90.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_980x90.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1227_980x90.jpg'];
+    document.addEventListener("DOMContentLoaded", () => {
+        const $advertisement = document.querySelector('.advertisement-info');
+        const $advertisementRandom = $sideAdvertisementArray[Math.floor(Math.random() * $sideAdvertisementArray.length)];
+        const $img = $advertisement.querySelector(':scope > img');
+        $img.setAttribute('src', $advertisementRandom);
+    });
+}
+// endregion
 
 const savedId = localStorage.getItem('rememberId');
 if (savedId) {
