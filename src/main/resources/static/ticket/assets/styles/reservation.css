@@ -12,7 +12,6 @@
   height: 10rem;
 }
 #main > .main-container {
-  width: 100%;
   align-items: flex-start;
   display: flex;
   flex-direction: row;
