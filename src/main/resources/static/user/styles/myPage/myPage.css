@@ -164,7 +164,7 @@
   display: flex;
   justify-content: center;
 }
-.main-container > .paging > .paging a {
+.main-container > .paging > .paging > .page {
   padding: 5px 5px;
   margin: 0 2px;
   cursor: pointer;
@@ -173,7 +173,7 @@
   color: #333;
   font-weight: 500;
 }
-.main-container > .paging > .paging a.active {
+.main-container > .paging > .paging > .page.active {
   color: #ff5a5a;
 }
 
@@ -740,7 +740,7 @@
   display: flex;
   justify-content: center;
 }
-.paging > .paging a {
+.paging > .paging > .page {
   padding: 5px 5px;
   margin: 0 2px;
   cursor: pointer;
@@ -749,7 +749,7 @@
   color: #333;
   font-weight: 500;
 }
-.paging > .paging a.active {
+.paging > .paging > .page.active {
   color: #ff5a5a;
 }
 

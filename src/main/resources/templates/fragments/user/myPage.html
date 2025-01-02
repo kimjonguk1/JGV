@@ -52,7 +52,9 @@
                 <a class="page"
                    th:each="page2 : ${#numbers.sequence(PageReservations.displayMinPage, PageReservations.displayMaxPage)}"
                    th:text="${page2}"
-                   th:href="@{/user/myPage/main(page=${page}, page2=${page2})}"></a>
+                   th:href="@{/user/myPage/main(page=${page}, page2=${page2})}"
+                   th:classappend="${page2 == PageReservations.requestPage} ? 'active'"></a>
+
             </div>
         </div>
     </div>
@@ -245,7 +247,9 @@
             <a class="page"
                th:each="page2 : ${#numbers.sequence(PageReservations.displayMinPage, PageReservations.displayMaxPage)}"
                th:text="${page2}"
-               th:href="@{/user/myPage/reservation(page2=${page2})}"></a>
+               th:href="@{/user/myPage/reservation(page2=${page2})}"
+               th:classappend="${page2 == PageReservations.requestPage} ? 'active'"></a>
+
         </div>
     </div>
     <div class="cancel-container">
