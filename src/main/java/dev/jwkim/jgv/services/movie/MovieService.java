@@ -409,38 +409,81 @@ public class MovieService {
 
     //영화 수정
     public boolean updateMovie(int movieNum, AllMovieInfoDTO movieInfo) {
+        movieInfo.setMoNum(movieNum);
         int updated = movieMapper.modifyMovie(movieInfo);
-        System.out.println(movieNum);
-        System.out.println("movieInfo : " + movieInfo);
         if (updated == 0) {
             return false;
         }
 
+        //장르 업데이트(기존 장르가 없을 경우 추가한 후 다대다 매핑)
 
-        // 영화 장르 수정
-        movieMapper.deleteGenresByMovieId(movieNum);
-        for (String genre : movieInfo.getGenres()) {
-            movieMapper.addGenreToMovie(movieNum, genre);
-        }
+        updateGenres(movieNum, movieInfo.getGenres());
+
+        //국가 업데이트(기존 국가가 없을 경우 추가한 후 다대다 매핑)
+        updateCountries(movieNum, movieInfo.getCountries());
+
 
         // 영화 인물 수정
         movieMapper.deleteActorsByMovieId(movieNum); // 기존 관계 삭제
-        for (AllMovieInfoDTO.MovieCharacterDTO character : movieInfo.getMovieCharacters()) {
+        for (AllMovieInfoDTO.MovieCharacterDTO character : movieInfo.getActors()) {
             if (!character.isDelete()) {
+                // 배우 이름 업데이트
+                movieMapper.updateActorName(character.getChNum(), character.getChName());
+
                 // 삭제 플래그가 false인 경우에만 추가
                 movieMapper.addActorToMovie(movieNum, character.getChNum());
             }
-        }
-
-        // 영화 국가 수정
-        movieMapper.deleteCountriesByMovieId(movieNum);
-        for (String country : movieInfo.getCountries()) {
-            movieMapper.addCountryToMovie(movieNum, country);
         }
 
         // 영화 관람 등급 수정
         movieMapper.updateMovieRating(movieNum, movieInfo.getRaGrade()); // 관람 등급 수정
 
         return true;
+    }
+
+    private void updateGenres(int movieNum, List<String> genres) {
+        if (genres == null || genres.isEmpty()) {
+            return;
+        }
+
+        // 기존 매핑 삭제
+        movieMapper.deleteGenresByMovieId(movieNum);
+
+        // 새로운 매핑 추가
+        for (String genreName : genres) {
+            Integer genreId = movieMapper.findGenreByName(genreName);
+
+            // 장르가 없으면 추가
+            if (genreId == null) {
+                movieMapper.insertGenre(genreName);
+                genreId = movieMapper.findGenreByName(genreName);
+            }
+
+            // 영화-장르 매핑 추가
+            movieMapper.insertMovieGenre(movieNum, genreId);
+        }
+    }
+
+    private void updateCountries(int movieNum, List<String> countries) {
+        if (countries == null || countries.isEmpty()) {
+            return;
+        }
+
+        // 기존 매핑 삭제
+        movieMapper.deleteCountriesByMovieId(movieNum);
+
+        // 새로운 매핑 추가
+        for (String countryName : countries) {
+            Integer countryId = movieMapper.findCountryByName(countryName);
+
+            // 국가가 없으면 추가
+            if (countryId == null) {
+                movieMapper.insertCountry(countryName);
+                countryId = movieMapper.findCountryByName(countryName);
+            }
+
+            // 영화-국가 매핑 추가
+            movieMapper.insertMovieCountry(movieNum, countryId);
+        }
     }
 }

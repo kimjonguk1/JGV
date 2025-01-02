@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function renderMoviePoster(imageUrl) {
         const container = document.getElementById("movie-image");
         container.innerHTML = `
-            <img src="${imageUrl}" alt="영화 포스터" style="width: 150px; height: auto; display: block; margin-bottom: 10px;">
+            <img src="${imageUrl}" alt="영화 포스터">
         `;
     }
 
@@ -82,9 +82,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 인물 이름 수정:
                 <input type="text" value="${characterName}" name="characterName">
             </label>
-            <img src="${imageUrl}" alt="인물 이미지" style="width: 100px; height: auto; display: block; margin-bottom: 10px;">
-            <label>
-                삭제:
+            <img src="${imageUrl}" alt="인물 이미지">
+            <label class="delete-container">
+                <label>삭제:</label>
                 <input type="checkbox" name="deleteCharacter">
             </label>
             <input type="hidden" name="characterNum" value="${chNum}">
@@ -149,7 +149,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         xhr.open('PUT', `/admin/api/${movieNum}`);
         xhr.setRequestHeader('Content-Type', 'application/json');
-        console.log(JSON.stringify(formData));
         xhr.send(JSON.stringify(formData));
     }
 });
