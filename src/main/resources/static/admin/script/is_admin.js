@@ -2,7 +2,7 @@ const $movieCrawl = document.getElementById('movie-crawl-button');
 
 $movieCrawl.onclick = () => {
     window.open(
-        "http://localhost:8080/admin/movie-crawl",
+        "../../admin/movie-crawl",
         "영화 정보 크롤링",
         "width=600,height=800,left=200,top=200"
     );
@@ -12,7 +12,7 @@ const $theaterCrawl = document.getElementById('theater-crawl-button');
 
 $theaterCrawl.onclick = () => {
     window.open(
-        "http://localhost:8080/admin/theater-crawl",
+        "../../admin/theater-crawl",
         "상영 정보 크롤링",
         "width=600,height=800,left=200,top=200"
     );

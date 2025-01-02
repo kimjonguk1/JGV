@@ -204,15 +204,27 @@ public class UserController {
 
     @RequestMapping(value = "/myPage/personal", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView postMyPagePersonal(@SessionAttribute("user") UserEntity user,
-                                           @RequestParam(value = "password") String password) {
+                                           @RequestParam(value = "password") String password,
+                                           @RequestParam(value = "forward", required = false) String forward) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         Boolean passwordMatches = encoder.matches(password, user.getUsPw()); // true, false, null
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("passwordMatches", passwordMatches);
-        modelAndView.setViewName("user/myPage/modify");
+
+        if (passwordMatches != null && passwordMatches) {
+            // 인증 성공 시 forward 경로로 이동
+            if (forward != null && !forward.isEmpty()) {
+                modelAndView.setViewName("redirect:" + forward);
+            } else {
+                modelAndView.setViewName("/user/myPage/modify"); // 기본 경로
+            }
+
+        }
         return modelAndView;
     }
+
+
 
 //    @RequestMapping(value = "/myPage/modify", method = RequestMethod.GET, produces =
 //            MediaType.TEXT_HTML_VALUE)
