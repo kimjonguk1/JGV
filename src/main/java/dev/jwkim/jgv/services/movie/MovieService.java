@@ -368,9 +368,6 @@ public class MovieService {
     @Transactional
     public void updateMovieDetails(MovieEntity movieEntity, String posterUrl, Integer raId, String ifPosterUrl) {
         Integer movieId = movieEntity.getMoNum();
-        System.out.println("영화 아이디: " + movieId);
-        System.out.println("영화 포스터 링크: " + posterUrl);
-        System.out.println("기존 포스터 URL: " + ifPosterUrl);
 
         if (movieId != null) {
             // Update 기존 영화 데이터

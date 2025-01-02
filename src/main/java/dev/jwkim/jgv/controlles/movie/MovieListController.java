@@ -150,30 +150,30 @@ public class MovieListController {
         //인물 검색
         List<CharacterDTO> people = searchService.searchPeopleByKeyword(keyword);
         // 인물별 관련 영화 검색 (감독 또는 배우)
-        Map<String, String> relatedMoviesJsonMap = new HashMap<>(); // JSON 문자열을 담을 Map
-        ObjectMapper objectMapper = new ObjectMapper(); // JSON 변환을 위한 ObjectMapper
+//        Map<String, String> relatedMoviesJsonMap = new HashMap<>(); // JSON 문자열을 담을 Map
+//        ObjectMapper objectMapper = new ObjectMapper(); // JSON 변환을 위한 ObjectMapper
 
-        for (CharacterDTO person : people) {
-            List<RelatedMovieDTO> relatedMovies = searchService.searchMoviesByActor(person.getChName())
-                    .stream()
-                    .map(movieMap -> {
-                        String title = (String) movieMap.get("movieTitle");
-                        String image = (String) movieMap.get("movieImage");
-                        Number moNum = (Number) movieMap.get("moNum");
-                        Integer id = moNum.intValue();
-                        return new RelatedMovieDTO(title, image, id);
-                    }).collect(Collectors.toList());
-
-            try {
-                // 관련 영화 리스트를 JSON 문자열로 변환
-                String jsonString = objectMapper.writeValueAsString(relatedMovies);
-                relatedMoviesJsonMap.put(person.getChName(), jsonString);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-                // 변환 실패 시 빈 문자열로 처리
-                relatedMoviesJsonMap.put(person.getChName(), "[]");
-            }
-        }
+//        for (CharacterDTO person : people) {
+//            List<RelatedMovieDTO> relatedMovies = searchService.searchMoviesByActor(person.getChName())
+//                    .stream()
+//                    .map(movieMap -> {
+//                        String title = (String) movieMap.get("movieTitle");
+//                        String image = (String) movieMap.get("movieImage");
+//                        Number moNum = (Number) movieMap.get("moNum");
+//                        Integer id = moNum.intValue();
+//                        return new RelatedMovieDTO(title, image, id);
+//                    }).collect(Collectors.toList());
+//
+//            try {
+//                // 관련 영화 리스트를 JSON 문자열로 변환
+//                String jsonString = objectMapper.writeValueAsString(relatedMovies);
+//                relatedMoviesJsonMap.put(person.getChName(), jsonString);
+//            } catch (JsonProcessingException e) {
+//                e.printStackTrace();
+//                // 변환 실패 시 빈 문자열로 처리
+//                relatedMoviesJsonMap.put(person.getChName(), "[]");
+//            }
+//        }
 
         if(movies == null) {
             movies = new ArrayList<>();
@@ -189,7 +189,7 @@ public class MovieListController {
         mav.addObject("people", people);
         mav.addObject("pageVo", pageVo);
         mav.addObject("movies", movies);
-        mav.addObject("relatedMoviesJsonMap", relatedMoviesJsonMap);
+//        mav.addObject("relatedMoviesJsonMap", relatedMoviesJsonMap);
 
         mav.setViewName("article/MovieSearch");
         return mav;
