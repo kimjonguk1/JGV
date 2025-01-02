@@ -28,6 +28,7 @@ main > .contents {
 main > .contents > .video_wrapper {
   width: 980px;
   height: 100%;
+  cursor: default;
   align-items: flex-start;
   display: flex;
   flex-direction: column;

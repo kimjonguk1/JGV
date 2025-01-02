@@ -90,6 +90,14 @@ public class TicketService {
         return this.ticketMapper.selectAllMoviesByMoTitle(moTitle);
     }
 
+    public MovieVo[] selectAllMoviesByRegion(String moTitle, String region) {
+        if (moTitle == null || moTitle.isEmpty() ||
+                region == null || region.isEmpty()) {
+            return null;
+        }
+        return this.ticketMapper.selectAllMoviesByMoTitleAndRegion(moTitle, region);
+    }
+
     public MovieVo[] selectAllMoviesByThName(String thName) {
         if (thName == null || thName.isEmpty()) {
             return null;
@@ -104,12 +112,29 @@ public class TicketService {
         return this.ticketMapper.selectAllMoviesByScStartDate(scStartDate);
     }
 
+    public MovieVo[] selectAllMoviesByScStartDateAndRegion(String scStartDate, String region) {
+        if (scStartDate == null || scStartDate.isEmpty() ||
+                region == null || region.isEmpty()) {
+            return null;
+        }
+        return this.ticketMapper.selectAllMoviesByScStartDateAndRegion(scStartDate, region);
+    }
+
     public MovieVo[] selectAllMoviesByMoTitleAndScStartDate(String moTitle, String scStartDate) {
         if (moTitle == null || moTitle.isEmpty() ||
                 scStartDate == null || scStartDate.isEmpty()) {
             return null;
         }
         return this.ticketMapper.selectAllMoviesByMoTitleAndScStartDate(moTitle, scStartDate);
+    }
+
+    public MovieVo[] selectAllMoviesByMoTitleAndScStartDateAndRegion(String moTitle, String scStartDate, String region) {
+        if (moTitle == null || moTitle.isEmpty() ||
+                scStartDate == null || scStartDate.isEmpty() ||
+                region == null || region.isEmpty()) {
+            return null;
+        }
+        return this.ticketMapper.selectAllMoviesByMoTitleAndScStartDateAndRegion(moTitle, scStartDate, region);
     }
 
     public MovieVo[] selectAllMoviesByThNameAndScStartDate(String thName, String scStartDate) {
@@ -184,9 +209,34 @@ public class TicketService {
         return map;
     }
 
-
     public Map<String, String> getWeekdaysByMoTitle(String moTitle) {
         MovieVo[] screens = this.ticketMapper.selectAllMoviesByMoTitle(moTitle);
+        SortedSet<String> sortedSet = new TreeSet<>();
+        for (MovieVo screen : screens) {
+            sortedSet.add(screen.getScStartDate().toString().split("T")[0]);
+        }
+
+        SortedSet<String> sortSet = new TreeSet<>();
+        for (String sort : sortedSet) {
+            sortSet.add(sort.substring(0, 7));
+        }
+
+        Map<String, String> map = new TreeMap<>();
+        for (String title : sortSet) {
+            List<String> list = new ArrayList<>();
+            for (String day : sortedSet) {
+                if (day.contains(title)) {
+                    LocalDate localDate = LocalDate.parse(day, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    list.add(day.split("-")[2] + "-" + localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN).split("요일")[0]);
+                }
+            }
+            map.put(title, list.toString().replace('[', ' ').replace(']', ' '));
+        }
+        return map;
+    }
+
+    public Map<String, String> getWeekdaysByMoTitleAndRegion(String moTitle, String region) {
+        MovieVo[] screens = this.ticketMapper.selectAllMoviesByMoTitleAndRegion(moTitle, region);
         SortedSet<String> sortedSet = new TreeSet<>();
         for (MovieVo screen : screens) {
             sortedSet.add(screen.getScStartDate().toString().split("T")[0]);
@@ -459,7 +509,7 @@ public class TicketService {
                                 for (WebElement element : timeElements) {
                                     String updatedText;
                                     timeTable.append("상영 시간: ").append(element.getText()).append("\n");
-                                    if (Integer.parseInt(element.getText().substring(0,2)) >= 24) {
+                                    if (Integer.parseInt(element.getText().substring(0, 2)) >= 24) {
                                         date = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd")).plusDays(1).toString().replaceAll("-", "");
                                         updatedText = element.getText().replace(element.getText().substring(0, 2), "00");
                                     } else {
@@ -625,7 +675,7 @@ public class TicketService {
     public int selectPaymentNum(String moTitle, String ciName, String thName, LocalDateTime scStartDate, int paPrice, int usNum) {
 
         // selectPaymentNum을 호출하여 결제 번호 조회
-        return  this.paymentMapper.selectPaymentNum(moTitle, ciName, thName, scStartDate, paPrice, usNum);
+        return this.paymentMapper.selectPaymentNum(moTitle, ciName, thName, scStartDate, paPrice, usNum);
     }
 
 }

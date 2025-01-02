@@ -81,6 +81,8 @@ public class AdminController {
 
             // 페이지네이션 정보
             modelAndView.addObject("screenPageVo", groupedScreens.getLeft());
+            modelAndView.addObject("screenFilter", screenFilter);
+            modelAndView.addObject("screenKeyword", screenKeyword);
         }
 
         if (user == null || !user.isUsIsAdmin()) {

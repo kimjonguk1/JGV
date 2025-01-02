@@ -35,15 +35,25 @@ public interface TicketMapper {
 
     MovieVo[] selectAllMoviesByMoTitle(@Param(value = "moTitle") String moTitle);
 
+    MovieVo[] selectAllMoviesByMoTitleAndRegion(@Param(value = "moTitle") String moTitle,
+                                                @Param(value = "region") String region);
+
     MovieVo[] selectAllMoviesByThName(@Param(value = "thName") String thName);
 
     MovieVo[] selectAllMoviesByScStartDate(@Param(value = "scStartDate") String scStartDate);
+
+    MovieVo[] selectAllMoviesByScStartDateAndRegion(@Param(value = "scStartDate") String scStartDate,
+                                                    @Param(value = "region") String region);
 
     MovieVo[] selectAllMoviesByMoTitleAndThName(@Param(value = "moTitle") String moTitle,
                                                 @Param(value = "thName") String thName);
 
     MovieVo[] selectAllMoviesByMoTitleAndScStartDate(@Param(value = "moTitle") String moTitle,
                                                      @Param(value = "scStartDate") String scStartDate);
+
+    MovieVo[] selectAllMoviesByMoTitleAndScStartDateAndRegion(@Param(value = "moTitle") String moTitle,
+                                                     @Param(value = "scStartDate") String scStartDate,
+                                                              @Param(value = "region") String region);
 
     MovieVo[] selectAllMoviesByThNameAndScStartDate(@Param(value = "thName") String thName,
                                                     @Param(value = "scStartDate") String scStartDate);

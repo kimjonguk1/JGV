@@ -12,6 +12,28 @@ $items.forEach((x) => {
     }
 })
 
+const $videoArray = ['https://adimg.cgv.co.kr/images/202412/PORORO/pororo_1080x608_MA.mp4', 'https://adimg.cgv.co.kr/images/202412/HARBIN/HARBIN_pc_1080x608.mp4'];
+window.onload = () => {
+    const $video = document.querySelector('video');
+    const $source = document.querySelector('source');
+    const $random = $videoArray[Math.floor(Math.random() * $videoArray.length)];
+    const $videoWrapper = document.querySelector('.video_wrapper');
+    const $strong = $videoWrapper.querySelector(':scope > strong');
+    const $span = $videoWrapper.querySelector(':scope > span');
+    const $a = $videoWrapper.querySelector(':scope > div > a');
+    $source.setAttribute('src', $random);
+    if ($random === $videoArray[0]) {
+        $strong.innerText = '뽀로로 극장판 바닷속 대모험';
+        $span.innerHTML = `최고 스케일 스펙터클 오션 어드벤처<br>1월 1일 대개봉`;
+        $a.setAttribute('href', '/movies/movieList/movieInfo/3628');
+    } else {
+        $strong.innerText = '하얼빈';
+        $span.innerHTML = `"지금 가장 의미있는 영화"<br>긴 여운 X 큰 울림! 예매 ▶`;
+        $a.setAttribute('href', '/movies/movieList/movieInfo/3611');
+    }
+    $video.load();
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     // Tabs for switching sections
     const currentTab = document.querySelector(".current-tab");
