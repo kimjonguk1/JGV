@@ -513,14 +513,18 @@ public class UserService {
 
         Map<Set<String>, List<String>> map = new LinkedHashMap<>();
         ReservationVo[] reservationVo = this.userMapper.selectPaymentByUsNum(usNum, pageVo.countPerPage, pageVo.offsetCount);
+
         for (ReservationVo reservationVos : reservationVo) {
             Set<String> strings = new LinkedHashSet<>();
             List<String> strings1 = new ArrayList<>();
+
             strings.add(String.valueOf(reservationVos.getPaNum()));
             strings.add(String.valueOf(reservationVos.getMImgUrl()));
             strings.add(String.valueOf(reservationVos.getMoTitle()));
             strings.add(String.format("%,d", reservationVos.getPaPrice()) + "원");
             strings.add(String.valueOf(reservationVos.getThName()));
+
+            // 예약 시간 포맷팅
             LocalDate localDate = LocalDate.parse(reservationVos.getScStartDate().toString().split("T")[0], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             strings.add(reservationVos.getScStartDate().toString().split("T")[0] + "(" + localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN).split("요일")[0] + ") " + reservationVos.getScStartDate().toString().split("T")[1]);
             strings.add(String.valueOf(reservationVos.getCiName()));
@@ -529,11 +533,17 @@ public class UserService {
             strings.add(String.valueOf(reservationVos.getScStartDate()));
             strings.add(String.valueOf(reservationVos.getMoNum()));
 
+            // seNames를 ','로 구분하여 리스트로 변환
+            String seNames = reservationVos.getSeNames(); // "A1,A2,A3"
+            if (seNames != null && !seNames.isEmpty()) {
+                List<String> seatList = Arrays.asList(seNames.split(","));
+                strings1.addAll(seatList); // 리스트에 좌석 이름 추가
+            }
 
-            strings1.add(String.valueOf(reservationVos.getSeName()));
-
+            // map에 추가
             map.computeIfAbsent(strings, k -> new ArrayList<>()).addAll(strings1);
         }
+
         return Pair.of(pageVo, map);
     }
 

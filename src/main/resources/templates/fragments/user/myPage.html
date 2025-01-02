@@ -45,14 +45,14 @@
         </div>
         <div class="paging">
             <div class="no-reservation" th:if="${#lists.isEmpty(PageReservations)}">
-                <span>예매한 영화가 없습니다.</span>
+                <span class="no-reservation-text">예매한 영화가 없습니다.</span>
             </div>
             <div class="paging"
                  th:if="${!#lists.isEmpty(PageReservations) && PageReservations.displayMaxPage > PageReservations.displayMinPage}">
                 <a class="page"
-                   th:each="page : ${#numbers.sequence(PageReservations.displayMinPage, PageReservations.displayMaxPage)}"
-                   th:text="${page}"
-                   th:href="@{/user/myPage/main(page=${page})}"></a>
+                   th:each="page2 : ${#numbers.sequence(PageReservations.displayMinPage, PageReservations.displayMaxPage)}"
+                   th:text="${page2}"
+                   th:href="@{/user/myPage/main(page=${page}, page2=${page2})}"></a>
             </div>
         </div>
     </div>
@@ -109,10 +109,15 @@
             <div class="no-review" th:if="${#lists.isEmpty(Reviews)}">
                 <span class="no-review-text">작성한 리뷰가 없습니다.</span>
             </div>
-            <div class="paging" th:if="${!#lists.isEmpty(Reviews) && pageVo.displayMaxPage > pageVo.displayMinPage}">
-                <a class="page" th:each="page : ${#numbers.sequence(pageVo.displayMinPage, pageVo.displayMaxPage)}"
+            <div class="no-review" th:if="${#lists.isEmpty(Reviews)}">
+                <span class="no-review-text">작성한 리뷰가 없습니다.</span>
+            </div>
+            <div class="paging"
+                 th:if="${!#lists.isEmpty(Reviews) && pageVo.displayMaxPage > pageVo.displayMinPage}">
+                <a class="page"
+                   th:each="page : ${#numbers.sequence(pageVo.displayMinPage, pageVo.displayMaxPage)}"
                    th:text="${page}"
-                   th:href="@{/user/myPage/main(page=${page})}"
+                   th:href="@{/user/myPage/main(page=${page}, page2=${page2})}"
                    th:classappend="${page == pageVo.requestPage} ? 'active'"></a>
             </div>
         </div>
@@ -146,14 +151,14 @@
             </div>
             <div class="reservation-info">
                 <a class="image-wrapper"
-                   th:href="@{'http://localhost:8080/movies/movieList/movieInfo/' + ${reservation.key[10]}}">
+                   th:href="@{'../../../movies/movieList/movieInfo/' + ${reservation.key[10]}}">
                     <!-- 영화 이미지 출력 -->
                     <img th:src="${reservation.key[1]}" alt="영화 이미지">
                 </a>
                 <div class="movie-info">
                     <div class="title-container">
                         <!-- 영화 제목 -->
-                        <a th:href="@{'http://localhost:8080/movies/movieList/movieInfo/' + ${reservation.key[10]}}"
+                        <a th:href="@{'../../../movies/movieList/movieInfo/' + ${reservation.key[10]}}"
                            class="movie" th:id="'moTitle-' + ${stat.index}" th:text="${reservation.key[2]}"></a>
                         <span class="movie" th:text="${reservation.key[6]}"></span>
                         <div class="-spring"></div>
@@ -229,6 +234,18 @@
                 </div>
 
             </div>
+        </div>
+    </div>
+    <div class="paging">
+        <div class="no-reservation" th:if="${#lists.isEmpty(PageReservations)}">
+            <span class="no-reservation-text">예매한 영화가 없습니다.</span>
+        </div>
+        <div class="paging"
+             th:if="${!#lists.isEmpty(PageReservations) && PageReservations.displayMaxPage > PageReservations.displayMinPage}">
+            <a class="page"
+               th:each="page : ${#numbers.sequence(PageReservations.displayMinPage, PageReservations.displayMaxPage)}"
+               th:text="${page}"
+               th:href="@{/user/myPage/reservation(page=${page})}"></a>
         </div>
     </div>
     <div class="cancel-container">
