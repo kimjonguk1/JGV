@@ -14,12 +14,12 @@
             </div>
             <div class="reservation-container">
                 <div class="reservation-movie">
-                    <a th:href="@{'http://localhost:8080/movies/movieList/movieInfo/' + ${reservation.key[10]}}">
+                    <a th:href="@{'../../../movies/movieList/movieInfo/' + ${reservation.key[10]}}" target="_blank">
                         <img th:src="${reservation.key[1]}" alt="예매사진">
                     </a>
                     <div class="movie-info">
                         <div class="movie-title">
-                            <a th:href="@{'http://localhost:8080/movies/movieList/movieInfo/' + ${reservation.key[10]}}" th:text="${reservation.key[2]}"></a>
+                            <a th:href="@{'../../../movies/movieList/movieInfo/' + ${reservation.key[10]}}" target="_blank" th:text="${reservation.key[2]}"></a>
                         </div>
                         <div class="cinema">
                             <span>관람 극장</span>
@@ -158,7 +158,7 @@
                 <div class="movie-info">
                     <div class="title-container">
                         <!-- 영화 제목 -->
-                        <a th:href="@{'../../../movies/movieList/movieInfo/' + ${reservation.key[10]}}"
+                        <a target="blank"  th:href="@{'../../../movies/movieList/movieInfo/' + ${reservation.key[10]}}"
                            class="movie" th:id="'moTitle-' + ${stat.index}" th:text="${reservation.key[2]}"></a>
                         <span class="movie" th:text="${reservation.key[6]}"></span>
                         <div class="-spring"></div>

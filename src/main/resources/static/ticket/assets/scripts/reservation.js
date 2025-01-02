@@ -2,7 +2,7 @@ const $body = document.querySelector('body');
 
 window.onload = () => {
     if (sessionStorage.getItem('paymentComplete') !== 'true') {
-        window.location.href = 'http://localhost:8080/';
+        window.location.href = '../../';
         return;
     }
 
