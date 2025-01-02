@@ -1,3 +1,22 @@
+// region nav 광고
+{
+    const $advertisementArray = ['https://adimg.cgv.co.kr/images/202411/MyHero/980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1224_980x80.png']
+    window.onload = () => {
+        const $advertisement = document.getElementById('advertisement');
+        const $advertisementRandom = $advertisementArray[Math.floor(Math.random() * $advertisementArray.length)];
+        const $img = $advertisement.querySelector(':scope > a > img');
+        if ($advertisementRandom === $advertisementArray[0]) {
+            $advertisement.style.backgroundColor = '#000000'
+        } else if ($advertisementRandom === $advertisementArray[1]) {
+            $advertisement.style.backgroundColor = '#4184D2'
+        } else {
+            $advertisement.style.backgroundColor = '#191413'
+        }
+        $img.setAttribute('src', $advertisementRandom);
+    }
+}
+// endregion
+
 document.addEventListener('DOMContentLoaded', function () {
     const tabs = document.querySelectorAll('.tabs a');
     const sections = document.querySelectorAll('main section');

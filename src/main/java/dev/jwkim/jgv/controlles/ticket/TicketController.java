@@ -244,7 +244,7 @@ public class TicketController {
     }
 
     @RequestMapping(value = "/crawling", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView Crawling(ScreenEntity screen) {
+    public ModelAndView getCrawling(ScreenEntity screen) {
         ModelAndView modelAndView = new ModelAndView();
         this.ticketService.Crawl(screen);
         modelAndView.setViewName("ticket/crawling");
