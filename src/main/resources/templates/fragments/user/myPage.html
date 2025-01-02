@@ -243,9 +243,9 @@
         <div class="paging"
              th:if="${!#lists.isEmpty(PageReservations) && PageReservations.displayMaxPage > PageReservations.displayMinPage}">
             <a class="page"
-               th:each="page : ${#numbers.sequence(PageReservations.displayMinPage, PageReservations.displayMaxPage)}"
-               th:text="${page}"
-               th:href="@{/user/myPage/reservation(page=${page})}"></a>
+               th:each="page2 : ${#numbers.sequence(PageReservations.displayMinPage, PageReservations.displayMaxPage)}"
+               th:text="${page2}"
+               th:href="@{/user/myPage/reservation(page2=${page2})}"></a>
         </div>
     </div>
     <div class="cancel-container">
