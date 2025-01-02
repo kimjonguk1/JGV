@@ -200,33 +200,46 @@
     </delete>
 
     <select id="selectPaymentByUsNum" resultType="dev.jwkim.jgv.vos.user.ReservationVo">
-        select payment.`pa_num`       as `paNum`,
-               `pa_price`             as `paPrice`,
-               `pa_created_at`        as `paCreatedAt`,
-               cinema.`ci_name`       as `ciName`,
-               theater.`th_name`      as `thName`,
-               screen.`sc_start_date` as `scStartDate`,
-               seat.`se_name`         as `seName`,
-               movie_image.m_img_url  as `mImgUrl`,
-               movie.`mo_title`       as `moTitle`,
-               `me_name`              as `meName`,
-               `pa_deleted_at`        as `paDeletedAt`,
-               movie.`mo_num`         as `moNum`
-
-        from jgv.payment
-                 left join jgv.reservation on payment.pa_num = reservation.pa_num
-                 left join jgv.screen on reservation.sc_num = screen.sc_num
-                 left join jgv.cinema on screen.ci_num = cinema.ci_num
-                 left join jgv.theater on cinema.th_num = theater.th_num
-                 left join jgv.seat on reservation.se_num = seat.se_num
-                 left join jgv.movie on screen.mo_num = movie.mo_num
-                 left join jgv.movie_image on movie.mo_num = movie_image.mo_num
-                 left join jgv.method on payment.me_num = method.me_num
-
-        where `us_num` = #{usNum}
-          and `pa_state` = true
-          and `pa_deleted_at` is null
-        LIMIT #{limitCount} OFFSET #{offsetCount}
+        SELECT
+            payment.`pa_num`       AS `paNum`,
+            `pa_price`             AS `paPrice`,
+            `pa_created_at`        AS `paCreatedAt`,
+            cinema.`ci_name`       AS `ciName`,
+            theater.`th_name`      AS `thName`,
+            screen.`sc_start_date` AS `scStartDate`,
+            GROUP_CONCAT(seat.`se_name` ORDER BY seat.`se_name` ASC) AS `seNames`, -- 여러 좌석을 합침
+            seat.`se_name`  AS `seName`,
+            movie_image.`m_img_url`  AS `mImgUrl`,
+            movie.`mo_title`       AS `moTitle`,
+            `me_name`              AS `meName`,
+            `pa_deleted_at`        AS `paDeletedAt`,
+            movie.`mo_num`         AS `moNum`
+        FROM
+            jgv.payment
+                LEFT JOIN
+            jgv.reservation ON payment.pa_num = reservation.pa_num
+                LEFT JOIN
+            jgv.screen ON reservation.sc_num = screen.sc_num
+                LEFT JOIN
+            jgv.cinema ON screen.ci_num = cinema.ci_num
+                LEFT JOIN
+            jgv.theater ON cinema.th_num = theater.th_num
+                LEFT JOIN
+            jgv.seat ON reservation.se_num = seat.se_num
+                LEFT JOIN
+            jgv.movie ON screen.mo_num = movie.mo_num
+                LEFT JOIN
+            jgv.movie_image ON movie.mo_num = movie_image.mo_num
+                LEFT JOIN
+            jgv.method ON payment.me_num = method.me_num
+        WHERE
+            `us_num` = #{usNum}
+          AND `pa_state` = TRUE
+          AND `pa_deleted_at` IS NULL
+        GROUP BY
+            payment.`pa_num` -- paNum별로 그룹화
+        LIMIT
+            #{limitCount} OFFSET #{offsetCount}; -- 페이지네이션 적용
     </select>
     <select id="selectCancelPaymentByUsNum" resultType="dev.jwkim.jgv.vos.user.ReservationVo">
         select payment.`pa_num`       as `paNum`,

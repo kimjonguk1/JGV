@@ -17,5 +17,14 @@ public class ReservationVo extends PaymentEntity {
     private String moTitle;     // 영화 제목
     private String meName;
     private String moNum;
+    private String seNames;
 
+
+    public String getSeNames() {
+        return seNames;
+    }
+
+    public void setSeNames(String seNames) {
+        this.seNames = seNames;
+    }
 }

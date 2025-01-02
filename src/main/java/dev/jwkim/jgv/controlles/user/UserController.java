@@ -147,7 +147,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/myPage/{fragment}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user,HttpSession session,@PathVariable(value = "fragment") String fragment, HttpServletRequest request, @RequestParam(value = "page", required = false, defaultValue = "1")int page) throws ServletException, IOException {
+    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user,HttpSession session,@PathVariable(value = "fragment") String fragment, HttpServletRequest request, @RequestParam(value = "page", required = false, defaultValue = "1")int page, @RequestParam(value = "page2", required = false, defaultValue = "1")int page2) throws ServletException, IOException {
         String[] validFragments = {"main", "reservation", "receipt", "personal", "withdraw"};
         if (fragment == null || Arrays.stream(validFragments).noneMatch(x -> x.equals(fragment))) {
             ModelAndView modelAndView = new ModelAndView();
@@ -177,9 +177,8 @@ public class UserController {
         LocalDateTime currentDate = LocalDateTime.now();
         String formattedCurrentDate = currentDate.toString();
         // 예약 정보 가져오기
-        UserEntity users = (UserEntity) session.getAttribute("user");
-        Pair<PageVo, Map<Set<String>, List<String>>> reservations = this.userService.reservationInformation(users.getUsNum(), page); // 예약 정보
-        List<List<String>> cancelReservations = this.userService.selectCancelPaymentByUsNum(users.getUsNum()); // 취소 정보
+        Pair<PageVo, Map<Set<String>, List<String>>> reservations = this.userService.reservationInformation(loggedInUser.getUsNum(), page2); // 예약 정보
+        List<List<String>> cancelReservations = this.userService.selectCancelPaymentByUsNum(loggedInUser.getUsNum()); // 취소 정보
 
 
         Pair<PageVo, List<MyReviewDTO>> pair = reviewService.getReviewByUser(page, loggedInUser.getUsNum());
@@ -194,6 +193,8 @@ public class UserController {
         modelAndView.addObject("PageReservations", reservations.getLeft());
         modelAndView.addObject("reservations", reservations.getRight());
         modelAndView.addObject("cancelReservations", cancelReservations);
+        modelAndView.addObject("page", page); // 현재 page
+        modelAndView.addObject("page2", page2); // 현재 page2
         modelAndView.setViewName("user/myPage/myPage");
 
         return modelAndView;

@@ -42,6 +42,43 @@
   }
 }
 
+.paging {
+  @include flex(row, center, center, 0.6rem);
+  width: 760px;
+  border: 1px solid #666666;
+
+  > .no-reservation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px;
+
+    .no-reservation-text {
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+
+  > .paging {
+    display: flex;
+    justify-content: center;
+
+    a {
+      padding: 5px 5px;
+      margin: 0 2px;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+
+      &.active {
+        color: #ff5a5a;
+      }
+    }
+  }
+}
+
 .sub-tooltip {
   @include flex(row, center, center, 0.5rem);
   padding-top: 0.5rem;
@@ -58,6 +95,7 @@
     padding-top: 2rem;
     font-size: 1.4rem;
     font-weight: 700;
+
     > .res-num {
       font-size: 1.4rem;
       color: #666666;
@@ -105,10 +143,11 @@
           font-weight: 500;
         }
 
-        > .title{
+        > .title {
           width: 3.5rem;
         }
-        > .content{
+
+        > .content {
           width: 12.6rem;
         }
       }
@@ -122,7 +161,7 @@
         > .movie {
           font-size: 1rem;
           font-weight: 500;
-            color:#222222;
+          color: #222222;
         }
 
         > .pay {
@@ -143,7 +182,7 @@
     @include flex(column, center, center, 1rem);
     width: 100%;
 
-    border-bottom: 1px solid  #e2e2e0;
+    border-bottom: 1px solid #e2e2e0;
 
     > .result-title {
       width: 80%;
@@ -249,7 +288,6 @@
       border-collapse: collapse;
 
 
-
       > thead {
         background-color: #e2e2e0;
         color: #666666;
@@ -258,7 +296,8 @@
 
       > tbody {
         color: #666666;
-        > tr > td{
+
+        > tr > td {
           height: 2rem;
 
         }
