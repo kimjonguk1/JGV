@@ -1660,10 +1660,7 @@
   width: 61.25rem;
   height: 13rem;
 }
-.add > a {
-  width: 100%;
-}
-.add > a .image {
+.add .image {
   width: 61.25rem;
   height: 8.75rem;
 }
