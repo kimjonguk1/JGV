@@ -182,21 +182,23 @@ function handleEditReview(reviewId, updatedText) {
             return;
         }
         if (xhr.status < 200 || xhr.status >= 300) {
-            alert('평점 수정에 실패하였습니다. 새로고침 후 다시 시도해 주세요')
+            alert('리뷰 수정에 실패하였습니다. 새로고침 후 다시 시도해 주세요')
             return;
         }
         const response = JSON.parse(xhr.responseText);
         if (response === "SUCCESS") {
-            alert('평점이 성공적으로 수정되었습니다')
+            alert('리뷰가 성공적으로 수정되었습니다')
             window.location.reload()
         } else if (response === "UNAUTHORIZED") {
-            alert('수정할 권한이 없습니다')
+            alert('리뷰를 수정할 권한이 없습니다')
             $modal.style.display = 'none';
         } else if (response === "FAILURE") {
-            alert('평점 수정에 실패하였습니다. 잠시 후 다시 시도해 주세요')
+            alert('리뷰 수정에 실패하였습니다. 잠시 후 다시 시도해 주세요')
         } else if (response === "NOT_LOGGED_IN") {
-            alert('평점 수정에 실패하였습니다. 로그인 상태를 확인 후 다시 시도해 주세요')
+            alert('리뷰 수정에 실패하였습니다. 로그인 상태를 확인 후 다시 시도해 주세요')
             $modal.style.display = 'none';
+            const redirectUrl = window.location.pathname;
+            window.location.replace(`../../../user/login?forward=${encodeURIComponent(redirectUrl)}`);
         }
     };
     xhr.open('PUT', `/reviews/${reviewId}`);
@@ -212,7 +214,7 @@ $submitReview.addEventListener('click', () => {
     console.log($submitReview.dataset)
     console.log(mode)
     if ($reviewText === '') {
-        alert('평점 내용을 입력해 주세요');
+        alert('리뷰 내용을 입력해 주세요');
         return
     }
     if (mode === 'create') {
@@ -246,10 +248,12 @@ function handleSubmitReview(movieId, reviewText) {
             alert('리뷰 작성에 실패했습니다. 세션이 만료되었거나 로그인이 해제되었을 수 있습니다. 로그인 상태를 확인한 후 다시 시도해 주세요.');
             document.getElementById('reviewText').value = ''
             $modal.style.display = 'none'
+            const redirectUrl = window.location.pathname;
+            window.location.replace(`../../../user/login?forward=${encodeURIComponent(redirectUrl)}`);
         } else if (response.result === 'ALREADY_WRITTEN') {
-            alert('이미 이 영화에 대한 평점을 작성하셨습니다.')
+            alert('이미 이 영화에 대한 리뷰를 작성하셨습니다.')
         } else {
-            alert('평점 작성에 실패하였습니다. 다시 시도해 주세요')
+            alert('리뷰 작성에 실패하였습니다. 다시 시도해 주세요')
         }
     };
     xhr.open('POST', '/reviews/write');
@@ -307,6 +311,8 @@ function handleLike(reviewId) {
         const response = JSON.parse(xhr.responseText);
         if (response === "NOT_LOGGED_IN") {
             alert("로그인 후 좋아요를 눌러주세요");
+            const redirectUrl = window.location.pathname;
+            window.location.replace(`../../../user/login?forward=${encodeURIComponent(redirectUrl)}`);
         } else if (response.trim() === "SUCCESS") {
             const reviewItem = document.querySelector(`.review-item[data-review-id="${reviewId}"]`);
             const likeCountSpan = reviewItem.querySelector('.like-count');
@@ -359,7 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.closest('.delete-review')) {
             const $reviewItem = e.target.closest('.review-item');
             const $reviewId = $reviewItem.dataset.reviewId;
-            const result = confirm('평점을 삭제하시겠습니까?')
+            const result = confirm('리뷰를 삭제하시겠습니까?')
             if (result) {
                 handleDeleteReview($reviewId);
             } else {
@@ -377,19 +383,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             if (xhr.status < 200 || xhr.status >= 300) {
-                alert('평점 삭제에 실패하였습니다. 새로고침 후 다시 시도해 주세요')
+                alert('리뷰 삭제에 실패하였습니다. 새로고침 후 다시 시도해 주세요')
                 return;
             }
             const response = JSON.parse(xhr.responseText);
             if (response === "SUCCESS") {
-                alert('평점이 성공적으로 삭제되었습니다')
+                alert('리뷰가 성공적으로 삭제되었습니다')
                 window.location.reload()
             } else if (response === "UNAUTHORIZED") {
                 alert('삭제할 권한이 없습니다')
             } else if (response === "FAILURE") {
-                alert('평점 삭제에 실패하였습니다. 잠시 후 다시 시도해 주세요')
+                alert('리뷰 삭제에 실패하였습니다. 잠시 후 다시 시도해 주세요')
             } else if (response === "NOT_LOGGED_IN") {
-                alert('평점 삭제에 실패하였습니다. 로그인 상태를 확인 후 다시 시도해 주세요')
+                alert('리뷰 삭제에 실패하였습니다. 로그인 상태를 확인 후 다시 시도해 주세요')
+                const redirectUrl = window.location.pathname;
+                window.location.replace(`../../../user/login?forward=${encodeURIComponent(redirectUrl)}`);
             }
         };
         xhr.open('PATCH', `/reviews/${reviewId}`);
