@@ -180,6 +180,7 @@ public class UserController {
         Pair<PageVo, Map<Set<String>, List<String>>> reservations = this.userService.reservationInformation(loggedInUser.getUsNum(), page2); // 예약 정보
         List<List<String>> cancelReservations = this.userService.selectCancelPaymentByUsNum(loggedInUser.getUsNum()); // 취소 정보
 
+        int allReservations = this.userService.findAllReservations(loggedInUser.getUsNum());
 
         Pair<PageVo, List<MyReviewDTO>> pair = reviewService.getReviewByUser(page, loggedInUser.getUsNum());
 
@@ -192,6 +193,7 @@ public class UserController {
         modelAndView.addObject("currentDate", formattedCurrentDate); // 현재 날짜 전달
         modelAndView.addObject("PageReservations", reservations.getLeft());
         modelAndView.addObject("reservations", reservations.getRight());
+        modelAndView.addObject("allReservations", allReservations);
         modelAndView.addObject("cancelReservations", cancelReservations);
         modelAndView.addObject("page", page); // 현재 page
         modelAndView.addObject("page2", page2); // 현재 page2

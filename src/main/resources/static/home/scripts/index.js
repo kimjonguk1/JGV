@@ -34,25 +34,6 @@ $items.forEach((x) => {
             $a.setAttribute('href', '/movies/movieList/movieInfo/3611');
         }
         $video.load();
-
-        const $advertisement = document.getElementById('advertisement');
-        const $advertisementRandom = $advertisementArray[Math.floor(Math.random() * $advertisementArray.length)];
-        const $img = $advertisement.querySelector(':scope > a > img');
-        const $aa = $advertisement.querySelector(':scope > a');
-        if ($advertisementRandom === $advertisementArray[0]) {
-            $advertisement.style.backgroundColor = '#2B53AB'
-            $aa.setAttribute('href', '../movies/movieList/movieInfo/3669');
-        } else if ($advertisementRandom === $advertisementArray[1]) {
-            $advertisement.style.backgroundColor = '#4184D2'
-            $aa.setAttribute('href', '../movies/movieList/movieInfo/3628');
-        } else if ($advertisementRandom === $advertisementArray[2]) {
-            $advertisement.style.backgroundColor = '#191413'
-            $aa.setAttribute('href', '../movies/movieList/movieInfo/3611');
-        } else {
-            $advertisement.style.backgroundColor = '#2B82DD'
-            $aa.setAttribute('href', '../movies/movieList/movieInfo/3666');
-        }
-        $img.setAttribute('src', $advertisementRandom);
     }
 }
 

@@ -298,4 +298,12 @@
           and `pa_state` = true
           and `pa_deleted_at` is null;
     </select>
+    <select id="findAllReservations"
+            resultType="java.lang.Integer">
+        select count(*)
+        from jgv.payment
+        where `us_num` = #{usNum}
+          and `pa_state` = true
+          and `pa_deleted_at` is null;
+    </select>
 </mapper>
