@@ -418,13 +418,13 @@ public class TicketService {
                         dates.add(date);
                     }
                 }
-                System.out.println(dates);
-                System.out.println(theater.cgvName);
+//                System.out.println(dates);
+//                System.out.println(theater.cgvName);
 
                 // 오늘을 기준으로 해당 영화관에 존재하는 날짜만 크롤링
                 for (int i = 0; i < dates.toArray().length; i++) {
                     String date = dates.toArray()[i].toString(); // YYYYMMDD 형식의 날짜
-                    System.out.println("상영일: " + date);
+//                    System.out.println("상영일: " + date);
 
                     // URL에 날짜 파라미터 추가
                     String url = "http://www.cgv.co.kr/theaters/?areacode=11&theaterCode=" + theater.cgvCode + "&date=" + date;
@@ -527,11 +527,11 @@ public class TicketService {
                         }
 
                         // 출력
-                        System.out.println("------------");
-                        System.out.println("영화: " + movieTitle);
-                        System.out.println(timeTable.toString().trim());
+//                        System.out.println("------------");
+//                        System.out.println("영화: " + movieTitle);
+//                        System.out.println(timeTable.toString().trim());
                     }
-                    System.out.println("------------");
+//                    System.out.println("------------");
                 }
             }
         } catch (Exception e) {
@@ -666,9 +666,9 @@ public class TicketService {
     private void deletePaymentIfInserted(int paNum) {
         int result = this.paymentMapper.deletePayment(paNum);
         if (result > 0) {
-            System.out.println("결제 정보 삭제 성공. PaNum: " + paNum);
+//            System.out.println("결제 정보 삭제 성공. PaNum: " + paNum);
         } else {
-            System.out.println("결제 정보 삭제 실패. PaNum: " + paNum);
+//            System.out.println("결제 정보 삭제 실패. PaNum: " + paNum);
         }
     }
 

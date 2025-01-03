@@ -189,8 +189,6 @@ $submitReview.addEventListener('click', () => {
     const $reviewText = document.getElementById('reviewText').value.trim();
     const movieId = window.location.pathname.split('/').pop();
     const mode = $submitReview.dataset.mode;
-    console.log($submitReview.dataset)
-    console.log(mode)
     if ($reviewText === '') {
         alert('리뷰 내용을 입력해 주세요');
         return
@@ -216,7 +214,6 @@ function handleSubmitReview(movieId, reviewText) {
         }
 
         const response = JSON.parse(xhr.responseText);
-        console.log(response.result);
         if (response.result === 'SUCCESS') {
             alert('관람평이 등록 되었습니다. \n 임직원의 경우 실관람평 작성 포인트는 지급되지 않습니다.');
             document.getElementById('reviewText').value = ''
@@ -283,7 +280,6 @@ function handleLike(reviewId) {
         }
         if (xhr.status < 200 || xhr.status >= 300) {
             alert('좋아요 반영에 실패했습니다. 다시 시도해 주세요')
-            console.log('xhr 스탯')
             return;
         }
         const response = JSON.parse(xhr.responseText);

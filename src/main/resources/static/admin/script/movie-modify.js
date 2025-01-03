@@ -41,8 +41,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("movie-genre").value = data.genres || "";
         document.getElementById("movie-country").value = data.countries || "";
 
-        console.log(data);
-
         // 영화 포스터 표시
         renderMoviePoster(data.mimgUrl);
 
@@ -132,7 +130,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
             const response = JSON.parse(xhr.responseText);
-            console.log(response)
             if(response === 'SUCCESS') {
                 alert('영화 정보가 성공적으로 수정되었습니다.')
                 window.location.href = '/admin/is_admin'
