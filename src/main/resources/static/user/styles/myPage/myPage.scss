@@ -32,21 +32,26 @@ body {
     }
 
     > .user-info {
-      @include flex(row, center, center, 1rem);
+      @include flex(row, flex-end, flex-end, 1rem);
       height: 5rem;
       border-bottom: 1px solid #e1e1e1;
+      padding-bottom: 1rem;
+
 
       > div {
         @include flex(column, flex-end, flex-end);
         height: 2rem;
 
         > button {
-          font-size: 0.775rem;
+          font-size: 1rem;
           font-weight: 500;
           cursor: pointer;
 
           &:hover {
+            color: #FB4357;
             text-decoration: underline;
+            text-underline-offset : 0.35rem;
+
           }
 
           > img {
@@ -61,7 +66,8 @@ body {
       }
 
       > .id {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
+        font-weight: 500;
       }
 
       > .nickname {

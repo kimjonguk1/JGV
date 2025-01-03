@@ -9,17 +9,12 @@ body {
 }
 
 #userInfo {
+  @include flex(row, center, flex-start, 1);
   width: 882px;
   height: 20rem;
   padding: 60px 40px 0 58px;
   color: #666666;
   background-color: #f8f8f8;
-
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  justify-content: flex-start;
 
   > .user-wrapper {
     width: 100%;
