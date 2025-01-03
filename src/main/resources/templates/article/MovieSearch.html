@@ -68,7 +68,7 @@
         <!-- 인물별 필모그래피 -->
     </div>
 
-    <div class="no-data-search" th:if="${movies.size() <= 0 || people.size() <= 0}" >
+    <div class="no-data-search" th:if="${movies.size() <= 0 && people.size() <= 0}" >
         <span class="no-data-search-text">검색 결과가 없습니다</span>
     </div>
 </main>

@@ -45,6 +45,47 @@ const $submitReview = document.getElementById('submitReview');
 const $closeModal = document.getElementById('closeModal');
 console.log($modal)
 $modal.style.display = 'none';
+
+// UTF-8 바이트 계산 함수
+function getByteLength(str) {
+    let byteLength = 0;
+    for (let i = 0; i < str.length; i++) {
+        const charCode = str.charCodeAt(i);
+        if (charCode <= 0x7f) {
+            byteLength += 1; // ASCII 문자: 1바이트
+        } else if (charCode <= 0x7ff) {
+            byteLength += 2; // 2바이트 문자
+        } else if (charCode <= 0xffff) {
+            byteLength += 3; // 3바이트 문자
+        } else {
+            byteLength += 4; // 4바이트 문자 (이모지 등)
+        }
+    }
+    return byteLength;
+}
+
+// 입력 이벤트 처리
+const textarea = document.getElementById('reviewText');
+const charCountDisplay = document.getElementById('charCount');
+
+function updateCharCount() {
+    const currentText = textarea.value;
+    const currentByteLength = getByteLength(currentText);
+    charCountDisplay.textContent = `${currentByteLength} / 280 (byte)`;
+}
+
+textarea.addEventListener('input', () => {
+    const currentByteLength = getByteLength(textarea.value);
+    charCountDisplay.textContent = `${currentByteLength} / 280 (byte)`;
+
+    // 입력 제한 처리
+    if (currentByteLength > 280) {
+        textarea.value = textarea.value.slice(0, -1); // 초과 시 마지막 문자 삭제
+        charCountDisplay.textContent = `${getByteLength(textarea.value)} / 280 (byte)`;
+    }
+});
+
+
 document.addEventListener('click', (e) => {
     if (e.target.closest('.edit-review')) {
         const $reviewItem = e.target.closest('.review-item');
@@ -58,6 +99,8 @@ document.addEventListener('click', (e) => {
         $modalMovieTitle.textContent = $movieTitle;
         $modalUserName.textContent = $userName;
 
+        updateCharCount();
+
         $submitReview.onclick = () => {
             handleEditReview($reviewId, $textarea.value.trim())
         }
@@ -65,7 +108,7 @@ document.addEventListener('click', (e) => {
     if (e.target.closest('.delete-review')) {
         const $reviewItem = e.target.closest('.review-item');
         const $reviewId = $reviewItem.dataset.reviewId;
-        const result = confirm('평점을 삭제하시겠습니까?')
+        const result = confirm('리뷰를 삭제하시겠습니까?')
         if (result) {
             handleDeleteReview($reviewId);
         } else {
@@ -102,21 +145,23 @@ function handleEditReview(reviewId, updatedText) {
             return;
         }
         if (xhr.status < 200 || xhr.status >= 300) {
-            alert('평점 수정에 실패하였습니다. 새로고침 후 다시 시도해 주세요')
+            alert('리뷰 수정에 실패하였습니다. 새로고침 후 다시 시도해 주세요')
             return;
         }
         const response = JSON.parse(xhr.responseText);
         if (response === "SUCCESS") {
-            alert('평점이 성공적으로 수정되었습니다')
+            alert('리뷰가 성공적으로 수정되었습니다')
             window.location.reload()
         } else if (response === "UNAUTHORIZED") {
             alert('수정할 권한이 없습니다')
             $modal.style.display = 'none';
         } else if (response === "FAILURE") {
-            alert('평점 수정에 실패하였습니다. 잠시 후 다시 시도해 주세요')
+            alert('리뷰 수정에 실패하였습니다. 잠시 후 다시 시도해 주세요')
         } else if (response === "NOT_LOGGED_IN") {
-            alert('평점 수정에 실패하였습니다. 로그인 상태를 확인 후 다시 시도해 주세요')
+            alert('리뷰 수정에 실패하였습니다. 로그인 상태를 확인 후 다시 시도해 주세요')
             $modal.style.display = 'none';
+            const redirectUrl = window.location.pathname;
+            window.location.replace(`../../../user/login?forward=${encodeURIComponent(redirectUrl)}`);
         }
     };
     xhr.open('PUT', `/reviews/${reviewId}`);
@@ -131,19 +176,21 @@ function handleDeleteReview(reviewId) {
             return;
         }
         if (xhr.status < 200 || xhr.status >= 300) {
-            alert('평점 삭제에 실패하였습니다. 새로고침 후 다시 시도해 주세요')
+            alert('리뷰 삭제에 실패하였습니다. 새로고침 후 다시 시도해 주세요')
             return;
         }
         const response = JSON.parse(xhr.responseText);
         if (response === "SUCCESS") {
-            alert('평점이 성공적으로 삭제되었습니다')
+            alert('리뷰가 성공적으로 삭제되었습니다')
             window.location.reload()
         } else if (response === "UNAUTHORIZED") {
-            alert('삭제할 권한이 없습니다')
+            alert('리뷰를 삭제할 권한이 없습니다')
         } else if (response === "FAILURE") {
-            alert('평점 삭제에 실패하였습니다. 잠시 후 다시 시도해 주세요')
+            alert('리뷰 삭제에 실패하였습니다. 잠시 후 다시 시도해 주세요')
         } else if (response === "NOT_LOGGED_IN") {
-            alert('평점 삭제에 실패하였습니다. 로그인 상태를 확인 후 다시 시도해 주세요')
+            alert('리뷰 삭제에 실패하였습니다. 로그인 상태를 확인 후 다시 시도해 주세요')
+            const redirectUrl = window.location.pathname;
+            window.location.replace(`../../../user/login?forward=${encodeURIComponent(redirectUrl)}`);
         }
     };
     xhr.open('PATCH', `/reviews/${reviewId}`);
