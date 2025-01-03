@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const relatedMoviesJson = this.getAttribute('data-related-movies');
             const relatedMovies = JSON.parse(relatedMoviesJson);
 
-            console.log("선택된 인물의 필모그래피: ", relatedMovies);
 
             // AJAX로 해당 캐릭터의 필모그래피 가져오기
             try {

@@ -182,7 +182,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         return;
                     }
                     const response = JSON.parse(xhr.responseText);
-                    console.log(response);
                     if (response === 'SUCCESS') {
                         alert('삭제가 완료되었습니다.');
                         window.location.reload();

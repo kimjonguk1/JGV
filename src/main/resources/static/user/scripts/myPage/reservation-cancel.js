@@ -55,7 +55,6 @@ $reservationCancel.onsubmit = (event) => {
 
         // 서버 응답 확인
         const response = JSON.parse(xhr.responseText);
-        console.log(response);  // 디버깅용 로그 추가
 
         if (response['result'] === 'failure') {
             alert("알 수 없는 이유로 예매취소에 실패하였습니다. 잠시 후 다시 시도해주세요.");

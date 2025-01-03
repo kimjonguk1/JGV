@@ -170,9 +170,6 @@ public class MovieListController {
         if(people == null) {
             people = new ArrayList<>();
         }
-        System.out.println(keyword);
-        System.out.println(people);
-        System.out.println(pageVo);
         mav.addObject("keyword", keyword);
         mav.addObject("people", people);
         mav.addObject("pageVo", pageVo);

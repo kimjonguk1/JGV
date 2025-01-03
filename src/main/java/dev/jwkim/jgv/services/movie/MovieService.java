@@ -386,10 +386,8 @@ public class MovieService {
         // 포스터 삽입 또는 업데이트 로직 분리
         if (posterUrl != null && !posterUrl.equals(ifPosterUrl)) {
             if (ifPosterUrl == null) {
-                System.out.println("새 포스터 삽입: " + posterUrl);
                 movieImageMapper.insertMoviePosterUrl(movieId, posterUrl); // 삽입
             } else {
-                System.out.println("포스터 업데이트: " + posterUrl);
                 movieImageMapper.updateMoviePosterUrl(movieId, posterUrl); // 업데이트
             }
         }

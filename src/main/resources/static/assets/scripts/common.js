@@ -61,9 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             if (xhr.status >= 200 && xhr.status < 300) {
-                // 성공적으로 응답을 받은 경우
-                console.log("응답 성공:", xhr.responseText);
-                // 브라우저를 해당 URL로 리다이렉트
                 window.location.href = searchUrl;
             } else {
                 alert("서버가 알수 없는 응답을 반환하였습니다. 잠시 후 다시 시도해 주세요.");
