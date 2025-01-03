@@ -131,7 +131,7 @@ function checkScreen() {
             if (xhr.readyState !== XMLHttpRequest.DONE) {
                 return;
             }
-            if (!ticketParams) {
+            if (ticketParams.thName == null && ticketParams.scStartDate == null) {
                 Loading.hide();
             }
             if (xhr.status < 200 || xhr.status >= 300) {
@@ -682,6 +682,9 @@ function movieItem($movieItems) {
                         if (xhr.readyState !== XMLHttpRequest.DONE) {
                             return;
                         }
+                        if (!ticketParams) {
+                            Loading.hide();
+                        }
                         if (xhr.status < 200 || xhr.status >= 300) {
                             alert('오류 발생');
                             return;
@@ -719,6 +722,9 @@ $orderItems.forEach((x) => {
                         if (xhr.readyState !== XMLHttpRequest.DONE) {
                             return;
                         }
+                        if (!ticketParams) {
+                            Loading.hide();
+                        }
                         if (xhr.status < 200 || xhr.status >= 300) {
                             alert('오류 발생');
                             return;
@@ -739,6 +745,9 @@ $orderItems.forEach((x) => {
                     xhr.onreadystatechange = () => {
                         if (xhr.readyState !== XMLHttpRequest.DONE) {
                             return;
+                        }
+                        if (ticketParams) {
+                            Loading.hide();
                         }
                         if (xhr.status < 200 || xhr.status >= 300) {
                             alert('오류 발생');

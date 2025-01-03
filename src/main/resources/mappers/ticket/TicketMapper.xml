@@ -194,6 +194,7 @@
           AND `sc_start_date` LIKE CONCAT('%', #{date}, '%')
           AND `sc_start_date` > NOW()
           AND `is_deleted` = false
+        ORDER BY cinema.`ci_num`
     </select>
     <select id="selectTheater"
             resultType="dev.jwkim.jgv.entities.theater.TheaterEntity">
