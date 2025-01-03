@@ -335,8 +335,12 @@ public class MovieService {
         return movieMapper.deleteDupleMovies();
     }
 
-    public List<Movie_ImageDTO> selectAllMovieList() {
-        return this.movieMapper.selectAllMovies();
+    public List<Movie_ImageDTO> selectNowPlayingMovies() {
+        return this.movieMapper.selectNowPlayingMovies();
+    }
+
+    public List<Movie_ImageDTO> selectUpcomingMovies() {
+        return this.movieMapper.selectUpcomingMovies();
     }
 
     public List<Movie_ImageDTO> selectCaraouselCurrnetMovieList() {
@@ -482,5 +486,9 @@ public class MovieService {
             // 영화-국가 매핑 추가
             movieMapper.insertMovieCountry(movieNum, countryId);
         }
+    }
+
+    public boolean ifReserveOk(int movieNum) {
+        return this.movieMapper.selectMovieReserveByMovieId(movieNum) > 0;
     }
 }

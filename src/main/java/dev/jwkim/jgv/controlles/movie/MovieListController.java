@@ -44,33 +44,14 @@ public class MovieListController {
     public ModelAndView getMovieList() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("article/MovieList");
-        List<Movie_ImageDTO> movies = this.movieService.selectAllMovieList();
+        //상영중인 영화
+        List<Movie_ImageDTO> nowPlaying = this.movieService.selectNowPlayingMovies();
+        //상영예정작
+        List<Movie_ImageDTO> upcoming = this.movieService.selectUpcomingMovies();
 
-        // 데이터 변환 및 분류
-        List<Movie_ImageDTO> nowPlaying = new ArrayList<>();
-        List<Movie_ImageDTO> upcomingMovies = new ArrayList<>();
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 
-        //현재 날짜 기준으로 이후 개봉하는 영화는 상영예정작
-        //개봉일이 잘못된 형식의 데이터이거나 현재날짜 기준 이전에 개봉한 영화이면 무비차트
-        for (Movie_ImageDTO movie : movies) {
-            try {
-                LocalDate releaseDate = LocalDate.parse(movie.getMoDate(), formatter);
-                if (!releaseDate.isAfter(today)) {
-                    //현재 날짜 기준 개봉일이 15일 이내의 경우만 추가
-                    if(ChronoUnit.DAYS.between(releaseDate, today) <= 15) {
-                        nowPlaying.add(movie);
-                    }
-                } else {
-                    upcomingMovies.add(movie);
-                }
-            } catch (DateTimeParseException e) {
-                upcomingMovies.add(movie);
-            }
-        }
         mav.addObject("nowPlaying", nowPlaying);
-        mav.addObject("upcomingMovies", upcomingMovies);
+        mav.addObject("upcomingMovies", upcoming);
         return mav;
     }
 
@@ -86,6 +67,13 @@ public class MovieListController {
         // 영화 정보를 표시하기 위해
         Movie_InfoDTO movieInfo = movieService.selectMovieInfoById(id);
         mav.addObject("movieInfo", movieInfo);
+        //영화 예매 여부를 확인하기 위해
+        boolean reserveOk = movieService.ifReserveOk(id);
+        if(reserveOk) {
+            mav.addObject("reserveOk", true);
+        } else {
+            mav.addObject("reserveOk", false);
+        }
         //세션을 위해
         Object user = session.getAttribute("user");
         mav.addObject("sessionUser", user);

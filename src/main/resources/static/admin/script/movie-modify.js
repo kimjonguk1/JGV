@@ -126,6 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (xhr.readyState !== XMLHttpRequest.DONE) {
                 return;
             }
+            Loading.hide();
             if (xhr.status < 200 || xhr.status >= 300) {
                 alert('영화 정보 수정에 실패하였습니다. 다시 시도해 주세요');
                 return;
@@ -146,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
         };
-
+        Loading.show();
         xhr.open('PUT', `/admin/api/${movieNum}`);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify(formData));

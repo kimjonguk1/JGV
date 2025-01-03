@@ -21,7 +21,8 @@ public interface MovieMapper {
     Integer selectMovieByUniqueFields(@Param("movieTitle") String movieTitle, @Param("movieDate")String movieDate);
 
     // 영화 리스트 모두 표시하기
-    List<Movie_ImageDTO> selectAllMovies();
+    List<Movie_ImageDTO> selectNowPlayingMovies();
+    List<Movie_ImageDTO> selectUpcomingMovies();
 
     //영화 중복 데이터 삭제
     boolean deleteDupleMovies();
@@ -92,4 +93,7 @@ public interface MovieMapper {
     Integer findCountryByName(String countryName);
     void insertCountry(String countryName);
     void insertMovieCountry(@Param("movieNum") int movieNum, @Param("coNum") int coNum);
+
+    //영화 예매 여부 확인
+    int selectMovieReserveByMovieId(@Param("movieNum") int movieNum);
 }

@@ -45,8 +45,8 @@
                 <div class="movie-detail">
                     <span>개봉일자: </span><span th:text="${movie.getMoDate()}">2024-01-01</span>
                 </div>
-                    <a class="reserve-btn" th:data-mo-title="${movie.moTitle}"
-                       th:href="@{/ticket/}">예매하기</a>
+                <a class="reserve-btn" th:data-mo-title="${movie.moTitle}"
+                   th:href="@{/ticket/}">예매하기</a>
             </div>
 
         </div>
@@ -69,7 +69,6 @@
                 <div class="movie-detail">
                     <span>개봉일자: </span><span th:text="${movie.getMoDate()}">2024-01-01</span>
                 </div>
-                <button class="reserve-btn">예매하기</button>
             </div>
         </div>
     </section>

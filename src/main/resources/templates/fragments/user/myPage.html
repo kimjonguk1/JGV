@@ -111,9 +111,6 @@
             <div class="no-review" th:if="${#lists.isEmpty(Reviews)}">
                 <span class="no-review-text">작성한 리뷰가 없습니다.</span>
             </div>
-            <div class="no-review" th:if="${#lists.isEmpty(Reviews)}">
-                <span class="no-review-text">작성한 리뷰가 없습니다.</span>
-            </div>
             <div class="paging"
                  th:if="${!#lists.isEmpty(Reviews) && pageVo.displayMaxPage > pageVo.displayMinPage}">
                 <a class="page"
