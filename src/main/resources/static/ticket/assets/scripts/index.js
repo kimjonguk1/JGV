@@ -131,9 +131,7 @@ function checkScreen() {
             if (xhr.readyState !== XMLHttpRequest.DONE) {
                 return;
             }
-            if (ticketParams.thName == null && ticketParams.scStartDate == null) {
-                Loading.hide();
-            }
+            Loading.hide();
             if (xhr.status < 200 || xhr.status >= 300) {
                 alert('오류 발생');
                 return;
@@ -689,6 +687,7 @@ function movieItem($movieItems) {
                             alert('오류 발생');
                             return;
                         }
+                        checkScreen();
                         const $info = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll(' #control-bar > .container > .containers > [data-id="movieInfo"]'));
                         $containers.innerHTML = "";
                         $info.forEach((info) => {
@@ -704,7 +703,6 @@ function movieItem($movieItems) {
                     Loading.show();
                 }
             })
-            checkScreen();
         }
     })
 }
@@ -722,9 +720,7 @@ $orderItems.forEach((x) => {
                         if (xhr.readyState !== XMLHttpRequest.DONE) {
                             return;
                         }
-                        if (!ticketParams) {
-                            Loading.hide();
-                        }
+                        Loading.hide();
                         if (xhr.status < 200 || xhr.status >= 300) {
                             alert('오류 발생');
                             return;
@@ -734,7 +730,6 @@ $orderItems.forEach((x) => {
                         $movieItem.forEach((x) => {
                             $movie.append(x);
                             movieItem($movieItem);
-                            checkScreen();
                         })
                     };
                     xhr.open('GET', './movies');
@@ -746,9 +741,7 @@ $orderItems.forEach((x) => {
                         if (xhr.readyState !== XMLHttpRequest.DONE) {
                             return;
                         }
-                        if (!ticketParams) {
-                            Loading.hide();
-                        }
+                        Loading.hide();
                         if (xhr.status < 200 || xhr.status >= 300) {
                             alert('오류 발생');
                             return;
@@ -758,7 +751,6 @@ $orderItems.forEach((x) => {
                         $movieItem.forEach((x) => {
                             $movie.append(x);
                             movieItem($movieItem);
-                            checkScreen();
                         })
                     };
                     xhr.open('GET', './');
