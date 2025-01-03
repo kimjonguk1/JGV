@@ -1,5 +1,7 @@
 const $registerForm = document.getElementById('register-form');
 
+
+// region 배너
 {
     const $advertisementArray = ['https://adimg.cgv.co.kr/images/202412/Moana2/1218_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1224_980x80.png', 'https://adimg.cgv.co.kr/images/202411/jjanggu/1209_980x80.png']
     document.addEventListener("DOMContentLoaded", () => {
@@ -23,6 +25,7 @@ const $registerForm = document.getElementById('register-form');
         $img.setAttribute('src', $advertisementRandom);
     });
 }
+// endregion
 
 // region 주소 요청
 $registerForm['addr-button'].onclick = () => {

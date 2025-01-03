@@ -226,6 +226,7 @@ public class UserController {
 
 
 
+
 //    @RequestMapping(value = "/myPage/modify", method = RequestMethod.GET, produces =
 //            MediaType.TEXT_HTML_VALUE)
 //    public ModelAndView getModify(HttpSession session, UserEntity user) {
