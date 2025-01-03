@@ -43,7 +43,6 @@ const $modalMovieTitle = document.getElementById('modalMovieTitle');
 const $modalUserName = document.getElementById('modalUserName');
 const $submitReview = document.getElementById('submitReview');
 const $closeModal = document.getElementById('closeModal');
-console.log($modal)
 $modal.style.display = 'none';
 
 // UTF-8 바이트 계산 함수

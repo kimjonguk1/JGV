@@ -38,22 +38,19 @@ justify-content: center; gap: 1rem; padding-top: 10rem; padding-bottom: 10rem;">
         <button style="display: flex; flex-direction: row; align-items: center;
         justify-content: center; gap: 0.5rem; border: 1px solid #e1e1e1; height: 2rem;
         width: 120px; border-radius: 999rem; cursor: pointer" onclick="history.back()">
-                <img style="height: 13px; width: 15px;"
-                     src="https://img.cgv.co.kr/R2014/images/common/ico/return.png"
-                     alt="back">
+            <img style="height: 13px; width: 15px;"
+                 src="https://img.cgv.co.kr/R2014/images/common/ico/return.png"
+                 alt="back">
             <span style="font-size: 15px; font-weight: 400; color: #222222">이전
             </span>
         </button>
-        <button style="display: flex; flex-direction: row; align-items: center;
-        justify-content: center; gap: 0.5rem; border: 1px solid #e1e1e1; height: 2rem;
-        width: 120px; border-radius: 999rem; cursor: pointer">
-            <img style="height: 18px; width: 17px;"
-                 src="https://img.cgv.co.kr/R2014/images/common/ico/home.png"
-                 alt="back">
-            <a style="font-size: 15px; font-weight: 400; color: #222222"
-               th:href="${'/'}">홈
-            </a>
-        </button>
+        <a style="display: flex; flex-direction: row; align-items: center;
+        justify-content: center; gap: 0.5rem; border: 1px solid #e1e1e1; height: 2rem; color: black;
+        width: 120px; border-radius: 999rem; cursor: pointer"
+           th:href="${'/'}"><img style="height: 18px; width: 17px;"
+                                 src="https://img.cgv.co.kr/R2014/images/common/ico/home.png"
+                                 alt="back">홈
+        </a>
     </div>
 </div>
 

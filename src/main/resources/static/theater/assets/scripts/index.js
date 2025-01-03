@@ -17,13 +17,14 @@ const theaterParams = JSON.parse(sessionStorage.getItem('theater'));
     document.addEventListener("DOMContentLoaded", () => {
         const $advertisement = document.querySelector('.advertisement-info');
         const $advertisementRandom = $sideAdvertisementArray[Math.floor(Math.random() * $sideAdvertisementArray.length)];
+        const $a = $advertisement.querySelector(':scope > a');
         const $img = $advertisement.querySelector(':scope > a > img');
         if ($advertisementRandom === $sideAdvertisementArray[0]) {
-            $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3651')
+            $a.setAttribute('href', '../movies/movieList/movieInfo/3651')
         } else if ($advertisementRandom === $sideAdvertisementArray[1]) {
-            $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3628')
+            $a.setAttribute('href', '../movies/movieList/movieInfo/3628')
         } else {
-            $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3611')
+            $a.setAttribute('href', '../movies/movieList/movieInfo/3611')
         }
         $img.setAttribute('src', $advertisementRandom);
     });
