@@ -60,7 +60,7 @@ public class UserService {
     // region 회원가입 / 비밀번호 암호화
     @Transactional
     public Result register(HttpServletRequest request, UserEntity user) throws MessagingException {
-        String idRegex = "^(?!.*[가-힣])(?=.*[a-z])(?=.*\\d).{6,20}$";
+        String idRegex = "^[a-z\\d]{6,20}$";
         Pattern idPattern = Pattern.compile(idRegex);
         Matcher idMatcher = idPattern.matcher(user.getUsId());
         if (!idMatcher.matches()) {
@@ -88,7 +88,7 @@ public class UserService {
 
             return CommonResult.FAILURE;
         }
-        if (this.userMapper.selectUserByEmail(user.getUsId()) != null) {
+        if (this.userMapper.selectUserById(user.getUsId()) != null) {
             return RegisterResult.FAILURE_DUPLICATE_ID;
         }
         if (this.userMapper.selectUserByEmail(user.getUsEmail()) != null) {
@@ -271,7 +271,7 @@ public class UserService {
     @Transactional
     public Result checkDuplicateUser(String userId, UserEntity user) {
 
-        String idRegex = "^(?!.*[가-힣])(?=.*[a-z])(?=.*\\d).{6,20}$";
+        String idRegex = "^[a-z\\d]{6,20}$";
         Pattern idPattern = Pattern.compile(idRegex);
         Matcher idMatcher = idPattern.matcher(userId);
         if (!idMatcher.matches()) {

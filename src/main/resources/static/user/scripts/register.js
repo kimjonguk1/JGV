@@ -51,7 +51,7 @@ $registerForm['duplicate-id-button'].onclick = () => {
 
         }
         if (result === 'failure_invalid_id') {
-            alert('사용할수 없는 문자가 포함되어 있습니다. 아이디는 6~20자의 소문자 + 숫자 입니다.');
+            alert('올바른 아이디 형식이 아닙니다 다시 확인해주세요. 아이디는 소문자와 숫자만 포함되어야 하며, 8~20자여야 합니다.');
             return;
         }
         if (result === 'failure') {
@@ -94,7 +94,7 @@ $registerForm['duplicate-nickname-button'].onclick = () => {
             return isNicknameValid = false;
         }
         if (result === 'failure') {
-            alert('올바른 닉네임을 입력해주세요. 닉네임은 2~20자 입니다.');
+            alert('올바른 닉네임을 입력해주세요. 닉네임은 2~12자 입니다.');
 
             return isNicknameValid = false;
         }
@@ -273,7 +273,17 @@ $passwordInput.addEventListener('keyup', (e) => {
                 alert('올바른 아이디 형식이 아닙니다 다시 확인해주세요. 아이디는 소문자와 숫자만 포함되어야 하며, 8~20자여야 합니다.');
             } else if (response['result'] === 'failure_invalid_password') {
                 alert('비밀번호는 8~100자 사이에 대소문자, 숫자, 특수문자를 포함해야 합니다.');
-            } else {
+            } else if (response['result'] === 'failure_duplicate_contact') {
+                alert('이미 사용중인 연락처 입니다.');
+            } else if (response['result'] === 'failure_duplicate_email') {
+                alert('이미 사용중인 이메일 입니다.');
+            } else if (response['result'] === 'failure_duplicate_nickname') {
+                alert('이미 사용중인 닉네임 입니다.');
+            }
+            else if (response['result'] === 'failure_duplicate_id') {
+                alert('이미 사용중인 아이디 입니다.');
+            }
+            else {
                 alert('서버가 알 수 없는 응답을 반환하였습니다. 잠시 후 다시 시도해 주세요.');
             }
         };

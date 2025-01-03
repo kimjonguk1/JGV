@@ -1168,13 +1168,14 @@ body > .-spring {
   background-color: transparent;
 }
 #myPage-main > .profile-container > .user-info {
-  align-items: center;
+  align-items: flex-end;
   display: flex;
   flex-direction: row;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-end;
   height: 5rem;
   border-bottom: 1px solid #e1e1e1;
+  padding-bottom: 1rem;
 }
 #myPage-main > .profile-container > .user-info > .-spring {
   flex-grow: 1;
@@ -1193,12 +1194,14 @@ body > .-spring {
   flex-shrink: 1;
 }
 #myPage-main > .profile-container > .user-info > div > button {
-  font-size: 0.775rem;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
 }
 #myPage-main > .profile-container > .user-info > div > button:hover {
+  color: #FB4357;
   text-decoration: underline;
+  text-underline-offset: 0.35rem;
 }
 #myPage-main > .profile-container > .user-info > div > button > img {
   width: 1rem;
@@ -1208,7 +1211,8 @@ body > .-spring {
   font-weight: 500;
 }
 #myPage-main > .profile-container > .user-info > .id {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
+  font-weight: 500;
 }
 #myPage-main > .profile-container > .user-info > .nickname {
   font-size: 1.3rem;
