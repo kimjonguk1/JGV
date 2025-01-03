@@ -47,7 +47,7 @@ $reservationCancel.onsubmit = (event) => {
         if (xhr.readyState !== XMLHttpRequest.DONE) {
             return;
         }
-
+        Loading.hide();
         if (xhr.status < 200 || xhr.status >= 300) {
             alert('요청을 전송하는 도중 오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
             return;
@@ -82,6 +82,7 @@ $reservationCancel.onsubmit = (event) => {
     // 요청 보내기
     xhr.open('PATCH', '/user/myPage/reservationCancel');
     xhr.send(formData);
+    Loading.show(0);
 };
 
 // F5 또는 새로 고침을 눌렀을 때 팝업을 닫도록 keydown 이벤트 추가
