@@ -157,7 +157,15 @@ function sortReviews(sort) {
         $reviews.sort((a, b) => b.dataset.likes - a.dataset.likes);
     }
     $reviewContainer.innerHTML = '';
-    $reviews.forEach(review => $reviewContainer.appendChild(review));
+
+    if($reviews.length > 0) {
+        $reviews.forEach(review => $reviewContainer.appendChild(review));
+    } else {
+        $reviewContainer.innerHTML = `<div class="review-no-data">
+                    <span class="review-no-text">아직 리뷰가 작성되지 않았습니다. 첫 번째 리뷰를 남겨보세요!</span>
+                </div>`
+    }
+
 
     document.querySelectorAll('.review-sort-button').forEach(button => button.classList.remove('active'));
     document.querySelector(`.review-sort-button[onclick="sortReviews('${sort}')"]`).classList.add('active');

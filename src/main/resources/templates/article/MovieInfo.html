@@ -62,7 +62,7 @@
                     <p>개봉: <span class="release-date" th:text="${movieInfo.getMoDate()}">2024.12.04</span></p>
                 </div>
                 <div class="buttons">
-                    <a class="reserve-btn" th:data-mo-title="${movieInfo.getMoTitle()}" th:href="@{/ticket/}">예매하기</a>
+                    <a class="reserve-btn" th:if="${reserveOk == true}" th:data-mo-title="${movieInfo.getMoTitle()}" th:href="@{/ticket/}">예매하기</a>
                 </div>
             </div>
         </div>

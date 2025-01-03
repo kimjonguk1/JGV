@@ -225,8 +225,8 @@ body {
   .movie-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 20px;
+    justify-content: flex-start;
+    gap: 40px;
 
     .movie-card {
       width: 30%;
