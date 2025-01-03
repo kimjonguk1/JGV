@@ -6,16 +6,15 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>JGV - 회원가입</title>
-    <link rel="stylesheet" th:href="@{'./assets/styles/index.css'}" type="text/css">
     <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
     <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}"
           type="text/css">
     <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}"
           type="text/css">
     <link rel="stylesheet" href="/user/styles/register.css" type="text/css">
-    <script defer th:src="@{'./assets/scripts/index.js'}" type="text/javascript"></script>
     <script defer src="/user/scripts/register.js" type="text/javascript"></script>
     <script defer th:src="@{'../../fragments/assets/scripts/common.js'}"></script>
+    <script defer src="/assets/scripts/common.js" type="text/javascript"></script>
     <link rel="shortcut icon" href="https://img.cgv.co.kr/theater_img/favicon.ico" type="image/x-icon">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
@@ -239,13 +238,13 @@
                                         value="naver.com">네이버
                                 </button>
                                 <button type="button" class="domain-button"
-                                        value="hanmail.com">한메일
+                                        value="hanmail.net">한메일
                                 </button>
                                 <button type="button" class="domain-button"
-                                        value="gmail.com">구글</button>
+                                        value="nate.com">네이트</button>
                                 <button type="button" class="domain-button"
-                                        value="yahoo.com">야후</button>
-                                <button type="button" class="domain-button" value="daum.net"></button>
+                                        value="gmail.com">지메일</button>
+                                <button type="button" class="domain-button" value="daum.net">다음</button>
                             </div>
                         </div>
                     </div>
@@ -264,8 +263,8 @@
         <input class="--obj-filed -input agree" name="agree" type="checkbox">
         <span class="_box"></span>
         <span class="text">
-            <a href="#">서비스 이용약관</a> 및
-            <a href="#">개인정보 처리방침</a>을 읽어보았으며 이해하였고 동의합니다.
+            <a th:href="@{'../../rules/service'}">서비스 이용약관</a> 및
+            <a th:href="@{'../../rules/privacy'}">개인정보 처리방침</a>을 읽어보았으며 이해하였고 동의합니다.
         </span>
     </label>
     <div class="button-container frame">

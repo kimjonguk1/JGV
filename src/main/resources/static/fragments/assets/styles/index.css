@@ -192,6 +192,7 @@ body > .frame {
   border: 0.0625rem solid transparent;
   padding: 0.2rem;
   position: absolute;
+  cursor: pointer;
 }
 #nav > .nav-wrapper > .search-wrapper > .search-form > .search > button > img {
   width: 1.8rem;

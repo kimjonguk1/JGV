@@ -15,6 +15,8 @@ public interface UserMapper {
 
     int insertUser(UserEntity user);
 
+    int findAllReservations(@Param("usNum") int usNum);
+
     UserEntity selectUserById(@Param("usId") String id);
 
     UserEntity selectUserByEmail(@Param("usEmail") String email);

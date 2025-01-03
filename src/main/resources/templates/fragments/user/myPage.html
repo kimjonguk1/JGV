@@ -4,7 +4,7 @@
     <div class="main-container">
         <div class="title-container">
             <h2>MY 예매내역</h2>
-            <span th:text="${reservations.size()} + '건'"></span>
+            <span th:text="${allReservations} + '건'"></span>
         </div>
         <div class="my-reservation" th:each="reservation, stat : ${reservations}">
             <div class="reservation-info">
@@ -328,7 +328,11 @@
             </div>
         </div>
         <div class="button-container">
-            <button class="withdraw-button" type="button">JGV 회원탈퇴</button>
+            <button class="withdraw-button" type="button"
+            onclick="window.open(`../../user/myPage/userWithdraw`,
+            `회원탈퇴`,
+            `width=600,height=800,left=200,top=200`)">
+                JGV 회원탈퇴</button>
         </div>
     </div>
 </div>

@@ -631,6 +631,9 @@ button {
 #theater-page-container > .theater-page-wrapper > .page > a:hover {
   color: #222222;
 }
+#theater-page-container > .theater-page-wrapper > .page > a.selected {
+  color: #222222;
+}
 
 .screen-item {
   padding-bottom: 1rem;

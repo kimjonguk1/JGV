@@ -180,6 +180,7 @@ public class UserController {
         Pair<PageVo, Map<Set<String>, List<String>>> reservations = this.userService.reservationInformation(loggedInUser.getUsNum(), page2); // 예약 정보
         List<List<String>> cancelReservations = this.userService.selectCancelPaymentByUsNum(loggedInUser.getUsNum()); // 취소 정보
 
+        int allReservations = this.userService.findAllReservations(loggedInUser.getUsNum());
 
         Pair<PageVo, List<MyReviewDTO>> pair = reviewService.getReviewByUser(page, loggedInUser.getUsNum());
 
@@ -192,6 +193,7 @@ public class UserController {
         modelAndView.addObject("currentDate", formattedCurrentDate); // 현재 날짜 전달
         modelAndView.addObject("PageReservations", reservations.getLeft());
         modelAndView.addObject("reservations", reservations.getRight());
+        modelAndView.addObject("allReservations", allReservations);
         modelAndView.addObject("cancelReservations", cancelReservations);
         modelAndView.addObject("page", page); // 현재 page
         modelAndView.addObject("page2", page2); // 현재 page2
@@ -226,6 +228,7 @@ public class UserController {
 
 
 
+
 //    @RequestMapping(value = "/myPage/modify", method = RequestMethod.GET, produces =
 //            MediaType.TEXT_HTML_VALUE)
 //    public ModelAndView getModify(HttpSession session, UserEntity user) {
@@ -240,8 +243,8 @@ public class UserController {
     // region 아이디 / 닉네임 중복 검사
     @RequestMapping(value = "/check-duplicate-id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String checkDuplicateId(@RequestParam("user") String user) {
-        Result result = userService.checkDuplicateUser(user);
+    public String checkDuplicateId(@RequestParam("user") String userId, UserEntity user) {
+        Result result = userService.checkDuplicateUser(userId, user);
         JSONObject response = new JSONObject();
         response.put(Result.NAME, result.nameToLower());
         return response.toString();

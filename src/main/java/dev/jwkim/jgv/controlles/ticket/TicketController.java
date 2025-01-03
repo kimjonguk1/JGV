@@ -200,7 +200,7 @@ public class TicketController {
         if (moTitle != null && thName != null && scStartDate != null) {
             MovieVo[] movieVos = this.ticketService.selectAllMovies(moTitle);
             ScreenVo[] screens = this.ticketService.selectScreenDatesByMovieAndTheaterAndDate(moTitle, thName, scStartDate);
-            Map<List<String>, List<List<String>>> times = new HashMap<>();
+            Map<List<String>, List<List<String>>> times = new LinkedHashMap<>();
             List<Object[]> vos = new ArrayList<>();
             Set<String> MoKeys = new LinkedHashSet<>();
             for (MovieVo vo : movieVos) {

@@ -3,30 +3,6 @@ const urlParams = new URLSearchParams(window.location.search);
 const emEmail = urlParams.get('userEmail');
 const emKey = urlParams.get('key');
 
-{
-    const $advertisementArray = ['https://adimg.cgv.co.kr/images/202412/Moana2/1218_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1224_980x80.png', 'https://adimg.cgv.co.kr/images/202411/jjanggu/1209_980x80.png']
-    document.addEventListener("DOMContentLoaded", () => {
-        const $advertisement = document.getElementById('advertisement');
-        const $advertisementRandom = $advertisementArray[Math.floor(Math.random() * $advertisementArray.length)];
-        const $img = $advertisement.querySelector(':scope > a > img');
-        const $a = $advertisement.querySelector(':scope > a')
-        if ($advertisementRandom === $advertisementArray[0]) {
-            $advertisement.style.backgroundColor = '#2B53AB'
-            $a.setAttribute('href', '../movies/movieList/movieInfo/3669')
-        } else if ($advertisementRandom === $advertisementArray[1]) {
-            $advertisement.style.backgroundColor = '#4184D2'
-            $a.setAttribute('href', '../movies/movieList/movieInfo/3628')
-        } else if ($advertisementRandom === $advertisementArray[2]) {
-            $advertisement.style.backgroundColor = '#191413'
-            $a.setAttribute('href', '../movies/movieList/movieInfo/3611')
-        } else {
-            $advertisement.style.backgroundColor = '#2B82DD'
-            $a.setAttribute('href', '../movies/movieList/movieInfo/3666')
-        }
-        $img.setAttribute('src', $advertisementRandom);
-    });
-}
-
 const $passwordInput = $recoverPassword[`recover-password`];
 const $strengthDisplay = document.getElementById('password-strength');
 
@@ -93,6 +69,7 @@ $recoverPassword.onsubmit = (e) => {
 
             return;
         }
+        Loading.hide();
         if (xhr.status < 200 || xhr.status >= 300) {
             alert('요청을 전송하는 도중 오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
             return;
@@ -119,5 +96,6 @@ $recoverPassword.onsubmit = (e) => {
     };
     xhr.open('PATCH', '/user/find-password-result');
     xhr.send(formData);
+    Loading.show(0);
 
 }

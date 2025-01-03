@@ -481,7 +481,6 @@ button {
       &:hover {
         color: #222222;
       }
-
     }
 
     > .page {
@@ -498,7 +497,6 @@ button {
           color: #222222;
         }
       }
-
     }
   }
 }
@@ -527,7 +525,6 @@ button {
       &:hover {
         color: #222222;
       }
-
     }
 
     > .page {
@@ -539,8 +536,11 @@ button {
         &:hover {
           color: #222222;
         }
-      }
 
+        &.selected {
+          color: #222222;
+        }
+      }
     }
   }
 }
