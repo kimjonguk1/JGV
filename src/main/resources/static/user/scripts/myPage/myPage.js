@@ -62,8 +62,10 @@ const $modalMovieTitle = document.getElementById('modalMovieTitle');
 const $modalUserName = document.getElementById('modalUserName');
 const $submitReview = document.getElementById('submitReview');
 const $closeModal = document.getElementById('closeModal');
-console.log($modal)
-$modal.style.display = 'none';
+if($modal) {
+    $modal.style.display = 'none';
+}
+
 
 // UTF-8 바이트 계산 함수
 function getByteLength(str) {
@@ -93,16 +95,20 @@ function updateCharCount() {
     charCountDisplay.textContent = `${currentByteLength} / 280 (byte)`;
 }
 
-textarea.addEventListener('input', () => {
-    const currentByteLength = getByteLength(textarea.value);
-    charCountDisplay.textContent = `${currentByteLength} / 280 (byte)`;
+if(textarea && charCountDisplay) {
+    textarea.addEventListener('input', () => {
+        const currentByteLength = getByteLength(textarea.value);
+        charCountDisplay.textContent = `${currentByteLength} / 280 (byte)`;
 
-    // 입력 제한 처리
-    if (currentByteLength > 280) {
-        textarea.value = textarea.value.slice(0, -1); // 초과 시 마지막 문자 삭제
-        charCountDisplay.textContent = `${getByteLength(textarea.value)} / 280 (byte)`;
-    }
-});
+        // 입력 제한 처리
+        if (currentByteLength > 280) {
+            textarea.value = textarea.value.slice(0, -1); // 초과 시 마지막 문자 삭제
+            charCountDisplay.textContent = `${getByteLength(textarea.value)} / 280 (byte)`;
+        }
+    });
+}
+
+
 
 
 document.addEventListener('click', (e) => {
