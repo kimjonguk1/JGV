@@ -19,30 +19,8 @@ const $firstButton = $controlBar.querySelector(':scope > .container > [data-id="
 const $theaterCinema = document.getElementById('theater-cinema');
 const ticketParams = JSON.parse(sessionStorage.getItem('ticketParams'));
 
-// region nav 광고
- {
-    const $advertisementArray = ['https://adimg.cgv.co.kr/images/202412/Moana2/1218_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1224_980x80.png', 'https://adimg.cgv.co.kr/images/202411/jjanggu/1209_980x80.png']
-    document.addEventListener("DOMContentLoaded", () => {
-        const $advertisement = document.getElementById('advertisement');
-        const $advertisementRandom = $advertisementArray[Math.floor(Math.random() * $advertisementArray.length)];
-        const $img = $advertisement.querySelector(':scope > a > img');
-        const $a = $advertisement.querySelector(':scope > a')
-        if ($advertisementRandom === $advertisementArray[0]) {
-            $advertisement.style.backgroundColor = '#2B53AB'
-            $a.setAttribute('href', '../movies/movieList/movieInfo/3669')
-        } else if ($advertisementRandom === $advertisementArray[1]) {
-            $advertisement.style.backgroundColor = '#4184D2'
-            $a.setAttribute('href', '../movies/movieList/movieInfo/3628')
-        } else if ($advertisementRandom === $advertisementArray[2]) {
-            $advertisement.style.backgroundColor = '#191413'
-            $a.setAttribute('href', '../movies/movieList/movieInfo/3611')
-        } else {
-            $advertisement.style.backgroundColor = '#2B82DD'
-            $a.setAttribute('href', '../movies/movieList/movieInfo/3666')
-        }
-        $img.setAttribute('src', $advertisementRandom);
-    });
-
+// region 광고
+{
     const $sideAdvertisementArray = ['https://adimg.cgv.co.kr/images/202411/Firefighters/996x140.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/996x140.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/996x140.jpg'];
     document.addEventListener("DOMContentLoaded", () => {
         const $advertisement = document.querySelector('.add');
@@ -120,6 +98,8 @@ const params = {
                 region.click();
             }
         })
+    }
+    document.addEventListener('DOMContentLoaded', () => {
         if (ticketParams) {
             $movieItems.forEach((movie) => {
                 const $items = movie.querySelector(':scope > .text > .name');
@@ -130,7 +110,7 @@ const params = {
                 }
             })
         }
-    }
+    })
 }
 
 // 지정한 데이터
@@ -151,7 +131,9 @@ function checkScreen() {
             if (xhr.readyState !== XMLHttpRequest.DONE) {
                 return;
             }
-            Loading.hide();
+            if (!ticketParams) {
+                Loading.hide();
+            }
             if (xhr.status < 200 || xhr.status >= 300) {
                 alert('오류 발생');
                 return;
@@ -716,7 +698,7 @@ function movieItem($movieItems) {
                     };
                     xhr.open('GET', url.toString());
                     xhr.send();
-                    Loading.show(0);
+                    Loading.show();
                 }
             })
             checkScreen();
@@ -737,7 +719,6 @@ $orderItems.forEach((x) => {
                         if (xhr.readyState !== XMLHttpRequest.DONE) {
                             return;
                         }
-                        Loading.hide();
                         if (xhr.status < 200 || xhr.status >= 300) {
                             alert('오류 발생');
                             return;
@@ -752,14 +733,13 @@ $orderItems.forEach((x) => {
                     };
                     xhr.open('GET', './movies');
                     xhr.send();
-                    Loading.show(0);
+                    Loading.show();
                 } else if (x.innerText === '예매율순') {
                     const xhr = new XMLHttpRequest();
                     xhr.onreadystatechange = () => {
                         if (xhr.readyState !== XMLHttpRequest.DONE) {
                             return;
                         }
-                        Loading.hide();
                         if (xhr.status < 200 || xhr.status >= 300) {
                             alert('오류 발생');
                             return;
@@ -774,7 +754,7 @@ $orderItems.forEach((x) => {
                     };
                     xhr.open('GET', './');
                     xhr.send();
-                    Loading.show(0);
+                    Loading.show();
                 }
             }
         })
@@ -782,6 +762,7 @@ $orderItems.forEach((x) => {
 })
 
 movieItem($movieItems);
+
 // endregion
 
 $regionItems.forEach((x) => {
@@ -797,7 +778,9 @@ $regionItems.forEach((x) => {
                     if (xhr.readyState !== XMLHttpRequest.DONE) {
                         return;
                     }
-                    Loading.hide();
+                    if (!ticketParams) {
+                        Loading.hide();
+                    }
                     if (xhr.status < 200 || xhr.status >= 300) {
                         alert('오류 발생');
                         return;
