@@ -22,10 +22,10 @@ public class TheaterService {
     private final TheaterMapper theaterMapper;
 
     public Map<Set<String>, Map<Set<String>, Set<String>>> selectAllScreensByCinemaType(String date, String region, String movie, String cinema) {
-        if (date == null || date.isEmpty() ||
-                region == null || region.isEmpty() ||
-                movie == null || movie.isEmpty() ||
-                cinema == null || cinema.isEmpty()) {
+        if (date == null || date.isEmpty() || date.length() > 19 ||
+                region == null || region.isEmpty() || region.length() > 10 ||
+                movie == null || movie.isEmpty() || movie.length() > 100 ||
+                cinema == null || cinema.isEmpty() || cinema.length() > 30) {
             return null;
         }
         ScreenVo[] screenVos = this.theaterMapper.selectAllScreensByCinemaType(date, region, movie, cinema);
@@ -74,8 +74,8 @@ public class TheaterService {
     }
 
     public Map<Set<String>, Map<Set<String>, Set<String>>> selectAllScreens(String date, String theater) {
-        if (date == null || date.isEmpty() ||
-                theater == null || theater.isEmpty()) {
+        if (date == null || date.isEmpty() || date.length() > 19 ||
+                theater == null || theater.isEmpty() || theater.length() > 30) {
             return null;
         }
         ScreenVo[] screenVos = this.theaterMapper.selectAllScreens(date, theater);
@@ -124,9 +124,9 @@ public class TheaterService {
     }
 
     public Map<Set<String>, Map<Set<String>, Set<String>>> selectAllScreensByRegion(String date, String region, String movie) {
-        if (date == null || date.isEmpty() ||
-                region == null || region.isEmpty() ||
-                movie == null || movie.isEmpty()) {
+        if (date == null || date.isEmpty() || date.length() > 19 ||
+                region == null || region.isEmpty() || region.length() > 10 ||
+                movie == null || movie.isEmpty() || movie.length() > 100) {
             return null;
         }
         ScreenVo[] screenVos = this.theaterMapper.selectAllScreensByRegion(date, region, movie);
@@ -175,10 +175,19 @@ public class TheaterService {
     }
 
     public TheaterVo[] selectAllTheaters(String theater) {
+        if (theater == null || theater.isEmpty() || theater.length() > 30) {
+            return null;
+        }
+
         return this.theaterMapper.selectAllTheaters(theater);
     }
 
     public TheaterVo[] selectAllTheatersByRegion(String region, String movie) {
+        if (region == null || region.isEmpty() || region.length() > 10 ||
+                movie == null || movie.isEmpty() || movie.length() > 100) {
+            return null;
+        }
+
         return this.theaterMapper.selectAllTheatersByRegion(region, movie);
     }
 
@@ -187,13 +196,17 @@ public class TheaterService {
     }
 
     public TheaterEntity[] getTheatersByRegion(String region) {
-        if (region == null) {
+        if (region == null || region.isEmpty() || region.length() > 10) {
             return null;
         }
         return this.theaterMapper.getTheatersByRegion(region);
     }
 
     public Map<String, String> getWeekdays(String theater) {
+        if (theater == null || theater.isEmpty() || theater.length() > 30) {
+            return null;
+        }
+
         // 화면의 시작 날짜들을 가져옴
         TheaterVo[] screens = this.theaterMapper.selectAllTheaters(theater);
 
@@ -234,6 +247,10 @@ public class TheaterService {
     }
 
     public Map<String, String> getWeekdaysByRegion(String region, String movie) {
+        if (region == null || region.isEmpty() || region.length() > 10 ||
+                movie == null || movie.isEmpty() || movie.length() > 100) {
+            return null;
+        }
         // 화면의 시작 날짜들을 가져옴
         TheaterVo[] screens = this.theaterMapper.selectAllTheatersByRegion(region, movie);
 

@@ -4,7 +4,7 @@
     <div class="main-container">
         <div class="title-container">
             <h2>MY 예매내역</h2>
-            <span th:text="${reservations.size()} + '건'"></span>
+            <span th:text="${allReservations} + '건'"></span>
         </div>
         <div class="my-reservation" th:each="reservation, stat : ${reservations}">
             <div class="reservation-info">

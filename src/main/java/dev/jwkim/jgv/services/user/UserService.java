@@ -53,6 +53,10 @@ public class UserService {
         this.templateEngine = templateEngine;
     }
 
+    public int findAllReservations(int usNum) {
+        return this.userMapper.findAllReservations(usNum);
+    }
+
     // region 회원가입 / 비밀번호 암호화
     @Transactional
     public Result register(HttpServletRequest request, UserEntity user) throws MessagingException {
