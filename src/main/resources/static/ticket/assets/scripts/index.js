@@ -746,7 +746,7 @@ $orderItems.forEach((x) => {
                         if (xhr.readyState !== XMLHttpRequest.DONE) {
                             return;
                         }
-                        if (ticketParams) {
+                        if (!ticketParams) {
                             Loading.hide();
                         }
                         if (xhr.status < 200 || xhr.status >= 300) {

@@ -255,13 +255,11 @@ public class UserService {
             }
 
             if (deletedCount > 0) {
-                System.out.println("ㅋㅋ 지움");
                 return CommonResult.SUCCESS;  // 일부 사용자 삭제 성공
             } else {
                 return CommonResult.FAILURE;  // 삭제된 사용자가 없음
             }
         }
-        System.out.println("실패임 ㅋㅋ ");
         return CommonResult.FAILURE;  // 미인증 사용자 없음
     }
 
