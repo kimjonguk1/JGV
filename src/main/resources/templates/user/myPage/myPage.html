@@ -6,13 +6,13 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>JGV - 마이페이지</title>
-    <link rel="stylesheet" th:href="@{'./assets/styles/index.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../assets/styles/index.css'}" type="text/css">
     <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
-    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}"
+          type="text/css">
     <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}" type="text/css">
     <link rel="stylesheet" href="/user/styles/myPage/myPage.css" type="text/css">
     <link rel="stylesheet" href="/user/styles/myPage/userWithdraw.css" type="text/css">
-    <script defer th:src="@{'./assets/scripts/index.js'}" type="text/javascript"></script>
     <script defer src="/user/scripts/myPage/myPage.js" type="text/javascript"></script>
     <script defer src="/user/scripts/myPage/withdraw.js" type="text/javascript"></script>
     <script defer th:src="@{'../../fragments/assets/scripts/common.js'}"></script>
@@ -32,7 +32,7 @@
             <span th:text="${session.user.getUsNickName()}" class="nickname"></span>
             <div>
             <button id="modify-nickname" onclick="window.open(
-                'http://localhost:8080/user/myPage/modifyNickname',
+                '../../user/myPage/modifyNickname',
                 '회원 닉네임 재설정',
                 'width=600,height=800,left=200,top=200'
             )">
@@ -46,24 +46,25 @@
         <div class="user-tab" >
             <ul>
                 <li class="title" id="myJgv">
-                    <a th:href="@{/user/myPage/main}">MY JGV HOME</a>
+                    <a th:href="@{'/user/myPage/main'}">MY JGV HOME</a>
                 </li>
 
                 <li class="title" id="myReservation">
-                    <a th:href="@{/user/myPage/reservation}">나의 예매내역</a>
+                    <a th:href="@{'/user/myPage/reservation'}">나의 예매내역</a>
                 </li>
                 <li class="title" id="myProfile">
-                    <a th:href="@{/user/myPage/personal}">회원정보</a>
+                    <a th:href="@{'/user/myPage/personal'}">회원정보</a>
                 </li>
                 <li class="item">
                     <img src="/user/images/user_myPage_Pointer.png" alt="right-pointer">
                     <div class="-spring"></div>
-                    <a th:href="@{/user/myPage/personal}">개인정보 설정</a>
+                    <a th:href="@{'/user/myPage/personal'}">개인정보 설정</a>
                 </li>
                 <li class="item">
                     <img src="/user/images/user_myPage_Pointer.png" alt="right-pointer">
                     <div class="-spring"></div>
-                    <a th:href="@{/user/myPage/withdraw}">회원탈퇴</a>
+                    <a th:href="@{'././personal?forward=/user/myPage/withdraw'}">
+                        회원탈퇴</a>
                 </li>
             </ul>
         </div>
