@@ -78,9 +78,9 @@ $loginForm.onsubmit = (e) => {
     formData.append('usPw', $loginForm['password'].value);
     xhr.onreadystatechange = () => {
         if (xhr.readyState !== XMLHttpRequest.DONE) {
-
             return;
         }
+        Loading.hide();
         if (xhr.status < 200 || xhr.status >= 300) {
             alert('요청을 전송하는 도중 오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
 
@@ -120,8 +120,7 @@ $loginForm.onsubmit = (e) => {
     };
     xhr.open('POST', '/user/login');
     xhr.send(formData);
-
-
+    Loading.show(0);
 }
 // endregion
 

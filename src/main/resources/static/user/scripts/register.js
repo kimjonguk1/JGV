@@ -65,6 +65,7 @@ $registerForm['duplicate-id-button'].onclick = () => {
 
             return;
         }
+        Loading.hide();
         if (xhr.status < 200 || xhr.status >= 300) {
             alert('요청을 전송하는 도중 오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
             return;
@@ -75,6 +76,10 @@ $registerForm['duplicate-id-button'].onclick = () => {
             alert('이미 사용중인 아이디 입니다.');
             return isIdValid = false;
 
+        }
+        if (result === 'failure_invalid_id') {
+            alert('사용할수 없는 문자가 포함되어 있습니다. 아이디는 6~20자의 소문자 + 숫자 입니다.');
+            return;
         }
         if (result === 'failure') {
             alert('올바른 아이디를 입력해주세요. 아이디는 6~20자의 소문자 + 숫자 입니다.');
@@ -88,6 +93,7 @@ $registerForm['duplicate-id-button'].onclick = () => {
     };
     xhr.open('GET', '/user/check-duplicate-id?user=' + encodeURIComponent($usId));
     xhr.send();
+    Loading.show(0);
 }
 // endregion
 
@@ -102,6 +108,7 @@ $registerForm['duplicate-nickname-button'].onclick = () => {
 
             return;
         }
+        Loading.hide();
         if (xhr.status < 200 || xhr.status >= 300) {
             alert('요청을 전송하는 도중 오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
             return;
@@ -125,6 +132,7 @@ $registerForm['duplicate-nickname-button'].onclick = () => {
     };
     xhr.open('GET', '/user/check-duplicate-nickname?nickname=' + encodeURIComponent($nickname));
     xhr.send();
+    Loading.show(0);
 }
 // endregion
 
@@ -274,6 +282,7 @@ $passwordInput.addEventListener('keyup', (e) => {
 
                 return;
             }
+            Loading.hide();
             if (xhr.status < 200 || xhr.status >= 300) {
                 alert('요청을 전송하는 도중 오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
                 return;
@@ -297,6 +306,7 @@ $passwordInput.addEventListener('keyup', (e) => {
         };
         xhr.open('POST', '/user/register');
         xhr.send(formData);
+        Loading.show(0);
 
     }
 }

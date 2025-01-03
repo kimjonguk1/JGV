@@ -241,8 +241,8 @@ public class UserController {
     // region 아이디 / 닉네임 중복 검사
     @RequestMapping(value = "/check-duplicate-id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String checkDuplicateId(@RequestParam("user") String user) {
-        Result result = userService.checkDuplicateUser(user);
+    public String checkDuplicateId(@RequestParam("user") String userId, UserEntity user) {
+        Result result = userService.checkDuplicateUser(userId, user);
         JSONObject response = new JSONObject();
         response.put(Result.NAME, result.nameToLower());
         return response.toString();
