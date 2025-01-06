@@ -30,7 +30,7 @@
 - /사용자/프로필 -> 사용자가 작성한 리뷰(평점)확인, 예매 내역 확인
 - /사용자/프로필 수정 -> 사용자가 프로필 정보 수정
 - /user/myPage/main -> 사용자가 예매한 영화 내역 결제 및 리뷰 작성 내역 확인
-- user/myPage/reservation -> 사용자가 예매한 영화 결제 취소 내역
+- /user/myPage/reservation -> 사용자가 예매한 영화 결제 취소 내역
 
 ### 영화 목록 및 상세 정보
 - /영화/목록조회 -> 현재 상영작 표시 (포스터, 영화 제목, 개봉일 표시)
@@ -42,8 +42,8 @@
 - /상영시간표/조회 -> 특정 극장에서 상영 중인 영화의 시간표를 확인
 
 ### 좌석 선택 및 예매
-- tikect -> 사용자가 상영 시간과 좌석 선택 (예약된 좌석과 남은 좌석 표시) 및 결제
-- tikect/reservation -> 사용자가 선택하여 예매한 내역 확인
+- /tikect -> 사용자가 영화, 영화관, 상영관, 상영 시간과 좌석 선택 (예약된 좌석과 남은 좌석 표시) 및 결제
+- /tikect/reservation -> 사용자가 선택하여 예매한 내역 확인
 
 ## ERD
 <img src="https://img.notionusercontent.com/s3/prod-files-secure%2Fbba77931-e5b0-47ad-bf2b-0d24647cd0c4%2Fc9bcf8ca-95a3-4400-bea5-3b8252e163e2%2Ferd.png/size/w=1420?exp=1733387405&sig=NANjttxYuuVZxz6YQJ32RL4lcnW3ZA_sv9co8MMLEww">
