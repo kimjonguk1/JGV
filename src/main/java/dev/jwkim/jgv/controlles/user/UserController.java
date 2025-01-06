@@ -198,7 +198,7 @@ public class UserController {
         modelAndView.addObject("page", page); // 현재 page
         modelAndView.addObject("page2", page2); // 현재 page2
         modelAndView.setViewName("user/myPage/myPage");
-
+        
         return modelAndView;
 
     }
@@ -219,7 +219,7 @@ public class UserController {
             if (forward != null && !forward.isEmpty()) {
                 modelAndView.setViewName("redirect:" + forward);
             } else {
-                modelAndView.setViewName("/user/myPage/modify"); // 기본 경로
+                modelAndView.setViewName("user/myPage/modify"); // 기본 경로
             }
 
         }
