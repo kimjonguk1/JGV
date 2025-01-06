@@ -58,3 +58,6 @@
 <a href="https://tricky-bloom-e01.notion.site/Jongyul-Pirates-Movie-Theater-130221d78586808aa580cbaf5e7a7e6f?pvs=4" target="_blank">
   <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png" alt="Notion" width="80">
 </a>
+
+## 🔗 [JGV] 공식 웹사이트 링크
+https://jgv.jwkim.dev/
