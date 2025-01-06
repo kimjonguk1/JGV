@@ -55,7 +55,7 @@
 - admin/crawling -> JSOUP 라이브러리를 활용하여 영화 목록 크롤링(cgv)
 
 ## ERD
-<img src="https://img.notionusercontent.com/s3/prod-files-secure%2Fbba77931-e5b0-47ad-bf2b-0d24647cd0c4%2Fc9bcf8ca-95a3-4400-bea5-3b8252e163e2%2Ferd.png/size/w=1420?exp=1733387405&sig=NANjttxYuuVZxz6YQJ32RL4lcnW3ZA_sv9co8MMLEww">
+<img src="https://img.notionusercontent.com/s3/prod-files-secure%2Fbba77931-e5b0-47ad-bf2b-0d24647cd0c4%2Ff978612d-0b69-4179-b2f2-b5631d52e9d6%2Ferd_%EC%B5%9C%EC%A2%85.png/size/w=1420?exp=1736235728&sig=WEbiTOwYMX_QgelXO2a4kiDlUEINUcmJprgwRw7HW5k">
 
 ## 노션 링크
 <a href="https://tricky-bloom-e01.notion.site/Jongyul-Pirates-Movie-Theater-130221d78586808aa580cbaf5e7a7e6f?pvs=4" target="_blank">
