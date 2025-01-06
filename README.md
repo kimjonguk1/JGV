@@ -25,13 +25,16 @@
 
 ## 주요 기능
 ### 사용자 관리
-- /user/register -> 회원가입
+- /user/register -> 회원가입 ( 아이디, 닉네임 중복검사 ) 
 - /user/login -> 사용자가 아이디, 비밀번호로 로그인
-- /user/find-id -> 사용자가 이메일 인증을 통해 아이디 찾기
-- /user/find-password -> 사용자가 아이디, 이메일 인증을 통해 비밀번호 찾
-- /user/myPage/personal -> 사용자가 프로필 정보 수정
+- /user/find-id -> 사용자가 입력한 이메일, 연락처 값으로 아이디 조회 
+- /user/find-password -> 사용자가 아이디, 이메일 인증을 통해 비밀번호를 찾는 기능
 - /user/myPage/main -> 사용자가 예매한 영화 내역 결제 및 리뷰 작성 내역 확인
+- /user/myPage/personal -> 사용자의 비밀번호 인증후, 회원 정보 수정 및 회원 탈퇴 페이지로 이동 
+- /user/myPage/modify -> 회원 정보 수정 ( 닉네임, 비밀번호 )
+- /user/myPage/userWithdraw -> 회원 탈퇴 기능 
 - /user/myPage/reservation -> 사용자가 예매한 영화 결제 취소 내역
+
 
 ### 영화 목록 및 상세 정보
 - /movies/movieList -> 현재 상영작 및 상영예정작 표시 (포스터, 영화 제목, 개봉일 표시)
