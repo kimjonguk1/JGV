@@ -33,10 +33,11 @@
 - /user/myPage/reservation -> 사용자가 예매한 영화 결제 취소 내역
 
 ### 영화 목록 및 상세 정보
-- /영화/목록조회 -> 현재 상영작 표시 (포스터, 영화 제목, 개봉일 표시)
-- /영화/상세조회 -> 특정 영화의 상세 정보를 확인 (줄거리, 감독/출연진 정보, 관람 등급, 영화 장르, 제작국가 표시)
-- /영화/검색 -> 특정 영화를 검색하거나 특정 인물을 검색
-- /관리자/크롤링 -> 영화 데이터를 cgv 공식 홈페이지에서 크롤링
+- /movies/movieList -> 현재 상영작 및 상영예정작 표시 (포스터, 영화 제목, 개봉일 표시)
+- /movies/movieList/movieInfo -> 특정 영화의 상세 정보를 확인 (주요정보, 출연진, 리뷰, 상영시간표 확인)
+
+### 영화 및 인물 검색
+- /movies/search -> 특정 영화를 검색하거나 특정 인물을 검색
 
 ### 상영 일정
 - /상영시간표/조회 -> 특정 극장에서 상영 중인 영화의 시간표를 확인
@@ -44,6 +45,10 @@
 ### 좌석 선택 및 예매
 - /tikect -> 사용자가 영화, 영화관, 상영관, 상영 시간과 좌석 선택 (예약된 좌석과 남은 좌석 표시) 및 결제
 - /tikect/reservation -> 사용자가 선택하여 예매한 내역 확인
+
+### 관리자 페이지
+- admin/is_admin?mode=movie -> 영화 수정 및 삭제
+- admin/crawling -> 영화 목록 크롤링(cgv)
 
 ## ERD
 <img src="https://img.notionusercontent.com/s3/prod-files-secure%2Fbba77931-e5b0-47ad-bf2b-0d24647cd0c4%2Fc9bcf8ca-95a3-4400-bea5-3b8252e163e2%2Ferd.png/size/w=1420?exp=1733387405&sig=NANjttxYuuVZxz6YQJ32RL4lcnW3ZA_sv9co8MMLEww">
