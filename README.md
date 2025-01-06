@@ -49,7 +49,7 @@
 
 ### 관리자 페이지
 - admin/is_admin?mode=movie -> 영화 수정 및 삭제
-- admin/crawling -> 영화 목록 크롤링(cgv)
+- admin/crawling -> JSOUP 라이브러리를 활용하여 영화 목록 크롤링(cgv)
 
 ## ERD
 <img src="https://img.notionusercontent.com/s3/prod-files-secure%2Fbba77931-e5b0-47ad-bf2b-0d24647cd0c4%2Fc9bcf8ca-95a3-4400-bea5-3b8252e163e2%2Ferd.png/size/w=1420?exp=1733387405&sig=NANjttxYuuVZxz6YQJ32RL4lcnW3ZA_sv9co8MMLEww">
@@ -59,5 +59,5 @@
   <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png" alt="Notion" width="80">
 </a>
 
-## 🔗 [JGV] 공식 웹사이트 링크
+## [JGV] 공식 웹사이트 링크
 https://jgv.jwkim.dev/
