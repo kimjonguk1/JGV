@@ -7,10 +7,7 @@ import dev.jwkim.jgv.entities.user.UserEntity;
 import dev.jwkim.jgv.results.Result;
 import dev.jwkim.jgv.services.theater.TheaterService;
 import dev.jwkim.jgv.services.ticket.TicketService;
-import dev.jwkim.jgv.vos.theater.MovieVo;
-import dev.jwkim.jgv.vos.theater.RegionVo;
-import dev.jwkim.jgv.vos.theater.ScreenVo;
-import dev.jwkim.jgv.vos.theater.TheaterVo;
+import dev.jwkim.jgv.vos.theater.*;
 import dev.jwkim.jgv.vos.ticket.CinemaTypeVo;
 import dev.jwkim.jgv.vos.ticket.SeatVo;
 import jakarta.servlet.ServletException;
@@ -215,11 +212,12 @@ public class TicketController {
             for (ScreenVo screen : screens) {
                 List<String> keys = new ArrayList<>();
                 List<String> contents = new ArrayList<>();
+                ScreenDataVo screenDataVo = new ScreenDataVo(screen.getSeatCount(), screen.getUsedSeatCount());
                 keys.add(screen.getCitName());
                 keys.add(screen.getCiName());
                 keys.add(String.valueOf(screen.getSeatCount()));
                 contents.add(String.valueOf(screen.getScStartDate()));
-                contents.add(String.valueOf(screen.getSeatCount()));
+                contents.add(String.valueOf(screenDataVo.getEmptySeatCount()));
                 times.computeIfAbsent(keys, k -> new ArrayList<>()).add(contents);
             }
             modelAndView.addObject("times", times);
