@@ -40,7 +40,8 @@ class Loading {
 
 //검색 기능 추가
 document.addEventListener('DOMContentLoaded', () => {
-    const $form = document.querySelector('.nav > .nav-wrapper > .search-wrapper > .search-form')
+    const $form = document.querySelector('.nav > .nav-wrapper > .search-wrapper > .search-form');
+    console.log($form)
     if($form) {
         const $searchKeyword = $form.querySelector('.search > .keyword');
 
