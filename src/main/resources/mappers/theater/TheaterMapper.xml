@@ -97,7 +97,9 @@
                          WHERE `seat`.`ci_num` = `cinema`.`ci_num`)        AS `seatCount`,
                         (SELECT COUNT(0)
                          FROM `jgv`.`reservation`
-                         WHERE `reservation`.`sc_num` = `screen`.`sc_num`) AS `usedSeatCount`
+                                  LEFT JOIN `jgv`.`payment` ON reservation.pa_num = payment.pa_num
+                         WHERE `reservation`.`sc_num` = `screen`.`sc_num`
+                           AND `pa_state` = TRUE) AS `usedSeatCount`
         FROM `jgv`.`screen`
                  LEFT JOIN `jgv`.`movie` ON `screen`.`mo_num` = `movie`.`mo_num`
                  LEFT JOIN `jgv`.`movie_genere` ON `movie`.`mo_num` = `movie_genere`.`mo_num`

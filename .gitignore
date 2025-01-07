@@ -16,6 +16,7 @@ target/
 ### IntelliJ IDEA ###
 application.properties
 application-local.properties
+portfolio.pem
 .idea
 *.iws
 *.iml
