@@ -9,6 +9,16 @@
                `reg_name` AS `regName`
         FROM `jgv`.`region`
     </select>
+    <select id="getAllTheaters"
+            resultType="dev.jwkim.jgv.entities.theater.TheaterEntity">
+        SELECT `th_num`     AS `thNum`,
+               `th_name`    AS `thName`,
+               `th_addr`    AS `thAddr`,
+               `th_img`     AS `thImg`,
+               `th_parking` AS `thParking`,
+               `reg_num`    AS `regNum`
+        FROM `jgv`.`theater`
+    </select>
     <select id="getTheatersByRegion"
             resultType="dev.jwkim.jgv.entities.theater.TheaterEntity">
         SELECT `th_num`            AS `thNum`,
