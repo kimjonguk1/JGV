@@ -614,7 +614,73 @@ public class UserService {
             throw new RuntimeException("결제 상태 업데이트 실패");
         }
     }
+    // endregion
+
+    // region 이메일토큰 재발급
+
+    public String resendEmail(String id) throws MessagingException {
+        // 사용자 ID를 통해 사용자 정보 조회
+        UserEntity userId = this.userMapper.selectUserById(id);
+        return userId.getUsEmail();
+    }
 
 
+    public Result reSendEmailToken(String id, HttpServletRequest request) throws MessagingException {
+        // 사용자 ID를 통해 사용자 정보 조회
+        UserEntity user = this.userMapper.selectUserByUserId(id);
+        String userEmail = user.getUsEmail();
+
+        // 사용자가 존재하지 않으면 예외 처리
+        if (user == null) {
+            throw new IllegalArgumentException("사용자 정보를 찾을 수 없습니다.");
+        }
+
+        // 이메일 도출
+
+        // 이메일 토큰 생성
+        EmailTokenEntity emailToken = new EmailTokenEntity();
+        emailToken.setEmEmail(userEmail);
+        emailToken.setEmKey(CryptoUtils.hashSha512(String.format("%s%s%f%f",
+                userEmail,
+                user.getUsPw(),
+                Math.random(),
+                Math.random()
+        )));
+        emailToken.setEmCreatedAt(LocalDateTime.now());
+        emailToken.setEmExpiresAt(LocalDateTime.now().plusHours(24));
+        emailToken.setEmUsed(false);
+
+        // 이메일 토큰을 데이터베이스에 저장
+        if (this.emailTokenMapper.insertEmailToken(emailToken) == 0) {
+            return CommonResult.FAILURE;
+        }
+
+        // 인증 링크 생성
+        String validationLink = String.format(
+                "%s://%s:%d/user/validate-email-token?emEmail=%s&emKey=%s",
+                request.getScheme(),
+                request.getServerName(),
+                request.getServerPort(),
+                emailToken.getEmEmail(),
+                emailToken.getEmKey()
+        );
+
+        // 이메일 본문 생성 (Thymeleaf를 이용한 이메일 템플릿 처리)
+        Context context = new Context();
+        context.setVariable("ValidationLink", validationLink);
+        String mailText = this.templateEngine.process("email/validationLink", context);
+
+        // 이메일 전송
+        MimeMessage mimeMessage = this.mailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+        mimeMessageHelper.setFrom("nyeonjae94@gmail.com");
+        mimeMessageHelper.setTo(userEmail);
+        mimeMessageHelper.setSubject("[JGV] 회원가입 인증 링크");
+        mimeMessageHelper.setText(mailText, true);
+
+        // 이메일 발송
+        this.mailSender.send(mimeMessage);
+        return CommonResult.SUCCESS; // 이메일을 반환
+    }
     // endregion
 }
