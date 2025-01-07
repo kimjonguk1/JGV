@@ -232,6 +232,18 @@ public class TicketController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/session", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String postSession(HttpSession session) {
+        JSONObject response = new JSONObject();
+        if (session.getAttribute("user") != null) {
+            response.put(Result.RESULT, "success");
+        } else {
+            response.put(Result.RESULT, "failure");
+        }
+        return response.toString();
+    }
+
     @RequestMapping(value = "/movies", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getMovies() {
         ModelAndView modelAndView = new ModelAndView();
@@ -356,7 +368,8 @@ public class TicketController {
                             @RequestParam(value = "moTitle", required = false) String moTitle,
                             @RequestParam(value = "ciName", required = false) String ciName,
                             @RequestParam(value = "thName", required = false) String thName,
-                            @RequestParam(value = "scStartDate", required = false) LocalDateTime scStartDate) {
+                            @RequestParam(value = "scStartDate", required = false) LocalDateTime scStartDate,
+                            HttpSession session) {
 
         System.out.println("유저 정보 :" + user.getUsName());
 
@@ -388,7 +401,6 @@ public class TicketController {
 
         response.put(Result.NAME, result.nameToLower());
         response.put(Result.NAMES, results);
-
 
         return response.toString();
     }

@@ -73,7 +73,6 @@ $loginForm.onsubmit = (e) => {
         }
 
         if (response['result'] === 'success') {
-            sessionStorage.setItem('user', response['MemberNum']);
             // URLSearchParams를 통해 현재 URL의 파라미터를 확인
             const urlParams = new URLSearchParams(window.location.search);
             const forwardUrl = urlParams.get('forward');
