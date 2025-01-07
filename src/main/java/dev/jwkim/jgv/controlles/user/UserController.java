@@ -486,7 +486,7 @@ public class UserController {
     }
     // endregion
 
-    @RequestMapping(value = "resend-register-email-token", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/resend-register-email-token", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> getResendRegisterEmailToken(
             HttpServletRequest request, @RequestParam(value = "emEmail") String email) throws MessagingException {
 
