@@ -254,9 +254,9 @@ public class TicketController {
     }
 
     @RequestMapping(value = "/crawling", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getCrawling(ScreenEntity screen) {
+    public ModelAndView getCrawling() throws IOException, InterruptedException {
         ModelAndView modelAndView = new ModelAndView();
-        this.ticketService.Crawl(screen);
+        this.ticketService.Crawl();
         modelAndView.setViewName("ticket/crawling");
         return modelAndView;
     }
