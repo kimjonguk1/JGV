@@ -17,7 +17,7 @@ public interface UserMapper {
 
     int findAllReservations(@Param("usNum") int usNum);
 
-    UserEntity selectUserById(@Param("usId") String id);
+    UserEntity selectUserById(@Param("id") String id);
 
     UserEntity selectUserByEmail(@Param("usEmail") String email);
 
@@ -34,6 +34,9 @@ public interface UserMapper {
                             @Param("usContact") String contact);
 
     int updateUser(UserEntity user);
+
+    UserEntity selectUserByUserId(@Param("id") String id);
+
 
     // 이메일 미인증 계정 삭제
     List<UserEntity> selectUnverifiedUsersWithExpiredToken(@Param("now") LocalDateTime now);

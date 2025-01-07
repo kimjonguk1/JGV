@@ -6,6 +6,7 @@ import dev.jwkim.jgv.entities.user.EmailTokenEntity;
 import dev.jwkim.jgv.entities.user.UserEntity;
 import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.results.Result;
+import dev.jwkim.jgv.results.user.LoginResult;
 import dev.jwkim.jgv.services.user.ReviewService;
 import dev.jwkim.jgv.services.user.UserService;
 import dev.jwkim.jgv.vos.PageVo;
@@ -18,6 +19,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/user")
@@ -98,7 +97,8 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String postLogin(UserEntity user, HttpServletRequest request) {
+    public String postLogin(UserEntity user, HttpServletRequest request,
+                            @RequestParam(value = "usId" ,required = false) String id) throws MessagingException {
         // 로그인 시도 시 IP 정보
         String currentIp = request.getRemoteAddr();
 
@@ -134,6 +134,13 @@ public class UserController {
 
             // 로그인 성공 시 사용자 번호 반환
             response.put("MemberNum", user.getUsNum());
+        }
+        if (result == LoginResult.FAILURE_NOT_VERIFIED) {
+
+            String userEmail = this.userService.resendEmail(id);
+            response.put("userEmail" ,userEmail);
+            response.put(Result.NAME, result.nameToLower());
+            return response.toString();
         }
 
         response.put(Result.NAME, result.nameToLower());
@@ -479,5 +486,19 @@ public class UserController {
     }
     // endregion
 
+    @RequestMapping(value = "resend-register-email-token", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, Object>> getResendRegisterEmailToken(
+            HttpServletRequest request, @RequestParam(value = "emEmail") String email) throws MessagingException {
 
+        Map<String, Object> response = new HashMap<>();
+
+        // 이메일 재발송 처리 결과
+        Result result = this.userService.reSendEmailToken(email, request);
+
+        // response에 필요한 데이터 추가
+        response.put("result", result.nameToLower());  // 성공/실패 상태
+        response.put("userEmail", email);  // 이메일 주소
+
+        return ResponseEntity.ok(response);  // 결과를 JSON 형태로 반환
+    }
 }
