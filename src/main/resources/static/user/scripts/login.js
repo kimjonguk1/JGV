@@ -93,7 +93,7 @@ $loginForm.onsubmit = (e) => {
             if (!document.getElementById("missing-email")) {
                 // 커스텀 다이얼로그 HTML 생성
                 const customDialog = `
-        <div id="missing-email" class="frame" style="padding: 20px; background-color: #f9f9f9; border: 1px solid #ccc; border-radius: 5px; width: 350px; text-align: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;">
+        <div id="missing-email" class="frame" style="padding: 20px; background-color: #f9f9f9; border: 1px solid #ccc; border-radius: 5px; width: 350px; text-align: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 97;">
             <span style="font-weight: 500; color: #222222; text-decoration: underline;">${response['userEmail']}</span>
             <span style="font-weight: 500; color: #6e6c6d;"">은 이메일 인증이 완료되지 않은 계정입니다.</span>
             <br><br>
@@ -110,21 +110,25 @@ $loginForm.onsubmit = (e) => {
 
                 // "인증 메일 다시 받기" 링크 클릭 시 이메일 재전송
                 document.getElementById("resendEmailLink").addEventListener("click", function(event) {
+                    Loading.show(0);
                     event.preventDefault(); // 기본 링크 동작 막기
 
                     // 이메일 재전송 로직 (서버와 연동 필요)
                     fetch(`/user/resend-register-email-token?emEmail=${response['userEmail']}`)
                         .then(response => response.json()) // 서버 응답 처리
                         .then(data => {
-                            console.log(data);
+                            Loading.hide();
                             if (data.result === 'success') {
                                 alert("인증 메일이 다시 전송되었습니다. 회원가입시 입력하신 메일을 확인해주세요.");
+                                window.location.reload();
                             } else {
                                 alert("메일 전송에 실패했습니다. 다시 시도해주세요.");
+                                window.location.reload();
                             }
                         })
                         .catch(error => {
                             alert("서버에 문제가 발생했습니다. 다시 시도해주세요.");
+                            window.location.reload();
                         });
                 });
             }
