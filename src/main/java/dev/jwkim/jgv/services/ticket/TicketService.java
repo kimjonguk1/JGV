@@ -358,21 +358,29 @@ public class TicketService {
     @Transactional
     public void Crawl(ScreenEntity screen) throws TransactionalException {
         // ChromeDriver 경로 설정
-        System.setProperty("webdriver.chrome.driver", "./chromedriver.exe"); // chromedriver.exe 경로 지정
+        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver"); // chromedriver.exe 경로 지정
 
         ChromeOptions options = new ChromeOptions();
+//        options.addArguments("--headless"); // 헤드리스 모드
+        options.addArguments("--no-sandbox");  // 리눅스 환경에서 필요할 수 있음
+        options.addArguments("--disable-dev-shm-usage"); // 성능 최적화
         options.addArguments("--disable-blink-features=AutomationControlled"); // 자동화 브라우저 감지 비활성화
-        options.addArguments("--headless"); // 브라우저 창을 띄우지 않고 실행 (옵션)
+        options.addArguments("--disable-gpu"); // GPU 사용 안함
+        options.addArguments("--disable-extensions"); // 확장 프로그램 비활성화
+        options.addArguments("--disable-software-rasterizer");  // GPU 비활성화
+        options.addArguments("--start-maximized"); // 최대화된 창으로 시작
+        options.addArguments("--disable-infobars");
+        options.addArguments("--remote-debugging-port=9222");
 
         // WebDriver 생성
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = new ChromeDriver(options);
 
         try {
             // 오늘 날짜 가져오기
 
             for (TheaterCode theater : TheaterCode.values()) {
                 int ciNum = 0;
-                String dateUrl = "http://www.cgv.co.kr/theaters/?areacode=11&theaterCode=" + theater.cgvCode;
+                String dateUrl = "http://www.cgv.co.kr/theaters/?areacode=11&theaterCode=" + "0345";
                 driver.get(dateUrl);
 
                 // iframe 요소 찾기 및 전환
@@ -427,7 +435,7 @@ public class TicketService {
 //                    System.out.println("상영일: " + date);
 
                     // URL에 날짜 파라미터 추가
-                    String url = "http://www.cgv.co.kr/theaters/?areacode=11&theaterCode=" + theater.cgvCode + "&date=" + date;
+                    String url = "http://www.cgv.co.kr/theaters/?areacode=11&theaterCode=" + "0345" + "&date=" + date;
                     // CGV 극장 URL 열기
                     driver.get(url);
 

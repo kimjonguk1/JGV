@@ -973,23 +973,34 @@ $rightButtons.forEach((x) => {
     x.onclick = () => {
         if (x.classList.contains('after')) {
             // 메인 바꾸기
-            if (sessionStorage.getItem('user') === null) {
-                const userCheck = confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")
-                if (userCheck) {
-                    params.moTitle = $data.movie;
-                    params.thName = $data.theater;
-                    params.scStartDate = $data.date;
-                    sessionStorage.setItem('ticketParams', JSON.stringify(params));
-                    const redirectUrl = window.location.pathname;
-                    window.location.replace(`.././user/login?forward=${encodeURIComponent(redirectUrl)}`);
-                } else {
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState !== XMLHttpRequest.DONE) {
                     return;
                 }
-            }
-            if (sessionStorage.getItem('user') !== null) {
-                sessionStorage.removeItem('ticketParams');
-            }
-
+                if (xhr.status < 200 || xhr.status >= 300) {
+                    alert('오류 발생');
+                    return;
+                }
+                const response = JSON.parse(xhr.responseText);
+                if (response['session'] === "success") {
+                    sessionStorage.removeItem('ticketParams');
+                } else {
+                    const userCheck = confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")
+                    if (userCheck) {
+                        params.moTitle = $data.movie;
+                        params.thName = $data.theater;
+                        params.scStartDate = $data.date;
+                        sessionStorage.setItem('ticketParams', JSON.stringify(params));
+                        const redirectUrl = window.location.pathname;
+                        window.location.replace(`.././user/login?forward=${encodeURIComponent(redirectUrl)}`);
+                    } else {
+                        return;
+                    }
+                }
+            };
+            xhr.open("POST", './session');
+            xhr.send();
             const $theaterMovie = $containers.querySelector(':scope > .posters > .movie-info > .title');
 
             $mains.forEach((main) => {
