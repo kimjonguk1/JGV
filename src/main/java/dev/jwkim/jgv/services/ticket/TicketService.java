@@ -29,6 +29,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -383,12 +386,17 @@ public class TicketService {
         return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
+    @Configuration
+    @EnableScheduling
+    public class SchedulerConfiguration {
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?")
     public void Crawl() throws IOException, InterruptedException {
         TheaterEntity[] theaters = this.theaterMapper.getAllTheaters();
         Map<String, Map<String, CinemaEntity>> cinemaTypeMap = new HashMap<>();
         Map<String, Map<String, CinemaEntity>> cinemaTitleMap = new HashMap<>();
         for (TheaterEntity theater : theaters) {
-            System.out.println(theater.getThName());
             TheaterCode _tc = Arrays.stream(TheaterCode.values())
                     .filter((x) -> x.getCgvName().equals(theater.getThName()))
                     .findFirst()
