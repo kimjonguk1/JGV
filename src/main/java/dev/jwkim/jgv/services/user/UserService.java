@@ -17,6 +17,7 @@ import dev.jwkim.jgv.vos.user.ReservationVo;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -164,7 +165,7 @@ public class UserService {
 // endregion //
 
     //region 로그인
-    public Result login(UserEntity user) {
+    public Result login(UserEntity user, HttpServletRequest request) {
         if (user == null ||
                 user.getUsId() == null || user.getUsId().isEmpty() || user.getUsId().length() < 2 || user.getUsId().length() > 20 ||
                 user.getUsPw() == null || user.getUsPw().isEmpty() || user.getUsPw().length() < 8 || user.getUsPw().length() > 100) {
@@ -200,6 +201,21 @@ public class UserService {
         user.setUsIsAdmin(dbUser.isUsIsAdmin());
         user.setUsIsSuspended(dbUser.isUsIsSuspended());
         user.setUsIsVerified(dbUser.isUsIsVerified());
+
+        HttpSession session = request.getSession(true);
+        String currentIp = request.getRemoteAddr();
+        String storedIp = (String) session.getAttribute("ip");
+
+        // 만약 기존 세션의 IP와 현재 IP가 다르면 강제 로그아웃
+        if (storedIp != null && !storedIp.equals(currentIp)) {
+            session.invalidate();
+            // 강제 로그아웃 메시지
+            return LoginResult.FAILURE_DUPLICATE_USER;
+        }
+
+        // 새로 로그인된 사용자 정보와 IP를 세션에 저장
+        session.setAttribute("user", user);
+        session.setAttribute("ip", currentIp);
 
         return CommonResult.SUCCESS;
     }

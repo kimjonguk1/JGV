@@ -66,7 +66,7 @@ $loginForm.onsubmit = (e) => {
         }
         const response = JSON.parse(xhr.responseText);
 
-        if (response['logout']) {
+        if (response['result'] === 'failure_duplicate_user') {
             alert(response['message']);  // 강제 로그아웃 메시지
             window.location.href = '/logout';  // 로그아웃 페이지로 이동
             return;  // 이후 코드 실행을 방지
