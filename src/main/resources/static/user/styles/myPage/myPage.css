@@ -22,7 +22,8 @@
   justify-content: flex-start;
   width: 100%;
   height: auto;
-  border: 1px solid #666666;
+  border: 1px solid #e2e2e0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   padding: 1.5rem;
 }
 .main-container > .my-reservation > .-spring {
@@ -144,7 +145,6 @@
   gap: 0.6rem;
   justify-content: center;
   width: 760px;
-  border: 1px solid #666666;
 }
 .main-container > .paging > .-spring {
   flex-grow: 1;
@@ -188,7 +188,7 @@
   gap: 10px;
   margin: 10px 0;
   width: 760px;
-  border: 1px solid #666666;
+  border: 1px solid #e2e2e0;
 }
 .my-review .review-item {
   display: flex;
@@ -720,7 +720,7 @@
   gap: 0.6rem;
   justify-content: center;
   width: 760px;
-  border: 1px solid #666666;
+  padding-top: 0.5rem;
 }
 .paging > .-spring {
   flex-grow: 1;

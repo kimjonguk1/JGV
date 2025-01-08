@@ -3,6 +3,7 @@ package dev.jwkim.jgv.controlles.user;
 
 import dev.jwkim.jgv.DTO.MyReviewDTO;
 import dev.jwkim.jgv.entities.user.EmailTokenEntity;
+import dev.jwkim.jgv.entities.user.ReviewEntity;
 import dev.jwkim.jgv.entities.user.UserEntity;
 import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.results.Result;

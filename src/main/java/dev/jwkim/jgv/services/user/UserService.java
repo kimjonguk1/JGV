@@ -2,9 +2,11 @@ package dev.jwkim.jgv.services.user;
 
 import dev.jwkim.jgv.entities.ticket.PaymentEntity;
 import dev.jwkim.jgv.entities.user.EmailTokenEntity;
+import dev.jwkim.jgv.entities.user.ReviewEntity;
 import dev.jwkim.jgv.entities.user.UserEntity;
 import dev.jwkim.jgv.exceptions.TransactionalException;
 import dev.jwkim.jgv.mappers.user.EmailTokenMapper;
+import dev.jwkim.jgv.mappers.user.ReviewMapper;
 import dev.jwkim.jgv.mappers.user.UserMapper;
 import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.results.Result;
@@ -45,14 +47,16 @@ public class UserService {
     private final EmailTokenMapper emailTokenMapper;
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
+    private final ReviewMapper reviewMapper;
 
 
     @Autowired
-    public UserService(UserMapper userMapper, EmailTokenMapper emailTokenMapper, JavaMailSender mailSender, SpringTemplateEngine templateEngine) {
+    public UserService(UserMapper userMapper, EmailTokenMapper emailTokenMapper, JavaMailSender mailSender, SpringTemplateEngine templateEngine, ReviewMapper reviewMapper) {
         this.userMapper = userMapper;
         this.emailTokenMapper = emailTokenMapper;
         this.mailSender = mailSender;
         this.templateEngine = templateEngine;
+        this.reviewMapper = reviewMapper;
     }
 
     public int findAllReservations(int usNum) {
@@ -511,6 +515,7 @@ public class UserService {
     public Result withdrawUser(UserEntity user) {
         UserEntity dbUser = this.userMapper.selectUserById(user.getUsId());
 
+
         if (dbUser == null || user.isUsIsDeleted()) {
             return CommonResult.FAILURE;
         }
@@ -521,6 +526,7 @@ public class UserService {
         if (this.userMapper.updateUser(user) == 0) {
             throw new TransactionalException();
         }
+
         return CommonResult.SUCCESS;
     }
     // endregion
