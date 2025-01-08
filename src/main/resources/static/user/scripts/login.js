@@ -100,6 +100,8 @@ $loginForm.onsubmit = (e) => {
             <span style="font-weight: 500; white-space: nowrap; color: #6e6c6d;">혹시 회원가입한 이메일로 인증메일이 도착하지 않았나요?</span>
             <br><br>
             <a style="color: #FB4357; font-weight: 700;" href="/user/resend-register-email-token?emEmail=${response['userEmail']}" id="resendEmailLink">&gt;&gt; 인증 메일 다시 받기</a>
+            <br><br>
+            <button style="color: #6e6c6d; cursor: pointer; font-weight: 700;" onclick="window.location.reload();">닫기</button>
         </div>
     `;
 
