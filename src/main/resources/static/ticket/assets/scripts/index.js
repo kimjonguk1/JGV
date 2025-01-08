@@ -641,6 +641,9 @@ function checkScreen() {
                             }
                         }
                         item.onclick = () => {
+                            if (ticketParams) {
+                                sessionStorage.removeItem('ticketParams');
+                            }
                             params.time = item.innerText.split('\n')[0];
                             const $cinema = screen.querySelector(':scope > .title > .cinema');
                             const $type = screen.querySelector(':scope > .title > .cinema-type');
