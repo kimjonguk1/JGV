@@ -176,8 +176,7 @@ let text = null;
                                                     $screens.append(screen);
                                                     const $timeTable = Array.from(screen.querySelectorAll(':scope > .screen-container > .time-table-container > .time-table'));
                                                     $timeTable.forEach((time) => {
-                                                        time.onclick = (e) => {
-                                                            e.preventDefault();
+                                                        time.onclick = () => {
                                                             const $moTitle = screen.querySelector(':scope > .movie-container > .text');// 파라미터 값들을 객체로 저장
                                                             const params = {
                                                                 moTitle: $moTitle.innerText,
@@ -421,8 +420,7 @@ let text = null;
                                                                             }
                                                                             const $timeTable = Array.from(screen.querySelectorAll(':scope > .screens > .screen-container > .time-table-container > .time-table'));
                                                                             $timeTable.forEach((time) => {
-                                                                                time.onclick = (e) => {
-                                                                                    e.preventDefault();
+                                                                                time.onclick = () => {
                                                                                     const $moTitle = document.querySelector('.movie-title > .movie > .select > .text > .name');
                                                                                     // 파라미터 값들을 객체로 저장
                                                                                     const params = {
