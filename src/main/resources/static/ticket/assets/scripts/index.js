@@ -1448,21 +1448,6 @@ $payForm.onsubmit = (e) => {
         // FormData 객체 생성
         const formData = new FormData();
 
-        // 세션에서 userId 값을 가져옴
-        const sessionUsId = sessionStorage.getItem('user');  // 세션에서 user 가져오기
-
-        if (sessionUsId === null || sessionUsId.trim() === "") {
-            const userCheck = confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")
-            if (userCheck) {
-                const redirectUrl = window.location.pathname;
-                window.location.replace(`.././user/login?forward=${encodeURIComponent(redirectUrl)}`);
-            } else {
-                return;
-            }
-        } else {
-            const trimmedUsId = sessionUsId.trim();  // null 체크 후 trim 호출
-            formData.append("usNum", trimmedUsId);  // 세션에서 가져온 userId 추가
-        }
         let rawDateStr = $theaterTime.innerText;
         let formattedDate = rawDateStr
             .replace(/\([^)]+\)/, "T") // "(금)" 제거

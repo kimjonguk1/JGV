@@ -758,11 +758,10 @@ public class TicketService {
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public Result insertReservationAndPayment(UserEntity user, String moTitle, String ciName, String thName, LocalDateTime scStartDate,
-                                              String meName, int usNum, String[] seNames, int paPrice) {
+    public Result insertReservationAndPayment(int usNum, String meName, int paPrice, String[] seNames, String moTitle, String ciName, String thName, LocalDateTime scStartDate) {
         try {
 
-            if (user == null) {
+            if (usNum == 0) {
                 return ReservationResult.FAILURE_UN_STEADY_LOGIN;
             }
 
