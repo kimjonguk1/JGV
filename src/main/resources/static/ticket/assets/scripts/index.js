@@ -19,6 +19,7 @@ const $firstButton = $controlBar.querySelector(':scope > .container > [data-id="
 const $theaterCinema = document.getElementById('theater-cinema');
 const ticketParams = JSON.parse(sessionStorage.getItem('ticketParams'));
 
+
 // region 광고
 {
     const $sideAdvertisementArray = ['https://adimg.cgv.co.kr/images/202411/Firefighters/996x140.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/996x140.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/996x140.jpg'];
@@ -857,7 +858,8 @@ const $RightThird = $controlBar.querySelector(':scope > .container > .third.righ
 const $RightSecond = $controlBar.querySelector(':scope > .container > .second.right-button');
 const $LeftSecond = $controlBar.querySelector(':scope > .container > .second.left-button');
 const $paymentSection = document.getElementById('payment-section');
-
+const $titleCinema = document.getElementById('title-cinema');
+const $titleTheater = document.getElementById('title-theater');
 
 const $mainPayment = document.getElementById("main-payment");
 const $payForm = $paymentSection.querySelector(':scope > .pay-form');
@@ -1010,6 +1012,8 @@ $rightButtons.forEach((x) => {
                     main.classList.remove('hidden');
                     $seatDate.innerText = `${$theaterTime.innerText}`;
                     $theaterTheater2 = `${$theaterTheater.innerText.substring(0, $theaterTheater.innerText.length - 1)}`;
+                    $titleCinema.innerText = `${$theaterCinema.innerText}`;
+                    $titleTheater.innerText = `${$theaterTheater2}`;
 
                     let rawDateStr = $theaterTime.innerText;
                     let formattedDate = rawDateStr

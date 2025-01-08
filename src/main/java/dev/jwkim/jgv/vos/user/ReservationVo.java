@@ -18,13 +18,5 @@ public class ReservationVo extends PaymentEntity {
     private String meName;
     private String moNum;
     private String seNames;
-
-
-    public String getSeNames() {
-        return seNames;
-    }
-
-    public void setSeNames(String seNames) {
-        this.seNames = seNames;
-    }
+    private int count;
 }

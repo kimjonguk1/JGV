@@ -23,41 +23,47 @@
                 <tbody>
                 <tr>
                     <th>예매영화</th>
-                    <td id="moTitle" colspan="3"></td>
+                    <td id="moTitle" colspan="3" th:text="${paCancelData[0]}"></td>
                 </tr>
                 <tr>
                     <th>예매번호</th>
-                    <td id="paNum"></td>
+                    <td id="paNum"
+                        th:text="${paCancelData[1]}"></td>
                     <th>관람일시</th>
-                    <td id="scStartDate"></td>
+                    <td id="scStartDate"
+                        th:text="${paCancelData[2]}"></td>
                 </tr>
                 <tr>
                     <th>관람극장</th>
-                    <td id="thName"></td>
+                    <td id="thName"
+                        th:text="${paCancelData[3]}"></td>
                     <th>관람인원</th>
-                    <td id="seHuman"></td>
+                    <td id="seHuman"
+                        th:text="${paCancelData[4]} + '매'"></td>
                 </tr>
                 </tbody>
             </table>
-
         </div>
-
         <div class="detail">
             <table style="padding-bottom: 2rem;">
                 <caption>결제정보</caption>
                 <tbody>
                 <tr>
                     <th>결제일</th>
-                    <td id="paCreatedAt"></td>
+                    <td id="paCreatedAt"
+                        th:text="${paCancelData[5]}"></td>
                     <th>결제금액</th>
-                    <td id="paPrice" style="padding: 0 3rem"></td>
+                    <td id="paPrice" style="padding: 0 3rem"
+                        th:text="${paCancelData[6]}"></td>
                 </tr>
                 <tr>
                     <th>결제수단</th>
                     <td colspan="4">
-                        <span id="meName"></span>
+                        <span id="meName"
+                              th:text="${paCancelData[7]}"></span>
                         <span>:</span>
-                        <span id="paPrice2">?</span>
+                        <span id="paPrice2"
+                              th:text="${paCancelData[6]}"></span>
                     </td>
                 </tr>
                 </tbody>
