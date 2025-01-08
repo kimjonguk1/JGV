@@ -10,6 +10,8 @@ import dev.jwkim.jgv.results.user.LoginResult;
 import dev.jwkim.jgv.services.user.ReviewService;
 import dev.jwkim.jgv.services.user.UserService;
 import dev.jwkim.jgv.vos.PageVo;
+import dev.jwkim.jgv.vos.ticket.SeatVo;
+import dev.jwkim.jgv.vos.user.ReservationVo;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -98,7 +100,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String postLogin(UserEntity user, HttpServletRequest request,
-                            @RequestParam(value = "usId" ,required = false) String id) throws MessagingException {
+                            @RequestParam(value = "usId", required = false) String id) throws MessagingException {
         // 로그인 시도 시 IP 정보
         String currentIp = request.getRemoteAddr();
 
@@ -108,7 +110,7 @@ public class UserController {
 
         // 로그인 성공 시
         if (result == CommonResult.SUCCESS) {
-            System.out.println("로그인 직후 세션 : " + currentIp );
+            System.out.println("로그인 직후 세션 : " + currentIp);
             // 기존 세션의 사용자 정보와 IP 체크
             HttpSession session = request.getSession(false);  // 기존 세션을 가져옴 (새로운 세션을 만들지 않음)
             if (session != null && session.getAttribute("user") != null) {
@@ -138,7 +140,7 @@ public class UserController {
         if (result == LoginResult.FAILURE_NOT_VERIFIED) {
 
             String userEmail = this.userService.resendEmail(id);
-            response.put("userEmail" ,userEmail);
+            response.put("userEmail", userEmail);
             response.put(Result.NAME, result.nameToLower());
             return response.toString();
         }
@@ -154,7 +156,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/myPage/{fragment}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user,HttpSession session,@PathVariable(value = "fragment") String fragment, HttpServletRequest request, @RequestParam(value = "page", required = false, defaultValue = "1")int page, @RequestParam(value = "page2", required = false, defaultValue = "1")int page2) throws ServletException, IOException {
+    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user, HttpSession session, @PathVariable(value = "fragment") String fragment, HttpServletRequest request, @RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "page2", required = false, defaultValue = "1") int page2) throws ServletException, IOException {
         String[] validFragments = {"main", "reservation", "receipt", "personal", "withdraw"};
         if (fragment == null || Arrays.stream(validFragments).noneMatch(x -> x.equals(fragment))) {
             ModelAndView modelAndView = new ModelAndView();
@@ -205,7 +207,7 @@ public class UserController {
         modelAndView.addObject("page", page); // 현재 page
         modelAndView.addObject("page2", page2); // 현재 page2
         modelAndView.setViewName("user/myPage/myPage");
-        
+
         return modelAndView;
 
     }
@@ -232,8 +234,6 @@ public class UserController {
         }
         return modelAndView;
     }
-
-
 
 
 //    @RequestMapping(value = "/myPage/modify", method = RequestMethod.GET, produces =
@@ -338,7 +338,7 @@ public class UserController {
     @RequestMapping(value = "/find-password-result", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ModelAndView getRecoverPassword(@RequestParam(value = "userEmail", required =
-                                                   false) String userEmail,
+            false) String userEmail,
                                            @RequestParam(value = "key", required = false) String key,
                                            @RequestParam(value = "userId", required =
                                                    false) String userId
@@ -431,30 +431,32 @@ public class UserController {
 
     @RequestMapping(value = "/myPage/reservationCancel", method = RequestMethod.GET,
             produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getReservationCancel(@SessionAttribute(value = "user", required = false) UserEntity user) {
+    public ModelAndView getReservationCancel(@SessionAttribute(value = "user", required = false) UserEntity user, @RequestParam(value = "paNum", required = false, defaultValue = "0") int paNum) {
 
         ModelAndView modelAndView = new ModelAndView();
         if (user == null) {
             modelAndView.setViewName("redirect:/error");
             return modelAndView;
         }
+        List<String> paCancelData = this.userService.selectCancelPaNumByAll(user.getUsNum(), paNum);
+
         modelAndView.addObject("user", user);
+        modelAndView.addObject("paCancelData", paCancelData);
         modelAndView.setViewName("user/myPage/reservation-cancel");
         return modelAndView;
     }
 
     @RequestMapping(value = "/myPage/reservationCancel", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String patchReservationCancel(HttpSession session,
-                                         @RequestParam(value = "usNum", required = false) int usNum,
-                                         @RequestParam(value = "paNum", required = false) int paNum,
-                                         @RequestParam(value = "paPrice", required = false) int paPrice,
-                                         @RequestParam(value = "paCreatedAt", required = false) String paCreatedAt) {
+    public String patchReservationCancel(
+            @SessionAttribute(value = "user") UserEntity user,
+            @RequestParam(value = "paNum", required = false) int paNum,
+            @RequestParam(value = "paPrice", required = false) int paPrice,
+            @RequestParam(value = "paCreatedAt", required = false) String paCreatedAt) {
 
-//        UserEntity users = (UserEntity) session.getAttribute("user");
 
         // 예매 취소 서비스 호출
-        Result result = this.userService.reservationCancel(usNum, paNum, paPrice, paCreatedAt);
+        Result result = this.userService.reservationCancel(user.getUsNum(), paNum, paPrice, paCreatedAt);
         JSONObject response = new JSONObject();
         response.put(Result.NAME, result.nameToLower());
         return response.toString();

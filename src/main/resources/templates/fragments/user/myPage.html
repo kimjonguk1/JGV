@@ -142,7 +142,7 @@
         <span>티켓판매기에서 예매번호를 입력하면 티켓을 발급받을 수 있습니다.</span>
     </div>
     <div th:each="reservation, stat : ${reservations}">
-        <div class="reservation-main">
+        <div class="reservation-main" >
             <div class="reservation-num">
                 <span class="res-num">예매번호</span>
                 <div class="-spring"></div>
@@ -227,7 +227,8 @@
                 <div class="reservation-cancel">
                     <button class="reservation-cancel-button"
                             th:onclick="'ticketCancel(' + ${stat.index} + ')'"
-                            th:classappend="${reservation.key[9] < currentDate} ? 'hidden' : ''">
+                            th:classappend="${reservation.key[9] < currentDate} ? 'hidden' : ''"
+                            th:id="'reservationForm-' + ${stat.index}">
                         예매 취소
                     </button>
                 </div>

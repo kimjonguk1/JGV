@@ -1,41 +1,41 @@
 function ticketCancel(index) {
-    // 선택된 항목의 데이터를 가져옵니다.
-    const paNum = document.getElementById(`paNum-${index}`).innerText;
-    const moTitle = document.getElementById(`moTitle-${index}`).innerText;
-    const paPrice = document.getElementById(`paPrice-${index}`).innerText;
-    const thName = document.getElementById(`thName-${index}`).innerText;
-    const seHuman = document.getElementById(`seHuman-${index}`).innerText;
-    const scStartDate = document.getElementById(`scStartDate-${index}`).innerText;
-    const meName = document.getElementById(`meName-${index}`).innerText.slice(2); // '메뉴:' 제거
-    const paCreatedAt = document.getElementById(`paCreatedAt-${index}`).innerText;
+    const $reservationForm = document.getElementById(`reservationForm-${index}`);
+    const paNumElement = document.getElementById(`paNum-${index}`);
 
-    // 팝업 데이터를 객체로 준비
-    const popupData = {
-        paNum,
-        moTitle,
-        paPrice,
-        thName,
-        seHuman,
-        scStartDate,
-        meName,
-        paCreatedAt,
+    // 여러 번 클릭할 수 있도록 클릭 이벤트 핸들러 설정
+    $reservationForm.onclick = () => {
+        const xhr = new XMLHttpRequest();
+        const url = new URL("/user/myPage/reservationCancel", window.location.origin);
+
+        // paNum 값을 가져와서 URL에 추가
+        url.searchParams.set("paNum", paNumElement.innerText);
+
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState !== XMLHttpRequest.DONE) {
+                return;
+            }
+            if (xhr.status < 200 || xhr.status >= 300) {
+                alert('오류입니다. 페이지 새로고침을 해주세요.');
+                return;
+            }
+        };
+
+        // 요청 보내기
+        xhr.open('GET', url.toString());
+        xhr.send();
     };
 
-    // 팝업 창 열기
-    const popupWindow = window.open(
-        "./reservationCancel",
-        "예매취소",
-        "width=600,height=800,left=200,top=200"
-    );
-
-    // 팝업이 로드된 후 데이터를 전달
-    const checkPopupLoaded = setInterval(() => {
-        if (popupWindow && popupWindow.document.readyState === "complete") {
-            popupWindow.postMessage(popupData, "*");
-            clearInterval(checkPopupLoaded); // 타이머 종료
-        }
-    }, 100);
+    // 팝업 창을 여러 번 열 수 있도록 클릭할 때마다 새로 열기
+    $reservationForm.addEventListener('click', () => {
+        const popupWindow = window.open(
+            `./reservationCancel?paNum=${paNumElement.innerText}`,
+            "예매취소",
+            "width=600,height=800,left=200,top=200"
+        );
+    });
 }
+
+
 
 const $modal = document.querySelector('.reserve-modal');
 const $textarea = document.getElementById('reviewText');
@@ -43,7 +43,7 @@ const $modalMovieTitle = document.getElementById('modalMovieTitle');
 const $modalUserName = document.getElementById('modalUserName');
 const $submitReview = document.getElementById('submitReview');
 const $closeModal = document.getElementById('closeModal');
-if($modal) {
+if ($modal) {
     $modal.style.display = 'none';
 }
 
@@ -76,7 +76,7 @@ function updateCharCount() {
     charCountDisplay.textContent = `${currentByteLength} / 280 (byte)`;
 }
 
-if(textarea && charCountDisplay) {
+if (textarea && charCountDisplay) {
     textarea.addEventListener('input', () => {
         const currentByteLength = getByteLength(textarea.value);
         charCountDisplay.textContent = `${currentByteLength} / 280 (byte)`;
@@ -88,8 +88,6 @@ if(textarea && charCountDisplay) {
         }
     });
 }
-
-
 
 
 document.addEventListener('click', (e) => {

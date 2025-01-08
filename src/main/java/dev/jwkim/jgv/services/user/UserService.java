@@ -12,6 +12,7 @@ import dev.jwkim.jgv.results.reservation.ReservationResult;
 import dev.jwkim.jgv.results.user.*;
 import dev.jwkim.jgv.utils.CryptoUtils;
 import dev.jwkim.jgv.vos.PageVo;
+import dev.jwkim.jgv.vos.ticket.SeatVo;
 import dev.jwkim.jgv.vos.user.ReservationVo;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -622,6 +623,34 @@ public class UserService {
         // 사용자 ID를 통해 사용자 정보 조회
         UserEntity userId = this.userMapper.selectUserById(id);
         return userId.getUsEmail();
+    }
+
+    public List<String> selectCancelPaNumByAll(int usNum, int paNum) {
+        ReservationVo paCancelData = this.userMapper.selectCancelPaNumByAll(usNum, paNum);
+
+            List<String> stringList = new ArrayList<>();
+
+            stringList.add(paCancelData.getMoTitle());
+            stringList.add(String.valueOf(paCancelData.getPaNum()));
+
+            String[] startDateTimeParts = paCancelData.getScStartDate().toString().split("T");
+            LocalDate localDate = LocalDate.parse(startDateTimeParts[0], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String formattedStartDate = startDateTimeParts[0] + "(" +
+                    localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN).split("요일")[0] +
+                    ") " + startDateTimeParts[1];
+            stringList.add(formattedStartDate);
+
+        stringList.add(paCancelData.getThName());
+        stringList.add(String.valueOf(paCancelData.getCount()));
+        stringList.add(paCancelData.getPaCreatedAt().toString().replace("T", " "));
+
+        stringList.add(String.format("%,d", paCancelData.getPaPrice()) + "원");
+
+        stringList.add(paCancelData.getMeName());
+
+
+
+        return stringList;
     }
 
 

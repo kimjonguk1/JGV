@@ -57,5 +57,5 @@ public interface UserMapper {
 
     int selectArticleByUsNumCount(@Param("usNum") int usNum);
 
-
+    ReservationVo selectCancelPaNumByAll(@Param("usNum") int usNum,                                               @Param("paNum") int paNum);
 }
