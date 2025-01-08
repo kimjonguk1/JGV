@@ -44,15 +44,16 @@
 - /movies/search -> 특정 영화를 검색하거나 특정 인물을 검색
 
 ### 상영 일정
-- /상영시간표/조회 -> 특정 극장에서 상영 중인 영화의 시간표를 확인
+- /theater/ -> 극장의 정보 및 특정 극장에서 상영 중인 영화의 시간표를 확인
+- /ticket/showTimes -> 특정 극장에서 상영 중인 영화의 시간표 및 특정 영화마다 상영 중인 극장의 시간표 확인.
 
 ### 좌석 선택 및 예매
-- /tikect -> 사용자가 영화, 영화관, 상영관, 상영 시간과 좌석 선택 (예약된 좌석과 남은 좌석 표시) 및 결제
-- /tikect/reservation -> 사용자가 선택하여 예매한 내역 확인
+- /ticket/ -> 사용자가 영화, 영화관, 상영관, 상영 시간과 좌석 선택 (예약된 좌석과 남은 좌석 표시) 및 결제
+- /ticket/reservation -> 사용자가 선택하여 예매한 내역 확인
 
 ### 관리자 페이지
-- admin/is_admin?mode=movie -> 영화 수정 및 삭제
-- admin/crawling -> JSOUP 라이브러리를 활용하여 영화 목록 크롤링(cgv)
+- /admin/is_admin?mode=movie -> 영화 수정 및 삭제
+- /admin/crawling -> JSOUP 라이브러리를 활용하여 영화 목록 크롤링(cgv)
 
 ## ERD
 <img src="https://img.notionusercontent.com/s3/prod-files-secure%2Fbba77931-e5b0-47ad-bf2b-0d24647cd0c4%2Ff978612d-0b69-4179-b2f2-b5631d52e9d6%2Ferd_%EC%B5%9C%EC%A2%85.png/size/w=1420?exp=1736235728&sig=WEbiTOwYMX_QgelXO2a4kiDlUEINUcmJprgwRw7HW5k">
