@@ -105,7 +105,7 @@ public class UserController {
         String currentIp = request.getRemoteAddr();
 
         // 로그인 시도 결과를 담을 변수
-        Result result = this.userService.login(user);
+        Result result = this.userService.login(user, request);
         JSONObject response = new JSONObject();
 
         // 로그인 성공 시
