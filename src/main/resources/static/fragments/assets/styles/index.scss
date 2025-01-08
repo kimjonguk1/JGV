@@ -237,6 +237,13 @@ body {
 
       > .item {
 
+        > a {
+
+          > img {
+            width: 6rem;
+          }
+        }
+
         > h2 {
           font-size: 16px;
           white-space: nowrap;

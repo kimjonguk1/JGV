@@ -45,7 +45,7 @@
 .paging {
   @include flex(row, center, center, 0.6rem);
   width: 760px;
-  border: 1px solid #666666;
+  padding-top: 0.5rem;
 
   > .no-reservation {
     display: flex;

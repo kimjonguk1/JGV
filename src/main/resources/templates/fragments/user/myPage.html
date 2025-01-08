@@ -87,7 +87,7 @@
 
     <div class="my-review">
         <div class="review-list">
-            <div class="review-item" th:if="${!#lists.isEmpty(Reviews)}" th:each="review : ${Reviews}"
+            <div class="review-item" th:if="${!#lists.isEmpty(Reviews)} " th:each="review : ${Reviews}"
                  th:attr="data-review-id=${review.reNum}">
                 <div class="review-thumbnail">
                     <img th:src="${review.mImgUrl}" alt="Poster">

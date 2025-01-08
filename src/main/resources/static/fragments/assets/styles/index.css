@@ -308,6 +308,9 @@ body > .frame {
   flex-grow: 1;
   flex-shrink: 1;
 }
+#scroll-nav > .nav-wrapper > .nav-menu > .item > a > img {
+  width: 6rem;
+}
 #scroll-nav > .nav-wrapper > .nav-menu > .item > h2 {
   font-size: 16px;
   white-space: nowrap;

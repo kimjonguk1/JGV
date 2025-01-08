@@ -14,7 +14,8 @@
     @include flex(row, flex-start, flex-start, 1rem);
     width: 100%;
     height: auto;
-    border: 1px solid #666666;
+    border: 1px solid #e2e2e0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     padding: 1.5rem;
 
     > .reservation-info {
@@ -93,7 +94,6 @@
   > .paging {
     @include flex(row, center, center, 0.6rem);
     width: 760px;
-    border: 1px solid #666666;
 
     > .no-reservation {
       display: flex;
@@ -139,7 +139,7 @@
     gap: 10px;
     margin: 10px 0;
     width: 760px;
-    border: 1px solid #666666;
+    border: 1px solid #e2e2e0;
   }
 
   .review-item {
@@ -234,6 +234,7 @@
   .paging {
     display: flex;
     justify-content: center;
+
 
     a {
       padding: 5px 5px;
