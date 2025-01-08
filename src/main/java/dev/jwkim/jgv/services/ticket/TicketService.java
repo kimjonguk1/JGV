@@ -388,7 +388,8 @@ public class TicketService {
         Map<String, Map<String, CinemaEntity>> cinemaTypeMap = new HashMap<>();
         Map<String, Map<String, CinemaEntity>> cinemaTitleMap = new HashMap<>();
         for (TheaterEntity theater : theaters) {
-            TicketService.TheaterCode _tc = Arrays.stream(TicketService.TheaterCode.values())
+            System.out.println(theater.getThName());
+            TheaterCode _tc = Arrays.stream(TheaterCode.values())
                     .filter((x) -> x.getCgvName().equals(theater.getThName()))
                     .findFirst()
                     .orElseThrow();
@@ -458,8 +459,8 @@ public class TicketService {
                                 cinemaNum = cinemaTypeNum.getCiNum();
                             }
                         } else {
-                            cinemaClearedName = Arrays.stream(TicketService.CinemaCode.values())
-                                    .map(TicketService.CinemaCode::getCitName)
+                            cinemaClearedName = Arrays.stream(CinemaCode.values())
+                                    .map(CinemaCode::getCitName)
                                     .filter((x) -> x.equals(cinemaDerivedName))
                                     .findFirst()
                                     .orElse(null);
@@ -505,8 +506,11 @@ public class TicketService {
 //                                    }
 //                                }
 //                            }
-                            screen.setCiNum(cinemaTypeNum.getCiNum());
+
                             cinemaNum = cinemaTypeNum.getCiNum();
+                            screen.setCiNum(cinemaNum);
+                        } else {
+                            screen.setCiNum(cinemaNum);
                         }
 
                         Elements $times = $timetable.select(".info-timetable > ul > li > a > em");
