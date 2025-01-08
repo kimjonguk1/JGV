@@ -78,7 +78,6 @@
                         </div>
                         <div class="hover-actions">
                             <button class="detail-button">상세보기</button>
-                            <button class="reserve-button">예매하기</button>
                         </div>
                         <h3 th:text="${movie.moTitle ?: '제목 없음'}"></h3>
                         <p th:text="'예매율: ' + (${movie.moBookingRate ?: '0'}) + '%'"></p>

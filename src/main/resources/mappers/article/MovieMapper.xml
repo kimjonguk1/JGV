@@ -261,7 +261,7 @@
             jgv.movie_image i ON m.mo_num = i.mo_num
         LEFT JOIN jgv.screen s ON m.mo_num = s.mo_num
         WHERE STR_TO_DATE(mo_date, '%Y.%m.%d') > CURRENT_DATE()
-          AND s.sc_start_date > NOW()
+        ORDER BY m.mo_booking_rate DESC
         LIMIT 20
     </select>
 
