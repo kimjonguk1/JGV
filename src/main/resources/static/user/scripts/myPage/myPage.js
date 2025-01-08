@@ -1,9 +1,12 @@
 function ticketCancel(index) {
-    const $reservationForm = document.getElementById(`reservationForm-${index}`);
     const paNumElement = document.getElementById(`paNum-${index}`);
 
     // 여러 번 클릭할 수 있도록 클릭 이벤트 핸들러 설정
-    $reservationForm.onclick = () => {
+        const popupWindow = window.open(
+            `./reservationCancel?paNum=${paNumElement.innerText}`,
+            "예매취소",
+            "width=600,height=800,left=200,top=200"
+        );
         const xhr = new XMLHttpRequest();
         const url = new URL("/user/myPage/reservationCancel", window.location.origin);
 
@@ -23,16 +26,7 @@ function ticketCancel(index) {
         // 요청 보내기
         xhr.open('GET', url.toString());
         xhr.send();
-    };
 
-    // 팝업 창을 여러 번 열 수 있도록 클릭할 때마다 새로 열기
-    $reservationForm.addEventListener('click', () => {
-        const popupWindow = window.open(
-            `./reservationCancel?paNum=${paNumElement.innerText}`,
-            "예매취소",
-            "width=600,height=800,left=200,top=200"
-        );
-    });
 }
 
 
