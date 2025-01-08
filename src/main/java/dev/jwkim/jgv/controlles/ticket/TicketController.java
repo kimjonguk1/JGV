@@ -363,7 +363,6 @@ public class TicketController {
     public String postIndex(@SessionAttribute(value = "user") UserEntity user,
                             @RequestParam(value = "meName", required = false) String meName,
                             @RequestParam(value = "paPrice", required = false) int paPrice,
-                            @RequestParam(value = "usNum", required = false) int usNum,
                             @RequestParam(value = "seName", required = false) String[] seNames,  // 여러 좌석 정보 배열로 받기
                             @RequestParam(value = "moTitle", required = false) String moTitle,
                             @RequestParam(value = "ciName", required = false) String ciName,
@@ -380,23 +379,20 @@ public class TicketController {
 //            return response.toString();
 
 //        }
-
+        UserEntity loggedInUser = (UserEntity) session.getAttribute("user");
         // seNames 배열이 비어 있는지 체크
         if (seNames == null || seNames.length == 0) {
             throw new IllegalArgumentException("좌석 정보가 전달되지 않았습니다.");
         }
 
         // 결제 정보 저장
-        Result result = this.ticketService.insertReservationAndPayment(user, moTitle, ciName, thName, scStartDate, meName, usNum, seNames, paPrice);
+        Result result = this.ticketService.insertReservationAndPayment(loggedInUser.getUsNum(), meName, paPrice, seNames, moTitle, ciName, thName, scStartDate);
 
-        int results = this.ticketService.selectPaymentNum(moTitle, ciName, thName, scStartDate, paPrice, usNum);
+        int results = this.ticketService.selectPaymentNum(moTitle, ciName, thName, scStartDate, paPrice, loggedInUser.getUsNum());
 
         // 응답 데이터 생성
         JSONObject response = new JSONObject();
 
-        if (user == null) {
-            response.put(Result.NAME, result.nameToLower());
-        }
 
 
         response.put(Result.NAME, result.nameToLower());
