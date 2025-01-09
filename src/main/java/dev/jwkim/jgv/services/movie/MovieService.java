@@ -144,6 +144,8 @@ public class MovieService {
             String releaseYear = yearFormatter.format(parsedDate); // "2025"
 
             String movieTitle = movieDoc.select("div.box-contents > div.title > strong").text();
+            // 제목 공백 제거
+            String movieTitleRaw = movieTitle.replaceAll(" ", "");
             // 관람 등급
             String raiting = rawData.split("[,.]")[0].trim();
             RatingEntity ratingEntity = new RatingEntity();
@@ -155,7 +157,7 @@ public class MovieService {
             }
 
             // 중복 확인 (제목, 개봉일(개봉년도 기준)이 이미 존재하는 경우 return)
-            Integer existingMovieId = movieMapper.selectMovieByUniqueFields(movieTitle, releaseYear);
+            Integer existingMovieId = movieMapper.selectMovieByUniqueFields(movieTitleRaw, releaseYear);
             if(existingMovieId != null) {
                 return;
             }
