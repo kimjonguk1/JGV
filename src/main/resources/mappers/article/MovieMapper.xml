@@ -63,7 +63,8 @@
             jgv.screen s ON m.mo_num = s.mo_num
         WHERE
             m.mo_ending IS NULL
-          AND STR_TO_DATE(m.mo_date, '%Y.%m.%d') > NOW(); -- 현재 이후의 상영작
+          AND STR_TO_DATE(m.mo_date, '%Y.%m.%d') > NOW() -- 현재 이후의 상영작
+        ORDER BY m.mo_date ASC
     </select>
 
     <select id="selectMovieByUniqueFields" resultType="java.lang.Integer">
