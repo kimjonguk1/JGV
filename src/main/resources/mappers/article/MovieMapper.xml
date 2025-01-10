@@ -159,7 +159,7 @@
         FROM jgv.movie m
                  LEFT JOIN jgv.movie_image mi on m.mo_num = mi.mo_num
         WHERE m.mo_title LIKE CONCAT('%', #{keyword}, '%')
-        ORDER BY m.mo_date DESC
+        ORDER BY m.mo_booking_rate DESC
         LIMIT #{offsetCount}, #{countPerPage}
     </select>
 
