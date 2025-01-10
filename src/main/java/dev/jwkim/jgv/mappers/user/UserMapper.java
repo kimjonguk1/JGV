@@ -1,7 +1,9 @@
 package dev.jwkim.jgv.mappers.user;
 
 import dev.jwkim.jgv.entities.ticket.PaymentEntity;
+import dev.jwkim.jgv.entities.user.UserBlockedIpsEntity;
 import dev.jwkim.jgv.entities.user.UserEntity;
+import dev.jwkim.jgv.entities.user.UserLoginAttemptsEntity;
 import dev.jwkim.jgv.vos.user.ReservationVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,6 +16,14 @@ import java.util.List;
 public interface UserMapper {
 
     int insertUser(UserEntity user);
+
+    int insertAttempts(UserLoginAttemptsEntity attempts);
+
+    int insertBlockedIp(UserBlockedIpsEntity blockedIp);
+
+    int countFailedLoginAttempts(@Param("clientIp") String clientIp);
+
+    UserBlockedIpsEntity selectBlockedIpByClientIp(@Param("clientIp") String clientIp);
 
     int findAllReservations(@Param("usNum") int usNum);
 
@@ -57,7 +67,8 @@ public interface UserMapper {
 
     int selectArticleByUsNumCount(@Param("usNum") int usNum);
 
-    ReservationVo selectCancelPaNumByAll(@Param("usNum") int usNum,                                               @Param("paNum") int paNum);
 
     int deleteReviewsByUserId(int usNum);
+    ReservationVo selectCancelPaNumByAll(@Param("usNum") int usNum, @Param("paNum") int paNum);
+
 }

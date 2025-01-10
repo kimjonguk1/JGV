@@ -80,7 +80,7 @@
             </td>
             <td>
                 <label class="--obj-label" data-id="password">
-                    <input required autocomplete="off" maxlength="100" minlength="8"
+                    <input required autocomplete="off" maxlength="20" minlength="8"
                            type="password" name="password"
                            class="_field --obj-filed -border password"
                            placeholder="비밀번호를 입력해주세요.">
@@ -123,7 +123,7 @@
             <!--추후 닉네임 글자수 조정 및 서비스 로직에 추가-->
             <td rel="row">
                 <label class="--obj-label" data-id="id">
-                    <input required maxlength="20" minlength="2" type="text"
+                    <input required maxlength="10" minlength="2" type="text"
                            class="_field --obj-filed -border"
                            name="nickname"
                            placeholder="닉네임을 입력해주세요.">
@@ -216,12 +216,12 @@
             <td rel="col">
                 <div class="email-container">
                     <label data-id="email" class="email-label">
-                        <input autocomplete="on" name="email" type="text" class="email"
-                               placeholder="이메일 입력">
+                        <input required autocomplete="on" name="email" type="text" class="email"
+                               placeholder="이메일 입력" maxlength="20" minlength="6">
                     </label>
                     <span>@</span>
                     <label data-id="email" class="email-label">
-                        <input autocomplete="off" name="domain" type="text" class="domain"
+                        <input required autocomplete="off" name="domain" type="text" class="domain"
                                placeholder="직접입력">
                     </label>
                     <div class="value-button">
@@ -233,7 +233,7 @@
                         </span>
                         <div id="domainModal" class="modal">
                             <div class="modal-content">
-                                <button type="button" class="domain-self">직접입력</button>
+                                <button type="button" class="domain-self" value="직접입력">직접입력</button>
                                 <button type="button" class="domain-button"
                                         value="naver.com">네이버
                                 </button>

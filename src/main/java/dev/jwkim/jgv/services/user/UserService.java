@@ -1,9 +1,7 @@
 package dev.jwkim.jgv.services.user;
 
 import dev.jwkim.jgv.entities.ticket.PaymentEntity;
-import dev.jwkim.jgv.entities.user.EmailTokenEntity;
-import dev.jwkim.jgv.entities.user.ReviewEntity;
-import dev.jwkim.jgv.entities.user.UserEntity;
+import dev.jwkim.jgv.entities.user.*;
 import dev.jwkim.jgv.exceptions.TransactionalException;
 import dev.jwkim.jgv.mappers.user.EmailTokenMapper;
 import dev.jwkim.jgv.mappers.user.ReviewMapper;
@@ -83,13 +81,12 @@ public class UserService {
                 user == null ||
                         user.getUsName() == null ||
                         user.getUsName().isEmpty() || user.getUsName().length() < 2 || user.getUsName().length() > 15 ||
-                        user.getUsId() == null || user.getUsId().isEmpty() || user.getUsId().length() < 2 || user.getUsId().length() > 20 ||
-                        user.getUsPw() == null || user.getUsPw().isEmpty() || user.getUsPw().length() < 8 || user.getUsPw().length() > 100 ||
+                        user.getUsId() == null || user.getUsId().isEmpty() || user.getUsId().length() < 6 || user.getUsId().length() > 20 ||
+                        user.getUsPw() == null || user.getUsPw().isEmpty() || user.getUsPw().length() < 8 || user.getUsPw().length() > 20 ||
                         user.getUsBirth() == null ||
                         user.getUsContact() == null || user.getUsContact().isEmpty() || user.getUsContact().length() < 10 || user.getUsContact().length() > 13 ||
-                        user.getUsEmail() == null || user.getUsEmail().isEmpty() || user.getUsEmail().length() < 8 || user.getUsEmail().length() > 50 ||
-                        user.getUsGender() == null || user.getUsAddr() == null || user.getUsAddr().isEmpty()
-
+                        user.getUsEmail() == null || user.getUsEmail().isEmpty() || user.getUsEmail().length() < 10 || user.getUsEmail().length() > 30 ||
+                        user.getUsGender() == null || user.getUsAddr() == null || user.getUsAddr().isEmpty() || user.getUsNickName() == null || user.getUsNickName().isEmpty() || user.getUsNickName().length() < 2 || user.getUsNickName().length() > 10
         ) {
 
             return CommonResult.FAILURE;
@@ -169,26 +166,70 @@ public class UserService {
 // endregion //
 
     //region 로그인
+    public void handleLoginFailure(String clientIp) {
+        int failedAttempts = userMapper.countFailedLoginAttempts(clientIp);
+        if (failedAttempts >= 5) {
+            UserBlockedIpsEntity blockedIp = new UserBlockedIpsEntity();
+            blockedIp.setIpClientIp(clientIp);
+            blockedIp.setIpCreatedAt(LocalDateTime.now());
+            blockedIp.setIpExpiresAt(true);
+            this.userMapper.insertBlockedIp(blockedIp);
+            System.out.println("IP 차단됨 " + clientIp);
+        }
+    }
+
     public Result login(UserEntity user, HttpServletRequest request) {
+
         if (user == null ||
                 user.getUsId() == null || user.getUsId().isEmpty() || user.getUsId().length() < 2 || user.getUsId().length() > 20 ||
                 user.getUsPw() == null || user.getUsPw().isEmpty() || user.getUsPw().length() < 8 || user.getUsPw().length() > 100) {
             return CommonResult.FAILURE;
         }
+        String clientIp = request.getRemoteAddr();
+        String userAgent = request.getHeader("User-Agent");
+
+        UserBlockedIpsEntity userBlockedIp = this.userMapper.selectBlockedIpByClientIp(clientIp);
+        if (userBlockedIp != null) {
+            System.out.println("차단된 IP 정보: " + userBlockedIp);  // 차단된 IP 정보 확인
+        }
+        if (userBlockedIp != null && userBlockedIp.isIpExpiresAt()) {
+            System.out.println("차단된 IP " + clientIp);
+            return LoginResult.FAILURE_BLOCKED_IP;
+        }
+
         UserEntity dbUser = this.userMapper.selectUserById(user.getUsId());
         if (dbUser == null || dbUser.isUsIsDeleted()) {
             return CommonResult.FAILURE;
         }
+        UserLoginAttemptsEntity userLoginAttempts = new UserLoginAttemptsEntity();
+        UserBlockedIpsEntity blockedIp = new UserBlockedIpsEntity();
+        // 클라이언트 IP 와 user-agent를 로그인 시도 정보에 추가
+
+
+        userLoginAttempts.setAtClientIp(clientIp);
+        userLoginAttempts.setAtClientUa(userAgent);
+
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (!encoder.matches(user.getUsPw(), dbUser.getUsPw())) {
-            return CommonResult.FAILURE;
+            userLoginAttempts.setAtClientIp(clientIp);
+            userLoginAttempts.setAtClientUa(userAgent);
+            userLoginAttempts.setAtCreatedAt(LocalDateTime.now());
+            userLoginAttempts.setAtResult(false);
+            this.userMapper.insertAttempts(userLoginAttempts);
+
+            handleLoginFailure(clientIp);
+            return LoginResult.FAILURE_PASSWORD_MISMATCH;
         }
         if (!dbUser.isUsIsVerified()) {
             return LoginResult.FAILURE_NOT_VERIFIED;
         }
+        if (!dbUser.getUsId().equals(user.getUsId())) {
+            return LoginResult.FAILURE_ID_MISMATCH;
+        }
         if (dbUser.isUsIsSuspended()) {
             return LoginResult.FAILURE_SUSPENDED;
         }
+
 
         user.setUsNum(dbUser.getUsNum());
         user.setUsPw(dbUser.getUsPw());
@@ -221,6 +262,12 @@ public class UserService {
         session.setAttribute("user", user);
         session.setAttribute("ip", currentIp);
 
+        //로그인 성공 시 성공 기록 삽입
+        userLoginAttempts.setAtResult(true);
+        userLoginAttempts.setAtClientIp(clientIp);
+        userLoginAttempts.setAtClientUa(userAgent);
+        userLoginAttempts.setAtCreatedAt(LocalDateTime.now());
+        this.userMapper.insertAttempts(userLoginAttempts);
         return CommonResult.SUCCESS;
     }
     // endregion
@@ -250,7 +297,7 @@ public class UserService {
             throw new TransactionalException();
         }
 
-
+        System.out.println(Result.NAMES);
         return CommonResult.SUCCESS;
     }
 // endregion
@@ -736,4 +783,5 @@ public class UserService {
         return CommonResult.SUCCESS; // 이메일을 반환
     }
     // endregion
+
 }
