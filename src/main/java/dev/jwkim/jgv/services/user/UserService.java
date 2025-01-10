@@ -523,6 +523,8 @@ public class UserService {
             return CommonResult.FAILURE;
         }
         user.setUsIsDeleted(true);
+        //리뷰도 같이 지우기
+        this.userMapper.deleteReviewsByUserId(user.getUsNum());
         if (this.userMapper.updateUser(user) == 0) {
             throw new TransactionalException();
         }

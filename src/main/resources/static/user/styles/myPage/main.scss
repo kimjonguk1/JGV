@@ -191,8 +191,11 @@
       }
 
       .review-description {
-        font-size: 16px;
-        margin-bottom: 15px;
+        white-space: normal; /* 자동 줄바꿈 허용 */
+        word-wrap: break-word; /* 긴 단어 줄바꿈 */
+        overflow-wrap: break-word; /* 긴 단어 줄바꿈 */
+        max-width: 100%; /* 부모 요소 크기에 맞춰서 줄바꿈 */
+        line-height: 1.5; /* 줄 간격 조정 */
       }
 
       .review-actions {

@@ -198,6 +198,12 @@
     <delete id="deleteUserById">
         DELETE FROM `jgv`.`user` WHERE `us_id` = #{usId}
     </delete>
+    <update id="deleteReviewsByUserId" parameterType="int">
+        UPDATE jgv.review
+        SET re_deleted_at = NOW()
+        WHERE us_num = #{usNum}
+    </update>
+
 
     <select id="selectPaymentByUsNum" resultType="dev.jwkim.jgv.vos.user.ReservationVo">
         SELECT
