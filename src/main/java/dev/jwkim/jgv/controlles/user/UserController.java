@@ -90,7 +90,7 @@ public class UserController {
     public ModelAndView getLogin(HttpSession session) {
         // 이미 로그인된 경우
         if (session.getAttribute("user") != null) {
-            return new ModelAndView("redirect:/error");
+            return new ModelAndView("redirect:/");
         }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/login");
@@ -111,7 +111,6 @@ public class UserController {
 
         // 로그인 성공 시
         if (result == CommonResult.SUCCESS) {
-            System.out.println("로그인 직후 세션 : " + currentIp);
             // 기존 세션의 사용자 정보와 IP 체크
             HttpSession session = request.getSession(false);  // 기존 세션을 가져옴 (새로운 세션을 만들지 않음)
             if (session != null && session.getAttribute("user") != null) {
@@ -122,7 +121,6 @@ public class UserController {
                 if (storedIp != null && !storedIp.equals(currentIp)) {
                     // 기존 세션을 무효화
                     session.invalidate();
-                    System.out.println("강제로그아웃 세션 : " + session.getAttribute("user"));
 
                     // 강제 로그아웃 메시지 추가
                     response.put("message", "다른 IP에서 로그인 시도가 감지되었습니다. 로그아웃되었습니다.");
@@ -145,8 +143,8 @@ public class UserController {
             response.put(Result.NAME, result.nameToLower());
             return response.toString();
         }
-
         response.put(Result.NAME, result.nameToLower());
+        System.out.println("컨트롤러" + result.nameToLower());
         return response.toString();
     }
 // endregion
@@ -158,7 +156,7 @@ public class UserController {
 
     @RequestMapping(value = "/myPage/{fragment}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getMyPage(HttpServletResponse response, UserEntity user, HttpSession session, @PathVariable(value = "fragment") String fragment, HttpServletRequest request, @RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "page2", required = false, defaultValue = "1") int page2) throws ServletException, IOException {
-        String[] validFragments = {"main", "reservation", "receipt", "personal", "withdraw"};
+        String[] validFragments = {"main", "reservation", "history", "personal", "withdraw"};
         if (fragment == null || Arrays.stream(validFragments).noneMatch(x -> x.equals(fragment))) {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("redirect:/error");

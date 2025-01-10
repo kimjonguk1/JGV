@@ -136,8 +136,8 @@ display: flex; flex-direction: row; align-items: center; justify-content: flex-s
         </tbody>
     </table>
     <div class="button-container frame">
-        <button class="cancel" type="button" th:href="@{'/user/myPage/main'}">
-            <a th:href="'./main'">취소</a>
+        <button class="cancel" type="button" onclick="location.href = './main';" th:href="@{'/user/myPage/main'}">
+            <a style="width: 10rem; height: 2.375rem;" th:href="'./main'">취소</a>
         </button>
         <button class="submit" type="submit">수정</button>
     </div>

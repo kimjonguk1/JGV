@@ -337,4 +337,41 @@
         </div>
     </div>
 </div>
+<div class="content history" th:fragment="history">
+    <div class="title-container">
+        <h2>로그인 이력조회</h2>
+    </div>
+    <ul class="notice">
+        <li>ㆍ최근 1주일간의 로그인 시도 이력을 조회할 수 있습니다.</li>
+        <li>ㆍ회원님의 로그인 시도 이력이 아니라면 계정 해킹시도일 수 있으니, 비밀번호를 점검해 보시기 바랍니다.</li>
+        <li>ㆍ카카오와 네이버 계정은 성공이력만 확인할 수 있습니다.</li>
+    </ul>
+    <table>
+        <thead>
+        <tr>
+            <th>일시</th>
+            <th>IP</th>
+            <th>성공여부</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>2025.01.10 11:19:21</td>
+            <td>1.1.1.1.1.1</td>
+            <td>성공</td>
+        </tr>
+        <tr>
+            <td>2025.01.10 11:19:21</td>
+            <td>1.1.1.1.1.1</td>
+            <td>성공</td>
+        </tr>
+        <tr>
+            <td>2025.01.10 11:19:21</td>
+            <td>2.2.2.2.2.2</td>
+            <td style="color: #FB4357">실패</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
 </html>

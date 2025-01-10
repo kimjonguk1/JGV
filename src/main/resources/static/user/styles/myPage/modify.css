@@ -344,7 +344,9 @@ body > .title-container > span > img {
   white-space: nowrap;
 }
 #register-form > .button-container > button > a {
+  width: 10rem;
   color: #222222;
+  height: 2.375rem;
 }
 #register-form > .button-container > .cancel {
   background-color: transparent;

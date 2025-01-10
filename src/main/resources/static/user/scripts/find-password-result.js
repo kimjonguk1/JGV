@@ -80,13 +80,10 @@ $recoverPassword.onsubmit = (e) => {
             alert('새로운 비밀번호가 설정 되었습니다. JGV 페이지로 이동하여 로그인 해주세요.');
             return window.close();
 
-        }
-        else if (response['result'] === 'failure') {
+        } else if (response['result'] === 'failure') {
             alert('올바른 비밀번호 형식이 아닙니다. 비밀번호는 8~100자 사이에 대소문자, 숫자, 특수문자를 포함해야 합니다.');
             return;
-        }
-
-        else if (response['result'] === 'failure_invalid_password') {
+        } else if (response['result'] === 'failure_invalid_password') {
             alert('비밀번호는 8~100자 사이에 대소문자, 숫자, 특수문자를 포함해야 합니다.');
             return;
         } else {

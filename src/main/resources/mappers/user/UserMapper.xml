@@ -9,6 +9,17 @@
         INSERT INTO `jgv`.`user` (`us_id`, `us_pw`, `us_name`, `us_nickname`, `us_birth`, `us_gender`, `us_email`, `us_contact`, `us_addr`, `us_created_at`, `us_updated_at`,`us_is_deleted`,`us_is_admin` ,`us_is_suspended`, `us_verified`)
         VALUES (#{usId}, #{usPw}, #{usName}, #{usNickName}, #{usBirth}, #{usGender}, #{usEmail}, #{usContact}, #{usAddr}, #{usCreatedAt}, #{usUpdatedAt}, #{usIsDeleted}, #{usIsAdmin}, #{usIsSuspended}, #{usIsVerified})
     </insert>
+
+    <insert id="insertAttempts" parameterType="dev.jwkim.jgv.entities.user.UserLoginAttemptsEntity">
+        INSERT INTO `jgv`.`user_login_attempts` (at_client_ip, at_client_ua, at_result, at_created_at)
+        VALUES (#{atClientIp}, #{atClientUa}, #{atResult}, #{atCreatedAt})
+    </insert>
+
+    <insert id="insertBlockedIp" parameterType="dev.jwkim.jgv.entities.user.UserBlockedIpsEntity">
+        INSERT INTO `jgv`.`blocked_ips` (ip_client_ip, ip_created_at, ip_expires_at)
+        VALUES (#{ipClientIp}, #{ipCreatedAt}, #{ipExpiresAt})
+    </insert>
+
     <update id="updateUser"
     parameterType="dev.jwkim.jgv.entities.user.UserEntity">
     UPDATE `jgv`.`user`
@@ -371,5 +382,19 @@
         GROUP BY
             payment.`pa_num` -- paNum별로 그룹화
 
+    </select>
+    <select id="countFailedLoginAttempts" resultType="_int">
+        SELECT COUNT(*)
+        FROM `jgv`.`user_login_attempts`
+        WHERE at_client_ip = #{clientIp}
+        AND at_result = false
+        AND at_created_at >= NOW() - INTERVAL 5 MINUTE
+    </select>
+
+    <select id="selectBlockedIpByClientIp" resultType="dev.jwkim.jgv.entities.user.UserBlockedIpsEntity">
+        SELECT *
+        FROM `jgv`.`blocked_ips`
+        WHERE ip_client_ip = #{clientIp} AND ip_expires_at = 1
+        LIMIT 1
     </select>
 </mapper>

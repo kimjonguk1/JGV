@@ -1,0 +1,8 @@
+.title-container {
+  background-color: red;
+}
+.title-container > h3 {
+  font-size: 2rem;
+}
+
+/*# sourceMappingURL=history.css.map */

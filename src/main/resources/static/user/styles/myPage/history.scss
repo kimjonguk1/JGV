@@ -1,0 +1,54 @@
+@import "../../../fragments/assets/styles/global";
+.history{
+  @include minmaxHeight(50rem);
+}
+
+.title-container {
+  padding-bottom: 2rem;
+  > h3 {
+    font-size: 1.8rem;
+  }
+}
+
+.notice {
+  @include flex(column, flex-start, center, 0.6rem);
+  padding-bottom: 3rem;
+  > li {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #7b7b7b;
+  }
+}
+
+table {
+  @include minmaxWidth(100%);
+  border-collapse: collapse;
+
+  > thead {
+    @include minmaxWidth(100%);
+    > tr {
+
+      > th {
+        height: 2rem;
+        background-color: #FB4357;
+        border-collapse: collapse;
+        color: #ffffff;
+      }
+    }
+  }
+  > tbody {
+    border: 1px solid #eaeaea;
+    text-align: center;
+
+    > tr {
+      border: 1px solid #eaeaea;
+
+      > td {
+        border: 1px solid #eaeaea;
+        height: 2rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+    }
+  }
+}

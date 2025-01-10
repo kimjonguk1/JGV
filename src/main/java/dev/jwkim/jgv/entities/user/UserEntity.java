@@ -29,5 +29,8 @@ public class UserEntity {
     private boolean usIsAdmin;
     private boolean usIsSuspended;
     private boolean usIsVerified;
-
+    private String usSocialTypeCode;
+    private String useSocialId;
+    private int usFailedAttempts;
+    private LocalDateTime usAttemptsAt;
 }
