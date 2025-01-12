@@ -14,12 +14,14 @@
             </div>
             <div class="reservation-container">
                 <div class="reservation-movie">
-                    <a th:href="@{'../../../movies/movieList/movieInfo/' + ${reservation.key[10]}}" target="_blank">
+                    <a th:href="@{'../../../movies/movieList/movieInfo/' + ${reservation.key[10]}}"
+                       target="_blank">
                         <img th:src="${reservation.key[1]}" alt="예매사진">
                     </a>
                     <div class="movie-info">
                         <div class="movie-title">
-                            <a th:href="@{'../../../movies/movieList/movieInfo/' + ${reservation.key[10]}}" target="_blank" th:text="${reservation.key[2]}"></a>
+                            <a th:href="@{'../../../movies/movieList/movieInfo/' + ${reservation.key[10]}}"
+                               target="_blank" th:text="${reservation.key[2]}"></a>
                         </div>
                         <div class="cinema">
                             <span>관람 극장</span>
@@ -70,12 +72,14 @@
             <p class="movie-title" id="modalMovieTitle"></p>
             <hr>
             <div class="review-userInfo">
-                <img class="profile-img" src="/user/images/user_mypage_default_profile.gif"
+                <img class="profile-img"
+                     src="/user/images/user_mypage_default_profile.gif"
                      alt="profile">
                 <span class="user-name" id="modalUserName">사용자 이름</span>
             </div>
             <label class="label">
-                <textarea id="reviewText" placeholder="운영원칙에 어긋나는 게시물로 판단되는 글은 제재 조치를 받을 수 있습니다."
+                <textarea id="reviewText"
+                          placeholder="운영원칙에 어긋나는 게시물로 판단되는 글은 제재 조치를 받을 수 있습니다."
                           maxlength="280"></textarea>
             </label>
             <div class="modal-action">
@@ -87,7 +91,8 @@
 
     <div class="my-review">
         <div class="review-list">
-            <div class="review-item" th:if="${!#lists.isEmpty(Reviews)} " th:each="review : ${Reviews}"
+            <div class="review-item" th:if="${!#lists.isEmpty(Reviews)} "
+                 th:each="review : ${Reviews}"
                  th:attr="data-review-id=${review.reNum}">
                 <div class="review-thumbnail">
                     <img th:src="${review.mImgUrl}" alt="Poster">
@@ -95,13 +100,17 @@
                 <div class="review-content">
                     <h3 class="review-title" th:text="${review.moTitle}">청설</h3>
                     <div class="review-info">
-                        <span class="nickname" th:text="${review.usNickName}">지니율스</span><span> | </span>
-                        <span class="review-date" th:text="${#temporals.format(review.reCreatedAt, 'yyyy-MM-dd')}">2024.12.26</span>
+                        <span class="nickname"
+                              th:text="${review.usNickName}">지니율스</span><span> | </span>
+                        <span class="review-date"
+                              th:text="${#temporals.format(review.reCreatedAt, 'yyyy-MM-dd')}">2024.12.26</span>
                     </div>
-                    <p class="review-description" th:text="${review.reContent}">1보다는 별로지만 암튼 재밌었어염</p>
+                    <p class="review-description" th:text="${review.reContent}">1보다는 별로지만
+                        암튼 재밌었어염</p>
                     <div class="review-actions">
                         <button class="edit-review">수정하기</button>
-                        <img class="likes" src="http://img.cgv.co.kr/R2014/images/point/ico_point_default.png"
+                        <img class="likes"
+                             src="http://img.cgv.co.kr/R2014/images/point/ico_point_default.png"
                              alt="likes">
                         <span th:text="${review.reLiked}">0</span>
                     </div>
@@ -142,11 +151,12 @@
         <span>티켓판매기에서 예매번호를 입력하면 티켓을 발급받을 수 있습니다.</span>
     </div>
     <div th:each="reservation, stat : ${reservations}">
-        <div class="reservation-main" >
+        <div class="reservation-main">
             <div class="reservation-num">
                 <span class="res-num">예매번호</span>
                 <div class="-spring"></div>
-                <span class="red" th:id="'paNum-' + ${stat.index}" th:text="${reservation.key[0]}">예매번호</span>
+                <span class="red" th:id="'paNum-' + ${stat.index}"
+                      th:text="${reservation.key[0]}">예매번호</span>
             </div>
             <div class="reservation-info">
                 <a class="image-wrapper"
@@ -157,12 +167,15 @@
                 <div class="movie-info">
                     <div class="title-container">
                         <!-- 영화 제목 -->
-                        <a target="blank"  th:href="@{'../../../movies/movieList/movieInfo/' + ${reservation.key[10]}}"
-                           class="movie" th:id="'moTitle-' + ${stat.index}" th:text="${reservation.key[2]}"></a>
+                        <a target="blank"
+                           th:href="@{'../../../movies/movieList/movieInfo/' + ${reservation.key[10]}}"
+                           class="movie" th:id="'moTitle-' + ${stat.index}"
+                           th:text="${reservation.key[2]}"></a>
                         <span class="movie" th:text="${reservation.key[6]}"></span>
                         <div class="-spring"></div>
                         <!-- 결제 금액 -->
-                        <span class="pay" th:id="'paPrice-' + ${stat.index}" th:text="${reservation.key[3]}"></span>
+                        <span class="pay" th:id="'paPrice-' + ${stat.index}"
+                              th:text="${reservation.key[3]}"></span>
                     </div>
                     <div class="detail">
                         <span class="title">관람극장</span>
@@ -198,12 +211,14 @@
                               th:text="${reservation.key[6]}"></span>
                         <span class="title">매수</span>
                         <!-- 매수: 좌석 수를 계산하여 출력 -->
-                        <span class="black content" th:text="${reservation.value.size()} + '매'"></span>
+                        <span class="black content"
+                              th:text="${reservation.value.size()} + '매'"></span>
                     </div>
                 </div>
             </div>
         </div>
-        <div style="display: none;" th:id="'paCreatedAt-' + ${stat.index}" th:text="${reservation.key[8]}"></div>
+        <div style="display: none;" th:id="'paCreatedAt-' + ${stat.index}"
+             th:text="${reservation.key[8]}"></div>
 
 
         <div class="movie-receipt">
@@ -215,13 +230,15 @@
                     <div class="result-pay underline">
                         <span class="result-text">총 결제금액</span>
                         <div class="-spring"></div>
-                        <span class="result-payment" th:text="${reservation.key[3]}"></span>
+                        <span class="result-payment"
+                              th:text="${reservation.key[3]}"></span>
                     </div>
                     <div class="result-pay">
                         <span class="payment-method" th:id="'meName-' + ${stat.index}"
                               th:text="'└  ' + ${reservation.key[7]}"></span>
                         <div class="-spring"></div>
-                        <span class="method-payment" th:text="${reservation.key[3]}"></span>
+                        <span class="method-payment"
+                              th:text="${reservation.key[3]}"></span>
                     </div>
                 </div>
                 <div class="reservation-cancel">
@@ -330,10 +347,11 @@
         </div>
         <div class="button-container">
             <button class="withdraw-button" type="button"
-            onclick="window.open(`../../user/myPage/userWithdraw`,
+                    onclick="window.open(`../../user/myPage/userWithdraw`,
             `회원탈퇴`,
             `width=600,height=800,left=200,top=200`)">
-                JGV 회원탈퇴</button>
+                JGV 회원탈퇴
+            </button>
         </div>
     </div>
 </div>
@@ -355,23 +373,48 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>2025.01.10 11:19:21</td>
-            <td>1.1.1.1.1.1</td>
-            <td>성공</td>
-        </tr>
-        <tr>
-            <td>2025.01.10 11:19:21</td>
-            <td>1.1.1.1.1.1</td>
-            <td>성공</td>
-        </tr>
-        <tr>
-            <td>2025.01.10 11:19:21</td>
-            <td>2.2.2.2.2.2</td>
-            <td style="color: #FB4357">실패</td>
+        <tr th:each="attempt : ${loginAttempt}">
+            <td
+                    th:text="${#temporals.format(attempt.getAtCreatedAt(), 'yyyy-MM-dd HH:mm:ss')}">
+                2025.01.10 11:19:21
+            </td>
+            <td th:text="${attempt.getAtClientIp()}">1.1.1.1.1.1</td>
+            <td
+                    th:style="${attempt.atResult ? 'font-weight: 500;' : 'color: #fb4357; font-weight: 500;'}"
+                    th:text="${attempt.atResult ? '성공' : '실패'}">성공
+            </td>
         </tr>
         </tbody>
     </table>
+        <div class="move" th:if="${loginAttempt != null && loginAttempt.length > 0}">
+            <!-- 첫 페이지로 이동 -->
+            <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
+               th:href="@{'/user/myPage/history' (page=${loginPage.movableMinPage})}"
+               class="page first">|&lt;</a>
 
+            <!-- 이전 페이지로 이동 -->
+            <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
+               th:href="@{'/user/myPage/history' (page=${loginPage.requestPage - 1})}"
+               class="page prev">&lt;</a>
+
+            <!-- 페이지 번호 표시 -->
+            <div class="page-container">
+                <a class="page"
+                   th:each="page : ${#numbers.sequence(loginPage.displayMinPage, loginPage.displayMaxPage)}"
+                   th:text="${page}"
+                   th:href="@{'/user/myPage/history' (page=${page})}"
+                   th:classappend="${page == loginPage.requestPage} ? 'selected'"></a>
+            </div>
+
+            <!-- 다음 페이지로 이동 -->
+            <a th:if="${loginPage.requestPage < loginPage.movableMaxPage}"
+               th:href="@{'/user/myPage/history' (page=${loginPage.requestPage + 1})}"
+               class="page next">&gt;</a>
+
+            <!-- 마지막 페이지로 이동 -->
+            <a th:if="${loginPage.requestPage < loginPage.movableMaxPage}"
+               th:href="@{'/user/myPage/history' (page=${loginPage.displayMaxPage})}"
+               class="page last">&gt;|</a>
+        </div>
 </div>
 </html>

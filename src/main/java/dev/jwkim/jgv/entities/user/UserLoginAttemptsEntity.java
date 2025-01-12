@@ -11,8 +11,10 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 public class UserLoginAttemptsEntity {
     private int atIndex;
+    private String atUserId;
     private String atClientIp;
     private String atClientUa;
     private boolean atResult;
     private LocalDateTime atCreatedAt;
+
 }

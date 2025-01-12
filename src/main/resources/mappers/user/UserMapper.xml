@@ -11,8 +11,9 @@
     </insert>
 
     <insert id="insertAttempts" parameterType="dev.jwkim.jgv.entities.user.UserLoginAttemptsEntity">
-        INSERT INTO `jgv`.`user_login_attempts` (at_client_ip, at_client_ua, at_result, at_created_at)
-        VALUES (#{atClientIp}, #{atClientUa}, #{atResult}, #{atCreatedAt})
+        INSERT INTO `jgv`.`user_login_attempts` (at_client_ip, at_user_id, at_client_ua,
+                                                 at_result, at_created_at)
+        VALUES (#{atClientIp}, #{atUserId}, #{atClientUa}, #{atResult}, #{atCreatedAt})
     </insert>
 
     <insert id="insertBlockedIp" parameterType="dev.jwkim.jgv.entities.user.UserBlockedIpsEntity">
@@ -383,6 +384,7 @@
             payment.`pa_num` -- paNum별로 그룹화
 
     </select>
+
     <select id="countFailedLoginAttempts" resultType="_int">
         SELECT COUNT(*)
         FROM `jgv`.`user_login_attempts`
@@ -392,9 +394,32 @@
     </select>
 
     <select id="selectBlockedIpByClientIp" resultType="dev.jwkim.jgv.entities.user.UserBlockedIpsEntity">
-        SELECT *
+        SELECT ip_index AS `ipIndex`,
+               ip_client_ip AS `ipClientIp`,
+               ip_created_at AS `ipCreatedAt`,
+               ip_expires_at AS `ipExpiresAt`
         FROM `jgv`.`blocked_ips`
-        WHERE ip_client_ip = #{clientIp} AND ip_expires_at = 1
+        WHERE ip_client_ip = #{clientIp}
+          AND ip_expires_at = 1
         LIMIT 1
     </select>
+
+    <select id="selectLoginAttemptsByUserId"
+            resultType="dev.jwkim.jgv.entities.user.UserLoginAttemptsEntity">
+        SELECT `at_user_id`    AS `atUserId`,
+               `at_created_at` AS `atCreatedAt`,
+               `at_client_ip`  AS `atClientIp`,
+               `at_result`     AS `atResult`
+        FROM `jgv`.`user_login_attempts`
+        WHERE `at_user_id` = #{userId}
+        ORDER BY `at_created_at` DESC
+        LIMIT #{limitCount} OFFSET #{offsetCount}
+    </select>
+
+    <select id="selectPageByUserId" resultType="_int">
+        SELECT COUNT(0)
+        FROM `jgv`.`user_login_attempts`
+        WHERE `at_user_id` = #{userId}
+    </select>
+
 </mapper>

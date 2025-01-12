@@ -599,6 +599,37 @@ table > tbody > tr > td {
   font-weight: 500;
 }
 
+.move {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 2rem;
+}
+.move .page {
+  width: 1.75rem;
+  aspect-ratio: 1/1;
+  color: #222222;
+  line-height: 1;
+  text-decoration: none;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.move .page.selected {
+  color: #FB4357;
+  cursor: pointer;
+  pointer-events: none;
+}
+.move > .page-container {
+  margin: 0 0.5rem;
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .my-reservation {
   align-items: flex-start;
   display: flex;
