@@ -166,7 +166,9 @@ public class UserService {
 // endregion //
 
     //region 로그인
-    public void handleLoginFailure(String clientIp) {
+
+    // 비밀번호 입력 5회 실패시 해당 IP 차단
+    public int handleLoginFailure(String clientIp) {
         int failedAttempts = userMapper.countFailedLoginAttempts(clientIp);
         if (failedAttempts >= 5) {
             UserBlockedIpsEntity blockedIp = new UserBlockedIpsEntity();
@@ -176,6 +178,7 @@ public class UserService {
             this.userMapper.insertBlockedIp(blockedIp);
             System.out.println("IP 차단됨 " + clientIp);
         }
+        return failedAttempts;
     }
 
     public Result login(UserEntity user, HttpServletRequest request) {
@@ -190,10 +193,8 @@ public class UserService {
 
         UserBlockedIpsEntity userBlockedIp = this.userMapper.selectBlockedIpByClientIp(clientIp);
         if (userBlockedIp != null) {
-            System.out.println("차단된 IP 정보: " + userBlockedIp);  // 차단된 IP 정보 확인
         }
         if (userBlockedIp != null && userBlockedIp.isIpExpiresAt()) {
-            System.out.println("차단된 IP " + clientIp);
             return LoginResult.FAILURE_BLOCKED_IP;
         }
 
@@ -204,19 +205,15 @@ public class UserService {
         UserLoginAttemptsEntity userLoginAttempts = new UserLoginAttemptsEntity();
         UserBlockedIpsEntity blockedIp = new UserBlockedIpsEntity();
         // 클라이언트 IP 와 user-agent를 로그인 시도 정보에 추가
-
-
         userLoginAttempts.setAtClientIp(clientIp);
+        userLoginAttempts.setAtUserId(user.getUsId());
         userLoginAttempts.setAtClientUa(userAgent);
+        userLoginAttempts.setAtCreatedAt(LocalDateTime.now());
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (!encoder.matches(user.getUsPw(), dbUser.getUsPw())) {
-            userLoginAttempts.setAtClientIp(clientIp);
-            userLoginAttempts.setAtClientUa(userAgent);
-            userLoginAttempts.setAtCreatedAt(LocalDateTime.now());
             userLoginAttempts.setAtResult(false);
             this.userMapper.insertAttempts(userLoginAttempts);
-
             handleLoginFailure(clientIp);
             return LoginResult.FAILURE_PASSWORD_MISMATCH;
         }
@@ -264,9 +261,6 @@ public class UserService {
 
         //로그인 성공 시 성공 기록 삽입
         userLoginAttempts.setAtResult(true);
-        userLoginAttempts.setAtClientIp(clientIp);
-        userLoginAttempts.setAtClientUa(userAgent);
-        userLoginAttempts.setAtCreatedAt(LocalDateTime.now());
         this.userMapper.insertAttempts(userLoginAttempts);
         return CommonResult.SUCCESS;
     }
@@ -582,8 +576,6 @@ public class UserService {
 
     // region 예매 내역
 
-    // region 예매 내역
-
     public Pair<PageVo, Map<Set<String>, List<String>>> reservationInformation(int usNum, int page) {
         page = Math.max(1, page);
         int totalCount = this.userMapper.selectArticleByUsNumCount(usNum);
@@ -784,4 +776,17 @@ public class UserService {
     }
     // endregion
 
+    //region 로그인 내역조회
+    public Pair<PageVo, UserLoginAttemptsEntity[]> getLoginAttempts(int page,
+                                                                    String userId) {
+        page = Math.max(1, page);
+        int totalCount = this.userMapper.selectPageByUserId(userId);
+        PageVo pageVo = new PageVo(page, totalCount);
+        UserLoginAttemptsEntity[] attempts = this.userMapper.selectLoginAttemptsByUserId(
+                userId,
+                pageVo.countPerPage,
+                pageVo.offsetCount);
+                return Pair.of(pageVo, attempts);
+    }
+    //endregion
 }

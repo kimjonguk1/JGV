@@ -23,6 +23,12 @@ public interface UserMapper {
 
     int countFailedLoginAttempts(@Param("clientIp") String clientIp);
 
+    int selectPageByUserId(@Param("userId") String userId);
+
+    UserLoginAttemptsEntity[] selectLoginAttemptsByUserId(@Param("userId") String userId,
+                                                          @Param("limitCount") int limitCount,
+                                                          @Param("offsetCount") int offsetCount);
+
     UserBlockedIpsEntity selectBlockedIpByClientIp(@Param("clientIp") String clientIp);
 
     int findAllReservations(@Param("usNum") int usNum);

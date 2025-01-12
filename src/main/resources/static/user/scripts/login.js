@@ -92,28 +92,51 @@ $loginForm.onsubmit = (e) => {
         else if (response['result'] === 'failure_blocked_ip') {
             alert('해당 IP 주소에서의 로그인 시도가 차단되었습니다. 관리자가 검토 후 조치를 취할 수 있습니다."');
         }
-        else if(response['result'] === 'failure_password_mismatch') {
-            const customDialog = `
-        <div id="missing-email" class="frame" style="padding: 20px; background-color: #f9f9f9; border: 1px solid #ccc; border-radius: 5px; width: 350px; text-align: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 97; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
-            <span style="font-weight: 500; color: #222222;">비밀번호가 일치하지 않습니다.</span>
-            <div style="display: flex; flex-direction: row">
-                <span style="font-weight: 500; color: #6e6c6d;">(</span>
-                <span style="font-weight: 700; color: #FB4357;">${response['count']}회 실패</span>
-                <span style="font-weight: 500; color: #6e6c6d;">, 5회 실패시 계정 정지</span>
-                <span style="font-weight: 500; color: #6e6c6d;">)</span>
+        else if (response['result'] === 'failure_password_mismatch') {
+            let customDialog = '';
+
+            // 5회 미만 실패 시 기본 다이얼로그
+            if (response["count"] < 5) {
+                customDialog = `
+            <div id="missing-email" class="frame" style="padding: 20px; background-color: #f9f9f9; border: 1px solid #ccc; border-radius: 5px; width: 350px; text-align: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 97; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                <span style="font-weight: 500; color: #222222;">비밀번호가 일치하지 않습니다.</span>
+                <div style="display: flex; flex-direction: row">
+                    <span style="font-weight: 500; color: #6e6c6d;">(</span>
+                    <span style="font-weight: 700; color: #FB4357;">${response['count']}회 실패</span>
+                    <span style="font-weight: 500; color: #6e6c6d;">, 5회 실패시 계정 정지</span>
+                    <span style="font-weight: 500; color: #6e6c6d;">)</span>
+                </div>
+                <div>
+                    <span style="font-weight: 500; color: #6e6c6d;">비밀번호를 잊어버리셨나요? &gt; <a style="color: #FB4357; font-weight: 700;" href="./find-password">비밀번호 찾기</a></span>
+                </div>
+                <button style="color: #6e6c6d; cursor: pointer; font-weight: 700;" onclick="window.location.reload();">닫기</button>
             </div>
-            <div>
-             <span style="font-weight: 500; color: #6e6c6d;">비밀번호를 잊어버리셨나요? &gt; <a style="color: #FB4357; font-weight: 700;" href="./find-password">비밀번호 찾기</a></span>
+        `;
+            }
+            // 5회 실패 시 IP 차단 다이얼로그
+            else if (response["count"] === 5) {
+                customDialog = `
+            <div id="missing-email" class="frame" style="padding: 20px; background-color: #f9f9f9; border: 1px solid #ccc; border-radius: 5px; width: 350px; text-align: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 97; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                <span style="font-weight: 500; color: #222222;">비밀번호가 일치하지 않습니다.</span>
+                <div style="display: flex; flex-direction: row">
+                    <span style="font-weight: 500; color: #6e6c6d;">(</span>
+                    <span style="font-weight: 700; color: #FB4357;">${response['count']}회 실패</span>
+                    <span style="font-weight: 500; color: #6e6c6d;">, 계정 정지</span>
+                    <span style="font-weight: 500; color: #6e6c6d;">)</span>
+                </div>
+                <div>
+                    <span style="font-weight: 500; color: #6e6c6d;">해당 IP에서의 접근이 차단되었습니다.</span>
+                </div>
+                <button style="color: #6e6c6d; cursor: pointer; font-weight: 700;" onclick="window.location.reload();">닫기</button>
             </div>
-            <button style="color: #6e6c6d; cursor: pointer; font-weight: 700;" onclick="window.location.reload();">닫기</button>
-           
-        </div>
-    `;
+        `;
+            }
 
             // 다이얼로그 HTML을 body에 추가
             const dialogDiv = document.createElement('div');
             dialogDiv.innerHTML = customDialog;
             document.body.appendChild(dialogDiv);
+            // 5회 실패 전까지는 다이얼로그와 함께 실패 횟수만 표시
         }
         else if (response['result'] === 'failure_not_verified') {
             if (!document.getElementById("missing-email")) {

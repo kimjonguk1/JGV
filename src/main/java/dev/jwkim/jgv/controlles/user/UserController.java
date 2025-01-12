@@ -5,6 +5,7 @@ import dev.jwkim.jgv.DTO.MyReviewDTO;
 import dev.jwkim.jgv.entities.user.EmailTokenEntity;
 import dev.jwkim.jgv.entities.user.ReviewEntity;
 import dev.jwkim.jgv.entities.user.UserEntity;
+import dev.jwkim.jgv.entities.user.UserLoginAttemptsEntity;
 import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.results.Result;
 import dev.jwkim.jgv.results.user.LoginResult;
@@ -104,11 +105,9 @@ public class UserController {
                             @RequestParam(value = "usId", required = false) String id) throws MessagingException {
         // 로그인 시도 시 IP 정보
         String currentIp = request.getRemoteAddr();
-
         // 로그인 시도 결과를 담을 변수
         Result result = this.userService.login(user, request);
         JSONObject response = new JSONObject();
-
         // 로그인 성공 시
         if (result == CommonResult.SUCCESS) {
             // 기존 세션의 사용자 정보와 IP 체크
@@ -143,8 +142,9 @@ public class UserController {
             response.put(Result.NAME, result.nameToLower());
             return response.toString();
         }
+        int count = this.userService.handleLoginFailure(currentIp);
+        response.put("count", count);
         response.put(Result.NAME, result.nameToLower());
-        System.out.println("컨트롤러" + result.nameToLower());
         return response.toString();
     }
 // endregion
@@ -155,7 +155,15 @@ public class UserController {
 
 
     @RequestMapping(value = "/myPage/{fragment}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user, HttpSession session, @PathVariable(value = "fragment") String fragment, HttpServletRequest request, @RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "page2", required = false, defaultValue = "1") int page2) throws ServletException, IOException {
+    public ModelAndView getMyPage(HttpServletResponse response, UserEntity user,
+                                  HttpSession session,
+                                  @PathVariable(value = "fragment") String fragment,
+                                  HttpServletRequest request, @RequestParam(value =
+                    "page", required = false, defaultValue = "1") int page,
+                                  @RequestParam(value = "page2", required = false,
+                                          defaultValue = "1") int page2
+                                 ) throws ServletException,
+            IOException {
         String[] validFragments = {"main", "reservation", "history", "personal", "withdraw"};
         if (fragment == null || Arrays.stream(validFragments).noneMatch(x -> x.equals(fragment))) {
             ModelAndView modelAndView = new ModelAndView();
@@ -178,20 +186,18 @@ public class UserController {
             return null;
         }
 
-
         UserEntity loggedInUser = (UserEntity) session.getAttribute("user");
-
+        // 로그인 내역 조회
+       Pair<PageVo, UserLoginAttemptsEntity[]> attempts =
+               this.userService.getLoginAttempts(page, loggedInUser.getUsId());
         // 현재 날짜를 model에 추가
         LocalDateTime currentDate = LocalDateTime.now();
         String formattedCurrentDate = currentDate.toString();
         // 예약 정보 가져오기
         Pair<PageVo, Map<Set<String>, List<String>>> reservations = this.userService.reservationInformation(loggedInUser.getUsNum(), page2); // 예약 정보
         List<List<String>> cancelReservations = this.userService.selectCancelPaymentByUsNum(loggedInUser.getUsNum()); // 취소 정보
-
         int allReservations = this.userService.findAllReservations(loggedInUser.getUsNum());
-
         Pair<PageVo, List<MyReviewDTO>> pair = reviewService.getReviewByUser(page, loggedInUser.getUsNum());
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("pageVo", pair.getLeft());
         modelAndView.addObject("Reviews", pair.getRight());
@@ -205,6 +211,8 @@ public class UserController {
         modelAndView.addObject("cancelReservations", cancelReservations);
         modelAndView.addObject("page", page); // 현재 page
         modelAndView.addObject("page2", page2); // 현재 page2
+        modelAndView.addObject("loginPage", attempts.getLeft());
+        modelAndView.addObject("loginAttempt", attempts.getRight());
         modelAndView.setViewName("user/myPage/myPage");
 
         return modelAndView;
@@ -337,7 +345,7 @@ public class UserController {
     @RequestMapping(value = "/find-password-result", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ModelAndView getRecoverPassword(@RequestParam(value = "userEmail", required =
-            false) String userEmail,
+                                                   false) String userEmail,
                                            @RequestParam(value = "key", required = false) String key,
                                            @RequestParam(value = "userId", required =
                                                    false) String userId
