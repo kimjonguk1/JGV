@@ -23,14 +23,19 @@ $theaterCrawl.onclick = () => {
     const $buttonWrapper = $titleChange.querySelector(':scope > .admin-button-wrapper');
     const $movieInfo = $titleChange.querySelector(':scope > .movie-information');
     const $theaterInfo = $titleChange.querySelector(':scope > .theater-information');
+    const $userInfo = $titleChange.querySelector(':scope > .user-information');
     const $movieButton = document.getElementById('movie-crawl-button');
     const $theaterButton = document.getElementById('theater-crawl-button');
     const $movieMain = document.getElementById('movie-admin-page');
     const $theaterMain = document.getElementById('theater-admin-page');
+    const $userMain = document.getElementById('user-admin-page')
     const $movieSearchForm = document.getElementById('movie-search-form');
     const $theaterSearchForm = document.getElementById('theater-search-form');
+    const $userSearchForm = document.getElementById('user-search-form');
     const $moviePage = document.getElementById('movie-page-container');
     const $theaterPage = document.getElementById('theater-page-container');
+    const $userPage = document.getElementById('user-page-container');
+
 
     $movieInfo.onclick = () => {
         $movieButton.style.display = 'block';
@@ -41,9 +46,13 @@ $theaterCrawl.onclick = () => {
         $theaterInfo.style.color = '#666666';
         $theaterMain.style.display = 'none';
         $theaterSearchForm.style.display = 'none';
+        $userSearchForm.style.display = 'none';
         $buttonWrapper.style.border = '2px solid #fb4357';
         $moviePage.style.display = 'block';
         $theaterPage.style.display = 'none';
+        $userInfo.style.color = '#666666';
+        $userMain.style.display = 'none';
+        $userPage.style.display = 'none';
 
         const url = new URL(location.href);
         url.searchParams.set('mode', 'movie');
@@ -61,21 +70,51 @@ $theaterCrawl.onclick = () => {
         $theaterButton.style.backgroundColor = '#2275a4';
         $theaterButton.style.border = '1px solid #2275a4';
         $theaterSearchForm.style.display = 'block';
+        $userSearchForm.style.display = 'none';
         $buttonWrapper.style.border = '2px solid #2275a4'
         $moviePage.style.display = 'none';
         $theaterPage.style.display = 'block';
+        $userInfo.style.color = '#666666';
+        $userMain.style.display = 'none';
+        $userPage.style.display = 'none';
 
         const url = new URL(location.href);
         url.searchParams.set('mode', 'theater');
         history.pushState(undefined, undefined, url.toString());
     }
 
+    $userInfo.onclick = () => {
+        $userInfo.style.color = '#000000';
+        $movieInfo.style.color = '#666666';
+        $theaterInfo.style.color = '#666666';
+        $buttonWrapper.style.display = 'none';
+        $movieButton.style.display = 'none';
+        $theaterButton.style.display = 'none';
+        $movieSearchForm.style.display = 'none';
+        $movieMain.style.display = 'none';
+        $moviePage.style.display = 'none';
+        $theaterMain.style.display = 'none';
+        $theaterPage.style.display = 'none';
+        $theaterSearchForm.style.display = 'none';
+        $userSearchForm.style.display = 'block';
+        $userMain.style.display = 'block';
+        $userPage.style.display = 'block';
+
+        const url = new URL(location.href);
+        url.searchParams.set('mode', 'user');
+        history.pushState(undefined, undefined, url.toString());
+
+    }
+
+
     const url = new URL(location.href);
     const mode = url.searchParams.get('mode') ?? 'movie'
     if (mode === 'movie') {
         $movieInfo.dispatchEvent(new Event('click'));
-    } else {
+    } else if (mode === 'theater') {
         $theaterInfo.dispatchEvent(new Event('click'));
+    } else {
+        $userInfo.dispatchEvent(new Event('click'));
     }
 }
 

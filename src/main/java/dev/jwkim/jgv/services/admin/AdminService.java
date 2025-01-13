@@ -4,6 +4,7 @@ import dev.jwkim.jgv.DTO.AdminMovieDTO;
 import dev.jwkim.jgv.DTO.AdminTheaterDTO;
 import dev.jwkim.jgv.DTO.ScreenInfoDTO;
 import dev.jwkim.jgv.entities.theater.ScreenEntity;
+import dev.jwkim.jgv.entities.user.UserEntity;
 import dev.jwkim.jgv.mappers.admin.AdminMapper;
 import dev.jwkim.jgv.mappers.ticket.TicketMapper;
 import dev.jwkim.jgv.results.CommonResult;
@@ -40,6 +41,29 @@ public class AdminService {
         return Pair.of(pageVo, adminMovieDTO);
     }
 
+
+    public Pair<PageVo, UserEntity[]> selectUserPage(int page) {
+        page = Math.max(1, page);
+        int totalCount = this.adminMapper.totalUsers();
+        PageVo pageVo = new PageVo(page, totalCount);
+        UserEntity[] users = this.adminMapper.selectAllUsers(
+                pageVo.countPerPage,
+                pageVo.offsetCount
+        );
+        return Pair.of(pageVo, users);
+    }
+
+    public Pair<PageVo, UserEntity[]> searchUserPage(int page, String filter, String keyword) {
+        page = Math.max(1, page);
+        int totalCount = this.adminMapper.searchUserByKeyword(filter, keyword);
+        PageVo pageVo = new PageVo(page, totalCount);
+        UserEntity[] users = this.adminMapper.selectUserByKeyword(
+                pageVo.countPerPage,
+                pageVo.offsetCount,
+                filter, keyword
+        );
+        return Pair.of(pageVo, users);
+    }
 
     public Pair<PageVo, AdminMovieDTO[]> searchMoviePage(int page, String filter, String keyword) {
         page = Math.max(1, page);

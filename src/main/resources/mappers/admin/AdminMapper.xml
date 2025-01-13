@@ -128,13 +128,13 @@
         GROUP BY `m`.`mo_num`, th.`th_num`) AS `TI`
     </select>
     <select id="selectAllDTOByTheaters" resultType="dev.jwkim.jgv.DTO.AdminTheaterDTO">
-        SELECT `th`.`th_name`        AS `thName`,
+        SELECT `th`.`th_name`       AS `thName`,
                `m`.`mo_title`       AS 'moTitle',
                `mi`.`m_img_url`     AS 'mImgUrl',
                `ci`.`ci_name`       AS `ciName`,
                `sc`.`sc_num`        AS `scNum`,
                `sc`.`sc_start_date` AS `scStartDate`,
-               `sc`.`is_deleted` AS `isDeleted`
+               `sc`.`is_deleted`    AS `isDeleted`
         FROM (SELECT `sc`.`ci_num`  AS `_ci_num`,
                      `sc`.`mo_num`  AS `_mo_num`,
                      `th`.`th_num`  AS `_th_num`,
@@ -200,14 +200,67 @@
     </select>
     <select id="selectScreenByScNum"
             resultType="dev.jwkim.jgv.entities.theater.ScreenEntity">
-        SELECT `sc_num` AS `scNum`,
+        SELECT `sc_num`        AS `scNum`,
                `sc_start_date` AS `scStartDate`,
-               `is_deleted` AS `isDeleted`,
-               `mo_num` AS `moNum`,
-               `ci_num` AS `ciNum`
+               `is_deleted`    AS `isDeleted`,
+               `mo_num`        AS `moNum`,
+               `ci_num`        AS `ciNum`
         FROM `jgv`.`screen`
         WHERE `sc_num` = #{scNum}
-        AND `is_deleted` = FALSE
+          AND `is_deleted` = FALSE
         LIMIT 1
     </select>
+
+    <select id="selectAllUsers" resultType="dev.jwkim.jgv.entities.user.UserEntity">
+        SELECT us_num              AS usNum,
+               us_id               AS usId,
+               us_name             AS usName,
+               us_nickname         AS usNickName,
+               us_is_suspended     AS usIsSuspended
+        FROM `jgv`.`user`
+        LIMIT #{limitCount} OFFSET #{offsetCount}
+    </select>
+
+    <select id="totalUsers" resultType="_int">
+        SELECT COUNT(0)
+        FROM `jgv`.`user`
+    </select>
+
+    <select id="searchUserByKeyword" resultType="java.lang.Integer">
+        SELECT COUNT(0)
+        FROM `jgv`.`user`
+        WHERE user.us_verified IS TRUE
+        <if test="filter.equals('name')">
+            AND `us_name` = #{keyword}
+        </if>
+        <if test="filter.equals('id')">
+            AND `us_id` = #{keyword}
+        </if>
+        <if test="filter.equals('nickname')">
+            AND `us_nickname` = #{keyword}
+        </if>
+    </select>
+
+    <select id="selectUserByKeyword">
+        SELECT us_num              AS usNum,
+               us_id               AS usId,
+               us_name             AS usName,
+               us_nickname         AS usNickName,
+               us_is_suspended     AS usIsSuspended
+        FROM `jgv`.`user`
+        <where>
+            <if test="filter.equals('name')">
+                AND `us_name` = #{keyword}
+            </if>
+            <if test="filter.equals('id')">
+                AND `us_id` = #{keyword}
+            </if>
+            <if test="filter.equals('nickname')">
+                AND `us_nickname` = #{keyword}
+            </if>
+        </where>
+        LIMIT #{limitCount} OFFSET #{offsetCount}
+
+    </select>
+
 </mapper>

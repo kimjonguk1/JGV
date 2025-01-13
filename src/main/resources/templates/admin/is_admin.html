@@ -39,6 +39,10 @@
     <button class="theater-information">
         <span>상영 정보</span>
     </button>
+    <img src="/home/images/verticalLine.png" alt="구분선">
+    <button class="user-information">
+        <span>회원 정보</span>
+    </button>
     <div class="-spring"></div>
     <div class="admin-button-wrapper">
         <button id="movie-crawl-button">
@@ -81,6 +85,24 @@
         <button class="theater-search" type="submit">검색</button>
     </div>
 </form>
+
+<form id="user-search-form" class="frame">
+    <div class="user-keyword-wrapper">
+        <label class="--obj-label">
+            <select class="user-keyword" name="user-filter">
+                <option value="name">회원이름</option>
+                <option value="id">회원아이디</option>
+                <option value="nickname">회원닉네임</option>
+            </select>
+        </label>
+        <label class="--obj-label">
+            <input name="user-keyword" class="--obj-filed" placeholder="회원정보 검색" type="text">
+        </label>
+        <input type="hidden" name="mode" value="user">
+        <button class="user-search" type="submit">검색</button>
+    </div>
+</form>
+
 <main id="movie-admin-page" class="frame">
     <div class="admin-movie-list">
         <!--        번호 / 영화 이름 / 개봉일 / 관람등급-->
@@ -261,6 +283,71 @@
         </div>
     </div>
 </div>
+
+<main id="user-admin-page" class="frame">
+    <div class="admin-user-list">
+        <!--        번호 / 영화 이름 / 개봉일 / 관람등급-->
+        <table>
+            <tbody>
+            <tr>
+                <th>번호</th>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>닉네임</th>
+                <th>상태</th>
+            </tr>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.getUsNum()}">0001</td>
+                <td>
+                    <span th:text="${user.getUsId()}">rlawhddbf123</span>
+                </td>
+                <td th:text="${user.getUsName()}">김종율</td>
+                <td th:text="${user.getUsNickName()}">망둥어닮은 종율2</td>
+                <td style="font-size: 1rem;">
+                   <span th:style="${user.isUsIsSuspended() ? 'font-weight: 500; color: #fb3457;' : 'font-weight: 500;'}"
+                         th:text="${user.isUsIsSuspended() ? '정지' : '활동'}"></span>
+                    <label style="margin-left: 1rem;">
+                        <select>
+                            <option value="resume">활동</option>
+                            <option value="suspend">정지</option>
+                        </select>
+                    </label>
+                    <button style="margin-left: 1rem;" class="user-suspend">변경</button>
+                </td>
+            </tr>
+            <tr th:if="${users == null || users.length == 0}">
+                <td colspan="7">회원 목록이 없습니다.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<div id="user-page-container" class="frame">
+    <div class="user-page-wrapper">
+        <div class="prev">
+            <!-- 이전 페이지 -->
+            <a th:if="${userPage.requestPage > userPage.movableMinPage}"
+               th:href="@{'./is_admin' (page=${userPage.movableMinPage}, user-filter=${userFilter}, user-keyword=${userKeyword}, mode='user')}">|&lt;</a>
+            <a th:if="${userPage.requestPage > userPage.movableMinPage}"
+               th:href="@{'./is_admin' (page=${userPage.requestPage - 1}, user-filter=${userFilter}, user-keyword=${userKeyword}, mode='user')}">&lt;</a>
+        </div>
+        <div class="page">
+            <!-- 페이지 번호들 -->
+            <a th:each="page : ${#numbers.sequence(userPage.displayMinPage, userPage.displayMaxPage)}"
+               th:text="${page}"
+               th:href="@{'./is_admin' (page=${page}, user-filter=${userFilter}, user-keyword=${userKeyword}, mode='user')}"
+               th:classappend="${page == userPage.requestPage} ? 'selected'"></a>
+        </div>
+        <div class="next">
+            <!-- 다음 페이지 -->
+            <a th:if="${userPage.requestPage < userPage.movableMaxPage}"
+               th:href="@{'./is_admin' (page=${userPage.requestPage + 1}, user-filter=${userFilter}, user-keyword=${userKeyword}, mode='user')}">&gt;</a>
+            <a th:if="${screenPageVo.requestPage < screenPageVo.movableMaxPage}"
+               th:href="@{'./is_admin' (page=${userPage.movableMaxPage}, user-filter=${userFilter}, user-keyword=${userKeyword}, mode='user')}">&gt;|</a>
+        </div>
+    </div>
+</div>
+
 
 
 <th:block th:replace="~{fragments/common.html :: footer}"></th:block>

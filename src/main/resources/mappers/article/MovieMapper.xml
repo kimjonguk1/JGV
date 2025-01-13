@@ -228,22 +228,20 @@
     </select>
 
     <select id="selectCaraouselCurrentMovies" resultType="dev.jwkim.jgv.DTO.Movie_ImageDTO">
-        SELECT DISTINCT
-            m.mo_num AS 'moNum',
-            m.mo_title AS 'moTitle',
-            m.mo_date AS 'moDate',
-            m.mo_time AS 'moTime',
-            m.mo_plot AS 'moPlot',
-            m.mo_booking_rate AS 'moBookingRate',
-            i.m_img_url AS 'm_img_url'
-        FROM
-            jgv.movie m
-                LEFT JOIN
-            jgv.movie_image i ON m.mo_num = i.mo_num
-        LEFT JOIN jgv.screen s ON m.mo_num = s.mo_num
-        WHERE CURRENT_DATE() > STR_TO_DATE(mo_date, '%Y.%m.%d')
-        AND s.sc_start_date > NOW()
-        ORDER BY mo_booking_rate DESC
+        SELECT DISTINCT `m`.`mo_num`          AS `moNum`,
+                        `m`.`mo_title`        AS `moTitle`,
+                        `m`.`mo_date`         AS `moDate`,
+                        `m`.`mo_time`         AS `moTime`,
+                        `m`.`mo_plot`         AS `moPlot`,
+                        `m`.`mo_booking_rate` AS `moBookingRate`,
+                        `i`.`m_img_url`       AS `m_img_url`
+        FROM `jgv`.`movie` AS `m`
+                 LEFT JOIN
+             `jgv`.`movie_image` AS `i` ON `m`.`mo_num` = `i`.`mo_num`
+                 LEFT JOIN `jgv`.`screen` AS `s` ON `m`.`mo_num` = `s`.`mo_num`
+        WHERE CURRENT_DATE() > STR_TO_DATE(`m`.`mo_date`, '%Y.%m.%d')
+          AND `s`.`sc_start_date` > NOW()
+        ORDER BY `m`.`mo_booking_rate` DESC
         LIMIT 20
     </select>
 
