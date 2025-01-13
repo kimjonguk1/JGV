@@ -48,7 +48,9 @@ public class AdminController {
                                    @RequestParam(value = "filter", required = false) String filter,
                                    @RequestParam(value = "keyword", required = false) String keyword,
                                    @RequestParam(value = "screen-filter", required = false) String screenFilter,
-                                   @RequestParam(value = "screen-keyword", required = false) String screenKeyword)
+                                   @RequestParam(value = "screen-keyword", required = false) String screenKeyword,
+                                   @RequestParam(value = "user-filter", required = false) String userFilter,
+                                   @RequestParam(value = "user-keyword", required = false) String userKeyword)
 
                                     throws IOException {
         ModelAndView modelAndView = new ModelAndView();
@@ -65,6 +67,19 @@ public class AdminController {
             modelAndView.addObject("filter", filter);
             modelAndView.addObject("keyword", keyword);
         }
+        if (userFilter == null && userKeyword == null) {
+            Pair<PageVo, UserEntity[]> totalUsers = this.adminService.selectUserPage(page);
+            modelAndView.addObject("userPage", totalUsers.getLeft());
+            modelAndView.addObject("users", totalUsers.getRight());
+        }
+        else {
+            Pair<PageVo, UserEntity[]> searchUsers = this.adminService.searchUserPage(page, userFilter, userKeyword);
+            modelAndView.addObject("userPage", searchUsers.getLeft());
+            modelAndView.addObject("users", searchUsers.getRight());
+            modelAndView.addObject("userFilter", userFilter);
+            modelAndView.addObject("userKeyword", userKeyword);
+        }
+
 
         // 상영정보 그룹화
         if (screenFilter == null && screenKeyword == null) {

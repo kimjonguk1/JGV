@@ -116,6 +116,65 @@ button {
   width: 5rem;
 }
 
+#user-admin-page {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: flex-start;
+  width: 980px;
+  max-width: 980px;
+  min-width: 980px;
+  height: auto;
+  padding: 2rem 0;
+}
+#user-admin-page > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#user-admin-page > .admin-user-list {
+  width: 100%;
+  height: auto;
+}
+#user-admin-page > .admin-user-list > table {
+  width: 100%;
+  height: 12rem;
+  border-collapse: collapse;
+  text-align: center;
+}
+#user-admin-page > .admin-user-list > table > tbody {
+  height: 12rem;
+  width: 100%;
+}
+#user-admin-page > .admin-user-list > table > tbody > tr > th {
+  height: 2rem;
+  background-color: #aa3ebc;
+  color: #ffffff;
+}
+#user-admin-page > .admin-user-list > table > tbody > tr > td {
+  height: 2.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-bottom: 1px solid #666666;
+  padding: 1rem 0;
+}
+#user-admin-page > .admin-user-list > table > tbody > tr > td > label {
+  border: 1px solid #222222;
+}
+#user-admin-page > .admin-user-list > table > tbody > tr > td > button {
+  width: 3rem;
+  height: 1.8rem;
+  border-radius: 0.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer !important;
+}
+#user-admin-page > .admin-user-list > table > tbody > tr > td > .user-suspend {
+  background-color: #aa3ebc;
+  color: #ffffff;
+}
+
 #admin-title-container {
   align-items: center;
   display: flex;
@@ -132,6 +191,9 @@ button {
 #admin-title-container > .-spring {
   flex-grow: 1;
   flex-shrink: 1;
+}
+#admin-title-container > .user-information {
+  color: #666666;
 }
 #admin-title-container > .theater-information {
   color: #666666;
@@ -515,6 +577,56 @@ button {
   font-weight: 600;
 }
 
+#user-search-form {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+  padding: 1.375rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+#user-search-form > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#user-search-form > .user-keyword-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+}
+#user-search-form > .user-keyword-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#user-search-form > .user-keyword-wrapper > label > .user-keyword {
+  color: #9e9e9e;
+  font-size: 1rem;
+  font-weight: 600;
+  padding-right: 0.75rem;
+}
+#user-search-form > .user-keyword-wrapper > label > input {
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+#user-search-form > .user-keyword-wrapper > .user-search {
+  width: 4rem;
+  height: 1.8rem;
+  text-align: center;
+  background-color: #aa3ebc;
+  border-radius: 0.4rem;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
 #movie-page-container {
   align-items: center;
   display: flex;
@@ -632,6 +744,67 @@ button {
   color: #222222;
 }
 #theater-page-container > .theater-page-wrapper > .page > a.selected {
+  color: #222222;
+}
+
+#user-page-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 1.8rem 0;
+}
+#user-page-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#user-page-container > .user-page-wrapper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+}
+#user-page-container > .user-page-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#user-page-container > .user-page-wrapper > .prev > a {
+  color: #666666;
+}
+#user-page-container > .user-page-wrapper > .prev > a:hover {
+  color: #222222;
+}
+#user-page-container > .user-page-wrapper > .next > a {
+  color: #666666;
+}
+#user-page-container > .user-page-wrapper > .next > a:hover {
+  color: #222222;
+}
+#user-page-container > .user-page-wrapper > .page {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+}
+#user-page-container > .user-page-wrapper > .page > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#user-page-container > .user-page-wrapper > .page > a {
+  color: #666666;
+}
+#user-page-container > .user-page-wrapper > .page > a:hover {
+  color: #222222;
+}
+#user-page-container > .user-page-wrapper > .page > a.selected {
   color: #222222;
 }
 

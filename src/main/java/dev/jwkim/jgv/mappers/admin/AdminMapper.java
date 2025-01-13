@@ -4,15 +4,30 @@ import dev.jwkim.jgv.DTO.AdminMovieDTO;
 import dev.jwkim.jgv.DTO.AdminTheaterDTO;
 import dev.jwkim.jgv.entities.movie.MovieEntity;
 import dev.jwkim.jgv.entities.theater.ScreenEntity;
-import dev.jwkim.jgv.entities.theater.TheaterEntity;
+import dev.jwkim.jgv.entities.user.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 
 @Mapper
 public interface AdminMapper {
 
     // 영화
     MovieEntity[] selectAllMovie();
+
+    int totalUsers();
+
+    int searchUserByKeyword(@Param("filter") String filter,
+                            @Param("keyword") String keyword);
+
+    UserEntity[] selectUserByKeyword( @Param("limitCount") int limitCount,
+                                      @Param("offsetCount") int offsetCount,
+                                      @Param("filter") String filter,
+                                      @Param("keyword") String keyword);
+
+
+    UserEntity[] selectAllUsers(@Param("limitCount") int limitCount,
+                                @Param("offsetCount") int offsetCount);
 
     int selectArticleCountByMovieName();
 
