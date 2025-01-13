@@ -74,8 +74,8 @@
                 <div class="movies-wrapper">
                     <div class="movie-card" th:each="movie : ${upComingMovies}">
                         <div class="movie-poster"
-                             th:style="'background-image: url(' + (${movie.m_img_url} ?: '/images/default-poster.jpg') + ')'">
-                        </div>
+                             th:style="${movie.m_img_url != null ? 'background-image: url(' + movie.m_img_url + ')' : ''}">
+                    </div>
                         <div class="hover-actions">
                             <button class="detail-button">상세보기</button>
                         </div>
