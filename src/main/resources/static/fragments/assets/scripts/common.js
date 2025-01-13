@@ -1,24 +1,41 @@
 // region nav 광고
 {
-    const $advertisementArray = ['https://adimg.cgv.co.kr/images/202412/Moana2/1218_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1224_980x80.png', 'https://adimg.cgv.co.kr/images/202411/jjanggu/1209_980x80.png']
+    const $advertisementArray = ['https://adimg.cgv.co.kr/images/202412/Moana2/1218_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_980x80.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1224_980x80.png', 'https://adimg.cgv.co.kr/images/202411/jjanggu/1209_980x80.png', 'https://adimg.cgv.co.kr/images/202501/DarkNuns/980x80.png', 'https://adimg.cgv.co.kr/images/202501/Panda/980x80.jpg', 'https://adimg.cgv.co.kr/images/202501/RealPain/980x80.jpg']
     document.addEventListener("DOMContentLoaded", () => {
         const $advertisement = document.getElementById('advertisement');
         if($advertisement) {
             const $advertisementRandom = $advertisementArray[Math.floor(Math.random() * $advertisementArray.length)];
             const $img = $advertisement.querySelector(':scope > a > img');
             const $a = $advertisement.querySelector(':scope > a')
-            if ($advertisementRandom === $advertisementArray[0]) {
-                $advertisement.style.backgroundColor = '#2B53AB'
-                $a.setAttribute('href', '../movies/movieList/movieInfo/3669')
-            } else if ($advertisementRandom === $advertisementArray[1]) {
-                $advertisement.style.backgroundColor = '#4184D2'
-                $a.setAttribute('href', '../movies/movieList/movieInfo/3628')
-            } else if ($advertisementRandom === $advertisementArray[2]) {
-                $advertisement.style.backgroundColor = '#191413'
-                $a.setAttribute('href', '../movies/movieList/movieInfo/3611')
-            } else {
-                $advertisement.style.backgroundColor = '#2B82DD'
-                $a.setAttribute('href', '../movies/movieList/movieInfo/3666')
+            switch ($advertisementRandom) {
+                case ($advertisementArray[0]):
+                    $advertisement.style.backgroundColor = '#2B53AB'
+                    $a.setAttribute('href', '/movies/movieList/movieInfo/3669')
+                    break;
+                case ($advertisementArray[1]):
+                    $advertisement.style.backgroundColor = '#4184D2'
+                    $a.setAttribute('href', '/movies/movieList/movieInfo/3628')
+                    break;
+                case ($advertisementArray[2]):
+                    $advertisement.style.backgroundColor = '#191413'
+                    $a.setAttribute('href', '/movies/movieList/movieInfo/3611')
+                    break;
+                case ($advertisementArray[3]):
+                    $advertisement.style.backgroundColor = '#2B82DD'
+                    $a.setAttribute('href', '/movies/movieList/movieInfo/3666')
+                    break;
+                case ($advertisementArray[4]):
+                    $advertisement.style.backgroundColor = '#181A1D'
+                    $a.setAttribute('href', '/movies/movieList/movieInfo/4024')
+                    break;
+                case ($advertisementArray[5]):
+                    $advertisement.style.backgroundColor = '#F4DC94'
+                    $a.setAttribute('href', '/movies/movieList/movieInfo/3974')
+                    break;
+                case ($advertisementArray[6]):
+                    $advertisement.style.backgroundColor = '#BDD6D0'
+                    $a.setAttribute('href', '/movies/movieList/movieInfo/3927')
+                    break;
             }
             $img.setAttribute('src', $advertisementRandom);
         }
@@ -60,8 +77,6 @@ if ($logout) {
                     return;
                 }
                 if (xhr.status >= 200 && xhr.status < 300) {
-                    // 성공적으로 응답을 받은 경우
-                    console.log("응답 성공:", xhr.responseText);
                     // 브라우저를 해당 URL로 리다이렉트
                     window.location.href = searchUrl;
                 } else {

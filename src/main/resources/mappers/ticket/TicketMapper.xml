@@ -71,23 +71,6 @@
         WHERE `sc_start_date` > NOW()
         ORDER BY `mo_booking_rate` DESC
     </select>
-    <select id="selectAllMoviesByKorea"
-            resultType="dev.jwkim.jgv.vos.theater.MovieVo">
-        SELECT DISTINCT `movie`.`mo_num` AS `moNum`,
-                        `mo_title` AS `moTitle`,
-                        `mo_date` AS `moDate`,
-                        `mo_time` AS `moTime`,
-                        `mo_plot` AS `moPlot`,
-                        `mo_booking_rate` AS `moBookingRate`,
-                        `mo_ending` AS `moEnding`,
-                        `movie`.`ra_num` AS `raNum`,
-                        `ra_grade` AS `raGrade`
-        FROM `jgv`.`movie`
-                 LEFT JOIN `jgv`.`rating` ra ON movie.ra_num = ra.ra_num
-                 LEFT JOIN `jgv`.`screen` ON `movie`.`mo_num` = `screen`.`mo_num`
-        WHERE `sc_start_date` > NOW()
-        ORDER BY `mo_title`
-    </select>
     <select id="selectRegionAndTheaterCount"
             resultType="dev.jwkim.jgv.vos.theater.RegionVo">
         SELECT `reg_num`                                        AS `regNum`,

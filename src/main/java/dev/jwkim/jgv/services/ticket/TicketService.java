@@ -172,20 +172,6 @@ public class TicketService {
         return movies;
     }
 
-    public MovieVo[] selectAllMoviesByKorea() {
-        MovieVo[] movies = this.ticketMapper.selectAllMoviesByKorea();
-        for (MovieVo movie : movies) {
-            switch (movie.getRaGrade()) {
-                case "청소년관람불가" -> movie.setRaGrade("nineteen");
-                case "15세이상관람가" -> movie.setRaGrade("fifteen");
-                case "12세이상관람가" -> movie.setRaGrade("twelve");
-                case "전체관람가" -> movie.setRaGrade("all");
-                case "미정" -> movie.setRaGrade("none");
-            }
-        }
-        return movies;
-    }
-
     public RegionVo[] selectRegionAndTheaterCount() {
         return this.ticketMapper.selectRegionAndTheaterCount();
     }

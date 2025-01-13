@@ -245,15 +245,6 @@ public class TicketController {
         return response.toString();
     }
 
-    @RequestMapping(value = "/movies", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getMovies() {
-        ModelAndView modelAndView = new ModelAndView();
-        MovieVo[] movies = this.ticketService.selectAllMoviesByKorea();
-        modelAndView.addObject("movies", movies);
-        modelAndView.setViewName("ticket/index");
-        return modelAndView;
-    }
-
     @RequestMapping(value = "/crawling", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getCrawling() throws IOException, InterruptedException {
         ModelAndView modelAndView = new ModelAndView();
