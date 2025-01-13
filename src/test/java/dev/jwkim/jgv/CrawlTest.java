@@ -1,5 +1,9 @@
 package dev.jwkim.jgv;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import dev.jwkim.jgv.entities.movie.MovieEntity;
 import dev.jwkim.jgv.entities.theater.CinemaEntity;
 import dev.jwkim.jgv.entities.theater.ScreenEntity;
@@ -10,6 +14,8 @@ import dev.jwkim.jgv.services.ticket.TicketService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -23,8 +29,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.util.UriBuilder;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -34,34 +45,152 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-//@SpringBootTest
+@SpringBootTest
 @ActiveProfiles(value = "local")
 public class CrawlTest {
-//    @Autowired
-//    private TheaterMapper theaterMapper;
-//    @Autowired
-//    private TicketMapper ticketMapper;
+    @Autowired
+    private TheaterMapper theaterMapper;
+    @Autowired
+    private TicketMapper ticketMapper;
 
-    private HttpResponse<String> getResponse(String areacode, String theaterCode, String date) throws IOException, InterruptedException {
-        String sessionId = RandomStringUtils.randomAlphanumeric(24);
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .uri(URI.create(String.format("http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=%s&theatercode=%s&date=%s", areacode, theaterCode, date)))
-                .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
-                .header("Accept-Encoding", "utf-8")
-                .header("Accept-Language", "ko-KR,ko;q=0.9")
-//                .header("Connection", "keep-alive")
-                .header("Cookie", String.format("ASP.NET_SessionId=%s;", sessionId))
-                .header("Referer", "http://www.cgv.co.kr/theaters/?areacode=11&theaterCode=0345")
-                .header("Upgrade-Insecure-Requests", "1")
-                .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
-                .build();
-        return client.send(request, HttpResponse.BodyHandlers.ofString());
+//    private HttpResponse<String> getResponse(String areacode, String theaterCode, String date) throws IOException, InterruptedException {
+//        String sessionId = RandomStringUtils.randomAlphanumeric(24);
+//        HttpClient client = HttpClient.newHttpClient();
+//        HttpRequest request = HttpRequest.newBuilder()
+//                .GET()
+//                .uri(URI.create(String.format("http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=%s&theatercode=%s&date=%s", areacode, theaterCode, date)))
+//                .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+//                .header("Accept-Encoding", "utf-8")
+//                .header("Accept-Language", "ko-KR,ko;q=0.9")
+//                .header("Cookie", String.format("ASP.NET_SessionId=%s;", sessionId))
+//                .header("Referer", "http://www.cgv.co.kr/theaters/?areacode=11&theaterCode=0345")
+//                .header("Upgrade-Insecure-Requests", "1")
+//                .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
+//                .build();
+//        return client.send(request, HttpResponse.BodyHandlers.ofString());
+//    }
+
+    @Test
+    public void test() throws IOException, InterruptedException {
+//        String URL = "https://www.megabox.co.kr/theater/time?brchNo=0072#tab2";
+//        Document doc = Jsoup.connect(URL).get();
+//        Elements element = doc.select(".theater-list");
+//        System.out.println(element);
+
+//        // POST 요청을 보낼 URL (예시로 로그인 페이지나 폼 제출 URL을 사용할 수 있습니다)
+//        String url = "https://www.megabox.co.kr/on/oh/ohc/Brch/schedulePage.do";  // 실제 POST URL로 바꾸세요.
+//
+//        // 전송할 데이터 (여기서는 예시로 로그인 폼 데이터를 사용)
+//        String brchNm = "대구프리미엄만경관";
+//        String brchNo = "0072";
+//        String brchNo1 = "0072";
+//        String firstAt = "Y";
+//        String masterType = "brch";
+//
+//        try {
+//            // POST 요청 보내기
+//            Connection.Response response = Jsoup.connect(url)
+//                    .data("brchNm", brchNm)    // 폼 데이터 전송
+//                    .data("brchNo", brchNo)    // 폼 데이터 전송
+//                    .data("brchNo1", brchNo1)    // 폼 데이터 전송
+//                    .data("firstAt", firstAt)    // 폼 데이터 전송
+//                    .data("masterType", masterType)    // 폼 데이터 전송
+//                    .method(Connection.Method.POST) // POST 요청으로 설정
+//                    .header("Origin", "https://www.megabox.co.kr")
+//                    .header("Referer", "https://www.megabox.co.kr/theater/time?brchNo=0072")
+//                    .header("Accept", "application/x-www-form-urlencoded, text/javascript, */*; q=0.01")
+//                    .header("Cookie", "JSESSIONID=8L58OUoT2JxlbNM5IHs2oDKu0tvg3ydWavcrinYQKM9gHNzAvFe87os0hyblvmDa.b25fbWVnYWJveF9kb21haW4vbWVnYS1vbi1zZXJ2ZXI4; SESSION=MGM1NGJiZDMtMmIwZi00MDA3LWIxYTEtNGQyZjNjZTI5ZDEy; WMONID=gkoxhvKyXSC")
+//                    .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+//                    .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
+//                    .execute();                    // 요청 보내기
+//
+//            // 서버 응답을 Document로 변환 (HTML 형태로 응답 받기)
+//            InputStreamReader reader = new InputStreamReader(response.bodyStream());
+//            Gson gson = new Gson();
+//            JsonObject jsonResponse = gson.fromJson(reader, JsonObject.class);
+//
+//            // 응답 받은 HTML 출력 (또는 원하는 데이터를 추출)
+//            System.out.println(jsonResponse.toString());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        String url = "https://www.megabox.co.kr/on/oh/ohc/Brch/schedulePage.do";  // 실제 POST URL로 바꾸세요.
+
+        // 전송할 데이터
+        String brchNm = "대구프리미엄만경관";
+        String brchNo = "0072";
+        String brchNo1 = "0072";
+        String firstAt = "Y";
+        String masterType = "brch";
+        String playDe = "20250115";
+
+        try {
+            // URL 객체 생성
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+            // 요청 메소드 설정
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Origin", "https://www.megabox.co.kr");
+            con.setRequestProperty("Referer", "https://www.megabox.co.kr/theater/time?brchNo=0072");
+            con.setRequestProperty("Accept", "application/json");
+            con.setRequestProperty("Cookie", "JSESSIONID=8L58OUoT2JxlbNM5IHs2oDKu0tvg3ydWavcrinYQKM9gHNzAvFe87os0hyblvmDa.b25fbWVnYWJveF9kb21haW4vbWVnYS1vbi1zZXJ2ZXI4; SESSION=MGM1NGJiZDMtMmIwZi00MDA3LWIxYTEtNGQyZjNjZTI5ZDEy; WMONID=gkoxhvKyXSC");
+            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36");
+
+            // POST 데이터를 보내기 위한 설정
+            con.setDoOutput(true);
+            String postData = "brchNm=" + URLEncoder.encode(brchNm, "UTF-8") + "&" +
+                    "brchNo=" + URLEncoder.encode(brchNo, "UTF-8") + "&" +
+                    "brchNo1=" + URLEncoder.encode(brchNo1, "UTF-8") + "&" +
+                    "firstAt=" + URLEncoder.encode(firstAt, "UTF-8") + "&" +
+                    "masterType=" + URLEncoder.encode(masterType, "UTF-8") + "&" +
+                    "playDe=" + URLEncoder.encode(playDe, "UTF-8");
+
+            // 데이터 전송
+            try (OutputStream os = con.getOutputStream()) {
+                byte[] input = postData.getBytes("UTF-8");
+                os.write(input, 0, input.length);
+            }
+
+            // 서버 응답 받기
+            int status = con.getResponseCode();
+            InputStream inputStream;
+            if (status == HttpURLConnection.HTTP_OK) {
+                inputStream = con.getInputStream();
+            } else {
+                inputStream = con.getErrorStream();
+            }
+
+            // JSON 응답 처리
+            InputStreamReader reader = new InputStreamReader(inputStream);
+            Gson gson = new Gson();
+            JsonObject jsonResponse = gson.fromJson(reader, JsonObject.class);
+            JsonObject megaMap = jsonResponse.getAsJsonObject("megaMap");
+//            JsonArray movieFormDeList = megaMap.getAsJsonArray("movieFormDeList");
+            JsonArray movieFormDeList = megaMap.getAsJsonArray("movieFormList");
+            for (JsonElement element : movieFormDeList) {
+                JsonObject movie = element.getAsJsonObject();
+
+                // 영화 제목, 상영일, 관 추출
+                String movieTitle = movie.get("movieNm").getAsString();
+                String playDate = movie.get("playDe").getAsString();
+                String theaterName = movie.get("theabExpoNm").getAsString();
+                String playStartTime = movie.get("playStartTime").getAsString();
+
+                // 출력
+                System.out.println("영화 제목: " + movieTitle);
+                System.out.println("상영일: " + playDate);
+                System.out.println("관: " + theaterName);
+                System.out.println("상영 시작 시간: " + playStartTime);
+                System.out.println("------------------------------------");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
-//    @Test
-//    public void test() throws IOException, InterruptedException {
 //        TheaterEntity[] theaters = this.theaterMapper.getAllTheaters();
 //        Map<String, Map<String, CinemaEntity>> cinemaTypeMap = new HashMap<>();
 //        Map<String, Map<String, CinemaEntity>> cinemaTitleMap = new HashMap<>();
