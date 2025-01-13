@@ -70,7 +70,7 @@
     <select id="selectMovieByUniqueFields" resultType="java.lang.Integer">
         SELECT *
         FROM jgv.movie
-        WHERE mo_title = #{movieTitle}
+        WHERE REPLACE(mo_title, ' ', '') = #{movieTitle}
           AND mo_date LIKE CONCAT('%', #{movieDate}, '%')
         LIMIT 1
     </select>
