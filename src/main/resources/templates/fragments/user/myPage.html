@@ -426,15 +426,15 @@
         </tr>
         </tbody>
     </table>
-    <div class="move" th:if="${loginAttempt != null && loginAttempt.length > 0}">
-        <!-- 첫 페이지로 이동 -->
-        <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
-           th:href="@{'/user/myPage/history' (page=${loginPage.movableMinPage})}"
-           class="page first">|&lt;</a>
+        <div class="move" th:if="${loginAttempt != null && loginAttempt.length > 0}">
+            <!-- 첫 페이지로 이동 -->
+            <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
+               th:href="@{'/user/myPage/history' (page=${loginPage.movableMinPage})}"
+               class="page first">|&lt;</a>
 
         <!-- 이전 페이지로 이동 -->
         <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
-           th:href="@{'/user/myPage/history' (page=${loginPage.requestPage - 1}.)}"
+           th:href="@{'/user/myPage/history' (page=${loginPage.requestPage - 1})}"
            class="page prev">&lt;</a>
 
         <!-- 페이지 번호 표시 -->
