@@ -190,6 +190,7 @@ public class UserController {
         // 로그인 내역 조회
        Pair<PageVo, UserLoginAttemptsEntity[]> attempts =
                this.userService.getLoginAttempts(page, loggedInUser.getUsId());
+
         // 현재 날짜를 model에 추가
         LocalDateTime currentDate = LocalDateTime.now();
         String formattedCurrentDate = currentDate.toString();
@@ -218,7 +219,6 @@ public class UserController {
         return modelAndView;
 
     }
-
 
     @RequestMapping(value = "/myPage/personal", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView postMyPagePersonal(@SessionAttribute("user") UserEntity user,
@@ -493,6 +493,8 @@ public class UserController {
         response.put(Result.NAME, result.nameToLower());
         return response.toString();
     }
+
+
     // endregion
 
     @RequestMapping(value = "/resend-register-email-token", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

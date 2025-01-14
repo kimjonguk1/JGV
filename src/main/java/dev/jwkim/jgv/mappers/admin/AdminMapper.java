@@ -15,6 +15,8 @@ public interface AdminMapper {
     // 영화
     MovieEntity[] selectAllMovie();
 
+    UserEntity selectUserByIndex(@Param("index") int usNum);
+
     int totalUsers();
 
     int searchUserByKeyword(@Param("filter") String filter,
@@ -28,6 +30,8 @@ public interface AdminMapper {
 
     UserEntity[] selectAllUsers(@Param("limitCount") int limitCount,
                                 @Param("offsetCount") int offsetCount);
+
+    int updateUserBySuspend(UserEntity user);
 
     int selectArticleCountByMovieName();
 

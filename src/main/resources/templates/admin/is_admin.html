@@ -240,8 +240,9 @@
                                             </div>
                                         </div>
                                     </form>
-                                     <span class="scNum" th:text="'상영 번호: ' + ${screen.scNum}"></span>,
-                                     <span class="date" th:text="'상영일: ' + ${screen.scStartDate.toString().replace('T', ' ')}"></span>
+                                    <span class="scNum" th:text="'상영 번호: ' + ${screen.scNum}"></span>,
+                                    <span class="date"
+                                          th:text="'상영일: ' + ${screen.scStartDate.toString().replace('T', ' ')}"></span>
                                     <div class="-spring"></div>
                                     <button class="theater-modify">수정</button>
                                     <button class="theater-delete">삭제</button>
@@ -294,26 +295,32 @@
                 <th>아이디</th>
                 <th>이름</th>
                 <th>닉네임</th>
-                <th>상태</th>
+                <th style="width: 15rem;">상태</th>
             </tr>
             <tr th:each="user : ${users}">
-                <td th:text="${user.getUsNum()}">0001</td>
+                <td id="user-number" th:text="${user.getUsNum()}">0001</td>
                 <td>
                     <span th:text="${user.getUsId()}">rlawhddbf123</span>
                 </td>
                 <td th:text="${user.getUsName()}">김종율</td>
                 <td th:text="${user.getUsNickName()}">망둥어닮은 종율2</td>
                 <td style="font-size: 1rem;">
-                   <span th:style="${user.isUsIsSuspended() ? 'font-weight: 500; color: #fb3457;' : 'font-weight: 500;'}"
-                         th:text="${user.isUsIsSuspended() ? '정지' : '활동'}"></span>
-                    <label style="margin-left: 1rem;">
-                        <select>
-                            <option value="resume">활동</option>
-                            <option value="suspend">정지</option>
-                        </select>
-                    </label>
-                    <button style="margin-left: 1rem;" class="user-suspend">변경</button>
+                    <form class="user-status-form">
+                         <span th:style="${user.isUsIsSuspended() ? 'font-weight: 600; color: #fb3457;' : 'font-weight: 600;'}"
+                               th:text="${user.isUsIsSuspended() ? '정지' : '활동'}"></span>
+                        <label style="margin-left: 1rem;">
+                            <select name="user-status" class="user-status">
+                                <option value="default">--</option>
+                                <option th:if="${user.isUsIsSuspended()}" class="resume" value="resume">활동</option>
+                                <option th:if="${!user.isUsIsSuspended()}" class="suspend" value="suspend">정지</option>
+                            </select>
+                        </label>
+                        <button style="margin-left: 1rem;" class="user-suspend" type="submit">변경</button>
+                        <input type="hidden" name="mode" value="user">
+
+                    </form>
                 </td>
+
             </tr>
             <tr th:if="${users == null || users.length == 0}">
                 <td colspan="7">회원 목록이 없습니다.</td>
@@ -347,7 +354,6 @@
         </div>
     </div>
 </div>
-
 
 
 <th:block th:replace="~{fragments/common.html :: footer}"></th:block>

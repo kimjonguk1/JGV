@@ -7,6 +7,7 @@ import dev.jwkim.jgv.entities.user.UserLoginAttemptsEntity;
 import dev.jwkim.jgv.vos.user.ReservationVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,6 +25,16 @@ public interface UserMapper {
     int countFailedLoginAttempts(@Param("clientIp") String clientIp);
 
     int selectPageByUserId(@Param("userId") String userId);
+
+    int searchPageByLoginHistory(@Param("userId") String userId,
+                                 @Param("startDate") String startDate,
+                                 @Param("endDate") String endDate);
+
+    UserLoginAttemptsEntity[] searchLoginAttemptsByUserId(@Param("userId") String userId,
+                                                          @Param("limitCount") int limitCount,
+                                                          @Param("offsetCount") int offsetCount,
+                                                          @Param("startDate") String startDate,
+                                                          @Param("endDate") String endDate);
 
     UserLoginAttemptsEntity[] selectLoginAttemptsByUserId(@Param("userId") String userId,
                                                           @Param("limitCount") int limitCount,

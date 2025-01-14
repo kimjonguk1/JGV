@@ -249,4 +249,51 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.href = `/admin/modify/${movieNum}`;
         })
     })
-})
+});
+
+{
+    const $userForms = document.querySelectorAll('.user-status-form');
+
+    $userForms.forEach((form) => {
+        form.onsubmit = (e) => {
+            e.preventDefault();
+
+            const userNum = form.closest('tr').querySelector('#user-number').innerText;
+            const userStatus = form.querySelector('.user-status').value;
+
+            if (userStatus === 'default') {
+                alert("변경할 상태를 선택하세요.");
+                return;
+            }
+
+            const xhr = new XMLHttpRequest();
+            const formData = new FormData();
+
+            formData.append('usNum', userNum);
+            formData.append('usIsSuspended', userStatus === 'suspend' ? 'true' : 'false');
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState !== XMLHttpRequest.DONE) return;
+
+                if (xhr.status < 200 || xhr.status >= 300) {
+                    alert('요청을 전송하는 도중 오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
+                    return;
+                }
+
+                const response = JSON.parse(xhr.responseText);
+                if (response['result'] === 'success') {
+                    alert('회원 정보가 변경 되었습니다.');
+                    location.reload(); // 변경 후 페이지 리로드
+                } else if (response['result'] === 'failure') {
+                    alert('회원 정보 변경에 실패하였습니다.');
+                } else {
+                    alert('서버가 알 수 없는 응답을 반환하였습니다. 잠시 후 다시 시도해 주세요.');
+                }
+            };
+
+            // 서버에 요청을 보냅니다.
+            xhr.open('PATCH', '/admin/is_admin_user');
+            xhr.send(formData);
+        };
+    });
+}
