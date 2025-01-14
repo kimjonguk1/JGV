@@ -77,7 +77,7 @@
                              th:style="${movie.m_img_url != null ? 'background-image: url(' + movie.m_img_url + ')' : ''}">
                     </div>
                         <div class="hover-actions">
-                            <button class="detail-button">상세보기</button>
+                            <a th:href="'/movies/movieList/movieInfo/' + ${movie.moNum}" class="detail-button">상세보기</a>
                         </div>
                         <h3 th:text="${movie.moTitle ?: '제목 없음'}"></h3>
                         <p th:text="'예매율: ' + (${movie.moBookingRate ?: '0'}) + '%'"></p>
