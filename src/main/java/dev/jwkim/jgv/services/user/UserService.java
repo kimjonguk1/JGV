@@ -19,6 +19,7 @@ import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.tuple.Pair;
+import org.openqa.selenium.devtools.v85.page.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -787,6 +788,19 @@ public class UserService {
                 pageVo.countPerPage,
                 pageVo.offsetCount);
                 return Pair.of(pageVo, attempts);
+    }
+
+    public Pair<PageVo, UserLoginAttemptsEntity[]> searchLoginHistory(int page, String userId, String startDate, String endDate) {
+        page = Math.max(1, page);
+        int totalCount = this.userMapper.searchPageByLoginHistory(userId, startDate, endDate);
+        PageVo pageVo = new PageVo(page, totalCount);
+        UserLoginAttemptsEntity[] totalLoginHistory = this.userMapper.searchLoginAttemptsByUserId(
+                userId,
+                pageVo.countPerPage,
+                pageVo.offsetCount,
+                startDate, endDate
+        );
+        return Pair.of(pageVo, totalLoginHistory);
     }
     //endregion
 }

@@ -90,3 +90,30 @@ table {
     justify-content: center;
   }
 }
+
+#keyword-wrapper {
+  @include flex(row, center, flex-start, 0.5rem);
+  width: 100%;
+  background-color: transparent;
+  padding-bottom: 1.5rem;
+
+  > label {
+    @include flex(row, center, center);
+    background-color: #f8f9fb;
+    border: 1px solid #e7e8ed;
+    color: #6a6e76;
+    width: 4rem;
+    height: 1.9rem;
+  }
+
+  > .submit {
+    width: 4rem;
+    height: 1.9rem;
+    background-color: #484e5f;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.0625rem;
+  }
+}

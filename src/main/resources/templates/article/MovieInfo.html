@@ -31,7 +31,7 @@
             <p class="movie-title" th:text="${movieInfo.getMoTitle()}"></p>
             <hr>
             <div class="review-userInfo">
-                <img class="profile-img" src="http://img.cgv.co.kr/R2014/images/common/default_profile.gif" alt="profile">
+                <img class="profile-img" src="/user/images/user_mypage_default_profile.gif" alt="profile">
                 <span class="user-name" th:if="${sessionUser != null}" th:text="${session.user.getUsName()}">사용자 이름</span>
             </div>
             <label class="label">
@@ -111,7 +111,7 @@
                 th:attr="data-timestamp=${article.getReCreatedAtTimestamp()}, data-likes=${article.getReLiked()},
                  data-review-id=${article.getReNum()}">
                     <div class="review-user">
-                        <img src="https://via.placeholder.com/50" alt="프로필 이미지" class="profile-img">
+                        <img src="/user/images/user_mypage_default_profile.gif" alt="프로필 이미지" class="profile-img">
                     </div>
                     <div class="review-content">
                         <span class="user-name" th:text="${article.getUsNickName()}">칠구</span>

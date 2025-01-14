@@ -121,7 +121,7 @@ button {
 }
 
 #user-admin-page {
-  @include flex(column, flex-start, flex-start, 1rem);
+  @include flex(column, flex-start, flex-start);
   @include minmaxWidth(980px);
   height: auto;
   padding: 2rem 0;
@@ -149,30 +149,40 @@ button {
           }
 
           > td {
+            background-color: #ffffff;
+            color: #222222;
             height: 2.5rem;
             font-size: 1rem;
-            font-weight: 500;
-            border-bottom: 1px solid #666666;
+            font-weight: 600;
+            border-bottom: 1px solid #999999;
             padding: 1rem 0;
 
-            > label {
-              border: 1px solid #222222;
+            > .user-status-form {
+              > button {
+                width: 3rem;
+                height: 1.8rem;
+                border-radius: 0.4rem;
+                font-size: 1rem;
+                font-weight: 500;
+                text-align: center;
+                cursor: pointer !important;
+              }
 
-            }
+              > .user-suspend {
+                background-color: #aa3ebc;
+                color: #ffffff;
+              }
 
-            > button {
-              width: 3rem;
-              height: 1.8rem;
-              border-radius: 0.4rem;
-              font-size: 1rem;
-              font-weight: 500;
-              text-align: center;
-              cursor: pointer !important;
-            }
+              > label {
+                border: 1px solid #222222;
 
-            > .user-suspend {
-              background-color: #aa3ebc;
-              color: #ffffff;
+                > .user-status {
+                  color: #666666;
+                  text-align: center;
+                }
+              }
+
+
             }
           }
         }

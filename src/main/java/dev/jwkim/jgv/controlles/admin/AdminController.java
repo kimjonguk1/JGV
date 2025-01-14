@@ -7,11 +7,13 @@ import dev.jwkim.jgv.DTO.MovieDeleteModifyDTO;
 import dev.jwkim.jgv.DTO.ScreenInfoDTO;
 import dev.jwkim.jgv.entities.theater.ScreenEntity;
 import dev.jwkim.jgv.entities.user.UserEntity;
+import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.results.Result;
 import dev.jwkim.jgv.results.user.MovieDeleteModifyResult;
 import dev.jwkim.jgv.results.user.ReviewResult;
 import dev.jwkim.jgv.services.admin.AdminService;
 import dev.jwkim.jgv.services.movie.MovieService;
+import dev.jwkim.jgv.services.user.UserService;
 import dev.jwkim.jgv.vos.PageVo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -35,10 +37,12 @@ import java.util.Map;
 public class AdminController {
     private final AdminService adminService;
     private final MovieService movieService;
+    private final UserService userService;
 
-    public AdminController(AdminService adminService, MovieService movieService) {
+    public AdminController(AdminService adminService, MovieService movieService, UserService userService) {
         this.adminService = adminService;
         this.movieService = movieService;
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/is_admin", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
@@ -106,6 +110,17 @@ public class AdminController {
         }
         modelAndView.setViewName("admin/is_admin");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/is_admin_user", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String patchIsAdmin(@RequestParam(value = "usNum", required = false) int usNum,
+                                     @RequestParam(value = "usIsSuspended" ,required = false) boolean usIsSuspended) {
+        System.out.println(usIsSuspended);
+        Result result = this.adminService.updateUser(usNum, usIsSuspended);
+        JSONObject response = new JSONObject();
+        response.put(Result.NAME, result.nameToLower());
+        return response.toString();
     }
 
     //region  press x express joy

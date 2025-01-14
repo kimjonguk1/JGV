@@ -180,4 +180,19 @@ public class AdminService {
                 ? CommonResult.SUCCESS
                 : CommonResult.FAILURE;
     }
+
+    public Result updateUser(int usNum, boolean usIsSuspended) {
+        UserEntity user = this.adminMapper.selectUserByIndex(usNum);
+
+        if (usNum < 1 || user == null) {
+            return CommonResult.FAILURE;
+        }
+        if (user.isUsIsDeleted()) {
+            return CommonResult.FAILURE;
+        }
+        user.setUsIsSuspended(usIsSuspended);
+        return this.adminMapper.updateUserBySuspend(user) > 0
+                ? CommonResult.SUCCESS
+                : CommonResult.FAILURE;
+    }
 }

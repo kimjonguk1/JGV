@@ -422,4 +422,25 @@
         WHERE `at_user_id` = #{userId}
     </select>
 
+
+
+    <select id="searchPageByLoginHistory" resultType="_int">
+        SELECT COUNT(0)
+        FROM `jgv`.`user_login_attempts`
+        WHERE at_user_id = #{userId}
+          AND  `at_created_at` BETWEEN #{startDate} AND #{endDate}
+    </select>
+
+    <select id="searchLoginAttemptsByUserId" resultType="dev.jwkim.jgv.entities.user.UserLoginAttemptsEntity">
+        SELECT `at_user_id`    AS `atUserId`,
+               `at_created_at` AS `atCreatedAt`,
+               `at_client_ip`  AS `atClientIp`,
+               `at_result`     AS `atResult`
+        FROM `jgv`.`user_login_attempts`
+        WHERE `at_user_id` = #{userId}
+          AND  `at_created_at` BETWEEN #{startDate} AND #{endDate}
+        ORDER BY `at_created_at` DESC
+        LIMIT #{limitCount} OFFSET #{offsetCount}
+    </select>
+
 </mapper>

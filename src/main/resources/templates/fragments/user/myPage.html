@@ -364,14 +364,46 @@
         <li>ㆍ회원님의 로그인 시도 이력이 아니라면 계정 해킹시도일 수 있으니, 비밀번호를 점검해 보시기 바랍니다.</li>
         <li>ㆍ카카오와 네이버 계정은 성공이력만 확인할 수 있습니다.</li>
     </ul>
-    <div class="keyword-wrapper">
+    <form id="keyword-wrapper" class="keyword-wrapper">
         <label>
-            <select>
+            <select class="year">
                 <option>2025</option>
-
             </select>
         </label>
-    </div>
+            <span>년</span>
+        <label>
+            <select class="month">
+                <option>01</option>
+            </select>
+        </label>
+            <span>월</span>
+        <label>
+            <select class="date">
+                <option>14</option>
+            </select>
+        </label>
+            <span>일</span>
+        <span>~</span>
+        <label>
+            <select class="year">
+                <option>2025</option>
+            </select>
+        </label>
+            <span>년</span>
+        <label>
+            <select class="month">
+                <option>01</option>
+            </select>
+        </label>
+            <span>월</span>
+        <label>
+            <select class="date">
+                <option>14</option>
+            </select>
+        </label>
+            <span>일</span>
+        <button class="submit" type="submit">조회</button>
+    </form>
     <table>
         <thead>
         <tr>
@@ -394,35 +426,35 @@
         </tr>
         </tbody>
     </table>
-        <div class="move" th:if="${loginAttempt != null && loginAttempt.length > 0}">
-            <!-- 첫 페이지로 이동 -->
-            <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
-               th:href="@{'/user/myPage/history' (page=${loginPage.movableMinPage})}"
-               class="page first">|&lt;</a>
+    <div class="move" th:if="${loginAttempt != null && loginAttempt.length > 0}">
+        <!-- 첫 페이지로 이동 -->
+        <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
+           th:href="@{'/user/myPage/history' (page=${loginPage.movableMinPage})}"
+           class="page first">|&lt;</a>
 
-            <!-- 이전 페이지로 이동 -->
-            <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
-               th:href="@{'/user/myPage/history' (page=${loginPage.requestPage - 1})}"
-               class="page prev">&lt;</a>
+        <!-- 이전 페이지로 이동 -->
+        <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
+           th:href="@{'/user/myPage/history' (page=${loginPage.requestPage - 1}.)}"
+           class="page prev">&lt;</a>
 
-            <!-- 페이지 번호 표시 -->
-            <div class="page-container">
-                <a class="page"
-                   th:each="page : ${#numbers.sequence(loginPage.displayMinPage, loginPage.displayMaxPage)}"
-                   th:text="${page}"
-                   th:href="@{'/user/myPage/history' (page=${page})}"
-                   th:classappend="${page == loginPage.requestPage} ? 'selected'"></a>
-            </div>
-
-            <!-- 다음 페이지로 이동 -->
-            <a th:if="${loginPage.requestPage < loginPage.movableMaxPage}"
-               th:href="@{'/user/myPage/history' (page=${loginPage.requestPage + 1})}"
-               class="page next">&gt;</a>
-
-            <!-- 마지막 페이지로 이동 -->
-            <a th:if="${loginPage.requestPage < loginPage.movableMaxPage}"
-               th:href="@{'/user/myPage/history' (page=${loginPage.displayMaxPage})}"
-               class="page last">&gt;|</a>
+        <!-- 페이지 번호 표시 -->
+        <div class="page-container">
+            <a class="page"
+               th:each="page : ${#numbers.sequence(loginPage.displayMinPage, loginPage.displayMaxPage)}"
+               th:text="${page}"
+               th:href="@{'/user/myPage/history' (page=${page})}"
+               th:classappend="${page == loginPage.requestPage} ? 'selected'"></a>
         </div>
+
+        <!-- 다음 페이지로 이동 -->
+        <a th:if="${loginPage.requestPage < loginPage.movableMaxPage}"
+           th:href="@{'/user/myPage/history' (page=${loginPage.requestPage + 1})}"
+           class="page next">&gt;</a>
+
+        <!-- 마지막 페이지로 이동 -->
+        <a th:if="${loginPage.requestPage < loginPage.movableMaxPage}"
+           th:href="@{'/user/myPage/history' (page=${loginPage.displayMaxPage})}"
+           class="page last">&gt;|</a>
+    </div>
 </div>
 </html>
