@@ -443,4 +443,62 @@
         LIMIT #{limitCount} OFFSET #{offsetCount}
     </select>
 
+    <select id="selectUserBySocialTypeCodeAndSocialId"
+            resultType="dev.jwkim.jgv.entities.user.UserEntity">
+        SELECT us_num              AS `usNum`,
+               us_id               AS `usId`,
+               us_pw               AS `usPw`,
+               us_name             AS `usName`,
+               us_nickname         AS `usNickName`,
+               us_birth            AS `usBirth`,
+               us_gender           AS `usGender`,
+               us_email            AS `usEmail`,
+               us_contact          AS `usContact`,
+               us_addr             AS `usAddr`,
+               us_created_at       AS `usCreatedAt`,
+               us_updated_at       AS `usUpdatedAt`,
+               us_is_deleted       AS `usIsDeleted`,
+               us_is_admin         AS `usIsAdmin`,
+               us_is_suspended     AS `usIsSuspended`,
+               us_verified         AS `usIsVerified`,
+               us_social_type_code AS `usSocialTypeCode`,
+               us_social_id        AS `usSocialId`
+        FROM `jgv`.`user`
+        WHERE `us_social_type_code` = #{usSocialTypeCode}
+          AND `us_social_id` = #{usSocialId}
+        LIMIT 1
+    </select>
+
+    <select id="selectUserByEmailAndSocialType"
+            resultType="dev.jwkim.jgv.entities.user.UserEntity">
+        SELECT us_num              AS `usNum`,
+               us_id               AS `usId`,
+               us_pw               AS `usPw`,
+               us_name             AS `usName`,
+               us_nickname         AS `usNickName`,
+               us_birth            AS `usBirth`,
+               us_gender           AS `usGender`,
+               us_email            AS `usEmail`,
+               us_contact          AS `usContact`,
+               us_addr             AS `usAddr`,
+               us_created_at       AS `usCreatedAt`,
+               us_updated_at       AS `usUpdatedAt`,
+               us_is_deleted       AS `usIsDeleted`,
+               us_is_admin         AS `usIsAdmin`,
+               us_is_suspended     AS `usIsSuspended`,
+               us_verified         AS `usIsVerified`,
+               us_social_type_code AS `usSocialTypeCode`,
+               us_social_id        AS `usSocialId`
+        FROM `jgv`.`user`
+        WHERE `us_social_type_code` = #{usSocialTypeCode}
+          AND `us_email` = #{usEmail}
+    </select>
+
+    <update id="updateSocial" parameterType="dev.jwkim.jgv.entities.user.UserEntity">
+        UPDATE `jgv`.`user`
+        SET `us_social_id` = #{usSocialId},
+            `us_social_type_code` = #{usSocialTypeCode}
+        WHERE `us_email` = #{usEmail}
+    </update>
+
 </mapper>

@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JGV - 소셜 회원가입</title>
+    <link rel="stylesheet" th:href="@{'../../assets/styles/common.css'}" type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/index.css'}"
+          type="text/css">
+    <link rel="stylesheet" th:href="@{'../../fragments/assets/styles/common.css'}"
+          type="text/css">
+    <link rel="stylesheet" href="/user/styles/register.css" type="text/css">
+    <script defer src="/user/scripts/social-register.js" type="text/javascript"></script>
+    <script defer th:src="@{'../../fragments/assets/scripts/common.js'}"></script>
+    <script defer src="/assets/scripts/common.js" type="text/javascript"></script>
+    <link rel="shortcut icon" href="https://img.cgv.co.kr/theater_img/favicon.ico" type="image/x-icon">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:if="${isSocialRegister == true}">
+        alert('소셜 계정으로 회원가입을 진행합니다. 아래 항목을 입력해 주세요.');
+    </script>
+</head>
+<body>
+<th:block th:replace="~{fragments/common.html :: advertisement}"></th:block>
+<th:block th:replace="~{fragments/common.html :: header}"></th:block>
+<th:block th:replace="~{fragments/common.html :: nav}"></th:block>
+<div class="frame title-container">
+    <h1>기본정보</h1>
+    <div class="-spring"></div>
+    <span>
+         <img src="/user/images/register_check.png"
+              alt="checkmark">
+        표시는 필수 입력 항목입니다.
+    </span>
+</div>
+<form id="register-form" class="frame">
+    <table class="table">
+        <tbody>
+        <tr>
+            <td style="border-top: 2px solid #000000;">
+                <img src="/user/images/register_check.png"
+                     alt="checkmark">
+                <span>이름</span>
+            </td>
+            <td style="border-top: 2px solid #000000;">
+                <label class="--obj-label" data-id="name">
+                    <input th:if="${social.getUsName() != null}"
+                           th:value="${social.getUsName()}" required autofocus maxlength="15" minlength="2" type="text"
+                           class="id _field --obj-filed -border"
+                           name="name" placeholder="이름을 입력해주세요.">
+                    <input th:if="${social.getUsName() == null}"
+                           required autofocus maxlength="15" minlength="2" type="text"
+                           class="id _field --obj-filed -border"
+                           name="name" placeholder="이름을 입력해주세요.">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="/user/images/register_check.png"
+                     alt="checkmark">
+                <span>아이디</span>
+            </td>
+            <td rel="row">
+                <label class="--obj-label" data-id="id">
+                    <input required maxlength="20" minlength="6" type="text"
+                           class="_field --obj-filed -border"
+                           name="id"
+                           placeholder="아이디를 입력해주세요.">
+                </label>
+                <button class="duplicate-button" type="button" name="duplicate-id-button">
+                    중복확인
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="/user/images/register_check.png"
+                     alt="checkmark">
+                <span>비밀번호</span>
+            </td>
+            <td>
+                <label class="--obj-label" data-id="password">
+                    <input required autocomplete="off" maxlength="100" minlength="8"
+                           type="password" name="password"
+                           class="_field --obj-filed -border password"
+                           placeholder="비밀번호를 입력해주세요.">
+                    <span style="font-size: 14px; font-weight: 400;"
+                          id="password-strength"></span>
+                    <span class="text">영문자, 숫자, 특수문자를 모두 조합하여 8~12자리를 입력해주세요.<br>
+                                        사용 가능 특수 문자는 !"#$%&'()*+,-./:;&lt;= &gt;?@[]^_`{|}~ 입니다.<br>
+                                        아이디와 4자리 이상 동일한 비밀번호는 사용 불가합니다.<br>
+                                        동일문자를 4번 이상 사용할 수 없습니다.<br>
+                                        4자리 이상 연속되는 문자와 숫자는 사용 불가합니다.<br>
+                                        휴대전화번호와 4자리 이상 동일한 비밀번호는 사용 불가합니다.<br>
+                                        생년월일과 4자리 이상 동일한 비밀번호는 사용 불가합니다.<br>
+                                        연속된 자판배열이 4자리 이상 포함된 비밀번호는 사용 불가합니다.
+                    </span>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="/user/images/register_check.png"
+                     alt="checkmark">
+                <span>비밀번호 확인</span>
+            </td>
+            <td>
+                <label class="--obj-label">
+                    <input required autocomplete="off" maxlength="100" minlength="8"
+                           type="password"
+                           name="passwordCheck" class="_field --obj-filed -border"
+                           placeholder="비밀번호를 재입력해주세요.">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="/user/images/register_check.png"
+                     alt="checkmark">
+                <span>닉네임</span>
+            </td>
+            <!--추후 닉네임 글자수 조정 및 서비스 로직에 추가-->
+            <td rel="row">
+                <label class="--obj-label" data-id="id">
+                    <input th:if="${social.getUsNickName() != null}"
+                           th:value="${social.getUsNickName()}" required maxlength="20" minlength="2" type="text"
+                           class="_field --obj-filed -border"
+                           name="nickname"
+                           placeholder="닉네임을 입력해주세요.">
+                </label>
+                <button class="duplicate-button" type="button"
+                        name="duplicate-nickname-button">중복확인
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="/user/images/register_check.png"
+                     alt="checkmark">
+                <span>성별</span>
+            </td>
+            <td rel="row">
+                <label class="--obj-label gender-container">
+                    <span>남자</span>
+                    <input required type="radio" name="gender" value="M"
+                           class="_field --obj-filed -border" checked>
+                    <span>여자</span>
+                    <input required type="radio" name="gender" value="F"
+                           class="_field --obj-filed -border">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="/user/images/register_check.png"
+                     alt="checkmark">
+                <span>주소</span>
+            </td>
+            <td rel="col">
+                <div class="label-container">
+                    <label class="--obj-label"
+                           style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 1rem;">
+                        <input class="_field --obj-filed -border" type="text"
+                               id="postcode"
+                               placeholder="우편번호를 입력해주세요." name="postcode">
+                        <button type="button" class="addr-button" name="addr-button">
+                            주소검색
+                        </button>
+                    </label>
+                    <label class="--obj-label">
+                        <input class="_field --obj-filed -border" type="text" id="address"
+                               placeholder="주소를 입력해주세요." name="address"><br>
+                    </label>
+                </div>
+                <label class="--obj-label">
+                    <input class="_field --obj-filed -border" type="text"
+                           id="extraAddress" placeholder="상세주소 입력" name="extraAddress">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="/user/images/register_check.png"
+                     alt="checkmark">
+                <span>생년월일</span>
+            </td>
+            <td>
+                <label class="--obj-label" data-id="birth">
+                    <input th:if="${social.getUsBirth() != null}"
+                           th:value="${social.getUsBirth()}"
+                           required name="birth" class="_field --obj-filed -border"
+                           type="date">
+                    <input th:if="${social.getUsBirth() == null}"
+                           required name="birth" class="_field --obj-filed -border"
+                           type="date" value="1900-01-01">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="/user/images/register_check.png"
+                     alt="checkmark">
+                <span>휴대전화번호</span>
+            </td>
+            <td>
+                <label class="--obj-label" data-id="contact">
+                    <input th:if="${social.getUsContact() != null}"
+                           th:value="${social.getUsContact()}"
+                           autocomplete="off" maxlength="13" minlength="10" required
+                           type="tel"
+                           name="contact" placeholder="'-' 없이 입력" spellcheck="false"
+                           class="_field --obj-filed -border">
+                    <input th:if="${social.getUsContact() == null}"
+                           autocomplete="off" maxlength="13" minlength="10" required
+                           type="tel"
+                           name="contact" placeholder="'-' 없이 입력" spellcheck="false"
+                           class="_field --obj-filed -border">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaUlEQVR4nO3UvUoDQRAH8NGbCaLgF6hPYiFoo9iIWPkAPoCdhQacXTuxEdROO+30IWysLEUERRCEgKJouJnTQpOTMxGTuwtc4gYs8oetbrnf7jIzAJ38h+g6LSnTrp+HkbYhb4wTYuhTDYXK9KjWm3eOhBZ6lfH6G6kuYXoPLXQ7hdTQTi1SWXjsFPEtTgpTqQ5hepI8jDlDwhXoU4O38dv4NrcILiOM+ylPduQY8WbFULm+ALBQtDDsDHlZhQExeJ+4jfXmMv+kuAZDYmgz6otGe4TxMI6IwYPMyKuFQTF0Xu2DQNibie8JbG4hgTDePVvozwwp02ms6QKx3vTP92i0qKGH+ptQuXZPNsjQWfK0v5gyniSrjPag2YiFUTV4mYYp03ZKKd9E4wdaSeV58CLl5HG85DNOtYQ0g4mhrT8h2TC8Ci30OIEaYcL0ETCOg+vEC0SYNpwjtSNHDbIwLocAXW2DOoGUfAGQTme3IOKwEQAAAABJRU5ErkJggg=="
+                     alt="checkmark">
+                <span>이메일</span>
+            </td>
+            <td rel="col">
+                <div class="email-container">
+                    <label data-id="email" class="email-label">
+                        <input autocomplete="on" name="email" type="text" class="email"
+                               placeholder="이메일 입력">
+                    </label>
+                    <span>@</span>
+                    <label data-id="email" class="email-label">
+                        <input autocomplete="off" name="domain" type="text" class="domain"
+                               placeholder="직접입력">
+                    </label>
+                    <div class="value-button">
+                        <span style=" display: flex; align-items: center;
+                        flex-direction: row; justify-content: center; gap: 1rem;">
+                            직접입력
+                            <img style="width: 1rem;" src="/user/images/emailSelect.png"
+                                 alt="도메인선택">
+                        </span>
+                        <div id="domainModal" class="modal">
+                            <div class="modal-content">
+                                <button type="button" class="domain-self">직접입력</button>
+                                <button type="button" class="domain-button"
+                                        value="naver.com">네이버
+                                </button>
+                                <button type="button" class="domain-button"
+                                        value="hanmail.net">한메일
+                                </button>
+                                <button type="button" class="domain-button"
+                                        value="nate.com">네이트</button>
+                                <button type="button" class="domain-button"
+                                        value="gmail.com">지메일</button>
+                                <button type="button" class="domain-button" value="daum.net">다음</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <span>이메일 주소 입력시 사용 가능 특수 문자:-ㆍ_</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <label class="--obj-check-label">
+        <input class="--obj-filed -input agree" name="agree" type="checkbox">
+        <span class="_box"></span>
+        <span class="text">
+            <a style="color: #f57c00;" th:href="@{'../../rules/service'}">서비스 이용약관</a> 및
+            <a style="color: #f57c00;" th:href="@{'../../rules/privacy'}">개인정보 처리방침</a>을 읽어보았으며 이해하였고 동의합니다.
+        </span>
+    </label>
+    <div class="button-container frame">
+        <button class="cancel" type="button" onclick="history.back();">취소</button>
+        <button class="submit" type="submit">등록</button>
+    </div>
+</form>
+
+
+<th:block th:replace="~{fragments/common.html :: footer}"></th:block>
+</body>
+</html>
