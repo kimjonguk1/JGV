@@ -15,6 +15,16 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
+    int updateSocial(@Param("usSocialId") String socialId,
+                     @Param("usSocialTypeCode") String usSocialTypeCode,
+                     @Param("usEmail") String usEmail);
+
+    UserEntity selectUserBySocialTypeCodeAndSocialId(@Param("usSocialTypeCode") String socialTypeCode,
+                                                     @Param("usSocialId") String socialId);
+
+    UserEntity selectUserByEmailAndSocialType(@Param("usEmail") String email,
+                                              @Param("usSocialTypeCode") String socialTypecode);
+
 
     int insertUser(UserEntity user);
 

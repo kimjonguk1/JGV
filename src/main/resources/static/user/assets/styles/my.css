@@ -1,0 +1,64 @@
+body > .dialog {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  top: 50%;
+  left: 50%;
+  width: 20rem;
+  background-color: #ffffff;
+  padding: 1.75rem 1.875rem;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+body > .dialog > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+body > .dialog > .title {
+  font-size: 1.75rem;
+  font-weight: 200;
+  margin-bottom: 0.5rem;
+}
+body > .dialog > .text > .bold {
+  font-weight: 600;
+}
+body > .dialog > .logout-anchor {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: center;
+  height: 2.25rem;
+  background-color: #9e9e9e;
+  border-radius: 0.25rem;
+  color: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition-duration: 125ms;
+  transition-property: background-color;
+  transition-timing-function: ease;
+  user-select: none;
+}
+body > .dialog > .logout-anchor > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+body > .dialog > .logout-anchor:hover {
+  background-color: rgb(145.25, 145.25, 145.25);
+}
+body > .dialog > .logout-anchor:active {
+  background-color: rgb(132.5, 132.5, 132.5);
+}
+body > .dialog > .cancel-anchor {
+  align-self: flex-end;
+  color: #3498db;
+  text-decoration: none;
+}
+body > .dialog > .cancel-anchor:hover {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=my.css.map */
