@@ -364,46 +364,65 @@
         <li>ㆍ회원님의 로그인 시도 이력이 아니라면 계정 해킹시도일 수 있으니, 비밀번호를 점검해 보시기 바랍니다.</li>
         <li>ㆍ카카오와 네이버 계정은 성공이력만 확인할 수 있습니다.</li>
     </ul>
-    <form id="keyword-wrapper" class="keyword-wrapper">
+    <form id="keyword-wrapper" class="keyword-wrapper" method="get">
         <label>
-            <select class="year">
-                <option>2025</option>
+            <select class="year" name="startYear">
+                <option value="2025">2025</option>
+                <option value="2025">2024</option>
             </select>
         </label>
-            <span>년</span>
+        <span>년</span>
         <label>
-            <select class="month">
-                <option>01</option>
+            <select class="month" name="startMonth">
+                <option value="12">12</option>
+                <option value="11">11</option>
+                <option value="10">10</option>
+                <option value="9">9</option>
+                <option value="8">8</option>
+                <option value="1">1</option>
             </select>
         </label>
-            <span>월</span>
+        <span>월</span>
         <label>
-            <select class="date">
+            <select class="date" name="startDate">
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+                <option>13</option>
                 <option>14</option>
             </select>
         </label>
-            <span>일</span>
+        <span>일</span>
         <span>~</span>
         <label>
-            <select class="year">
-                <option>2025</option>
+            <select class="year" name="endYear">
+                <option value="2025">2025</option>
             </select>
         </label>
-            <span>년</span>
+        <span>년</span>
         <label>
-            <select class="month">
-                <option>01</option>
+            <select class="month" name="endMonth">
+                <option value="12">12</option>
+                <option value="11">11</option>
+                <option value="10">10</option>
+                <option value="9">9</option>
+                <option value="8">8</option>
+                <option value="1">1</option>
             </select>
         </label>
-            <span>월</span>
+        <span>월</span>
         <label>
-            <select class="date">
-                <option>14</option>
+            <select class="date" name="endDate">
+                <option value="15">15</option>
+                <option value="14">14</option>
+                <option value="13">13</option>
+                <option value="12">12</option>
             </select>
         </label>
-            <span>일</span>
+        <span>일</span>
         <button class="submit" type="submit">조회</button>
     </form>
+
     <table>
         <thead>
         <tr>
@@ -414,46 +433,38 @@
         </thead>
         <tbody>
         <tr th:each="attempt : ${loginAttempt}">
-            <td
-                    th:text="${#temporals.format(attempt.getAtCreatedAt(), 'yyyy-MM-dd HH:mm:ss')}">
-                2025.01.10 11:19:21
-            </td>
+            <td th:text="${#temporals.format(attempt.getAtCreatedAt(), 'yyyy-MM-dd HH:mm:ss')}">2025.01.10 11:19:21</td>
             <td th:text="${attempt.getAtClientIp()}">1.1.1.1.1.1</td>
-            <td
-                    th:style="${attempt.atResult ? 'font-weight: 500;' : 'color: #fb4357; font-weight: 500;'}"
-                    th:text="${attempt.atResult ? '성공' : '실패'}">성공
-            </td>
+            <td th:style="${attempt.atResult ? 'font-weight: 500;' : 'color: #fb4357; font-weight: 500;'}"
+                th:text="${attempt.atResult ? '성공' : '실패'}">성공</td>
         </tr>
         </tbody>
     </table>
-        <div class="move" th:if="${loginAttempt != null && loginAttempt.length > 0}">
-            <!-- 첫 페이지로 이동 -->
-            <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
-               th:href="@{'/user/myPage/history' (page=${loginPage.movableMinPage})}"
-               class="page first">|&lt;</a>
 
-        <!-- 이전 페이지로 이동 -->
+    <div class="move" th:if="${loginAttempt != null && loginAttempt.length > 0}">
+        <!-- 페이지네이션 -->
         <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
-           th:href="@{'/user/myPage/history' (page=${loginPage.requestPage - 1})}"
+           th:href="@{'/user/myPage/history' (page=${loginPage.movableMinPage}, startYear=${startDate.substring(0,4)}, startMonth=${startDate.substring(5,7)}, startDate=${startDate.substring(8)}, endYear=${endDate.substring(0,4)}, endMonth=${endDate.substring(5,7)}, endDate=${endDate.substring(8)})}"
+           class="page first">|&lt;</a>
+
+        <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
+           th:href="@{'/user/myPage/history' (page=${loginPage.requestPage - 1}, startYear=${startDate.substring(0,4)}, startMonth=${startDate.substring(5,7)}, startDate=${startDate.substring(8)}, endYear=${endDate.substring(0,4)}, endMonth=${endDate.substring(5,7)}, endDate=${endDate.substring(8)})}"
            class="page prev">&lt;</a>
 
-        <!-- 페이지 번호 표시 -->
         <div class="page-container">
             <a class="page"
                th:each="page : ${#numbers.sequence(loginPage.displayMinPage, loginPage.displayMaxPage)}"
                th:text="${page}"
-               th:href="@{'/user/myPage/history' (page=${page})}"
+               th:href="@{'/user/myPage/history' (page=${page}, startYear=${startDate.substring(0,4)}, startMonth=${startDate.substring(5,7)}, startDate=${startDate.substring(8)}, endYear=${endDate.substring(0,4)}, endMonth=${endDate.substring(5,7)}, endDate=${endDate.substring(8)})}"
                th:classappend="${page == loginPage.requestPage} ? 'selected'"></a>
         </div>
 
-        <!-- 다음 페이지로 이동 -->
         <a th:if="${loginPage.requestPage < loginPage.movableMaxPage}"
-           th:href="@{'/user/myPage/history' (page=${loginPage.requestPage + 1})}"
+           th:href="@{'/user/myPage/history' (page=${loginPage.requestPage + 1}, startYear=${startDate.substring(0,4)}, startMonth=${startDate.substring(5,7)}, startDate=${startDate.substring(8)}, endYear=${endDate.substring(0,4)}, endMonth=${endDate.substring(5,7)}, endDate=${endDate.substring(8)})}"
            class="page next">&gt;</a>
 
-        <!-- 마지막 페이지로 이동 -->
         <a th:if="${loginPage.requestPage < loginPage.movableMaxPage}"
-           th:href="@{'/user/myPage/history' (page=${loginPage.displayMaxPage})}"
+           th:href="@{'/user/myPage/history' (page=${loginPage.displayMaxPage}, startYear=${startDate.substring(0,4)}, startMonth=${startDate.substring(5,7)}, startDate=${startDate.substring(8)}, endYear=${endDate.substring(0,4)}, endMonth=${endDate.substring(5,7)}, endDate=${endDate.substring(8)})}"
            class="page last">&gt;|</a>
     </div>
 </div>
