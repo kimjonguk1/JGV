@@ -164,6 +164,9 @@ function checkScreen() {
                                 const $theaterItem = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.theater > .body > .content > .theater-container > .theater'));
                                 $theaterItem.forEach((x) => {
                                     $theater.append(x);
+                                    if (x.innerText === $data.theater.substring(3)) {
+                                        x.classList.add('select');
+                                    }
                                     x.onclick = () => {
                                         $theaterItem.forEach((item) => {
                                             item.classList.remove('select');
@@ -696,6 +699,9 @@ function movieItem($movieItems) {
                                             const $theaterItem = Array.from(new DOMParser().parseFromString(xhr.responseText, 'text/html').querySelectorAll('.theater > .body > .content > .theater-container > .theater'));
                                             $theaterItem.forEach((x) => {
                                                 $theater.append(x);
+                                                if (x.innerText === $data.theater.substring(3)) {
+                                                    x.classList.add('select')
+                                                }
                                                 x.onclick = () => {
                                                     $theaterItem.forEach((item) => {
                                                         item.classList.remove('select');
@@ -1005,6 +1011,9 @@ function dayItem($dayItems) {
 function theaterItem($theaterItems) {
     $theaterItems.forEach((x) => {
         $theater.append(x);
+        if ($data.theater != null && x.innerText === $data.theater.substring(3)) {
+            x.classList.add('select');
+        }
         x.onclick = () => {
             $theaterItems.forEach((item) => {
                 item.classList.remove('select');
@@ -1127,6 +1136,7 @@ const $leftButtons = Array.from($controlBar.querySelectorAll(':scope > .containe
 const $rightButtons = Array.from($controlBar.querySelectorAll(':scope > .container > .right-button'));
 const $RightThird = $controlBar.querySelector(':scope > .container > .third.right-button');
 const $RightSecond = $controlBar.querySelector(':scope > .container > .second.right-button');
+const $LeftSecond = $controlBar.querySelector(':scope > .container > .second.left-button');
 const $paymentSection = document.getElementById('payment-section');
 const $titleCinema = document.getElementById('title-cinema');
 const $titleTheater = document.getElementById('title-theater');
@@ -1438,6 +1448,15 @@ $rightButtons.forEach((x) => {
                                                 selectedSeats.splice(index, 1);
                                             }
                                             $seatNumber.textContent = `${selectedSeats.join(', ')}`;
+
+                                            // else if (seat.classList.contains('selected-seat')) {
+                                            //         t++;
+                                            //         seat.classList.remove('selected-seat');
+                                            //         const index = selectedSeats.indexOf(seat.id);
+                                            //         if (index !== -1) {
+                                            //             selectedSeats.splice(index, 1);
+                                            //         }
+                                            //         $seatNumber.textContent = `${selectedSeats.join(', ')}`;
                                         }
                                     }
                                 }
