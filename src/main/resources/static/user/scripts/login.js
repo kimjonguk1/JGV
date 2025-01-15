@@ -2,18 +2,30 @@ const $loginForm = document.getElementById('login-form');
 
 // region nav 광고
 {
-    const $sideAdvertisementArray = ['https://adimg.cgv.co.kr/images/202411/Firefighters/1121_980x90.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_980x90.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1227_980x90.jpg'];
+    const $sideAdvertisementArray = ['https://adimg.cgv.co.kr/images/202411/Firefighters/1121_980x90.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_980x90.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1227_980x90.jpg', 'https://adimg.cgv.co.kr/images/202501/RealPain/0114_980x90.jpg', 'https://adimg.cgv.co.kr/images/202501/Panda/980x90.jpg', 'https://adimg.cgv.co.kr/images/202501/DarkNuns/980x90.jpg'];
     document.addEventListener("DOMContentLoaded", () => {
         const $advertisement = document.querySelector('.advertisement-info');
         const $advertisementRandom = $sideAdvertisementArray[Math.floor(Math.random() * $sideAdvertisementArray.length)];
         const $img = $advertisement.querySelector(':scope > img');
-        const $a = $advertisement.querySelector(':scope > a')
-        if ($advertisementRandom === $sideAdvertisementArray[0]) {
-            $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3651')
-        } else if ($advertisementRandom === $sideAdvertisementArray[1]) {
-            $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3628')
-        } else {
-            $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3611')
+        switch ($advertisementRandom) {
+            case ($sideAdvertisementArray[0]):
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3651');
+                break;
+            case ($sideAdvertisementArray[1]):
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3628');
+                break;
+            case ($sideAdvertisementArray[2]):
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3611');
+                break;
+            case ($sideAdvertisementArray[3]):
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3927')
+                break;
+            case ($sideAdvertisementArray[4]):
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3974')
+                break;
+            case ($sideAdvertisementArray[5]):
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/4024')
+                break;
         }
         $img.setAttribute('src', $advertisementRandom);
     });
