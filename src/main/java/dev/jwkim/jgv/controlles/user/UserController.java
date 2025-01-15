@@ -218,6 +218,7 @@ public class UserController extends AbstractGeneralController {
             HttpSession newSession = request.getSession(true);  // 새 세션을 생성
             newSession.setAttribute("user", user);
             newSession.setAttribute("ip", currentIp);  // 현재 IP를 세션에 저장
+            newSession.setAttribute("isSocialRegister", false);
 
             // 로그인 성공 시 사용자 번호 반환
             response.put("MemberNum", user.getUsNum());
