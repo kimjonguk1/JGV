@@ -35,6 +35,7 @@ $theaterCrawl.onclick = () => {
     const $moviePage = document.getElementById('movie-page-container');
     const $theaterPage = document.getElementById('theater-page-container');
     const $userPage = document.getElementById('user-page-container');
+    const $userButton = document.getElementById('user-history-button');
 
 
     $movieInfo.onclick = () => {
@@ -53,6 +54,7 @@ $theaterCrawl.onclick = () => {
         $userInfo.style.color = '#666666';
         $userMain.style.display = 'none';
         $userPage.style.display = 'none';
+        $userButton.style.display = 'none';
 
         const url = new URL(location.href);
         url.searchParams.set('mode', 'movie');
@@ -61,11 +63,11 @@ $theaterCrawl.onclick = () => {
 
     $theaterInfo.onclick = () => {
         $movieButton.style.display = 'none';
+        $theaterButton.style.display = 'block';
         $movieInfo.style.color = '#666666';
         $movieMain.style.display = 'none';
         $movieSearchForm.style.display = 'none';
         $theaterInfo.style.color = '#000000';
-        $theaterButton.style.display = 'block';
         $theaterMain.style.display = 'block';
         $theaterButton.style.backgroundColor = '#2275a4';
         $theaterButton.style.border = '1px solid #2275a4';
@@ -77,6 +79,7 @@ $theaterCrawl.onclick = () => {
         $userInfo.style.color = '#666666';
         $userMain.style.display = 'none';
         $userPage.style.display = 'none';
+        $userButton.style.display = 'none';
 
         const url = new URL(location.href);
         url.searchParams.set('mode', 'theater');
@@ -87,7 +90,6 @@ $theaterCrawl.onclick = () => {
         $userInfo.style.color = '#000000';
         $movieInfo.style.color = '#666666';
         $theaterInfo.style.color = '#666666';
-        $buttonWrapper.style.display = 'none';
         $movieButton.style.display = 'none';
         $theaterButton.style.display = 'none';
         $movieSearchForm.style.display = 'none';
@@ -99,6 +101,11 @@ $theaterCrawl.onclick = () => {
         $userSearchForm.style.display = 'block';
         $userMain.style.display = 'block';
         $userPage.style.display = 'block';
+        $userButton.style.display = 'block';
+        $userButton.style.backgroundColor = '#aa3ebc';
+        $userButton.style.border = '1px solid #aa3ebc';
+        $buttonWrapper.style.border = '2px solid #aa3ebc';
+
 
         const url = new URL(location.href);
         url.searchParams.set('mode', 'user');

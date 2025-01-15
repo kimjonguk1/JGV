@@ -120,6 +120,7 @@ public class UserService {
         if (!responseObject.has("id")) {
             return ResultDto.<Result, UserEntity>builder().result(CommonResult.FAILURE).build();
         }
+        System.out.println(responseObject);
         String id = String.valueOf(responseObject.getLong("id"));
         String nickname = responseObject.getJSONObject("properties").getString("nickname");
         UserEntity user = this.userMapper.selectUserBySocialTypeCodeAndSocialId(SocialTypes.KAKAO.getCode(), id);

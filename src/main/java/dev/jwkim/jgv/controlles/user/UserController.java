@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -249,8 +250,14 @@ public class UserController extends AbstractGeneralController {
                                   HttpServletRequest request, @RequestParam(value =
                     "page", required = false, defaultValue = "1") int page,
                                   @RequestParam(value = "page2", required = false,
-                                          defaultValue = "1") int page2
-                                 ) throws ServletException,
+                                          defaultValue = "1") int page2,
+                                  @RequestParam(value = "startYear", required = false) String startYear,
+                                  @RequestParam(value = "startMonth", required = false) String startMonth,
+                                  @RequestParam(value = "startDate", required = false) String startDate,
+                                  @RequestParam(value = "endYear", required = false) String endYear,
+                                  @RequestParam(value = "endMonth", required = false) String endMonth,
+                                  @RequestParam(value = "endDate", required = false) String endDate
+    ) throws ServletException,
             IOException {
         String[] validFragments = {"main", "reservation", "history", "personal", "withdraw"};
         if (fragment == null || Arrays.stream(validFragments).noneMatch(x -> x.equals(fragment))) {
@@ -275,13 +282,27 @@ public class UserController extends AbstractGeneralController {
         }
 
         UserEntity loggedInUser = (UserEntity) session.getAttribute("user");
+        // 날짜 처리
+
+        String startDateString = startYear + "-" + startMonth + "-" + startDate;
+        String endDateString = endYear + "-" + endMonth + "-" + endDate;
+
         // 로그인 내역 조회
-       Pair<PageVo, UserLoginAttemptsEntity[]> attempts =
-               this.userService.getLoginAttempts(page, loggedInUser.getUsId());
+        Pair<PageVo, UserLoginAttemptsEntity[]> attempts;
+        if (endDate == null) {
+            System.out.println("기본페이지");
+            attempts = this.userService.getLoginAttempts(page, loggedInUser.getUsId());
+        }
+        else {
+            System.out.println("날짜검색 페이지");
+            attempts = this.userService.searchLoginHistory(page, loggedInUser.getUsId(), startDateString, endDateString);
+        }
+
 
         // 현재 날짜를 model에 추가
         LocalDateTime currentDate = LocalDateTime.now();
         String formattedCurrentDate = currentDate.toString();
+
         // 예약 정보 가져오기
         Pair<PageVo, Map<Set<String>, List<String>>> reservations = this.userService.reservationInformation(loggedInUser.getUsNum(), page2); // 예약 정보
         List<List<String>> cancelReservations = this.userService.selectCancelPaymentByUsNum(loggedInUser.getUsNum()); // 취소 정보
@@ -302,6 +323,8 @@ public class UserController extends AbstractGeneralController {
         modelAndView.addObject("page2", page2); // 현재 page2
         modelAndView.addObject("loginPage", attempts.getLeft());
         modelAndView.addObject("loginAttempt", attempts.getRight());
+        modelAndView.addObject("startDate", startDateString);
+        modelAndView.addObject("endDate", endDateString);
         modelAndView.setViewName("user/myPage/myPage");
 
         return modelAndView;
