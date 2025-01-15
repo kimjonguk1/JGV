@@ -8,7 +8,7 @@ const $submitReview = document.getElementById('submitReview');
 
 // region 광고
 {
-    const $sideAdvertisementArray = ['https://adimg.cgv.co.kr/images/202411/Firefighters/1121_800x90.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_800x90.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1227_800x90.jpg'];
+    const $sideAdvertisementArray = ['https://adimg.cgv.co.kr/images/202411/Firefighters/1121_980x90.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_980x90.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1227_980x90.jpg', 'https://adimg.cgv.co.kr/images/202501/RealPain/0114_980x90.jpg', 'https://adimg.cgv.co.kr/images/202501/Panda/980x90.jpg', 'https://adimg.cgv.co.kr/images/202501/DarkNuns/980x90.jpg'];
     document.addEventListener("DOMContentLoaded", () => {
         const $advertisement = document.querySelector('.ad:nth-child(2)');
         const $advertisementRandom = $sideAdvertisementArray[Math.floor(Math.random() * $sideAdvertisementArray.length)];

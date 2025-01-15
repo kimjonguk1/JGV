@@ -22,34 +22,60 @@ const ticketParams = JSON.parse(sessionStorage.getItem('ticketParams'));
 
 // region 광고
 {
-    const $sideAdvertisementArray = ['https://adimg.cgv.co.kr/images/202411/Firefighters/996x140.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/996x140.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/996x140.jpg'];
+    const $sideAdvertisementArray = ['https://adimg.cgv.co.kr/images/202411/Firefighters/1121_980x90.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_980x90.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1227_980x90.jpg', 'https://adimg.cgv.co.kr/images/202501/RealPain/0114_980x90.jpg', 'https://adimg.cgv.co.kr/images/202501/Panda/980x90.jpg', 'https://adimg.cgv.co.kr/images/202501/DarkNuns/980x90.jpg'];
     document.addEventListener("DOMContentLoaded", () => {
-        const $advertisement = document.querySelector('.add');
+        const $advertisement = document.querySelector('.advertisement-info');
         const $advertisementRandom = $sideAdvertisementArray[Math.floor(Math.random() * $sideAdvertisementArray.length)];
-        const $img = $advertisement.querySelector(':scope > img');
-        if ($advertisementRandom === $sideAdvertisementArray[0]) {
-            $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3651')
-        } else if ($advertisementRandom === $sideAdvertisementArray[1]) {
-            $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3628')
-        } else {
-            $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3611')
+        const $a = $advertisement.querySelector(':scope > a');
+        const $img = $advertisement.querySelector(':scope > a > img');        switch ($advertisementRandom) {
+            case ($sideAdvertisementArray[0]):
+                $a.setAttribute('href', '../movies/movieList/movieInfo/3651');
+                break;
+            case ($sideAdvertisementArray[1]):
+                $a.setAttribute('href', '../movies/movieList/movieInfo/3628');
+                break;
+            case ($sideAdvertisementArray[2]):
+                $a.setAttribute('href', '../movies/movieList/movieInfo/3611');
+                break;
+            case ($sideAdvertisementArray[3]):
+                $a.setAttribute('href', '../movies/movieList/movieInfo/3927')
+                break;
+            case ($sideAdvertisementArray[4]):
+                $a.setAttribute('href', '../movies/movieList/movieInfo/3974')
+                break;
+            case ($sideAdvertisementArray[5]):
+                $a.setAttribute('href', '../movies/movieList/movieInfo/4024')
+                break;
         }
         $img.setAttribute('src', $advertisementRandom);
     });
 
-    const $advertisementContainerArray = ['https://adimg.cgv.co.kr/images/202412/PORORO/1231_160x300.jpg', 'https://adimg.cgv.co.kr/images/202412/Moana2/1218_160x300.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1227_160x300.png'];
+    const $advertisementContainerArray = ['https://adimg.cgv.co.kr/images/202412/PORORO/1231_160x300.jpg', 'https://adimg.cgv.co.kr/images/202412/Moana2/1218_160x300.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1227_160x300.png', 'https://adimg.cgv.co.kr/images/202501/RealPain/0114_160x300.jpg', 'https://adimg.cgv.co.kr/images/202501/Panda/160x300.jpg', 'https://adimg.cgv.co.kr/images/202501/DarkNuns/160x300.png'];
     const $advertisementContainer = Array.from(document.querySelectorAll('.advertisement-container'));
     document.addEventListener("DOMContentLoaded", () => {
         $advertisementContainer.forEach((advertisement) => {
             const $advertisementMove = Array.from(advertisement.querySelectorAll(':scope > .advertisement-move'));
             $advertisementMove.forEach((ad) => {
                 const $advertisementRandom = $advertisementContainerArray[Math.floor(Math.random() * $advertisementContainerArray.length)];
-                if ($advertisementRandom === $advertisementContainerArray[0]) {
-                    ad.setAttribute('href', '../movies/movieList/movieInfo/3628')
-                } else if ($advertisementRandom === $advertisementContainerArray[1]) {
-                    ad.setAttribute('href', '../movies/movieList/movieInfo/3669')
-                } else {
-                    ad.setAttribute('href', '../movies/movieList/movieInfo/3611')
+                switch ($advertisementRandom) {
+                    case ($advertisementContainerArray[0]):
+                        ad.setAttribute('href', '../movies/movieList/movieInfo/3628')
+                        break;
+                    case ($advertisementContainerArray[1]):
+                        ad.setAttribute('href', '../movies/movieList/movieInfo/3669')
+                        break;
+                    case ($advertisementContainerArray[2]):
+                        ad.setAttribute('href', '../movies/movieList/movieInfo/3611')
+                        break;
+                    case ($advertisementContainerArray[3]):
+                        ad.setAttribute('href', '../movies/movieList/movieInfo/3927')
+                        break;
+                    case ($advertisementContainerArray[4]):
+                        ad.setAttribute('href', '../movies/movieList/movieInfo/3974')
+                        break;
+                    case ($advertisementContainerArray[5]):
+                        ad.setAttribute('href', '../movies/movieList/movieInfo/4024')
+                        break;
                 }
                 const $img = ad.querySelector(':scope > img');
                 $img.setAttribute('src', $advertisementRandom);
