@@ -101,10 +101,10 @@ $theaterCrawl.onclick = () => {
         $userSearchForm.style.display = 'block';
         $userMain.style.display = 'block';
         $userPage.style.display = 'block';
-        $userButton.style.display = 'block';
+        $userButton.style.display = 'none';
         $userButton.style.backgroundColor = '#aa3ebc';
         $userButton.style.border = '1px solid #aa3ebc';
-        $buttonWrapper.style.border = '2px solid #aa3ebc';
+        $buttonWrapper.style.border = '2px solid transparent';
 
 
         const url = new URL(location.href);

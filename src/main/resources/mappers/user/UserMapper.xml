@@ -433,12 +433,13 @@
 
     <select id="searchLoginAttemptsByUserId" resultType="dev.jwkim.jgv.entities.user.UserLoginAttemptsEntity">
         SELECT `at_user_id`    AS `atUserId`,
-               `at_created_at` AS `atCreatedAt`,
-               `at_client_ip`  AS `atClientIp`,
-               `at_result`     AS `atResult`
+        `at_created_at` AS `atCreatedAt`,
+        `at_client_ip`  AS `atClientIp`,
+        `at_result`     AS `atResult`
         FROM `jgv`.`user_login_attempts`
         WHERE `at_user_id` = #{userId}
-          AND  `at_created_at` BETWEEN #{startDate} AND #{endDate}
+        AND `at_created_at` >= #{startDate}
+        AND `at_created_at` &lt; #{endDate} + INTERVAL 1 DAY
         ORDER BY `at_created_at` DESC
         LIMIT #{limitCount} OFFSET #{offsetCount}
     </select>

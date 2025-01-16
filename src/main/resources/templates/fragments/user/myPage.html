@@ -374,22 +374,13 @@
         <span>년</span>
         <label>
             <select class="month" name="startMonth">
-                <option value="12">12</option>
-                <option value="11">11</option>
-                <option value="10">10</option>
-                <option value="9">9</option>
-                <option value="8">8</option>
                 <option value="1">1</option>
             </select>
         </label>
         <span>월</span>
         <label>
             <select class="date" name="startDate">
-                <option>10</option>
-                <option>11</option>
                 <option>12</option>
-                <option>13</option>
-                <option>14</option>
             </select>
         </label>
         <span>일</span>
@@ -402,21 +393,13 @@
         <span>년</span>
         <label>
             <select class="month" name="endMonth">
-                <option value="12">12</option>
-                <option value="11">11</option>
-                <option value="10">10</option>
-                <option value="9">9</option>
-                <option value="8">8</option>
                 <option value="1">1</option>
             </select>
         </label>
         <span>월</span>
         <label>
             <select class="date" name="endDate">
-                <option value="15">15</option>
-                <option value="14">14</option>
                 <option value="13">13</option>
-                <option value="12">12</option>
             </select>
         </label>
         <span>일</span>
@@ -436,35 +419,36 @@
             <td th:text="${#temporals.format(attempt.getAtCreatedAt(), 'yyyy-MM-dd HH:mm:ss')}">2025.01.10 11:19:21</td>
             <td th:text="${attempt.getAtClientIp()}">1.1.1.1.1.1</td>
             <td th:style="${attempt.atResult ? 'font-weight: 500;' : 'color: #fb4357; font-weight: 500;'}"
-                th:text="${attempt.atResult ? '성공' : '실패'}">성공</td>
+                th:text="${attempt.atResult ? '성공' : '실패'}">성공
+            </td>
         </tr>
         </tbody>
     </table>
 
-    <div class="move" th:if="${loginAttempt != null && loginAttempt.length > 0}">
+    <div class="move" th:if="${loginAttempt != null && loginAttempt.length > 0}" th:with="dateParam = ${param.startYear != null && param.startMonth != null && param.startDate != null && param.endYear != null && param.endMonth != null && param.endDate != null ? '&startYear=' + param.startYear + '&startMonth=' + param.startMonth + '&startDate=' + param.startDate + '&endYear=' + param.endYear + '&endMonth=' + param.endMonth + '&endDate=' + param.endDate : ''}">
         <!-- 페이지네이션 -->
         <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
-           th:href="@{'/user/myPage/history' (page=${loginPage.movableMinPage}, startYear=${startDate.substring(0,4)}, startMonth=${startDate.substring(5,7)}, startDate=${startDate.substring(8)}, endYear=${endDate.substring(0,4)}, endMonth=${endDate.substring(5,7)}, endDate=${endDate.substring(8)})}"
+           th:href="${'/user/myPage/history?page=' + loginPage.movableMinPage + dateParam}"
            class="page first">|&lt;</a>
 
         <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
-           th:href="@{'/user/myPage/history' (page=${loginPage.requestPage - 1}, startYear=${startDate.substring(0,4)}, startMonth=${startDate.substring(5,7)}, startDate=${startDate.substring(8)}, endYear=${endDate.substring(0,4)}, endMonth=${endDate.substring(5,7)}, endDate=${endDate.substring(8)})}"
+           th:href="${'/user/myPage/history?page=' + (loginPage.requestPage - 1) + dateParam}"
            class="page prev">&lt;</a>
 
         <div class="page-container">
             <a class="page"
                th:each="page : ${#numbers.sequence(loginPage.displayMinPage, loginPage.displayMaxPage)}"
                th:text="${page}"
-               th:href="@{'/user/myPage/history' (page=${page}, startYear=${startDate.substring(0,4)}, startMonth=${startDate.substring(5,7)}, startDate=${startDate.substring(8)}, endYear=${endDate.substring(0,4)}, endMonth=${endDate.substring(5,7)}, endDate=${endDate.substring(8)})}"
+               th:href="${'/user/myPage/history?page=' + page + dateParam}"
                th:classappend="${page == loginPage.requestPage} ? 'selected'"></a>
         </div>
 
         <a th:if="${loginPage.requestPage < loginPage.movableMaxPage}"
-           th:href="@{'/user/myPage/history' (page=${loginPage.requestPage + 1}, startYear=${startDate.substring(0,4)}, startMonth=${startDate.substring(5,7)}, startDate=${startDate.substring(8)}, endYear=${endDate.substring(0,4)}, endMonth=${endDate.substring(5,7)}, endDate=${endDate.substring(8)})}"
+           th:href="${'/user/myPage/history?page=' + (loginPage.requestPage + 1) + dateParam}"
            class="page next">&gt;</a>
 
         <a th:if="${loginPage.requestPage < loginPage.movableMaxPage}"
-           th:href="@{'/user/myPage/history' (page=${loginPage.displayMaxPage}, startYear=${startDate.substring(0,4)}, startMonth=${startDate.substring(5,7)}, startDate=${startDate.substring(8)}, endYear=${endDate.substring(0,4)}, endMonth=${endDate.substring(5,7)}, endDate=${endDate.substring(8)})}"
+           th:href="${'/user/myPage/history?page=' + loginPage.displayMaxPage + dateParam}"
            class="page last">&gt;|</a>
     </div>
 </div>

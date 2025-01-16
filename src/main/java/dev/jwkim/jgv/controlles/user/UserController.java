@@ -77,7 +77,7 @@ public class UserController extends AbstractGeneralController {
             session.setAttribute("kakaoClientId", kakaoClientId);
             session.setAttribute("kakaoLogoutRedirectUri", kakaoLogoutRedirectUri);
             session.setAttribute("isSocialRegister", true);
-            modelAndView.setViewName("redirect:/user/myPage/main");
+            modelAndView.setViewName("redirect:/");
         } else if (result.getResult() == HandleKakaoLoginResult.IS_DELETED) {
             session.setAttribute("deleteMessage", true);
             modelAndView.setViewName("redirect:/user/login");
@@ -103,7 +103,7 @@ public class UserController extends AbstractGeneralController {
         } else if (result.getResult() == CommonResult.SUCCESS) {
             session.setAttribute(UserEntity.NAME_SINGULAR, result.getPayload());
             session.setAttribute("isSocialRegister", false);
-            modelAndView.setViewName("redirect:/user/myPage/main");
+            modelAndView.setViewName("redirect:/");
         } else if (result.getResult() == HandleNaverLoginResult.IS_DELETED) {
             session.setAttribute("deleteMessage", true);
             modelAndView.setViewName("redirect:/user/login");
