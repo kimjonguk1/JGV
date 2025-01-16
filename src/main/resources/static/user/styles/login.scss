@@ -32,7 +32,7 @@
     }
 
     > .form-container {
-      @include flex(column, center, center, 1.5rem);
+      @include flex(column, center, center, 1rem);
       border-top: 2px solid #cacaca;
       border-bottom: 2px solid #cacaca;
       height: 100%;
