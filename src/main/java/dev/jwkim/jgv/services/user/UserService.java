@@ -75,7 +75,7 @@ public class UserService {
         this.reviewMapper = reviewMapper;
     }
 
-    public ResultDto<Result, UserEntity> handleKakaoLogin(String code) throws URISyntaxException, IOException, InterruptedException {
+    public ResultDto<Result, UserEntity> handleKakaoLogin(String code, HttpServletRequest httpServletRequest) throws URISyntaxException, IOException, InterruptedException {
         if (code == null) {
             return ResultDto.<Result, UserEntity>builder().result(CommonResult.FAILURE).build();
         }
@@ -134,13 +134,22 @@ public class UserService {
                             .build())
                     .build();
         }
+        String clientIp = httpServletRequest.getRemoteAddr();
+        String userAgent = httpServletRequest.getHeader("User-Agent");
+        UserLoginAttemptsEntity userLoginAttempts = new UserLoginAttemptsEntity();
+        userLoginAttempts.setAtClientIp(clientIp);
+        userLoginAttempts.setAtUserId(user.getUsId());
+        userLoginAttempts.setAtClientUa(userAgent);
+        userLoginAttempts.setAtCreatedAt(LocalDateTime.now());
+        userLoginAttempts.setAtResult(true);
+        this.userMapper.insertAttempts(userLoginAttempts);
         return ResultDto.<Result, UserEntity>builder()
                 .result(CommonResult.SUCCESS)
                 .payload(user)
                 .build();
     }
 
-    public ResultDto<Result, UserEntity> handleNaverLogin(String code) throws URISyntaxException, IOException, InterruptedException {
+    public ResultDto<Result, UserEntity> handleNaverLogin(String code, HttpServletRequest servletRequest) throws URISyntaxException, IOException, InterruptedException {
         if (code == null) {
             return ResultDto.<Result, UserEntity>builder().result(CommonResult.FAILURE).build();
         }
@@ -211,6 +220,15 @@ public class UserService {
                             .build())
                     .build();
         }
+        String clientIp = servletRequest.getRemoteAddr();
+        String userAgent = servletRequest.getHeader("User-Agent");
+        UserLoginAttemptsEntity userLoginAttempts = new UserLoginAttemptsEntity();
+        userLoginAttempts.setAtClientIp(clientIp);
+        userLoginAttempts.setAtUserId(user.getUsId());
+        userLoginAttempts.setAtClientUa(userAgent);
+        userLoginAttempts.setAtCreatedAt(LocalDateTime.now());
+        userLoginAttempts.setAtResult(true);
+        this.userMapper.insertAttempts(userLoginAttempts);
         return ResultDto.<Result, UserEntity>builder()
                 .result(CommonResult.SUCCESS)
                 .payload(user)

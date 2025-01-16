@@ -63,9 +63,9 @@ public class UserController extends AbstractGeneralController {
     private String naverRedirectUri;
 
     @RequestMapping(value = "/login/kakao", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getLoginKakao(HttpSession session,
+    public ModelAndView getLoginKakao(HttpSession session, HttpServletRequest httpServletRequest,
                                       @RequestParam(value = "code", required = false) String code) throws URISyntaxException, IOException, InterruptedException {
-        ResultDto<Result, UserEntity> result = this.userService.handleKakaoLogin(code);
+        ResultDto<Result, UserEntity> result = this.userService.handleKakaoLogin(code, httpServletRequest);
         ModelAndView modelAndView = new ModelAndView();
         if (result.getResult() == HandleKakaoLoginResult.FAILURE_NOT_REGISTERED) {
             modelAndView.addObject("isSocialRegister", true);
@@ -91,9 +91,9 @@ public class UserController extends AbstractGeneralController {
     }
 
     @RequestMapping(value = "/login/naver", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getLoginNaver(HttpSession session,
+    public ModelAndView getLoginNaver(HttpSession session, HttpServletRequest httpServletRequest,
                                       @RequestParam(value = "code", required = false) String code) throws URISyntaxException, IOException, InterruptedException {
-        ResultDto<Result, UserEntity> result = this.userService.handleNaverLogin(code);
+        ResultDto<Result, UserEntity> result = this.userService.handleNaverLogin(code, httpServletRequest);
         ModelAndView modelAndView = new ModelAndView();
         if (result.getResult() == HandleNaverLoginResult.FAILURE_NOT_REGISTERED) {
             modelAndView.addObject("isSocialRegister", true);
