@@ -24,27 +24,27 @@ const ticketParams = JSON.parse(sessionStorage.getItem('ticketParams'));
 {
     const $sideAdvertisementArray = ['https://adimg.cgv.co.kr/images/202411/Firefighters/1121_980x90.jpg', 'https://adimg.cgv.co.kr/images/202412/PORORO/1231_980x90.jpg', 'https://adimg.cgv.co.kr/images/202412/HARBIN/1227_980x90.jpg', 'https://adimg.cgv.co.kr/images/202501/RealPain/0114_980x90.jpg', 'https://adimg.cgv.co.kr/images/202501/Panda/980x90.jpg', 'https://adimg.cgv.co.kr/images/202501/DarkNuns/980x90.jpg'];
     document.addEventListener("DOMContentLoaded", () => {
-        const $advertisement = document.querySelector('.advertisement-info');
+        const $advertisement = document.querySelector('.add');
         const $advertisementRandom = $sideAdvertisementArray[Math.floor(Math.random() * $sideAdvertisementArray.length)];
-        const $a = $advertisement.querySelector(':scope > a');
-        const $img = $advertisement.querySelector(':scope > a > img');        switch ($advertisementRandom) {
+        const $img = $advertisement.querySelector(':scope > .image');
+        switch ($advertisementRandom) {
             case ($sideAdvertisementArray[0]):
-                $a.setAttribute('href', '../movies/movieList/movieInfo/3651');
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3651');
                 break;
             case ($sideAdvertisementArray[1]):
-                $a.setAttribute('href', '../movies/movieList/movieInfo/3628');
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3628');
                 break;
             case ($sideAdvertisementArray[2]):
-                $a.setAttribute('href', '../movies/movieList/movieInfo/3611');
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3611');
                 break;
             case ($sideAdvertisementArray[3]):
-                $a.setAttribute('href', '../movies/movieList/movieInfo/3927')
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3927')
                 break;
             case ($sideAdvertisementArray[4]):
-                $a.setAttribute('href', '../movies/movieList/movieInfo/3974')
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3974')
                 break;
             case ($sideAdvertisementArray[5]):
-                $a.setAttribute('href', '../movies/movieList/movieInfo/4024')
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/4024')
                 break;
         }
         $img.setAttribute('src', $advertisementRandom);
