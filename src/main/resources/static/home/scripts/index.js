@@ -151,8 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const ticket = {moTitle: movieTitle};
             sessionStorage.setItem('ticketParams', JSON.stringify(ticket));
-
-            window.location.href = `/ticket/?moTitle=${encodeURIComponent(movieTitle)}`
+            window.location.href = `/ticket/`
         })
     })
 });
