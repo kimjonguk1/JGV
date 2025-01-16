@@ -612,6 +612,8 @@ table > tbody > tr > td {
   color: #222222;
   line-height: 1;
   text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
   align-items: center;
   display: flex;
   flex-direction: row;
@@ -659,6 +661,13 @@ table > tbody > tr > td {
 #keyword-wrapper > label > .-spring {
   flex-grow: 1;
   flex-shrink: 1;
+}
+#keyword-wrapper > label > select {
+  width: 4rem;
+  height: 1.9rem;
+  background-color: #f8f9fb;
+  font-weight: 500;
+  text-align: left;
 }
 #keyword-wrapper > .submit {
   width: 4rem;

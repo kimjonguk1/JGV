@@ -542,7 +542,7 @@
   font-size: 0.6875rem;
   padding-right: 1rem;
   box-sizing: border-box;
-  color: rgb(255, 0, 0);
+  color: #FB4357;
 }
 #main-seat > .seat-div .screen-container .info-container .title-container {
   width: 100%;
@@ -611,7 +611,7 @@
   border-left: 0.025rem solid #d4d3c9;
 }
 #main-seat > .seat-div .screen-container .info-container .seat-color {
-  color: red;
+  color: #FB4357;
 }
 #main-seat > .seat-div .screen-container > .seat-container {
   width: 55rem;
@@ -642,7 +642,8 @@
   background-color: #d4d3c9;
 }
 #main-seat > .seat-div .screen-container > .seat-container > .screen th.selected-seat, #main-seat > .seat-div .screen-container > .seat-container > .screen td.selected-seat {
-  background-color: red;
+  background-color: #FB4357;
+  color: #ffffff;
 }
 #main-seat > .seat-div .screen-container > .plus {
   margin-top: 2rem;
@@ -665,7 +666,7 @@
   height: 1rem;
 }
 #main-seat > .seat-div .screen-container > .plus > span > .icon.icon1 {
-  background-color: red;
+  background-color: #FB4357;
 }
 #main-seat > .seat-div .screen-container > .plus > span > .icon.icon2 {
   background-color: #d4d3c9;
@@ -845,7 +846,7 @@
   padding: 0.5rem 0;
 }
 #main-payment > .left-container > .cellphone-container > .cellphone-text > h5 {
-  color: red;
+  color: #FB4357;
 }
 #main-payment > .left-container > .simple-pay-container {
   width: 100%;
@@ -890,7 +891,7 @@
   list-style-type: none;
   padding-left: 1.5rem;
   height: 3rem;
-  color: rgb(198, 36, 36);
+  color: #FB4357;
   gap: 0.2rem;
 }
 #main-payment > .left-container > .simple-pay-container > .simple-pay-text-container > .text-space {
@@ -924,7 +925,7 @@
   gap: 0.2rem;
 }
 #main-payment > .left-container > .simple-pay-container > .simple-pay-text-container > .simple-pay-under-text > h5 {
-  color: red;
+  color: #FB4357;
 }
 #main-payment > .left-container > .credit-container {
   width: 100%;
@@ -963,7 +964,7 @@
   background-color: rgb(235, 233, 223);
 }
 #main-payment > .left-container > .credit-container > .credit-text > h4 {
-  color: red;
+  color: #FB4357;
 }
 #main-payment > .left-container > .toss-container {
   width: 100%;
@@ -1002,7 +1003,7 @@
   background-color: rgb(235, 233, 223);
 }
 #main-payment > .left-container > .toss-container > .toss-text > h4 {
-  color: red;
+  color: #FB4357;
 }
 #main-payment > .right-container {
   width: 16rem;
@@ -1247,13 +1248,13 @@
 #payment-section > .pay-form > .table-div > .div-content2 > span > .big-red {
   font-size: 1rem;
   font-weight: 700;
-  color: red;
+  color: #FB4357;
 }
 #payment-section > .pay-form > .table-div > .div-content2 > span > .big-font {
   font-weight: 700;
 }
 #payment-section > .pay-form > .table-div > .div-content2 > span > .small-red {
-  color: red;
+  color: #FB4357;
 }
 #payment-section > .pay-form > .cancel {
   padding-top: 1rem;
@@ -1360,7 +1361,7 @@
 #pay-button > .real-pay {
   width: 8.125rem;
   height: 2.8125rem;
-  background-color: red;
+  background-color: #FB4357;
   color: white;
   margin: 0.2rem;
   border: 0.1rem solid white;

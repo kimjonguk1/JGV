@@ -51,9 +51,9 @@
         <div id="current-movies" class="carousel-container active">
             <div class="carousel">
                 <div class="movies-wrapper">
-                    <div class="movie-card" th:each="movie : ${currentMovies}">
-                        <div class="movie-poster"
-                             th:style="'background-image: url(' + (${movie.m_img_url} ?: '/images/default-poster.jpg') + ')'">
+                    <div class="movie-card" th:each="movie, iterStat : ${currentMovies}">
+                        <div th:style="'background-image: url(' + (${movie.m_img_url} ?: '/images/default-poster.jpg') + ')'">
+                            <div th:text="${iterStat.index + 1}" style="color: #ffffff; font-size: 3.5rem; font-weight: 700; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; height: 30%; font-style: italic; padding-left: 0.6rem; width: 100%; background-color: #FB4357">1</div>
                         </div>
                         <div class="hover-actions">
                             <a th:href="'/movies/movieList/movieInfo/' + ${movie.moNum}" class="detail-button">상세보기</a>
@@ -72,10 +72,11 @@
         <div id="upcoming-movies" class="carousel-container">
             <div class="carousel">
                 <div class="movies-wrapper">
-                    <div class="movie-card" th:each="movie : ${upComingMovies}">
+                    <div class="movie-card" th:each="movie, iterStat : ${upComingMovies}">
                         <div class="movie-poster"
                              th:style="${movie.m_img_url != null ? 'background-image: url(' + movie.m_img_url + ')' : ''}">
-                    </div>
+                            <div th:text="${iterStat.index + 1}" style="color: #ffffff; font-size: 3.5rem; font-weight: 700; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; height: 100%; font-style: italic; padding-left: 0.6rem;">1</div>
+                        </div>
                         <div class="hover-actions">
                             <a th:href="'/movies/movieList/movieInfo/' + ${movie.moNum}" class="detail-button">상세보기</a>
                         </div>

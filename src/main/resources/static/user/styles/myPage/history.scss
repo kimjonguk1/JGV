@@ -67,6 +67,8 @@ table {
     color: #222222;
     line-height: 1;
     text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
 
     align-items: center;
     display: flex;
@@ -77,6 +79,7 @@ table {
       color: #FB4357;
       cursor: pointer;
       pointer-events: none;
+
     }
   }
 
@@ -104,6 +107,14 @@ table {
     color: #6a6e76;
     width: 4rem;
     height: 1.9rem;
+
+    > select {
+      width: 4rem;
+      height: 1.9rem;
+      background-color: #f8f9fb;
+      font-weight: 500;
+      text-align: left;
+    }
   }
 
   > .submit {

@@ -263,7 +263,7 @@ $passwordInput.addEventListener('keyup', (e) => {
             const response = JSON.parse(xhr.responseText);
 
             if (response['result'] === 'success') {
-                alert('회원이 되신 걸 축하드립니다.');
+                alert('회원가입이 완료되었습니다.');
                 return location.href = `/user/login`;
 
             } else if (response['result'] === 'failure') {
@@ -276,7 +276,7 @@ $passwordInput.addEventListener('keyup', (e) => {
             } else if (response['result'] === 'failure_duplicate_contact') {
                 alert('이미 사용중인 연락처 입니다.');
             } else if (response['result'] === 'failure_duplicate_email') {
-                alert('같은 이메일 정보를 가진 계정이 있음을 확인했습니다. 계정 통합을 완료했으며, 확인을 누를시 로그인 페이지로 이동합니다.');
+                alert('이미 동일한 이메일을 가진 계정이 존재합니다. 계정 통합이 완료되었습니다. 확인을 누르시면 로그인 페이지로 이동합니다.');
                 location.href = '../login';
             } else if (response['result'] === 'failure_duplicate_nickname') {
                 alert('이미 사용중인 닉네임 입니다.');
