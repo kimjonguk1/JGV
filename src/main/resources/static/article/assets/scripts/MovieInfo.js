@@ -60,6 +60,7 @@ $bottomBtn.onclick = () => {
 
 $writeReviewButton.addEventListener('click', () => {
     if (sessionUser !== 'null') {
+        // TODO xhr 보내서 예매 여부 체크
         $modal.style.display = 'flex';
     } else {
         const result = confirm('로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?');
