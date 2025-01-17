@@ -32,7 +32,7 @@
             <hr>
             <div class="review-userInfo">
                 <img class="profile-img" src="/user/images/user_mypage_default_profile.gif" alt="profile">
-                <span class="user-name" th:if="${sessionUser != null}" th:text="${session.user.getUsName()}">사용자 이름</span>
+                <span class="user-name" th:if="${sessionUser != null}" th:text="${session.user.getUsNickName()}">사용자 이름</span>
             </div>
             <label class="label">
                 <textarea id="reviewText" placeholder="운영원칙에 어긋나는 게시물로 판단되는 글은 제재 조치를 받을 수 있습니다." maxlength="280"></textarea>
