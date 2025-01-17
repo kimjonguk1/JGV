@@ -390,6 +390,7 @@ button {
   border-bottom: 1px solid #666666;
 }
 #theater-admin-page > .admin-theater-list > table > thead > tr > th {
+  height: 2rem;
   background-color: #2275a4;
   color: #ffffff;
 }
