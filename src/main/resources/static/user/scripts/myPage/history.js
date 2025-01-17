@@ -3,16 +3,21 @@ const now = new Date();
 const currentYear = now.getFullYear();
 const currentMonth = now.getMonth() + 1; // 0-11, 1-12로 맞추기 위해 +1
 const currentDate = now.getDate();
+const $history = document.getElementById('history');
 
-// startYear, startMonth, startDate 기본값 설정
-document.getElementById('startYear').innerHTML = createYearOptions(currentYear);
-document.getElementById('startMonth').innerHTML = createMonthOptions(currentMonth);
-document.getElementById('startDate').innerHTML = createDateOptions(currentYear, currentMonth, currentDate);
+if(document.getElementById('startYear') !== null) {
+    document.getElementById('startYear').innerHTML = createYearOptions(currentYear);
+    document.getElementById('startMonth').innerHTML = createMonthOptions(currentMonth);
+    document.getElementById('startDate').innerHTML = createDateOptions(currentYear, currentMonth, currentDate);
 
 // endYear, endMonth, endDate 기본값 설정
-document.getElementById('endYear').innerHTML = createYearOptions(currentYear);
-document.getElementById('endMonth').innerHTML = createMonthOptions(currentMonth);
-document.getElementById('endDate').innerHTML = createDateOptions(currentYear, currentMonth, currentDate);
+    document.getElementById('endYear').innerHTML = createYearOptions(currentYear);
+    document.getElementById('endMonth').innerHTML = createMonthOptions(currentMonth);
+    document.getElementById('endDate').innerHTML = createDateOptions(currentYear, currentMonth, currentDate);
+}
+// startYear, startMonth, startDate 기본값 설정
+
+
 
 // 1~12월을 위한 함수
 function createMonthOptions(selectedMonth) {

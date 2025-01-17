@@ -356,102 +356,107 @@
     </div>
 </div>
 <div class="content history" th:fragment="history">
-    <div class="title-container">
-        <h2>로그인 이력조회</h2>
-    </div>
-    <ul class="notice">
-        <li>ㆍ최근 1주일간의 로그인 시도 이력을 조회할 수 있습니다.</li>
-        <li>ㆍ회원님의 로그인 시도 이력이 아니라면 계정 해킹시도일 수 있으니, 비밀번호를 점검해 보시기 바랍니다.</li>
-        <li>ㆍ카카오와 네이버 계정은 성공이력만 확인할 수 있습니다.</li>
-    </ul>
-    <form id="keyword-wrapper" class="keyword-wrapper" method="get">
-        <label>
-            <select class="year" name="startYear" id="startYear">
-                <!-- startYear 동적으로 설정 -->
-            </select>
-        </label>
-        <span>년</span>
-        <label>
-            <select class="month" name="startMonth" id="startMonth">
-                <!-- startMonth 동적으로 설정 -->
-            </select>
-        </label>
-        <span>월</span>
-        <label>
-            <select class="date" name="startDate" id="startDate">
-                <!-- startDate 동적으로 설정 -->
-            </select>
-        </label>
-        <span>일</span>
-        <span>~</span>
-        <label>
-            <select class="year" name="endYear" id="endYear">
-                <!-- endYear 동적으로 설정 -->
-            </select>
-        </label>
-        <span>년</span>
-        <label>
-            <select class="month" name="endMonth" id="endMonth">
-                <!-- endMonth 동적으로 설정 -->
-            </select>
-        </label>
-        <span>월</span>
-        <label>
-            <select class="date" name="endDate" id="endDate">
-                <!-- endDate 동적으로 설정 -->
-            </select>
-        </label>
-        <span>일</span>
-        <button class="submit" type="submit">조회</button>
-    </form>
-
-    <table>
-        <thead>
-        <tr>
-            <th>일시</th>
-            <th>IP</th>
-            <th>성공여부</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="attempt : ${loginAttempt}">
-            <td th:text="${#temporals.format(attempt.getAtCreatedAt(), 'yyyy-MM-dd HH:mm:ss')}">2025.01.10 11:19:21</td>
-            <td th:text="${attempt.getAtClientIp()}">1.1.1.1.1.1</td>
-            <td th:style="${attempt.atResult ? 'font-weight: 500;' : 'color: #fb4357; font-weight: 500;'}"
-                th:text="${attempt.atResult ? '성공' : '실패'}">성공
-            </td>
-        </tr>
-        <tr th:if="${loginAttempt == null || loginAttempt.length == 0}">
-            <td colspan="7">로그인 이력이 없습니다.</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <div class="move" th:if="${loginAttempt != null && loginAttempt.length > 0}" th:with="dateParam = ${param.startYear != null && param.startMonth != null && param.startDate != null && param.endYear != null && param.endMonth != null && param.endDate != null ? '&startYear=' + param.startYear + '&startMonth=' + param.startMonth + '&startDate=' + param.startDate + '&endYear=' + param.endYear + '&endMonth=' + param.endMonth + '&endDate=' + param.endDate : ''}">
-        <!-- 페이지네이션 -->
-        <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
-           th:href="${'/user/myPage/history?page=' + loginPage.movableMinPage + dateParam}"
-           class="page first">|&lt;</a>
-
-        <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
-           th:href="${'/user/myPage/history?page=' + (loginPage.requestPage - 1) + dateParam}"
-           class="page prev">&lt;</a>
-
-        <div class="page-container">
-            <a class="page"
-               th:each="page : ${#numbers.sequence(loginPage.displayMinPage, loginPage.displayMaxPage)}"
-               th:text="${page}"
-               th:href="${'/user/myPage/history?page=' + page + dateParam}"
-               th:classappend="${page == loginPage.requestPage} ? 'selected'"></a>
+    <div id="history">
+        <div class="title-container">
+            <h2>로그인 이력조회</h2>
         </div>
+        <ul class="notice">
+            <li>ㆍ최근 1주일간의 로그인 시도 이력을 조회할 수 있습니다.</li>
+            <li>ㆍ회원님의 로그인 시도 이력이 아니라면 계정 해킹시도일 수 있으니, 비밀번호를 점검해 보시기 바랍니다.</li>
+            <li>ㆍ카카오와 네이버 계정은 성공이력만 확인할 수 있습니다.</li>
+        </ul>
+        <form id="keyword-wrapper" class="keyword-wrapper" method="get">
+            <label>
+                <select class="year" name="startYear" id="startYear">
+                    <!-- startYear 동적으로 설정 -->
+                </select>
+            </label>
+            <span>년</span>
+            <label>
+                <select class="month" name="startMonth" id="startMonth">
+                    <!-- startMonth 동적으로 설정 -->
+                </select>
+            </label>
+            <span>월</span>
+            <label>
+                <select class="date" name="startDate" id="startDate">
+                    <!-- startDate 동적으로 설정 -->
+                </select>
+            </label>
+            <span>일</span>
+            <span>~</span>
+            <label>
+                <select class="year" name="endYear" id="endYear">
+                    <!-- endYear 동적으로 설정 -->
+                </select>
+            </label>
+            <span>년</span>
+            <label>
+                <select class="month" name="endMonth" id="endMonth">
+                    <!-- endMonth 동적으로 설정 -->
+                </select>
+            </label>
+            <span>월</span>
+            <label>
+                <select class="date" name="endDate" id="endDate">
+                    <!-- endDate 동적으로 설정 -->
+                </select>
+            </label>
+            <span>일</span>
+            <button class="submit" type="submit">조회</button>
+        </form>
 
-        <a th:if="${loginPage.requestPage < loginPage.movableMaxPage}"
-           th:href="${'/user/myPage/history?page=' + (loginPage.requestPage + 1) + dateParam}"
-           class="page next">&gt;</a>
+        <table>
+            <thead>
+            <tr>
+                <th>일시</th>
+                <th>IP</th>
+                <th>성공여부</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="attempt : ${loginAttempt}">
+                <td th:text="${#temporals.format(attempt.getAtCreatedAt(), 'yyyy-MM-dd HH:mm:ss')}">2025.01.10
+                    11:19:21
+                </td>
+                <td th:text="${attempt.getAtClientIp()}">1.1.1.1.1.1</td>
+                <td th:style="${attempt.atResult ? 'font-weight: 500;' : 'color: #fb4357; font-weight: 500;'}"
+                    th:text="${attempt.atResult ? '성공' : '실패'}">성공
+                </td>
+            </tr>
+            <tr th:if="${loginAttempt == null || loginAttempt.length == 0}">
+                <td colspan="7">로그인 이력이 없습니다.</td>
+            </tr>
+            </tbody>
+        </table>
 
-        <a th:if="${loginPage.requestPage < loginPage.movableMaxPage}"
-           th:href="${'/user/myPage/history?page=' + loginPage.displayMaxPage + dateParam}"
-           class="page last">&gt;|</a>
+        <div class="move" th:if="${loginAttempt != null && loginAttempt.length > 0}"
+             th:with="dateParam = ${param.startYear != null && param.startMonth != null && param.startDate != null && param.endYear != null && param.endMonth != null && param.endDate != null ? '&startYear=' + param.startYear + '&startMonth=' + param.startMonth + '&startDate=' + param.startDate + '&endYear=' + param.endYear + '&endMonth=' + param.endMonth + '&endDate=' + param.endDate : ''}">
+            <!-- 페이지네이션 -->
+            <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
+               th:href="${'/user/myPage/history?page=' + loginPage.movableMinPage + dateParam}"
+               class="page first">|&lt;</a>
+
+            <a th:if="${loginPage.requestPage > loginPage.movableMinPage}"
+               th:href="${'/user/myPage/history?page=' + (loginPage.requestPage - 1) + dateParam}"
+               class="page prev">&lt;</a>
+
+            <div class="page-container">
+                <a class="page"
+                   th:each="page : ${#numbers.sequence(loginPage.displayMinPage, loginPage.displayMaxPage)}"
+                   th:text="${page}"
+                   th:href="${'/user/myPage/history?page=' + page + dateParam}"
+                   th:classappend="${page == loginPage.requestPage} ? 'selected'"></a>
+            </div>
+
+            <a th:if="${loginPage.requestPage < loginPage.movableMaxPage}"
+               th:href="${'/user/myPage/history?page=' + (loginPage.requestPage + 1) + dateParam}"
+               class="page next">&gt;</a>
+
+            <a th:if="${loginPage.requestPage < loginPage.movableMaxPage}"
+               th:href="${'/user/myPage/history?page=' + loginPage.displayMaxPage + dateParam}"
+               class="page last">&gt;|</a>
+        </div>
     </div>
 </div>
 </html>
