@@ -102,7 +102,7 @@ $loginForm.onsubmit = (e) => {
 
         }
         else if (response['result'] === 'failure_blocked_ip') {
-            alert('해당 IP 주소에서의 로그인 시도가 차단되었습니다. 관리자가 검토 후 조치를 취할 수 있습니다."');
+            alert('해당 IP 주소에서의 로그인 시도가 차단되었습니다. 관리자가 검토 후 조치를 취할 수 있습니다.');
         }
         else if (response['result'] === 'failure_password_mismatch') {
             let customDialog = '';
