@@ -60,8 +60,27 @@ $bottomBtn.onclick = () => {
 
 $writeReviewButton.addEventListener('click', () => {
     if (sessionUser !== 'null') {
-        // TODO xhr 보내서 예매 여부 체크
-        $modal.style.display = 'flex';
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState !== XMLHttpRequest.DONE) {
+                return;
+            }
+            if (xhr.status < 200 || xhr.status >= 300) {
+                alert('서버 오류가 발생했습니다. 다시 시도해주세요.');
+                return;
+            }
+            const response = JSON.parse(xhr.responseText);
+            console.log(response);
+            if (response.result === 'SUCCESS') {
+                $modal.style.display = 'flex';
+            } else if (response.result === 'FAILURE') {
+                alert('예매를 한 영화만 리뷰를 작성할 수 있습니다.');
+                return;
+            }
+        };
+        const moNum = window.location.pathname.split('/').pop();
+        xhr.open('GET', `/user/getReserveInfo?moNum=${moNum}`);
+        xhr.send();
     } else {
         const result = confirm('로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?');
         if (result) {

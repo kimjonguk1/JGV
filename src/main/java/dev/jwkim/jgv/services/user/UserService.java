@@ -1029,4 +1029,8 @@ public class UserService {
         return Pair.of(pageVo, totalLoginHistory);
     }
     //endregion
+
+    public CommonResult getReserveInfo(int usNum, int moNum) {
+        return this.userMapper.getReserveInfoById(usNum, moNum) > 0 ? CommonResult.SUCCESS : CommonResult.FAILURE;
+    }
 }

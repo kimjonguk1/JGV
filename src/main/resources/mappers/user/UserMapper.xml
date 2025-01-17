@@ -494,6 +494,14 @@
         WHERE `us_social_type_code` = #{usSocialTypeCode}
           AND `us_email` = #{usEmail}
     </select>
+    <select id="getReserveInfoById" resultType="java.lang.Integer">
+        SELECT COUNT(*) AS reservation_count
+        FROM jgv.reservation r
+                 JOIN jgv.payment p ON r.pa_num = p.pa_num
+                 JOIN jgv.screen s ON r.sc_num = s.sc_num
+        WHERE p.us_num = #{usId}
+          AND s.mo_num = #{moNum};
+    </select>
 
     <update id="updateSocial" parameterType="dev.jwkim.jgv.entities.user.UserEntity">
         UPDATE `jgv`.`user`
@@ -501,5 +509,7 @@
             `us_social_type_code` = #{usSocialTypeCode}
         WHERE `us_email` = #{usEmail}
     </update>
+
+
 
 </mapper>

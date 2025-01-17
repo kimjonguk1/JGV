@@ -4,6 +4,7 @@ import dev.jwkim.jgv.entities.ticket.PaymentEntity;
 import dev.jwkim.jgv.entities.user.UserBlockedIpsEntity;
 import dev.jwkim.jgv.entities.user.UserEntity;
 import dev.jwkim.jgv.entities.user.UserLoginAttemptsEntity;
+import dev.jwkim.jgv.results.CommonResult;
 import dev.jwkim.jgv.vos.user.ReservationVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -98,4 +99,5 @@ public interface UserMapper {
     int deleteReviewsByUserId(int usNum);
     ReservationVo selectCancelPaNumByAll(@Param("usNum") int usNum, @Param("paNum") int paNum);
 
+    int getReserveInfoById(@Param("usId") int usId, @Param("moNum") int moNum);
 }
