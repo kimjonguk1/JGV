@@ -198,7 +198,7 @@ public class MovieListController {
             // 예외 발생 시 FAILURE 응답 반환
             return SearchResult.failure("An error occurred while fetching data: " + e.getMessage());
         }
-
-
     }
+
+
 }

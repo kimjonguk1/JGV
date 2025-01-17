@@ -623,4 +623,14 @@ public class UserController extends AbstractGeneralController {
 
         return ResponseEntity.ok(response);  // 결과를 JSON 형태로 반환
     }
+
+    @RequestMapping(value = "/getReserveInfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String getReserveInfo(HttpSession session, @RequestParam("moNum") Integer moNum) {
+        UserEntity users = (UserEntity) session.getAttribute("user");
+        CommonResult result = this.userService.getReserveInfo(users.getUsNum(), moNum);
+        JSONObject response = new JSONObject();
+        response.put("result", result);
+        return response.toString();
+    }
 }
