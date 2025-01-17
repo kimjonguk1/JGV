@@ -17,8 +17,11 @@
     <script defer src="/assets/scripts/common.js" type="text/javascript"></script>
     <link rel="shortcut icon" href="https://img.cgv.co.kr/theater_img/favicon.ico" type="image/x-icon">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script th:if="${isSocialRegister == true}">
-        alert('소셜 계정으로 회원가입을 진행합니다. 아래 항목을 입력해 주세요.');
+    <script th:if="${naverSocialRegister == true}">
+        alert('네이버 계정으로 회원가입을 진행합니다. 아래 항목을 입력해 주세요.');
+    </script>
+    <script th:if="${kakaoSocialRegister == true}">
+        alert('카카오 계정으로 회원가입을 진행합니다. 아래 항목을 입력해 주세요.');
     </script>
 </head>
 <body>

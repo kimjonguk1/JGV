@@ -166,6 +166,10 @@ main > .contents > .video_wrapper::after {
   background-size: cover;
   background-position: center;
   border-radius: 8px;
+  position: relative;
+}
+.movie-container .carousel-container .carousel .movies-wrapper .movie-card .movie-poster > div:hover {
+  color: #FB4357;
 }
 .movie-container .carousel-container .carousel .movies-wrapper .movie-card .hover-actions {
   position: absolute;

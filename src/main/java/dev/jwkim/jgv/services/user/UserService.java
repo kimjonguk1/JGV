@@ -19,6 +19,7 @@ import dev.jwkim.jgv.vos.user.ReservationVo;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONException;
@@ -403,19 +404,26 @@ public class UserService {
             blockedIp.setIpCreatedAt(LocalDateTime.now());
             blockedIp.setIpExpiresAt(true);
             this.userMapper.insertBlockedIp(blockedIp);
-            System.out.println("IP 차단됨 " + clientIp);
         }
         return failedAttempts;
     }
 
-    public Result login(UserEntity user, HttpServletRequest request) {
+    public Result login(UserEntity user, HttpServletRequest request, HttpServletResponse response) {
 
         if (user == null ||
                 user.getUsId() == null || user.getUsId().isEmpty() || user.getUsId().length() < 2 || user.getUsId().length() > 20 ||
                 user.getUsPw() == null || user.getUsPw().isEmpty() || user.getUsPw().length() < 8 || user.getUsPw().length() > 100) {
             return CommonResult.FAILURE;
         }
-        String clientIp = request.getRemoteAddr();
+
+        String clientIp = request.getHeader("CF-Connecting-IP");
+        if (clientIp == null || clientIp.isEmpty()) {
+            clientIp = request.getHeader("X-Forwarded-For");
+        }
+        if (clientIp == null || clientIp.isEmpty()) {
+            clientIp = request.getRemoteAddr();
+        }
+
         String userAgent = request.getHeader("User-Agent");
 
         UserBlockedIpsEntity userBlockedIp = this.userMapper.selectBlockedIpByClientIp(clientIp);
@@ -441,7 +449,6 @@ public class UserService {
         if (!encoder.matches(user.getUsPw(), dbUser.getUsPw())) {
             userLoginAttempts.setAtResult(false);
             this.userMapper.insertAttempts(userLoginAttempts);
-            handleLoginFailure(clientIp);
             return LoginResult.FAILURE_PASSWORD_MISMATCH;
         }
         if (!dbUser.isUsIsVerified()) {
@@ -472,7 +479,7 @@ public class UserService {
         user.setUsIsVerified(dbUser.isUsIsVerified());
 
         HttpSession session = request.getSession(true);
-        String currentIp = request.getRemoteAddr();
+        String currentIp = clientIp;
         String storedIp = (String) session.getAttribute("ip");
 
         // 만약 기존 세션의 IP와 현재 IP가 다르면 강제 로그아웃

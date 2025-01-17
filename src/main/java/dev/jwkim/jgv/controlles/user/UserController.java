@@ -4,7 +4,6 @@ package dev.jwkim.jgv.controlles.user;
 import dev.jwkim.jgv.DTO.MyReviewDTO;
 import dev.jwkim.jgv.DTO.ResultDto;
 import dev.jwkim.jgv.entities.user.EmailTokenEntity;
-import dev.jwkim.jgv.entities.user.ReviewEntity;
 import dev.jwkim.jgv.entities.user.UserEntity;
 import dev.jwkim.jgv.entities.user.UserLoginAttemptsEntity;
 import dev.jwkim.jgv.results.CommonResult;
@@ -15,8 +14,6 @@ import dev.jwkim.jgv.results.user.LoginResult;
 import dev.jwkim.jgv.services.user.ReviewService;
 import dev.jwkim.jgv.services.user.UserService;
 import dev.jwkim.jgv.vos.PageVo;
-import dev.jwkim.jgv.vos.ticket.SeatVo;
-import dev.jwkim.jgv.vos.user.ReservationVo;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +31,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -68,7 +64,7 @@ public class UserController extends AbstractGeneralController {
         ResultDto<Result, UserEntity> result = this.userService.handleKakaoLogin(code, httpServletRequest);
         ModelAndView modelAndView = new ModelAndView();
         if (result.getResult() == HandleKakaoLoginResult.FAILURE_NOT_REGISTERED) {
-            modelAndView.addObject("isSocialRegister", true);
+            modelAndView.addObject("kakaoSocialRegister", true);
             session.setAttribute(UserEntity.LAST_SINGULAR, result.getPayload());
             modelAndView.addObject("social", result.getPayload());
             modelAndView.setViewName("user/social-register");
@@ -96,7 +92,7 @@ public class UserController extends AbstractGeneralController {
         ResultDto<Result, UserEntity> result = this.userService.handleNaverLogin(code, httpServletRequest);
         ModelAndView modelAndView = new ModelAndView();
         if (result.getResult() == HandleNaverLoginResult.FAILURE_NOT_REGISTERED) {
-            modelAndView.addObject("isSocialRegister", true);
+            modelAndView.addObject("naverSocialRegister", true);
             session.setAttribute(UserEntity.LAST_SINGULAR, result.getPayload());
             modelAndView.addObject("social", result.getPayload());
             modelAndView.setViewName("user/social-register");
@@ -189,12 +185,12 @@ public class UserController extends AbstractGeneralController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String postLogin(UserEntity user, HttpServletRequest request,
+    public String postLogin(UserEntity user, HttpServletRequest request,HttpServletResponse responses,
                             @RequestParam(value = "usId", required = false) String id) throws MessagingException {
         // 로그인 시도 시 IP 정보
         String currentIp = request.getRemoteAddr();
         // 로그인 시도 결과를 담을 변수
-        Result result = this.userService.login(user, request);
+        Result result = this.userService.login(user, request, responses);
         JSONObject response = new JSONObject();
         // 로그인 성공 시
         if (result == CommonResult.SUCCESS) {

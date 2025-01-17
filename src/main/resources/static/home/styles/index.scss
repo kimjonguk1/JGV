@@ -170,6 +170,7 @@ main {
         .movie-card {
           position: relative;
           width: 20%;
+
           margin: 0 10px;
           text-align: center;
           flex: 0 0 calc(20% - 20px);
@@ -187,6 +188,11 @@ main {
             background-size: cover;
             background-position: center;
             border-radius: 8px;
+            position: relative;
+
+            > div:hover {
+              color: #FB4357;
+            }
           }
 
           .hover-actions {
