@@ -39,28 +39,34 @@
                 <img src="/user/images/user_id.png"
                      alt="person-male--v2">
                     </span>
-                <input class="--obj-filed" placeholder="아이디를 입력해주세요." type="text" required autofocus maxlength="20" minlength="2" name="id">
+                <input class="--obj-filed" placeholder="아이디를 입력해주세요." type="text" required autofocus maxlength="20"
+                       minlength="2" name="id">
             </label>
             <label class="--obj-label">
                 <span class="image-wrapper">
                     <img src="/user/images/user.password.png" alt="unlock">
                 </span>
-                <input class="--obj-filed" placeholder="비밀번호를 입력해주세요." type="password" required maxlength="100" minlength="8" autocomplete="off" name="password">
+                <input class="--obj-filed" placeholder="비밀번호를 입력해주세요." type="password" required maxlength="100"
+                       minlength="8" autocomplete="off" name="password">
             </label>
             <div class="button-container">
                 <button class="button" type="submit">로그인</button>
             </div>
             <div class="social-container">
-                <a class="button -color-kakao" target="_self"
-                   th:href="@{https://kauth.kakao.com/oauth/authorize (response_type='code', client_id=${kakaoClientId}, redirect_uri = ${kakaoRedirectUri})}">
-                    <img alt="" class="image" th:src="@{/user/assets/images/index/loginForm.kakao.png}">
-                    <span class="text">카카오 로그인</span>
-                </a>
-                <a class="button -color-naver" target="_self"
-                   th:href="@{https://nid.naver.com/oauth2.0/authorize (response_type='code', client_id = ${naverClientId}, redirect_uri = ${naverRedirectUri}, state = 'study')}">
-                    <img alt="" class="image" th:src="@{/user/assets/images/index/loginForm.naver.png}">
-                    <span class="text">네이버 로그인</span>
-                </a>
+                <div class="kakao-container" style="width: 10.8rem; background-color: #fee500; display: flex; flex-direction: row; align-items: center; justify-content: center; height: 2.25rem;">
+                    <a class="button -color-kakao" target="_self"
+                       th:href="@{https://kauth.kakao.com/oauth/authorize (response_type='code', client_id=${kakaoClientId}, redirect_uri = ${kakaoRedirectUri})}">
+                        <img alt="" class="image" th:src="@{/user/assets/images/index/loginForm.kakao.png}">
+                        <span class="text">카카오 로그인</span>
+                    </a>
+                </div>
+                <div class="naver-container" style="width: 10.8rem; background-color: #03c75a; display: flex; flex-direction: row; align-items: center; justify-content: center; height: 2.25rem">
+                    <a class="button -color-naver" target="_self"
+                       th:href="@{https://nid.naver.com/oauth2.0/authorize (response_type='code', client_id = ${naverClientId}, redirect_uri = ${naverRedirectUri}, state = 'study')}">
+                        <img alt="" class="image" th:src="@{/user/assets/images/index/loginForm.naver.png}">
+                        <span class="text">네이버 로그인</span>
+                    </a>
+                </div>
             </div>
             <div class="user-container">
                 <label class="--obj-check-label">
@@ -81,7 +87,7 @@
         <div class="-spring"></div>
         <div class="ad" style="border: 2px solid #f6f6f6;">
             <a th:href="@{'https://g-sa.koreaisacademy.com/'}">
-            <img src="https://www.koreaedugroup.com/m/img/affiliate/koreais/001.gif" alt="로그인배너">
+                <img src="https://www.koreaedugroup.com/m/img/affiliate/koreais/001.gif" alt="로그인배너">
             </a>
         </div>
     </form>

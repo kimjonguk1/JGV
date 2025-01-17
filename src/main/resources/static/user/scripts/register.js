@@ -264,7 +264,7 @@ $passwordInput.addEventListener('keyup', (e) => {
             }
             Loading.hide();
             if (domain === '') {
-                alert('도메인 값이 누락 되었습니다.');
+                alert('이메일의 도메인 부분이 누락되었습니다. 이메일 주소를 올바르게 입력해 주세요.');
                 $registerForm['email'].focus();
                 return;
             }

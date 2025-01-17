@@ -54,6 +54,10 @@
           font-size: 1rem;
           font-weight: 500;
           cursor: pointer;
+
+          &:hover {
+            filter: brightness(87%);
+          }
         }
       }
 
@@ -105,49 +109,53 @@
         display: flex;
         gap: 1rem;
 
-        > .button {
-          @mixin applyColor($b, $c, $darkenOffset: 5%) {
-            background-color: $b;
-            color: $c;
+        > .kakao-container,
+        .naver-container {
 
-            &:hover {
-              background-color: darken($b, $darkenOffset);
+          > .button {
+            @mixin applyColor($b, $c, $darkenOffset: 5%) {
+              background-color: $b;
+              color: $c;
+
+              &:hover {
+                background-color: darken($b, $darkenOffset);
+              }
+
+              &:active {
+                background-color: darken($b, $darkenOffset * 2);
+              }
+            }
+            @include flex(row, center, center, 0.5rem);
+            width: 10.4rem;
+            height: 1.85rem;
+            border: 2px solid #ffffff;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition-duration: 125ms;
+            transition-property: background-color;
+            transition-timing-function: ease;
+            user-select: none;
+
+            &.-color-primary {
+              @include applyColor(#3498db, #ffffff);
             }
 
-            &:active {
-              background-color: darken($b, $darkenOffset * 2);
+            &.-color-gray {
+              @include applyColor(#9e9e9e, #ffffff);
             }
-          }
-          @include flex(row, center, center, 0.5rem);
-          width: 10.8rem;
-          height: 2.25rem;
-          border-radius: 0.25rem;
-          cursor: pointer;
-          text-align: center;
-          text-decoration: none;
-          transition-duration: 125ms;
-          transition-property: background-color;
-          transition-timing-function: ease;
-          user-select: none;
 
-          &.-color-primary {
-            @include applyColor(#3498db, #ffffff);
-          }
+            &.-color-kakao {
+              @include applyColor(#fee500, #212121, 2.5%);
+            }
 
-          &.-color-gray {
-            @include applyColor(#9e9e9e, #ffffff);
-          }
+            &.-color-naver {
+              @include applyColor(#03c75a, #ffffff, 2.5%);
+            }
 
-          &.-color-kakao {
-            @include applyColor(#fee500, #212121, 2.5%);
-          }
-
-          &.-color-naver {
-            @include applyColor(#03c75a, #ffffff, 2.5%);
-          }
-
-          > .image {
-            height: 1rem;
+            > .image {
+              height: 1rem;
+            }
           }
         }
       }

@@ -668,7 +668,7 @@
           font-size: 0.6875rem;
           padding-right: 1rem;
           box-sizing: border-box;
-          color: rgb(255, 0, 0);
+          color: #FB4357;
         }
 
         .title-container {
@@ -751,7 +751,7 @@
         }
 
         .seat-color {
-          color: red;
+          color: #FB4357;
         }
       }
 
@@ -789,7 +789,8 @@
             }
 
             &.selected-seat {
-              background-color: red;
+              background-color: #FB4357;
+              color: #ffffff;
             }
 
           }
@@ -818,7 +819,7 @@
             height: 1rem;
 
             &.icon1 {
-              background-color: red;
+              background-color: #FB4357;
             }
 
             &.icon2 {
@@ -1031,7 +1032,7 @@
         }
 
         > h5 {
-          color: red;
+          color: #FB4357;
         }
       }
     }
@@ -1085,7 +1086,7 @@
           list-style-type: none;
           padding-left: 1.5rem;
           height: 3rem;
-          color: rgb(198, 36, 36);
+          color: #FB4357;
           gap: 0.2rem;
         }
 
@@ -1124,7 +1125,7 @@
           gap: 0.2rem;
 
           > h5 {
-            color: red;
+            color: #FB4357;
           }
         }
       }
@@ -1172,7 +1173,7 @@
         background-color: rgb(235, 233, 223);
 
         > h4 {
-          color: red;
+          color: #FB4357;
         }
       }
     }
@@ -1219,7 +1220,7 @@
         background-color: rgb(235, 233, 223);
 
         > h4 {
-          color: red;
+          color: #FB4357;
         }
       }
     }
@@ -1501,7 +1502,7 @@
           > .big-red {
             font-size: 1rem;
             font-weight: 700;
-            color: red;
+            color: #FB4357;
           }
 
           > .big-font {
@@ -1509,7 +1510,7 @@
           }
 
           > .small-red {
-            color: red;
+            color: #FB4357;
           }
         }
       }
@@ -1640,7 +1641,7 @@
   > .real-pay {
     width: 8.125rem;
     height: 2.8125rem;
-    background-color: red;
+    background-color: #FB4357;
     color: white;
     margin: 0.2rem;
     border: 0.1rem solid white;

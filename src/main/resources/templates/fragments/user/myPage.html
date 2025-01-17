@@ -421,6 +421,9 @@
                 th:text="${attempt.atResult ? '성공' : '실패'}">성공
             </td>
         </tr>
+        <tr th:if="${loginAttempt == null || loginAttempt.length == 0}">
+            <td colspan="7">로그인 이력이 없습니다.</td>
+        </tr>
         </tbody>
     </table>
 
