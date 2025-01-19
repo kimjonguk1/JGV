@@ -396,8 +396,20 @@ public class UserService {
     //region 로그인
 
     // 비밀번호 입력 5회 실패시 해당 IP 차단
-    public int handleLoginFailure(String clientIp) {
+    public int handleLoginFailure(HttpServletRequest request) {
+        // IP 가져오는 로직 재사용
+        String clientIp = request.getHeader("CF-Connecting-IP");
+        if (clientIp == null || clientIp.isEmpty()) {
+            clientIp = request.getHeader("X-Forwarded-For");
+        }
+        if (clientIp == null || clientIp.isEmpty()) {
+            clientIp = request.getRemoteAddr();
+        }
+
+        // 로그인 실패 횟수 계산
         int failedAttempts = userMapper.countFailedLoginAttempts(clientIp);
+
+        // 실패 횟수가 5 이상인 경우 IP 차단
         if (failedAttempts >= 5) {
             UserBlockedIpsEntity blockedIp = new UserBlockedIpsEntity();
             blockedIp.setIpClientIp(clientIp);
@@ -405,8 +417,10 @@ public class UserService {
             blockedIp.setIpExpiresAt(true);
             this.userMapper.insertBlockedIp(blockedIp);
         }
+
         return failedAttempts;
     }
+
 
     public Result login(UserEntity user, HttpServletRequest request, HttpServletResponse response) {
 

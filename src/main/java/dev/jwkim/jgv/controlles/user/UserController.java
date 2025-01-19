@@ -227,7 +227,7 @@ public class UserController extends AbstractGeneralController {
             response.put(Result.NAME, result.nameToLower());
             return response.toString();
         }
-        int count = this.userService.handleLoginFailure(currentIp);
+        int count = this.userService.handleLoginFailure(request);
         response.put("count", count);
         response.put(Result.NAME, result.nameToLower());
         return response.toString();
@@ -279,18 +279,15 @@ public class UserController extends AbstractGeneralController {
 
         UserEntity loggedInUser = (UserEntity) session.getAttribute("user");
         // 날짜 처리
-
         String startDateString = startYear + "-" + startMonth + "-" + startDate;
         String endDateString = endYear + "-" + endMonth + "-" + endDate;
 
         // 로그인 내역 조회
         Pair<PageVo, UserLoginAttemptsEntity[]> attempts;
         if (endDate == null) {
-            System.out.println("기본페이지");
             attempts = this.userService.getLoginAttempts(page, loggedInUser.getUsId());
         }
         else {
-            System.out.println("날짜검색 페이지");
             attempts = this.userService.searchLoginHistory(page, loggedInUser.getUsId(), startDateString, endDateString);
         }
 
