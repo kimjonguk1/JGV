@@ -10,19 +10,19 @@
             switch ($advertisementRandom) {
                 case ($advertisementArray[0]):
                     $advertisement.style.backgroundColor = '#2B53AB'
-                    $a.setAttribute('href', '/movies/movieList/movieInfo/3669')
+                    $a.setAttribute('href', '/movies/movieList/movieInfo/4318')
                     break;
                 case ($advertisementArray[1]):
                     $advertisement.style.backgroundColor = '#4184D2'
-                    $a.setAttribute('href', '/movies/movieList/movieInfo/3628')
+                    $a.setAttribute('href', '/movies/movieList/movieInfo/4266')
                     break;
                 case ($advertisementArray[2]):
                     $advertisement.style.backgroundColor = '#191413'
-                    $a.setAttribute('href', '/movies/movieList/movieInfo/3611')
+                    $a.setAttribute('href', '/movies/movieList/movieInfo/4267')
                     break;
                 case ($advertisementArray[3]):
                     $advertisement.style.backgroundColor = '#2B82DD'
-                    $a.setAttribute('href', '/movies/movieList/movieInfo/3666')
+                    $a.setAttribute('href', '/movies/movieList/movieInfo/4314')
                     break;
                 case ($advertisementArray[4]):
                     $advertisement.style.backgroundColor = '#181A1D'
@@ -30,11 +30,11 @@
                     break;
                 case ($advertisementArray[5]):
                     $advertisement.style.backgroundColor = '#F4DC94'
-                    $a.setAttribute('href', '/movies/movieList/movieInfo/3974')
+                    $a.setAttribute('href', '/movies/movieList/movieInfo/4290')
                     break;
                 case ($advertisementArray[6]):
                     $advertisement.style.backgroundColor = '#BDD6D0'
-                    $a.setAttribute('href', '/movies/movieList/movieInfo/3927')
+                    $a.setAttribute('href', '/movies/movieList/movieInfo/4283')
                     break;
             }
             $img.setAttribute('src', $advertisementRandom);

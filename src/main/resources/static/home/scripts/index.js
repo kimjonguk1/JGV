@@ -27,27 +27,27 @@ $items.forEach((x) => {
             case ($videoArray[0]):
                 $strong.innerText = '뽀로로 극장판 바닷속 대모험';
                 $span.innerHTML = `최고 스케일 스펙터클 오션 어드벤처<br>1월 1일 대개봉`;
-                $a.setAttribute('href', '/movies/movieList/movieInfo/3628');
+                $a.setAttribute('href', '/movies/movieList/movieInfo/4266');
                 break;
             case ($videoArray[1]):
                 $strong.innerText = '하얼빈';
                 $span.innerHTML = `"지금 가장 의미있는 영화"<br>긴 여운 X 큰 울림! 예매 ▶`;
-                $a.setAttribute('href', '/movies/movieList/movieInfo/3611');
+                $a.setAttribute('href', '/movies/movieList/movieInfo/4267');
                 break;
             case ($videoArray[2]):
                 $strong.innerText = '꼬마 판다 팡의 아프리카 대모험';
                 $span.innerHTML = `귀여움으로 무장한 <br> 새로운 꼬마 판다의 등장!`;
-                $a.setAttribute('href', '/movies/movieList/movieInfo/3974');
+                $a.setAttribute('href', '/movies/movieList/movieInfo/4290');
                 break;
             case ($videoArray[3]):
                 $strong.innerText = '리얼 페인';
                 $span.innerHTML = `2025 골든 글로브 수상작 <br> 1월 15일 대개봉`;
-                $a.setAttribute('href', '/movies/movieList/movieInfo/3927');
+                $a.setAttribute('href', '/movies/movieList/movieInfo/4283');
                 break;
             case ($videoArray[4]):
                 $strong.innerText = '검은 수녀들';
                 $span.innerHTML = `송혜교, 이번 상대는 악마다! <br> 더러운 영들아, 당장 떠나거라`;
-                $a.setAttribute('href', '/movies/movieList/movieInfo/4024');
+                $a.setAttribute('href', '/movies/movieList/movieInfo/4261');
                 break;
         }
         $video.load();

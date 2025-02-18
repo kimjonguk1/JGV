@@ -29,22 +29,22 @@ const ticketParams = JSON.parse(sessionStorage.getItem('ticketParams'));
         const $img = $advertisement.querySelector(':scope > .image');
         switch ($advertisementRandom) {
             case ($sideAdvertisementArray[0]):
-                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3651');
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/4317');
                 break;
             case ($sideAdvertisementArray[1]):
-                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3628');
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/4266');
                 break;
             case ($sideAdvertisementArray[2]):
-                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3611');
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/4267');
                 break;
             case ($sideAdvertisementArray[3]):
-                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3927')
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/4283')
                 break;
             case ($sideAdvertisementArray[4]):
-                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/3974')
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/4290')
                 break;
             case ($sideAdvertisementArray[5]):
-                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/4024')
+                $advertisement.setAttribute('href', '../movies/movieList/movieInfo/4261')
                 break;
         }
         $img.setAttribute('src', $advertisementRandom);
@@ -59,22 +59,22 @@ const ticketParams = JSON.parse(sessionStorage.getItem('ticketParams'));
                 const $advertisementRandom = $advertisementContainerArray[Math.floor(Math.random() * $advertisementContainerArray.length)];
                 switch ($advertisementRandom) {
                     case ($advertisementContainerArray[0]):
-                        ad.setAttribute('href', '../movies/movieList/movieInfo/3628')
+                        ad.setAttribute('href', '../movies/movieList/movieInfo/4266')
                         break;
                     case ($advertisementContainerArray[1]):
-                        ad.setAttribute('href', '../movies/movieList/movieInfo/3669')
+                        ad.setAttribute('href', '../movies/movieList/movieInfo/4318')
                         break;
                     case ($advertisementContainerArray[2]):
-                        ad.setAttribute('href', '../movies/movieList/movieInfo/3611')
+                        ad.setAttribute('href', '../movies/movieList/movieInfo/4267')
                         break;
                     case ($advertisementContainerArray[3]):
-                        ad.setAttribute('href', '../movies/movieList/movieInfo/3927')
+                        ad.setAttribute('href', '../movies/movieList/movieInfo/4283')
                         break;
                     case ($advertisementContainerArray[4]):
-                        ad.setAttribute('href', '../movies/movieList/movieInfo/3974')
+                        ad.setAttribute('href', '../movies/movieList/movieInfo/4290')
                         break;
                     case ($advertisementContainerArray[5]):
-                        ad.setAttribute('href', '../movies/movieList/movieInfo/4024')
+                        ad.setAttribute('href', '../movies/movieList/movieInfo/4261')
                         break;
                 }
                 const $img = ad.querySelector(':scope > img');

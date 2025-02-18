@@ -105,6 +105,7 @@ public class TheaterService {
             keys.add(String.valueOf(screen.getSeatCount()));
             keys.add(String.valueOf(screen.getMoNum()));
             keys.add(genreList.toString());
+            System.out.println("screen.getMoDate()= " + screen.getMoDate());
             keys.add(String.valueOf(Period.between(LocalDate.parse(screen.getMoDate(), DateTimeFormatter.ofPattern("yyyy.MM.dd")), LocalDate.now())));
             if (screen.getCitName().equals("4DX")) {
                 screen.setCitName("DX");

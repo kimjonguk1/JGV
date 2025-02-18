@@ -55,7 +55,8 @@ public class TheaterController {
             modelAndView.addObject("theaterVos", values);
         }
         if (date != null && theater != null) {
-            Map<Set<String>, Map<Set<String>, Set<String>>> screenVos = this.theaterService.selectAllScreens(date, theater);
+            Map<Set<String>, Map<Set<String>, Set<String>>> screenVos =
+                    this.theaterService.selectAllScreens(date, theater);
             modelAndView.addObject("screenVos", screenVos);
         }
         modelAndView.addObject("regions", regions);
